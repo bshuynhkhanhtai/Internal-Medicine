@@ -23,57 +23,57 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent;}
   html{height:-webkit-fill-available;scroll-behavior:smooth;}
-  body{background:var(--bg-primary);color:var(--text-primary);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;display:flex;flex-direction:column;transition:background-color .3s,color .3s;overscroll-behavior-y:none;}
+  body{background:var(--bg-primary);color:var(--text-primary);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;display:flex;flex-direction:column;transition:background-color .3s,color .3s;overscroll-behavior-y:none;overflow-x:hidden;}
   header{background:linear-gradient(135deg,var(--tiffany-main),var(--tiffany-dark));color:#fff;padding:14px 18px 12px;position:sticky;top:0;z-index:40;box-shadow:0 4px 12px rgba(0,0,0,.12);}
   .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
-  h1{font-size:18px;font-weight:800;letter-spacing:-.3px;}
+  h1{font-size:17px;font-weight:800;letter-spacing:-.3px;}
   .sub{font-size:11px;opacity:.85;font-weight:500;margin-top:1px;}
   .theme-toggle-btn{background:rgba(255,255,255,.2);border:none;font-size:15px;padding:7px 12px;border-radius:18px;cursor:pointer;color:#fff;display:flex;align-items:center;gap:4px;backdrop-filter:blur(10px);}
   .theme-toggle-btn:active{background:rgba(255,255,255,.32);}
 
-  /* Disease tab bar */
-  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:sticky;top:64px;z-index:35;}
+  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:sticky;top:62px;z-index:35;}
   .disease-tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .disease-tabs::-webkit-scrollbar{display:none;}
-  .d-tab{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 13px;border-radius:14px;background:var(--bg-primary);color:var(--text-secondary);font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;min-width:64px;border:1px solid var(--border-color);}
-  .d-tab .emoji{font-size:18px;line-height:1;margin-bottom:2px;}
+  .d-tab{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;border-radius:14px;background:var(--bg-primary);color:var(--text-secondary);font-size:11.5px;font-weight:700;white-space:nowrap;cursor:pointer;min-width:60px;border:1px solid var(--border-color);}
+  .d-tab .emoji{font-size:17px;line-height:1;margin-bottom:2px;}
   .d-tab.active{background:var(--tiffany-main);color:#fff;border-color:var(--tiffany-main);}
 
-  /* Section sub-nav (pill) */
-  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:var(--tiffany-light);scrollbar-width:none;position:sticky;top:118px;z-index:30;border-bottom:1px solid var(--border-color);}
+  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:var(--tiffany-light);scrollbar-width:none;position:sticky;top:114px;z-index:30;border-bottom:1px solid var(--border-color);}
   .section-nav::-webkit-scrollbar{display:none;}
   .s-pill{flex-shrink:0;font-size:11.5px;font-weight:700;color:var(--tiffany-dark);background:var(--bg-card);padding:6px 11px;border-radius:12px;cursor:pointer;border:1px solid var(--border-color);}
   .s-pill.active{background:var(--tiffany-dark);color:#fff;border-color:var(--tiffany-dark);}
 
-  .container{flex:1;padding:14px 16px 50px;display:flex;flex-direction:column;gap:14px;max-width:720px;margin:0 auto;width:100%;}
+  .container{flex:1;padding:14px 14px 50px;display:flex;flex-direction:column;gap:14px;max-width:720px;margin:0 auto;width:100%;overflow-x:hidden;}
 
   .disease-header{background:linear-gradient(135deg,var(--tiffany-light),var(--bg-card));border:1px solid var(--border-color);border-radius:16px;padding:16px;}
-  .disease-header h2{font-size:19px;font-weight:800;color:var(--tiffany-dark);margin-bottom:4px;}
-  .disease-header .guideline-tag{display:inline-block;font-size:11px;font-weight:700;background:var(--tiffany-main);color:#fff;padding:3px 9px;border-radius:8px;margin-top:6px;margin-right:6px;}
+  .disease-header h2{font-size:18px;font-weight:800;color:var(--tiffany-dark);margin-bottom:4px;}
+  .disease-header .guideline-tag{display:inline-block;font-size:10.5px;font-weight:700;background:var(--tiffany-main);color:#fff;padding:3px 9px;border-radius:8px;margin-top:6px;margin-right:6px;}
 
-  .card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:14px;box-shadow:var(--card-shadow);overflow:hidden;scroll-margin-top:170px;}
-  .card-head{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;cursor:pointer;}
-  .card-head-title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:var(--text-primary);}
-  .card-head-title .ic{font-size:17px;}
-  .chevron{font-size:13px;color:var(--tiffany-main);transition:transform .25s;}
+  .card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:14px;box-shadow:var(--card-shadow);overflow:hidden;scroll-margin-top:165px;}
+  .card-head{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;cursor:pointer;}
+  .card-head-title{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:800;color:var(--text-primary);}
+  .card-head-title .ic{font-size:16px;}
+  .chevron{font-size:13px;color:var(--tiffany-main);transition:transform .25s;flex-shrink:0;}
   .card.open .chevron{transform:rotate(180deg);}
   .card-body{max-height:0;overflow:hidden;transition:max-height .3s ease;}
   .card.open .card-body{max-height:none;}
-  .card-body-inner{padding:0 15px 16px;font-size:13.5px;line-height:1.65;color:var(--text-primary);}
+  .card-body-inner{padding:0 14px 16px;font-size:13.3px;line-height:1.62;color:var(--text-primary);word-break:break-word;}
   .card-body-inner p{margin-bottom:8px;}
   .card-body-inner ul{padding-left:18px;margin-bottom:8px;}
   .card-body-inner li{margin-bottom:5px;}
   .card-body-inner b{color:var(--tiffany-dark);}
 
-  .subhead{font-size:12.5px;font-weight:800;color:var(--tiffany-dark);text-transform:uppercase;letter-spacing:.3px;margin:12px 0 6px;}
+  .subhead{font-size:12px;font-weight:800;color:var(--tiffany-dark);text-transform:uppercase;letter-spacing:.3px;margin:12px 0 6px;}
   .subhead:first-child{margin-top:0;}
 
-  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:10px;}
-  th{background:var(--tiffany-light);color:var(--tiffany-dark);text-align:left;padding:7px 8px;font-weight:800;border-bottom:1px solid var(--border-color);}
-  td{padding:7px 8px;border-bottom:1px solid var(--border-color);vertical-align:top;}
-  tr:last-child td{border-bottom:none;}
-  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--border-color);margin-bottom:10px;}
-  .tbl-wrap table{margin-bottom:0;min-width:480px;}
+  /* Bảng dạng thẻ xếp dọc — không kéo ngang, luôn gọn trong 1 màn hình */
+  .rtable{display:flex;flex-direction:column;gap:7px;margin-bottom:10px;width:100%;}
+  .rtable-row{background:var(--bg-primary);border:1px solid var(--border-color);border-radius:10px;padding:9px 11px;width:100%;}
+  .rtable-title{font-weight:800;font-size:12.8px;color:var(--tiffany-dark);margin-bottom:4px;line-height:1.4;}
+  .rtable-cell{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;font-size:12.3px;padding:4px 0;border-top:1px dashed var(--border-color);}
+  .rtable-row .rtable-cell:first-of-type{border-top:none;padding-top:0;}
+  .rtable-label{color:var(--text-secondary);font-weight:700;flex-shrink:0;white-space:nowrap;}
+  .rtable-value{color:var(--text-primary);text-align:right;font-weight:600;}
 
   .badge{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:6px;color:#fff;white-space:nowrap;}
   .badge-I{background:var(--success);}
@@ -81,14 +81,14 @@
   .badge-IIb{background:var(--warning);}
   .badge-III{background:var(--danger);}
 
-  .alert-box{border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.5;margin-bottom:10px;border-left:4px solid;}
+  .alert-box{border-radius:10px;padding:10px 12px;font-size:12.3px;line-height:1.5;margin-bottom:10px;border-left:4px solid;}
   .alert-warn{background:rgba(245,158,11,.1);border-color:var(--warning);}
   .alert-danger{background:rgba(239,68,68,.1);border-color:var(--danger);}
   .alert-info{background:rgba(59,130,246,.1);border-color:var(--info);}
 
   .age-tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:8px;background:var(--tiffany-light);color:var(--tiffany-dark);margin-bottom:3px;}
 
-  .source-note{font-size:10.5px;color:var(--text-secondary);font-style:italic;padding:10px 15px 0;border-top:1px dashed var(--border-color);margin-top:4px;}
+  .source-note{font-size:10.5px;color:var(--text-secondary);font-style:italic;padding:2px 4px 0;}
 
   footer{text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px 20px;}
 </style>
@@ -119,6 +119,22 @@
 
 <script>
 /* =========================================================
+   HELPER: render bảng dạng thẻ xếp dọc — không kéo ngang
+   headers: [ "Cột phụ 1", "Cột phụ 2", ... ] (KHÔNG bao gồm cột đầu)
+   rows: [ [tieu_de_dong, giatri1, giatri2, ...], ... ]
+   ========================================================= */
+function rt(headers, rows){
+  const body = rows.map(r => {
+    const title = r[0];
+    const cells = headers.map((h,i) => `
+      <div class="rtable-cell"><span class="rtable-label">${h}</span><span class="rtable-value">${r[i+1]}</span></div>
+    `).join('');
+    return `<div class="rtable-row"><div class="rtable-title">${title}</div>${cells}</div>`;
+  }).join('');
+  return `<div class="rtable">${body}</div>`;
+}
+
+/* =========================================================
    DỮ LIỆU PHÁC ĐỒ — TIM MẠCH & CHUYỂN HÓA (ESC / AHA-ACC)
    ========================================================= */
 const diseases = [
@@ -128,26 +144,29 @@ const diseases = [
   sections:{
     dinh_nghia:`
       <div class="subhead">Phân độ huyết áp — ESC 2024</div>
-      <div class="tbl-wrap"><table><tr><th>Phân loại</th><th>HA tâm thu</th><th>HA tâm trương</th></tr>
-      <tr><td>Không tăng</td><td>&lt;120</td><td>&lt;70</td></tr>
-      <tr><td><b>HA tăng (Elevated BP)</b> – nhóm mới</td><td>120–139</td><td>70–89</td></tr>
-      <tr><td><b>Tăng huyết áp</b></td><td>≥140</td><td>≥90</td></tr></table></div>
+      ${rt(["Tâm thu","Tâm trương"],[
+        ["Không tăng","&lt;120","&lt;70"],
+        ["<b>HA tăng (Elevated)</b> – nhóm mới","120–139","70–89"],
+        ["<b>Tăng huyết áp</b>","≥140","≥90"]
+      ])}
       <div class="subhead">Phân độ — AHA/ACC 2017</div>
-      <div class="tbl-wrap"><table><tr><th>Phân loại</th><th>Tâm thu</th><th>Tâm trương</th></tr>
-      <tr><td>Bình thường</td><td>&lt;120</td><td>&lt;80</td></tr>
-      <tr><td>Tăng (Elevated)</td><td>120–129</td><td>&lt;80</td></tr>
-      <tr><td>Giai đoạn 1</td><td>130–139</td><td>80–89</td></tr>
-      <tr><td>Giai đoạn 2</td><td>≥140</td><td>≥90</td></tr></table></div>
+      ${rt(["Tâm thu","Tâm trương"],[
+        ["Bình thường","&lt;120","&lt;80"],
+        ["Tăng (Elevated)","120–129","&lt;80"],
+        ["Giai đoạn 1","130–139","80–89"],
+        ["Giai đoạn 2","≥140","≥90"]
+      ])}
       <p><b>Điểm mới ESC 2024:</b> đưa vào nhóm "HA tăng" trung gian để nhận diện sớm người có nguy cơ, thay vì chờ đến ngưỡng 140/90 mới can thiệp.</p>`,
     chan_doan:`
       <p><b>Ưu tiên đo HA ngoài phòng khám</b> (Holter HA 24h – ABPM, hoặc tự đo tại nhà – HBPM) để xác định chẩn đoán, tránh "hiệu ứng áo choàng trắng" và "THA ẩn giấu".</p>
       <div class="subhead">Ngưỡng chẩn đoán theo phương pháp đo</div>
-      <div class="tbl-wrap"><table><tr><th>Phương pháp</th><th>Ngưỡng THA</th></tr>
-      <tr><td>Tại phòng khám</td><td>≥140/90 mmHg</td></tr>
-      <tr><td>ABPM – trung bình 24h</td><td>≥130/80 mmHg</td></tr>
-      <tr><td>ABPM – ban ngày</td><td>≥135/85 mmHg</td></tr>
-      <tr><td>ABPM – ban đêm</td><td>≥120/70 mmHg</td></tr>
-      <tr><td>HBPM tại nhà (trung bình)</td><td>≥135/85 mmHg</td></tr></table></div>
+      ${rt(["Ngưỡng THA"],[
+        ["Tại phòng khám","≥140/90 mmHg"],
+        ["ABPM – trung bình 24h","≥130/80 mmHg"],
+        ["ABPM – ban ngày","≥135/85 mmHg"],
+        ["ABPM – ban đêm","≥120/70 mmHg"],
+        ["HBPM tại nhà (trung bình)","≥135/85 mmHg"]
+      ])}
       <p>Đánh giá nguy cơ tim mạch tổng thể (thang SCORE2/SCORE2-OP), tầm soát tổn thương cơ quan đích (đáy mắt, ECG, creatinine/eGFR, albumin niệu) và <b>sàng lọc THA thứ phát</b> khi có dấu hiệu gợi ý (khởi phát &lt;30 tuổi, THA kháng trị, hạ kali máu). ESC 2024 khuyến cáo cân nhắc đo renin/aldosterone tầm soát cường aldosteron nguyên phát ở tất cả người lớn THA đã xác định (IIa).</p>`,
     dieu_tri:`
       <div class="subhead">Mục tiêu điều trị</div>
@@ -157,7 +176,7 @@ const diseases = [
       <ul>
         <li>Nguy cơ tim mạch 10 năm thấp–trung bình (&lt;10%): thay đổi lối sống 3 tháng; dùng thuốc nếu HA vẫn ≥140/90.</li>
         <li>Nguy cơ cao/rất cao, đã có bệnh tim mạch, ĐTĐ, bệnh thận mạn: khởi trị thuốc khi HA &gt;130/80 mmHg.</li>
-        <li><b>Ưu tiên khởi đầu bằng viên phối hợp liều thấp 2 thuốc</b> (single-pill combination) thay vì đơn trị, giúp đạt mục tiêu nhanh và tăng tuân thủ.</li>
+        <li><b>Ưu tiên khởi đầu bằng viên phối hợp liều thấp 2 thuốc</b> thay vì đơn trị, giúp đạt mục tiêu nhanh và tăng tuân thủ.</li>
       </ul>
       <div class="subhead">Nhóm thuốc nền tảng (ưu tiên phối hợp)</div>
       <ul>
@@ -167,29 +186,28 @@ const diseases = [
       </ul>
       <div class="alert-box alert-info">Chẹn beta <b>không còn là lựa chọn hàng đầu</b> thường quy (trừ khi có chỉ định riêng: bệnh mạch vành, suy tim, rung nhĩ cần kiểm soát tần số, phụ nữ có thai/dự định có thai).</div>
       <div class="subhead">THA kháng trị (không đạt đích dù 3 thuốc tối ưu gồm lợi tiểu)</div>
-      <p>Thêm <b>spironolactone</b> liều thấp (eplerenone nếu không dung nạp) → chẹn beta → thuốc khác (chẹn alpha, chẹn giao cảm trung ương). Có thể cân nhắc <b>đốt thần kinh giao cảm thận (renal denervation)</b> — khuyến cáo mới lần đầu trong ESC 2024.</p>`,
+      <p>Thêm <b>spironolactone</b> liều thấp (eplerenone nếu không dung nạp) → chẹn beta → thuốc khác (chẹn alpha, chẹn giao cảm trung ương). Có thể cân nhắc <b>đốt thần kinh giao cảm thận</b> — khuyến cáo mới lần đầu trong ESC 2024.</p>`,
     lieu_thuoc:`
       <div class="alert-box alert-warn">Người cao tuổi (≥65–75), suy thận, suy gan: khởi liều thấp nhất, tăng liều chậm, theo dõi HA tư thế đứng để tránh hạ HA/té ngã.</div>
-      <div class="tbl-wrap"><table>
-      <tr><th>Thuốc</th><th>Người lớn tiêu chuẩn</th><th>Người cao tuổi / thận yếu</th></tr>
-      <tr><td>Amlodipine</td><td>5–10 mg × 1 lần/ngày</td><td>khởi đầu 2.5 mg/ngày</td></tr>
-      <tr><td>Perindopril</td><td>5–10 mg × 1 lần/ngày</td><td>khởi đầu 2.5 mg/ngày; giảm liều nếu eGFR &lt;60</td></tr>
-      <tr><td>Losartan</td><td>50–100 mg × 1 lần/ngày</td><td>khởi đầu 25 mg/ngày</td></tr>
-      <tr><td>Indapamide SR</td><td>1.5 mg × 1 lần/ngày (sáng)</td><td>thận trọng nếu eGFR &lt;30; theo dõi Na⁺/K⁺</td></tr>
-      <tr><td>Chlorthalidone</td><td>12.5–25 mg × 1 lần/ngày</td><td>khởi đầu 12.5 mg, theo dõi điện giải sát</td></tr>
-      <tr><td>Bisoprolol (khi có chỉ định)</td><td>2.5–10 mg × 1 lần/ngày</td><td>khởi đầu 1.25 mg/ngày</td></tr>
-      <tr><td>Spironolactone (THA kháng trị)</td><td>12.5–50 mg × 1 lần/ngày</td><td>tránh nếu eGFR &lt;30 hoặc K⁺ &gt;5.0 mmol/L</td></tr>
-      </table></div>
-      <p><b>Viên phối hợp thường dùng:</b> Perindopril/Amlodipine, Perindopril/Indapamide, Losartan/HCTZ, Amlodipine/Valsartan — liều chỉnh theo đáp ứng, tái khám sau 2–4 tuần.</p>`,
+      ${rt(["Người lớn tiêu chuẩn","Cao tuổi / thận yếu"],[
+        ["Amlodipine","5–10 mg × 1 lần/ngày","khởi đầu 2.5 mg/ngày"],
+        ["Perindopril","5–10 mg × 1 lần/ngày","khởi đầu 2.5 mg/ngày; giảm nếu eGFR &lt;60"],
+        ["Losartan","50–100 mg × 1 lần/ngày","khởi đầu 25 mg/ngày"],
+        ["Indapamide SR","1.5 mg × 1 lần/ngày (sáng)","thận trọng eGFR &lt;30; theo dõi Na⁺/K⁺"],
+        ["Chlorthalidone","12.5–25 mg × 1 lần/ngày","khởi đầu 12.5 mg, theo dõi điện giải sát"],
+        ["Bisoprolol (khi có chỉ định)","2.5–10 mg × 1 lần/ngày","khởi đầu 1.25 mg/ngày"],
+        ["Spironolactone (kháng trị)","12.5–50 mg × 1 lần/ngày","tránh nếu eGFR &lt;30 hoặc K⁺&gt;5.0"]
+      ])}
+      <p><b>Viên phối hợp thường dùng:</b> Perindopril/Amlodipine, Perindopril/Indapamide, Losartan/HCTZ, Amlodipine/Valsartan — chỉnh liều theo đáp ứng, tái khám sau 2–4 tuần.</p>`,
     khuyen_cao:`
-      <div class="tbl-wrap"><table><tr><th>Khuyến cáo</th><th>Mức</th></tr>
-      <tr><td>Đo HA ngoài phòng khám (ABPM/HBPM) để chẩn đoán khi khả thi</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Đích SBP 120–129 mmHg ở người lớn đang dùng thuốc hạ áp</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Khởi đầu bằng viên phối hợp 2 thuốc liều thấp</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Sàng lọc cường aldosteron nguyên phát ở mọi người lớn THA đã xác định</td><td><span class="badge badge-IIa">IIa</span></td></tr>
-      <tr><td>Đốt thần kinh giao cảm thận cho THA kháng trị chọn lọc</td><td><span class="badge badge-IIb">IIb</span></td></tr>
-      <tr><td>Chẹn beta là thuốc hàng đầu thường quy không kèm chỉ định khác</td><td><span class="badge badge-III">III</span></td></tr>
-      </table></div>`
+      ${rt(["Mức"],[
+        ["Đo HA ngoài phòng khám (ABPM/HBPM) để chẩn đoán khi khả thi",'<span class="badge badge-I">I</span>'],
+        ["Đích SBP 120–129 mmHg ở người lớn đang dùng thuốc hạ áp",'<span class="badge badge-I">I</span>'],
+        ["Khởi đầu bằng viên phối hợp 2 thuốc liều thấp",'<span class="badge badge-I">I</span>'],
+        ["Sàng lọc cường aldosteron nguyên phát ở mọi người lớn THA",'<span class="badge badge-IIa">IIa</span>'],
+        ["Đốt thần kinh giao cảm thận cho THA kháng trị chọn lọc",'<span class="badge badge-IIb">IIb</span>'],
+        ["Chẹn beta là thuốc hàng đầu thường quy không kèm chỉ định khác",'<span class="badge badge-III">III</span>']
+      ])}`
   },
   source:"ESC Guidelines for Elevated Blood Pressure and Hypertension 2024 (Eur Heart J 2024); ACC/AHA/AAPA/ABC... 2017 Hypertension Guideline"
 },
@@ -200,75 +218,75 @@ const diseases = [
     dinh_nghia:`
       <p>Suy tim là hội chứng lâm sàng do bất thường cấu trúc và/hoặc chức năng tim, gây tăng áp lực đổ đầy trong tim và/hoặc cung lượng tim không đủ khi nghỉ hoặc gắng sức.</p>
       <div class="subhead">Phân loại theo phân suất tống máu (EF)</div>
-      <div class="tbl-wrap"><table><tr><th>Thể</th><th>EF</th></tr>
-      <tr><td>HFrEF – EF giảm</td><td>≤40%</td></tr>
-      <tr><td>HFmrEF – EF giảm nhẹ</td><td>41–49%</td></tr>
-      <tr><td>HFpEF – EF bảo tồn</td><td>≥50%</td></tr>
-      <tr><td>HFimpEF – EF cải thiện</td><td>EF nền ≤40%, tăng ≥10 điểm và hiện &gt;40%</td></tr></table></div>
+      ${rt(["EF"],[
+        ["HFrEF – EF giảm","≤40%"],
+        ["HFmrEF – EF giảm nhẹ","41–49%"],
+        ["HFpEF – EF bảo tồn","≥50%"],
+        ["HFimpEF – EF cải thiện","nền ≤40%, tăng ≥10 điểm và hiện &gt;40%"]
+      ])}
       <div class="subhead">Giai đoạn suy tim (AHA/ACC 2022)</div>
       <p><b>A</b> – nguy cơ cao chưa triệu chứng/bệnh cấu trúc · <b>B</b> – có bệnh cấu trúc, chưa triệu chứng · <b>C</b> – bệnh cấu trúc + triệu chứng hiện tại/trước đây · <b>D</b> – suy tim kháng trị giai đoạn cuối.</p>`,
     chan_doan:`
-      <p>Chẩn đoán dựa trên: (1) triệu chứng cơ năng (khó thở, mệt, phù chân) và thực thể (ran ẩm, tĩnh mạch cổ nổi, phù), (2) bằng chứng khách quan bất thường cấu trúc/chức năng tim trên siêu âm tim, và (3) NT-proBNP/BNP tăng (khi không cấp cứu).</p>
-      <div class="tbl-wrap"><table><tr><th>Xét nghiệm</th><th>Ngưỡng gợi ý suy tim</th></tr>
-      <tr><td>NT-proBNP (không cấp, ngoại trú)</td><td>&gt;125 pg/mL</td></tr>
-      <tr><td>NT-proBNP (cấp cứu)</td><td>&gt;300 pg/mL</td></tr>
-      <tr><td>BNP (cấp cứu)</td><td>&gt;100 pg/mL</td></tr>
-      </table></div>
+      <p>Chẩn đoán dựa trên: (1) triệu chứng cơ năng (khó thở, mệt, phù chân) và thực thể (ran ẩm, tĩnh mạch cổ nổi, phù), (2) bằng chứng khách quan bất thường cấu trúc/chức năng tim trên siêu âm tim, và (3) NT-proBNP/BNP tăng.</p>
+      ${rt(["Ngưỡng gợi ý suy tim"],[
+        ["NT-proBNP (ngoại trú, không cấp)","&gt;125 pg/mL"],
+        ["NT-proBNP (cấp cứu)","&gt;300 pg/mL"],
+        ["BNP (cấp cứu)","&gt;100 pg/mL"]
+      ])}
       <p>Siêu âm tim là công cụ chính để xác định EF, bất thường cấu trúc, van tim, đổ đầy thất trái. Cân nhắc thêm ECG, X-quang ngực, và tìm nguyên nhân nền (thiếu máu cơ tim, bệnh van, bệnh cơ tim).</p>`,
     dieu_tri:`
       <div class="subhead">HFrEF (EF ≤40%) – "4 trụ cột" điều trị</div>
       <p>Khởi động <b>đồng thời và nhanh</b> (không cần tuần tự) 4 nhóm thuốc nền tảng, mỗi nhóm giảm tử vong/nhập viện độc lập:</p>
       <ul>
-        <li><b>ARNI</b> (sacubitril/valsartan) — ưu tiên hơn ACEi/ARB đơn thuần; nếu chưa dùng được ARNI thì dùng ACEi (hoặc ARB nếu không dung nạp ACEi)</li>
+        <li><b>ARNI</b> (sacubitril/valsartan) — ưu tiên hơn ACEi/ARB đơn thuần</li>
         <li><b>Chẹn beta</b> đã chứng minh lợi ích (bisoprolol, carvedilol, metoprolol succinate, nebivolol)</li>
         <li><b>Kháng thụ thể mineralocorticoid (MRA)</b>: spironolactone hoặc eplerenone</li>
-        <li><b>Ức chế SGLT2</b>: dapagliflozin hoặc empagliflozin — dùng cho <b>mọi HFrEF</b> bất kể có ĐTĐ hay không</li>
+        <li><b>Ức chế SGLT2</b>: dapagliflozin hoặc empagliflozin — dùng cho mọi HFrEF bất kể có ĐTĐ hay không</li>
       </ul>
-      <div class="alert-box alert-info">Chiến lược 2021–2023: khởi trị và chuẩn liều cả 4 nhóm trong vài tuần đầu (thay vì chờ chuẩn liều từng thuốc), rút ngắn thời gian đạt lợi ích sống còn.</div>
+      <div class="alert-box alert-info">Chiến lược 2021–2023: khởi trị và chuẩn liều cả 4 nhóm trong vài tuần đầu, rút ngắn thời gian đạt lợi ích sống còn.</div>
       <div class="subhead">HFmrEF và HFpEF</div>
       <ul>
-        <li><b>SGLT2i</b> (dapagliflozin/empagliflozin) là nền tảng, khuyến cáo mạnh nhất hiện có cho cả hai thể này</li>
-        <li>Lợi tiểu để kiểm soát sung huyết; cân nhắc MRA, ARNI ở một số bệnh nhân HFmrEF</li>
-        <li>Điều trị bệnh đồng mắc: kiểm soát THA, rung nhĩ, béo phì</li>
+        <li><b>SGLT2i</b> là nền tảng, khuyến cáo mạnh nhất hiện có cho cả hai thể này</li>
+        <li>Lợi tiểu kiểm soát sung huyết; cân nhắc MRA, ARNI ở một số bệnh nhân HFmrEF</li>
+        <li>Điều trị bệnh đồng mắc: THA, rung nhĩ, béo phì</li>
       </ul>
       <div class="subhead">Suy tim cấp mất bù</div>
-      <p>Lợi tiểu quai tĩnh mạch (furosemide) chỉnh liều theo đáp ứng natri niệu/lâm sàng; oxy nếu SpO2&lt;90%; xử trí nguyên nhân khởi phát; tránh ngưng đột ngột 4 trụ cột nếu huyết động ổn.</p>`,
+      <p>Lợi tiểu quai TM (furosemide) chỉnh liều theo đáp ứng; oxy nếu SpO2&lt;90%; xử trí nguyên nhân khởi phát; tránh ngưng đột ngột 4 trụ cột nếu huyết động ổn.</p>`,
     lieu_thuoc:`
       <div class="alert-box alert-warn">Người cao tuổi/suy thận: khởi liều thấp, tăng liều mỗi 2–4 tuần, theo dõi HA, K⁺, creatinine sau mỗi lần tăng liều.</div>
-      <div class="tbl-wrap"><table>
-      <tr><th>Thuốc</th><th>Liều khởi đầu</th><th>Liều đích</th></tr>
-      <tr><td>Sacubitril/Valsartan</td><td>24/26 mg × 2 lần/ngày (49/51 nếu chưa dùng ACEi/ARB liều cao)</td><td>97/103 mg × 2 lần/ngày</td></tr>
-      <tr><td>Bisoprolol</td><td>1.25 mg × 1 lần/ngày</td><td>10 mg × 1 lần/ngày</td></tr>
-      <tr><td>Carvedilol</td><td>3.125 mg × 2 lần/ngày</td><td>25–50 mg × 2 lần/ngày (theo cân nặng)</td></tr>
-      <tr><td>Metoprolol succinate (phóng thích chậm)</td><td>12.5–25 mg × 1 lần/ngày</td><td>200 mg × 1 lần/ngày</td></tr>
-      <tr><td>Spironolactone</td><td>12.5–25 mg × 1 lần/ngày</td><td>25–50 mg × 1 lần/ngày</td></tr>
-      <tr><td>Eplerenone</td><td>25 mg × 1 lần/ngày</td><td>50 mg × 1 lần/ngày</td></tr>
-      <tr><td>Dapagliflozin</td><td>10 mg × 1 lần/ngày (liều cố định)</td><td>—</td></tr>
-      <tr><td>Empagliflozin</td><td>10 mg × 1 lần/ngày (liều cố định)</td><td>—</td></tr>
-      <tr><td>Furosemide (sung huyết)</td><td>20–40 mg, chỉnh theo đáp ứng</td><td>tối đa theo lâm sàng, TM khi suy tim cấp</td></tr>
-      </table></div>
+      ${rt(["Khởi đầu","Liều đích"],[
+        ["Sacubitril/Valsartan","24/26 mg × 2 lần/ngày","97/103 mg × 2 lần/ngày"],
+        ["Bisoprolol","1.25 mg × 1 lần/ngày","10 mg × 1 lần/ngày"],
+        ["Carvedilol","3.125 mg × 2 lần/ngày","25–50 mg × 2 lần/ngày"],
+        ["Metoprolol succinate","12.5–25 mg × 1 lần/ngày","200 mg × 1 lần/ngày"],
+        ["Spironolactone","12.5–25 mg × 1 lần/ngày","25–50 mg × 1 lần/ngày"],
+        ["Eplerenone","25 mg × 1 lần/ngày","50 mg × 1 lần/ngày"],
+        ["Dapagliflozin","10 mg × 1 lần/ngày","liều cố định"],
+        ["Empagliflozin","10 mg × 1 lần/ngày","liều cố định"],
+        ["Furosemide (sung huyết)","20–40 mg, chỉnh theo đáp ứng","theo lâm sàng, TM khi cấp"]
+      ])}
       <div class="age-tag">Người cao tuổi</div>
-      <p style="margin-bottom:10px;">Bắt đầu ARNI/ACEi và MRA ở liều thấp nhất bảng trên; ưu tiên chuẩn liều chẹn beta chậm hơn theo dung nạp nhịp tim/HA; SGLT2i không cần chỉnh liều theo tuổi nhưng thận trọng nguy cơ mất nước, nhiễm nấm sinh dục.</p>
+      <p style="margin-bottom:10px;">Bắt đầu ARNI/ACEi và MRA ở liều thấp nhất; chuẩn liều chẹn beta chậm hơn theo dung nạp; SGLT2i không chỉnh theo tuổi nhưng thận trọng mất nước, nhiễm nấm sinh dục.</p>
       <div class="age-tag">Suy thận (eGFR 30–60)</div>
-      <p>Không chống chỉ định 4 trụ cột nhưng cần theo dõi sát K⁺/creatinine; SGLT2i vẫn dùng được đến eGFR ≥20; MRA thận trọng nếu eGFR &lt;30.</p>`,
+      <p>Không chống chỉ định 4 trụ cột nhưng theo dõi sát K⁺/creatinine; SGLT2i dùng đến eGFR ≥20; MRA thận trọng nếu eGFR &lt;30.</p>`,
     khuyen_cao:`
-      <div class="tbl-wrap"><table><tr><th>Khuyến cáo</th><th>Mức</th></tr>
-      <tr><td>Khởi trị đồng thời 4 nhóm thuốc nền tảng (ARNI/ACEi, chẹn beta, MRA, SGLT2i) trong HFrEF</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>SGLT2i cho HFmrEF và HFpEF</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Sacubitril/valsartan ưu tiên hơn ACEi ở bệnh nhân phù hợp</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Theo dõi NT-proBNP để hướng dẫn điều trị</td><td><span class="badge badge-IIb">IIb</span></td></tr>
-      <tr><td>Chẹn kênh canxi non-dihydropyridine (verapamil/diltiazem) trong HFrEF</td><td><span class="badge badge-III">III</span></td></tr>
-      </table></div>`
+      ${rt(["Mức"],[
+        ["Khởi trị đồng thời 4 nhóm thuốc nền tảng trong HFrEF",'<span class="badge badge-I">I</span>'],
+        ["SGLT2i cho HFmrEF và HFpEF",'<span class="badge badge-I">I</span>'],
+        ["Sacubitril/valsartan ưu tiên hơn ACEi ở bệnh nhân phù hợp",'<span class="badge badge-I">I</span>'],
+        ["Theo dõi NT-proBNP để hướng dẫn điều trị",'<span class="badge badge-IIb">IIb</span>'],
+        ["Chẹn kênh canxi non-dihydropyridine trong HFrEF",'<span class="badge badge-III">III</span>']
+      ])}`
   },
   source:"ESC Heart Failure Guidelines 2021 + 2023 Focused Update; 2022 AHA/ACC/HFSA Guideline for the Management of Heart Failure"
 },
 {
-  id:"af", emoji:"〰️", short:"Rung nhĩ", title:"Rung nhĩ (Atrial Fibrillation)",
+  id:"af", emoji:"〰️", short:"RN", title:"Rung nhĩ (Atrial Fibrillation)",
   guidelines:["ESC 2024 (AF-CARE)"],
   sections:{
     dinh_nghia:`
       <p>Rung nhĩ là rối loạn nhịp nhĩ nhanh, không đều, mất co bóp nhĩ hiệu quả, làm tăng nguy cơ đột quỵ, suy tim và tử vong.</p>
-      <div class="subhead">Khung tiếp cận mới ESC 2024: <b>AF-CARE</b></div>
+      <div class="subhead">Khung tiếp cận mới ESC 2024: AF-CARE</div>
       <ul>
         <li><b>C</b> – Comorbidity: kiểm soát bệnh đồng mắc & yếu tố nguy cơ (THA, béo phì, ngưng thở khi ngủ, rượu)</li>
         <li><b>A</b> – Avoid stroke: phòng ngừa đột quỵ bằng kháng đông</li>
@@ -276,111 +294,211 @@ const diseases = [
         <li><b>E</b> – Evaluation: đánh giá lại động học định kỳ</li>
       </ul>
       <div class="subhead">Phân loại</div>
-      <p>Kịch phát (tự hết ≤7 ngày) · Dai dẳng (&gt;7 ngày) · Dai dẳng kéo dài (&gt;12 tháng) · Vĩnh viễn (không còn ý định phục hồi nhịp xoang).</p>`,
+      <p>Kịch phát (tự hết ≤7 ngày) · Dai dẳng (&gt;7 ngày) · Dai dẳng kéo dài (&gt;12 tháng) · Vĩnh viễn.</p>`,
     chan_doan:`
-      <p>Chẩn đoán xác định cần <b>ECG 12 chuyển đạo hoặc bản ghi nhịp ≥30 giây</b> thể hiện rung nhĩ (khoảng RR không đều, không có sóng P rõ).</p>
-      <div class="subhead">Thang điểm nguy cơ đột quỵ — CHA₂DS₂-VA (ESC 2024, bỏ tiêu chí giới tính)</div>
-      <div class="tbl-wrap"><table><tr><th>Yếu tố</th><th>Điểm</th></tr>
-      <tr><td>Suy tim/rối loạn chức năng thất trái</td><td>1</td></tr>
-      <tr><td>Tăng huyết áp</td><td>1</td></tr>
-      <tr><td>Tuổi ≥75</td><td>2</td></tr>
-      <tr><td>Đái tháo đường</td><td>1</td></tr>
-      <tr><td>Tiền sử đột quỵ/TIA/thuyên tắc</td><td>2</td></tr>
-      <tr><td>Bệnh mạch máu (mạch vành, ĐM ngoại biên, mảng xơ vữa ĐMC)</td><td>1</td></tr>
-      <tr><td>Tuổi 65–74</td><td>1</td></tr></table></div>
+      <p>Chẩn đoán xác định cần <b>ECG 12 chuyển đạo hoặc bản ghi nhịp ≥30 giây</b> thể hiện rung nhĩ (RR không đều, không có sóng P rõ).</p>
+      <div class="subhead">CHA₂DS₂-VA (ESC 2024, bỏ tiêu chí giới tính)</div>
+      ${rt(["Điểm"],[
+        ["Suy tim/rối loạn chức năng thất trái","1"],
+        ["Tăng huyết áp","1"],
+        ["Tuổi ≥75","2"],
+        ["Đái tháo đường","1"],
+        ["Tiền sử đột quỵ/TIA/thuyên tắc","2"],
+        ["Bệnh mạch máu (mạch vành, ĐM ngoại biên, mảng xơ vữa ĐMC)","1"],
+        ["Tuổi 65–74","1"]
+      ])}
       <p>Điểm ≥2: khuyến cáo kháng đông. Đánh giá song song nguy cơ chảy máu bằng thang <b>HAS-BLED</b> để xác định yếu tố có thể điều chỉnh, không dùng để loại trừ kháng đông.</p>`,
     dieu_tri:`
       <div class="subhead">Phòng ngừa đột quỵ</div>
-      <p><b>Kháng đông đường uống thế hệ mới (NOAC)</b> được ưu tiên hơn kháng vitamin K (warfarin) ở hầu hết bệnh nhân rung nhĩ không do bệnh van tim, trừ khi có van cơ học hoặc hẹp van 2 lá trung bình–nặng.</p>
+      <p><b>Kháng đông đường uống thế hệ mới (NOAC)</b> được ưu tiên hơn kháng vitamin K ở hầu hết bệnh nhân rung nhĩ không do bệnh van tim, trừ khi có van cơ học hoặc hẹp van 2 lá trung bình–nặng.</p>
       <div class="subhead">Kiểm soát nhịp vs tần số</div>
       <ul>
-        <li><b>Kiểm soát nhịp sớm</b> (thuốc chống loạn nhịp hoặc <b>đốt điện qua catheter</b>) được khuyến cáo ưu tiên, đặc biệt trong 12 tháng đầu chẩn đoán, giúp giảm biến cố tim mạch so với chỉ kiểm soát tần số (theo dữ liệu EAST-AFNET4).</li>
-        <li>Đốt điện qua catheter là lựa chọn hàng đầu (không chỉ hàng hai sau thuốc) cho rung nhĩ kịch phát/dai dẳng có triệu chứng, đặc biệt khi kèm suy tim EF giảm.</li>
+        <li><b>Kiểm soát nhịp sớm</b> (thuốc chống loạn nhịp hoặc <b>đốt điện qua catheter</b>) được ưu tiên, đặc biệt trong 12 tháng đầu chẩn đoán, giảm biến cố tim mạch so với chỉ kiểm soát tần số (EAST-AFNET4).</li>
+        <li>Đốt điện qua catheter là lựa chọn hàng đầu cho rung nhĩ có triệu chứng, đặc biệt khi kèm suy tim EF giảm.</li>
         <li>Kiểm soát tần số (chẹn beta, chẹn canxi non-DHP, digoxin) khi chiến lược kiểm soát nhịp không phù hợp.</li>
       </ul>
       <div class="subhead">Kiểm soát yếu tố nguy cơ (trụ C)</div>
-      <p>Giảm cân, điều trị ngưng thở khi ngủ, kiểm soát HA chặt, hạn chế rượu — là can thiệp bắt buộc song song, làm giảm gánh nặng rung nhĩ và tái phát sau đốt điện.</p>`,
+      <p>Giảm cân, điều trị ngưng thở khi ngủ, kiểm soát HA chặt, hạn chế rượu — can thiệp bắt buộc song song, giảm gánh nặng rung nhĩ và tái phát sau đốt điện.</p>`,
     lieu_thuoc:`
-      <div class="alert-box alert-danger">Luôn chỉnh liều NOAC theo tuổi, cân nặng, chức năng thận (CrCl) — quá liều làm tăng nguy cơ xuất huyết, dưới liều làm tăng nguy cơ đột quỵ.</div>
-      <div class="tbl-wrap"><table>
-      <tr><th>Thuốc</th><th>Liều chuẩn</th><th>Liều giảm & tiêu chí</th></tr>
-      <tr><td>Apixaban</td><td>5 mg × 2 lần/ngày</td><td>2.5 mg × 2 lần/ngày nếu có ≥2/3: tuổi ≥80, cân nặng ≤60kg, creatinine ≥1.5mg/dL</td></tr>
-      <tr><td>Rivaroxaban</td><td>20 mg × 1 lần/ngày (cùng bữa ăn)</td><td>15 mg × 1 lần/ngày nếu CrCl 15–49 mL/phút</td></tr>
-      <tr><td>Dabigatran</td><td>150 mg × 2 lần/ngày</td><td>110 mg × 2 lần/ngày nếu tuổi ≥80, dùng verapamil, hoặc nguy cơ chảy máu cao</td></tr>
-      <tr><td>Edoxaban</td><td>60 mg × 1 lần/ngày</td><td>30 mg × 1 lần/ngày nếu CrCl 15–50, cân nặng ≤60kg, hoặc dùng kèm ức chế P-gp mạnh</td></tr>
-      <tr><td>Warfarin (khi cần kháng VitK)</td><td>chỉnh liều theo INR đích 2.0–3.0</td><td>người cao tuổi thường cần liều thấp hơn, theo dõi INR sát hơn</td></tr>
-      </table></div>
-      <div class="tbl-wrap"><table>
-      <tr><th>Kiểm soát tần số</th><th>Liều thường dùng</th></tr>
-      <tr><td>Bisoprolol</td><td>2.5–10 mg/ngày</td></tr>
-      <tr><td>Diltiazem phóng thích chậm</td><td>120–360 mg/ngày</td></tr>
-      <tr><td>Digoxin (thêm vào khi cần, đặc biệt có suy tim)</td><td>0.125–0.25 mg/ngày, giảm liều & theo dõi nồng độ ở người cao tuổi/suy thận</td></tr>
-      </table></div>`,
+      <div class="alert-box alert-danger">Luôn chỉnh liều NOAC theo tuổi, cân nặng, chức năng thận (CrCl) — quá liều tăng nguy cơ xuất huyết, dưới liều tăng nguy cơ đột quỵ.</div>
+      ${rt(["Liều chuẩn","Liều giảm & tiêu chí"],[
+        ["Apixaban","5 mg × 2 lần/ngày","2.5mg×2 nếu ≥2/3: tuổi≥80, CN≤60kg, creatinin≥1.5"],
+        ["Rivaroxaban","20 mg × 1 lần/ngày (cùng ăn)","15mg×1 nếu CrCl 15–49 mL/phút"],
+        ["Dabigatran","150 mg × 2 lần/ngày","110mg×2 nếu tuổi≥80, dùng verapamil, hoặc nguy cơ chảy máu cao"],
+        ["Edoxaban","60 mg × 1 lần/ngày","30mg×1 nếu CrCl 15–50, CN≤60kg, hoặc kèm ức chế P-gp mạnh"],
+        ["Warfarin (khi cần)","chỉnh theo INR đích 2.0–3.0","cao tuổi thường cần liều thấp hơn, theo dõi INR sát"]
+      ])}
+      <div class="subhead">Kiểm soát tần số</div>
+      ${rt(["Liều thường dùng"],[
+        ["Bisoprolol","2.5–10 mg/ngày"],
+        ["Diltiazem phóng thích chậm","120–360 mg/ngày"],
+        ["Digoxin (thêm khi cần, có suy tim)","0.125–0.25 mg/ngày, giảm liều/theo dõi nồng độ ở cao tuổi/suy thận"]
+      ])}`,
     khuyen_cao:`
-      <div class="tbl-wrap"><table><tr><th>Khuyến cáo</th><th>Mức</th></tr>
-      <tr><td>NOAC ưu tiên hơn warfarin khi không có chống chỉ định</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Kháng đông khi CHA₂DS₂-VA ≥2</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Đốt điện qua catheter là lựa chọn hàng đầu (không chỉ hàng hai) cho AF có triệu chứng</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Kiểm soát yếu tố nguy cơ (cân nặng, ngưng thở khi ngủ, rượu) song song điều trị</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Dùng aspirin đơn độc để phòng đột quỵ trong AF</td><td><span class="badge badge-III">III</span></td></tr>
-      </table></div>`
+      ${rt(["Mức"],[
+        ["NOAC ưu tiên hơn warfarin khi không có chống chỉ định",'<span class="badge badge-I">I</span>'],
+        ["Kháng đông khi CHA₂DS₂-VA ≥2",'<span class="badge badge-I">I</span>'],
+        ["Đốt điện qua catheter là lựa chọn hàng đầu cho AF có triệu chứng",'<span class="badge badge-I">I</span>'],
+        ["Kiểm soát yếu tố nguy cơ song song điều trị",'<span class="badge badge-I">I</span>'],
+        ["Dùng aspirin đơn độc để phòng đột quỵ trong AF",'<span class="badge badge-III">III</span>']
+      ])}`
   },
   source:"2024 ESC Guidelines for the management of atrial fibrillation (AF-CARE), Eur Heart J 2024"
+},
+{
+  id:"tachy", emoji:"⚡", short:"Nhịp nhanh", title:"Rối loạn nhịp nhanh",
+  guidelines:["ESC 2019 (SVT)","ESC 2022 (Loạn nhịp thất & đột tử)"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhịp nhanh: tần số thất &gt;100 lần/phút phát sinh từ cơ chế bất thường (vòng vào lại, tăng tính tự động, hoạt động khởi kích).</p>
+      <div class="subhead">Phân loại theo vị trí khởi phát</div>
+      ${rt(["Đặc điểm"],[
+        ["Nhịp nhanh xoang không thích hợp","QRS hẹp, tần số cao liên tục không tương xứng gắng sức"],
+        ["Nhịp nhanh vào lại nút nhĩ thất (AVNRT)","QRS hẹp, khởi phát/kết thúc đột ngột, thường gặp nhất ở người trẻ khỏe mạnh"],
+        ["Nhịp nhanh vào lại nhĩ thất (AVRT/WPW)","QRS hẹp (hoặc rộng nếu dẫn truyền xuôi qua đường phụ), có sóng delta nền"],
+        ["Cuồng nhĩ (Atrial flutter)","QRS đều, sóng răng cưa tần số nhĩ ~300/phút"],
+        ["Nhịp nhanh thất đơn dạng (VT)","QRS rộng đều, thường trên nền bệnh tim cấu trúc/sẹo NMCT cũ"],
+        ["Rung thất (VF) / VT đa dạng","QRS rộng không đều, đe dọa tính mạng ngay lập tức"]
+      ])}`,
+    chan_doan:`
+      <p>ECG 12 chuyển đạo lúc có cơn là then chốt — phân biệt <b>QRS hẹp</b> (nguồn gốc trên thất) và <b>QRS rộng</b> (nguồn gốc thất hoặc SVT dẫn truyền lệch hướng, dùng tiêu chuẩn Brugada để phân biệt).</p>
+      <p>Nghiệm pháp phế vị có thể cắt cơn hoặc bộc lộ hoạt động nhĩ để chẩn đoán. Holter ECG 24–48h hoặc máy ghi biến cố kéo dài khi cơn ngắt quãng, không bắt được lúc thăm khám. Thăm dò điện sinh lý (EPS) khi cần định vị ổ loạn nhịp trước đốt điện hoặc đánh giá nguy cơ đột tử.</p>
+      <div class="alert-box alert-warn">Mọi nhịp nhanh QRS rộng chưa rõ nguyên nhân nên được xử trí như <b>VT</b> cho đến khi chứng minh được ngược lại — đặc biệt ở người có bệnh tim cấu trúc/tiền sử NMCT.</div>`,
+    dieu_tri:`
+      <div class="subhead">SVT cấp (QRS hẹp, huyết động ổn)</div>
+      <p>Nghiệm pháp phế vị (Valsalva cải biên) → adenosine TM nếu không đáp ứng → sốc điện chuyển nhịp đồng bộ nếu huyết động không ổn hoặc kháng thuốc.</p>
+      <div class="subhead">Điều trị dài hạn SVT tái phát</div>
+      <p><b>Đốt điện qua catheter</b> là điều trị hàng đầu cho AVNRT, AVRT/WPW có triệu chứng và cuồng nhĩ (đốt eo van 3 lá–TM chủ dưới) — tỷ lệ thành công cao, ưu tiên hơn dùng thuốc dài hạn.</p>
+      <div class="subhead">VT/VF huyết động không ổn</div>
+      <p>Sốc điện/khử rung ngay theo phác đồ ACLS. VT đơn dạng bền bỉ có bệnh tim cấu trúc: amiodarone TM, cân nhắc đốt điện VT.</p>
+      <div class="subhead">Phòng ngừa đột tử do tim (SCD)</div>
+      <ul>
+        <li>ICD phòng ngừa <b>thứ phát</b>: sống sót sau ngừng tim do VT/VF không do nguyên nhân hồi phục</li>
+        <li>ICD phòng ngừa <b>tiên phát</b>: EF≤35% sau NMCT ≥40 ngày, NYHA II–III dù điều trị nội khoa tối ưu</li>
+      </ul>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-warn">Người cao tuổi: giảm liều amiodarone nạp/duy trì, theo dõi tuyến giáp/gan/phổi khi dùng dài hạn; tránh phối hợp verapamil/diltiazem với chẹn beta do nguy cơ block nặng.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Adenosine","6mg TM nhanh → 12mg → 12mg nếu chưa đáp ứng","giảm còn 3mg nếu qua catheter TM trung tâm/dùng dipyridamole"],
+        ["Amiodarone TM","150mg/10 phút → 1mg/phút×6h → 0.5mg/phút×18h","theo dõi HA, kéo dài QT"],
+        ["Amiodarone uống","200mg×3 lần/ngày×1 tuần → 200mg×1–2 lần/ngày","xét nghiệm chức năng tuyến giáp/gan định kỳ"],
+        ["Flecainide (không bệnh tim cấu trúc)","50–150 mg × 2 lần/ngày","chống chỉ định nếu có bệnh mạch vành/suy tim"],
+        ["Verapamil (SVT, không suy tim)","5–10 mg TM chậm","chống chỉ định nếu QRS rộng chưa rõ chẩn đoán hoặc suy tim"],
+        ["Chẹn beta uống dự phòng","liều chuẩn theo thuốc (vd. bisoprolol 2.5–10mg/ngày)","giảm liều khởi đầu ở người cao tuổi"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Đốt điện qua catheter cho AVNRT/AVRT có triệu chứng tái phát",'<span class="badge badge-I">I</span>'],
+        ["Adenosine là thuốc đầu tay cắt cơn SVT QRS hẹp cấp",'<span class="badge badge-I">I</span>'],
+        ["ICD phòng ngừa thứ phát sau ngừng tim do VT/VF không hồi phục",'<span class="badge badge-I">I</span>'],
+        ["ICD phòng ngừa tiên phát khi EF≤35% sau NMCT ≥40 ngày",'<span class="badge badge-I">I</span>'],
+        ["Verapamil/diltiazem TM trong nhịp nhanh QRS rộng chưa rõ chẩn đoán",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2019 ESC Guidelines for SVT management; 2022 ESC Guidelines for ventricular arrhythmias and sudden cardiac death prevention"
+},
+{
+  id:"brady", emoji:"🐢", short:"Nhịp chậm", title:"Rối loạn nhịp chậm",
+  guidelines:["ESC 2021 (Tạo nhịp tim & CRT)"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhịp chậm: tần số tim &lt;60 lần/phút, do rối loạn tạo nhịp tại nút xoang (hội chứng suy nút xoang) hoặc rối loạn dẫn truyền nhĩ–thất.</p>
+      <div class="subhead">Phân loại block nhĩ thất (AV)</div>
+      ${rt(["Đặc điểm"],[
+        ["Block AV độ I","PR kéo dài &gt;200ms, dẫn truyền 1:1, thường lành tính"],
+        ["Block AV độ II Mobitz I (Wenckebach)","PR dài dần rồi rớt nhịp, vị trí tại nút AV, thường lành tính"],
+        ["Block AV độ II Mobitz II","Rớt nhịp đột ngột không báo trước, vị trí dưới nút, nguy cơ tiến triển độ III cao"],
+        ["Block AV độ III (hoàn toàn)","Phân ly nhĩ thất hoàn toàn, nhịp thoát chậm và không ổn định"],
+        ["Hội chứng suy nút xoang","Nhịp chậm xoang, ngưng xoang, hội chứng nhanh–chậm xen kẽ"]
+      ])}`,
+    chan_doan:`
+      <p>ECG, Holter 24–48h hoặc máy ghi biến cố kéo dài nếu triệu chứng ngắt quãng. <b>Tương quan triệu chứng với nhịp chậm</b> (chóng mặt, ngất, mệt khi gắng sức) là yếu tố quyết định chỉ định điều trị — không chỉ dựa vào nhịp tim đơn thuần.</p>
+      <div class="alert-box alert-info">Block AV độ II Mobitz II và độ III cần được xử trí như tình trạng nguy cơ cao (nguy cơ vô tâm thu) dù bệnh nhân có triệu chứng hay chưa.</div>`,
+    dieu_tri:`
+      <div class="subhead">Cấp cứu — nhịp chậm có triệu chứng/huyết động không ổn</div>
+      <p>Atropine TM trước tiên → nếu không đáp ứng: tạo nhịp qua da/tĩnh mạch tạm thời, hoặc truyền isoproterenol/adrenaline/dopamine trong lúc chờ đặt máy tạo nhịp.</p>
+      <div class="subhead">Điều trị dài hạn — cấy máy tạo nhịp vĩnh viễn</div>
+      <ul>
+        <li>Chỉ định khi có <b>triệu chứng tương quan rõ</b> với nhịp chậm và không có nguyên nhân hồi phục (rối loạn điện giải, thuốc, thiếu máu cơ tim cấp)</li>
+        <li>Hội chứng suy nút xoang có triệu chứng: cấy máy tạo nhịp</li>
+        <li>Block AV độ II Mobitz II, độ III: cấy máy tạo nhịp <b>dù có triệu chứng hay không</b> do nguy cơ vô tâm thu</li>
+      </ul>
+      <div class="subhead">Chọn kiểu tạo nhịp</div>
+      <p>Ở bệnh nhân suy tim EF giảm cần tạo nhịp thất nhiều: cân nhắc tạo nhịp hai buồng thất (CRT) hoặc tạo nhịp bó His/nhánh trái để tránh mất đồng bộ thất do tạo nhịp thất phải đơn thuần gây ra.</p>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-warn">Đây chủ yếu là xử trí cấp cứu tạm thời trong lúc chờ tạo nhịp; không có thuốc điều trị nền lâu dài thay thế máy tạo nhịp khi có chỉ định.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Atropine","0.5mg TM mỗi 3–5 phút, tối đa 3mg","kém hiệu quả với block vị trí dưới nút His (QRS rộng); liều &lt;0.5mg có thể gây chậm nhịp nghịch thường"],
+        ["Isoproterenol truyền TM","2–10 microgam/phút, chỉnh theo đáp ứng","dùng khi chờ đặt máy tạo nhịp tạm thời"],
+        ["Dopamine truyền TM","5–20 microgam/kg/phút","chỉnh theo HA và tần số tim đáp ứng"],
+        ["Adrenaline truyền TM","2–10 microgam/phút","dành cho nhịp chậm nặng kháng trị với atropine"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Chỉ định máy tạo nhịp không bị giới hạn bởi tuổi cao đơn thuần — quyết định dựa trên triệu chứng, tổng trạng và kỳ vọng sống còn lại, không phải theo một mốc tuổi cụ thể.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Cấy máy tạo nhịp vĩnh viễn khi nhịp chậm có triệu chứng tương quan rõ",'<span class="badge badge-I">I</span>'],
+        ["Cấy máy tạo nhịp ở block AV độ II Mobitz II hoặc độ III dù không triệu chứng",'<span class="badge badge-I">I</span>'],
+        ["Tạo nhịp bó His/nhánh trái hoặc CRT thay vì tạo nhịp thất phải đơn thuần khi EF giảm",'<span class="badge badge-IIa">IIa</span>'],
+        ["Atropine trong block AV độ cao vị trí dưới nút His (QRS rộng)",'<span class="badge badge-IIb">IIb</span>'],
+        ["Cấy máy tạo nhịp vĩnh viễn cho block AV độ I không triệu chứng",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2021 ESC Guidelines on cardiac pacing and cardiac resynchronization therapy, Eur Heart J 2021"
 },
 {
   id:"acs", emoji:"❤️‍🔥", short:"HCVC", title:"Hội chứng vành cấp",
   guidelines:["ESC 2023 (ACS)","AHA/ACC 2021 (đau ngực)"],
   sections:{
     dinh_nghia:`
-      <p>Hội chứng vành cấp (ACS) bao gồm phổ bệnh do thiếu máu cơ tim cấp: <b>STEMI</b> (nhồi máu cơ tim ST chênh lên), <b>NSTEMI</b> (không ST chênh lên) và <b>đau thắt ngực không ổn định</b>.</p>
-      <p>Theo <b>định nghĩa toàn cầu về nhồi máu cơ tim</b>: cần có tăng và/hoặc giảm troponin tim với ít nhất 1 giá trị &gt;bách phân vị 99, kèm bằng chứng thiếu máu cơ tim cấp (triệu chứng, biến đổi ECG, hình ảnh học, hoặc huyết khối trên chụp mạch).</p>`,
+      <p>Hội chứng vành cấp (ACS) bao gồm phổ bệnh do thiếu máu cơ tim cấp: <b>STEMI</b>, <b>NSTEMI</b> và <b>đau thắt ngực không ổn định</b>.</p>
+      <p>Theo định nghĩa toàn cầu về nhồi máu cơ tim: cần có tăng và/hoặc giảm troponin tim với ít nhất 1 giá trị &gt;bách phân vị 99, kèm bằng chứng thiếu máu cơ tim cấp (triệu chứng, biến đổi ECG, hình ảnh học, hoặc huyết khối trên chụp mạch).</p>`,
     chan_doan:`
-      <p>ECG 12 chuyển đạo trong vòng 10 phút từ khi tiếp xúc y tế đầu tiên. STEMI: ST chênh lên ≥1mm ở ≥2 chuyển đạo liên tiếp (≥2mm V2-V3 ở nam &lt;40 tuổi hoặc ≥1.5mm ở nữ) hoặc block nhánh trái mới.</p>
-      <div class="subhead">Thuật toán troponin siêu nhạy (hs-cTn) 0h/1h (hoặc 0h/2h)</div>
-      <ul>
-        <li><b>Loại trừ</b>: hs-cTn rất thấp lúc 0h, hoặc thấp và không tăng đáng kể sau 1h</li>
-        <li><b>Xác định NMCT</b>: hs-cTn cao lúc 0h, hoặc tăng rõ rệt sau 1h</li>
-        <li><b>Vùng quan sát</b>: các trường hợp còn lại → theo dõi thêm, cân nhắc chẩn đoán hình ảnh</li>
-      </ul>
+      <p>ECG 12 chuyển đạo trong 10 phút từ khi tiếp xúc y tế đầu tiên. STEMI: ST chênh lên ≥1mm ở ≥2 chuyển đạo liên tiếp (≥2mm V2-V3 nam &lt;40 tuổi hoặc ≥1.5mm nữ) hoặc block nhánh trái mới.</p>
+      <div class="subhead">Thuật toán troponin siêu nhạy (hs-cTn) 0h/1h</div>
+      ${rt(["Tiêu chí"],[
+        ["Loại trừ NMCT","hs-cTn rất thấp lúc 0h, hoặc thấp và không tăng đáng kể sau 1h"],
+        ["Xác định NMCT","hs-cTn cao lúc 0h, hoặc tăng rõ rệt sau 1h"],
+        ["Vùng quan sát","các trường hợp còn lại → theo dõi thêm, cân nhắc chẩn đoán hình ảnh"]
+      ])}
       <p>Thang điểm <b>GRACE</b> giúp phân tầng nguy cơ và quyết định thời điểm can thiệp trong NSTEMI (nguy cơ rất cao: can thiệp &lt;2h; nguy cơ cao: &lt;24h).</p>`,
     dieu_tri:`
       <div class="subhead">STEMI</div>
       <ul>
-        <li><b>Can thiệp mạch vành qua da thì đầu (PCI)</b> là chiến lược tái tưới máu ưu tiên, mục tiêu thời gian từ chẩn đoán đến bóng &lt;<b>120 phút</b> (lý tưởng &lt;60–90 phút ở trung tâm có PCI).</li>
-        <li>Nếu không thể PCI trong 120 phút → <b>tiêu sợi huyết</b> trong 10 phút đầu, sau đó chuyển đến trung tâm PCI (chiến lược "dược lý-xâm lấn").</li>
+        <li><b>PCI thì đầu</b> là chiến lược tái tưới máu ưu tiên, mục tiêu từ chẩn đoán đến bóng &lt;<b>120 phút</b> (lý tưởng &lt;60–90 phút)</li>
+        <li>Nếu không thể PCI trong 120 phút → tiêu sợi huyết trong 10 phút đầu, sau đó chuyển trung tâm PCI</li>
       </ul>
       <div class="subhead">NSTEMI/đau thắt ngực không ổn định</div>
-      <p>Chiến lược xâm lấn sớm (chụp mạch vành) theo phân tầng nguy cơ GRACE; kháng kết tập tiểu cầu kép (DAPT) + kháng đông ngay khi chẩn đoán.</p>
-      <div class="subhead">Điều trị nội khoa nền tảng (cả STEMI/NSTEMI)</div>
+      <p>Chiến lược xâm lấn sớm theo phân tầng GRACE; kháng kết tập tiểu cầu kép (DAPT) + kháng đông ngay khi chẩn đoán.</p>
+      <div class="subhead">Điều trị nội khoa nền tảng</div>
       <ul>
-        <li>Kháng kết tập tiểu cầu kép: aspirin + ức chế P2Y12 (ticagrelor hoặc prasugrel ưu tiên hơn clopidogrel, trừ khi nguy cơ chảy máu cao hoặc cần kháng đông kèm — dùng clopidogrel)</li>
-        <li>Statin cường độ cao ngay khi nhập viện, không trì hoãn chờ xét nghiệm lipid</li>
-        <li>Chẹn beta sớm nếu không có chống chỉ định (đặc biệt khi có rối loạn chức năng thất trái)</li>
-        <li>ACEi/ARB nếu EF giảm, THA, ĐTĐ, hoặc bệnh thận mạn</li>
-        <li>Kháng đông trong giai đoạn cấp (heparin không phân đoạn hoặc enoxaparin, hoặc fondaparinux trong NSTEMI)</li>
+        <li>DAPT: aspirin + ticagrelor/prasugrel (ưu tiên hơn clopidogrel trừ khi nguy cơ chảy máu cao hoặc cần kháng đông kèm)</li>
+        <li>Statin cường độ cao ngay khi nhập viện, không chờ xét nghiệm lipid</li>
+        <li>Chẹn beta sớm nếu không chống chỉ định (đặc biệt khi EF giảm)</li>
+        <li>ACEi/ARB nếu EF giảm, THA, ĐTĐ, bệnh thận mạn</li>
+        <li>Kháng đông giai đoạn cấp (heparin không phân đoạn, enoxaparin, hoặc fondaparinux trong NSTEMI)</li>
       </ul>`,
     lieu_thuoc:`
-      <div class="alert-box alert-warn">Người ≥75 tuổi: cân nhắc không dùng liều nạp prasugrel/tiêu sợi huyết liều đầy đủ tùy phác đồ, ưu tiên clopidogrel hoặc giảm liều tiêu sợi huyết; theo dõi sát nguy cơ chảy máu.</div>
-      <div class="tbl-wrap"><table>
-      <tr><th>Thuốc</th><th>Liều nạp</th><th>Liều duy trì</th></tr>
-      <tr><td>Aspirin</td><td>150–300 mg (nhai) đường uống, hoặc 75–250mg TM</td><td>75–100 mg/ngày, suốt đời</td></tr>
-      <tr><td>Ticagrelor</td><td>180 mg</td><td>90 mg × 2 lần/ngày (12 tháng)</td></tr>
-      <tr><td>Prasugrel</td><td>60 mg (chỉ khi biết giải phẫu mạch vành, PCI)</td><td>10 mg/ngày (5mg nếu &lt;60kg hoặc ≥75 tuổi)</td></tr>
-      <tr><td>Clopidogrel</td><td>300–600 mg</td><td>75 mg/ngày; người ≥75 tuổi dùng tiêu sợi huyết: không liều nạp, khởi liều 75mg</td></tr>
-      <tr><td>Atorvastatin (cường độ cao)</td><td>—</td><td>80 mg/ngày</td></tr>
-      <tr><td>Rosuvastatin (cường độ cao)</td><td>—</td><td>20–40 mg/ngày</td></tr>
-      <tr><td>Enoxaparin</td><td>—</td><td>1 mg/kg × 2 lần/ngày TDD; giảm liều nếu eGFR &lt;30 (1mg/kg × 1 lần/ngày)</td></tr>
-      </table></div>
-      <p><b>Thời gian DAPT chuẩn:</b> 12 tháng sau ACS (có thể rút ngắn 3–6 tháng nếu nguy cơ chảy máu cao, hoặc kéo dài nếu nguy cơ thiếu máu cục bộ tái phát cao).</p>`,
+      <div class="alert-box alert-warn">Người ≥75 tuổi: tránh liều nạp prasugrel; nếu dùng tiêu sợi huyết không dùng liều nạp clopidogrel; theo dõi sát nguy cơ chảy máu.</div>
+      ${rt(["Liều nạp","Liều duy trì"],[
+        ["Aspirin","150–300mg nhai (hoặc 75–250mg TM)","75–100 mg/ngày, suốt đời"],
+        ["Ticagrelor","180mg","90mg × 2 lần/ngày (12 tháng)"],
+        ["Prasugrel","60mg (chỉ khi biết giải phẫu mạch vành)","10mg/ngày (5mg nếu &lt;60kg hoặc ≥75 tuổi)"],
+        ["Clopidogrel","300–600mg","75mg/ngày; ≥75 tuổi dùng tiêu sợi huyết: không nạp"],
+        ["Atorvastatin (cường độ cao)","—","80 mg/ngày"],
+        ["Rosuvastatin (cường độ cao)","—","20–40 mg/ngày"],
+        ["Enoxaparin","—","1mg/kg×2/ngày TDD; 1mg/kg×1/ngày nếu eGFR&lt;30"]
+      ])}
+      <p><b>Thời gian DAPT chuẩn:</b> 12 tháng sau ACS (rút ngắn 3–6 tháng nếu nguy cơ chảy máu cao, kéo dài nếu nguy cơ thiếu máu cục bộ tái phát cao).</p>`,
     khuyen_cao:`
-      <div class="tbl-wrap"><table><tr><th>Khuyến cáo</th><th>Mức</th></tr>
-      <tr><td>PCI thì đầu trong 120 phút cho STEMI</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Thuật toán hs-troponin 0h/1h để chẩn đoán nhanh NSTEMI</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Statin cường độ cao khởi động sớm, không chờ lipid máu</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Ticagrelor/prasugrel ưu tiên hơn clopidogrel (nếu không chống chỉ định)</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Rút ngắn DAPT còn 1–3 tháng ở bệnh nhân nguy cơ chảy máu rất cao</td><td><span class="badge badge-IIa">IIa</span></td></tr>
-      <tr><td>Chụp mạch vành thường quy hoàn toàn qua đường mạch quay thay vì đùi</td><td><span class="badge badge-I">I</span></td></tr>
-      </table></div>`
+      ${rt(["Mức"],[
+        ["PCI thì đầu trong 120 phút cho STEMI",'<span class="badge badge-I">I</span>'],
+        ["Thuật toán hs-troponin 0h/1h để chẩn đoán nhanh NSTEMI",'<span class="badge badge-I">I</span>'],
+        ["Statin cường độ cao khởi động sớm, không chờ lipid máu",'<span class="badge badge-I">I</span>'],
+        ["Ticagrelor/prasugrel ưu tiên hơn clopidogrel",'<span class="badge badge-I">I</span>'],
+        ["Rút ngắn DAPT còn 1–3 tháng khi nguy cơ chảy máu rất cao",'<span class="badge badge-IIa">IIa</span>'],
+        ["Chụp mạch vành ưu tiên đường mạch quay thay vì đùi",'<span class="badge badge-I">I</span>']
+      ])}`
   },
   source:"2023 ESC Guidelines for the management of acute coronary syndromes, Eur Heart J 2023"
 },
@@ -389,51 +507,50 @@ const diseases = [
   guidelines:["ESC/EAS 2019 (+ cập nhật phòng ngừa 2021)"],
   sections:{
     dinh_nghia:`
-      <p>Rối loạn lipid máu là tình trạng bất thường nồng độ lipoprotein huyết tương (LDL-C, HDL-C, triglyceride, Lp(a)) làm tăng nguy cơ xơ vữa động mạch. <b>LDL-C</b> là mục tiêu điều trị chính vì có mối quan hệ nhân quả trực tiếp với xơ vữa động mạch.</p>
-      <div class="subhead">Phân tầng nguy cơ tim mạch (SCORE2 / SCORE2-OP)</div>
-      <p>Rất cao: đã có bệnh tim mạch do xơ vữa, ĐTĐ có tổn thương cơ quan đích, bệnh thận mạn nặng, tăng cholesterol máu gia đình kèm yếu tố nguy cơ khác. Cao/trung bình/thấp: theo thang điểm nguy cơ 10 năm dựa vào tuổi, giới, hút thuốc, HA, cholesterol toàn phần.</p>`,
+      <p>Rối loạn lipid máu là bất thường nồng độ lipoprotein huyết tương (LDL-C, HDL-C, triglyceride, Lp(a)) làm tăng nguy cơ xơ vữa động mạch. <b>LDL-C</b> là mục tiêu điều trị chính.</p>
+      <div class="subhead">Phân tầng nguy cơ tim mạch (SCORE2/SCORE2-OP)</div>
+      <p>Rất cao: đã có bệnh tim mạch do xơ vữa, ĐTĐ có tổn thương cơ quan đích, bệnh thận mạn nặng, tăng cholesterol máu gia đình kèm yếu tố nguy cơ khác. Cao/trung bình/thấp: theo thang điểm nguy cơ 10 năm.</p>`,
     chan_doan:`
-      <p>Xét nghiệm bilan lipid máu (không nhất thiết phải nhịn đói): cholesterol toàn phần, LDL-C, HDL-C, triglyceride, tính non-HDL-C; đo <b>Lp(a) ít nhất một lần trong đời</b> để phát hiện nguy cơ di truyền tăng cao.</p>
-      <div class="tbl-wrap"><table><tr><th>Chỉ số</th><th>Ngưỡng cần lưu ý</th></tr>
-      <tr><td>LDL-C rất cao gợi ý tăng cholesterol máu gia đình</td><td>&gt;4.9 mmol/L (~190 mg/dL) không điều trị</td></tr>
-      <tr><td>Triglyceride cao</td><td>≥1.7 mmol/L (~150 mg/dL)</td></tr>
-      <tr><td>Lp(a) tăng nguy cơ</td><td>&gt;50 mg/dL (~125 nmol/L)</td></tr>
-      </table></div>`,
+      <p>Bilan lipid máu (không nhất thiết nhịn đói): cholesterol toàn phần, LDL-C, HDL-C, triglyceride, non-HDL-C; đo <b>Lp(a) ít nhất một lần trong đời</b>.</p>
+      ${rt(["Ngưỡng cần lưu ý"],[
+        ["LDL-C gợi ý tăng cholesterol máu gia đình","&gt;4.9 mmol/L (~190 mg/dL) không điều trị"],
+        ["Triglyceride cao","≥1.7 mmol/L (~150 mg/dL)"],
+        ["Lp(a) tăng nguy cơ","&gt;50 mg/dL (~125 nmol/L)"]
+      ])}`,
     dieu_tri:`
       <div class="subhead">Đích LDL-C theo phân tầng nguy cơ</div>
-      <div class="tbl-wrap"><table><tr><th>Nhóm nguy cơ</th><th>Đích LDL-C</th></tr>
-      <tr><td>Rất cao (đã có bệnh mạch vành/đột quỵ, ĐTĐ tổn thương cơ quan đích)</td><td>&lt;1.4 mmol/L (&lt;55 mg/dL) và giảm ≥50% so với nền</td></tr>
-      <tr><td>Cao</td><td>&lt;1.8 mmol/L (&lt;70 mg/dL) và giảm ≥50%</td></tr>
-      <tr><td>Trung bình</td><td>&lt;2.6 mmol/L (&lt;100 mg/dL)</td></tr>
-      <tr><td>Thấp</td><td>&lt;3.0 mmol/L (&lt;116 mg/dL)</td></tr>
-      </table></div>
+      ${rt(["Đích LDL-C"],[
+        ["Rất cao","&lt;1.4 mmol/L (&lt;55 mg/dL) và giảm ≥50% so nền"],
+        ["Cao","&lt;1.8 mmol/L (&lt;70 mg/dL) và giảm ≥50%"],
+        ["Trung bình","&lt;2.6 mmol/L (&lt;100 mg/dL)"],
+        ["Thấp","&lt;3.0 mmol/L (&lt;116 mg/dL)"]
+      ])}
       <div class="subhead">Chiến lược bậc thang</div>
       <ul>
         <li><b>Bước 1:</b> statin cường độ cao nhất dung nạp được</li>
         <li><b>Bước 2:</b> thêm ezetimibe nếu chưa đạt đích</li>
-        <li><b>Bước 3:</b> thêm ức chế PCSK9 (evolocumab/alirocumab hoặc inclisiran) nếu vẫn chưa đạt đích ở nguy cơ rất cao</li>
+        <li><b>Bước 3:</b> thêm ức chế PCSK9 nếu vẫn chưa đạt đích ở nguy cơ rất cao</li>
       </ul>
-      <div class="alert-box alert-info">Ở bệnh nhân nguy cơ rất cao có biến cố tim mạch tái phát trong 2 năm dù đã dùng statin liều tối đa, có thể xem xét đích LDL-C &lt;1.0 mmol/L (&lt;40 mg/dL).</div>`,
+      <div class="alert-box alert-info">Nguy cơ rất cao có biến cố tim mạch tái phát trong 2 năm dù đã statin liều tối đa: có thể xem xét đích LDL-C &lt;1.0 mmol/L (&lt;40 mg/dL).</div>`,
     lieu_thuoc:`
-      <div class="alert-box alert-warn">Người châu Á, người cao tuổi, cân nặng thấp: nguy cơ tăng men gan/đau cơ cao hơn với statin liều cao — nhiều hướng dẫn khu vực giới hạn rosuvastatin ở mức 20mg/ngày cho người châu Á trừ khi có giám sát chặt.</div>
-      <div class="tbl-wrap"><table>
-      <tr><th>Thuốc</th><th>Liều tiêu chuẩn</th><th>Cao tuổi / thận yếu</th></tr>
-      <tr><td>Atorvastatin</td><td>10–80 mg/ngày (cường độ cao: 40–80mg)</td><td>khởi đầu 10–20 mg/ngày</td></tr>
-      <tr><td>Rosuvastatin</td><td>5–40 mg/ngày (cường độ cao: 20–40mg)</td><td>khởi đầu 5–10 mg/ngày; thận trọng &gt;20mg ở người châu Á/eGFR&lt;30</td></tr>
-      <tr><td>Ezetimibe</td><td>10 mg/ngày (đơn độc hoặc phối hợp cố định với statin)</td><td>không cần chỉnh liều theo tuổi</td></tr>
-      <tr><td>Evolocumab (PCSK9i)</td><td>140 mg TDD mỗi 2 tuần, hoặc 420mg mỗi tháng</td><td>không cần chỉnh liều theo tuổi/thận</td></tr>
-      <tr><td>Alirocumab (PCSK9i)</td><td>75 mg TDD mỗi 2 tuần (có thể tăng 150mg)</td><td>không cần chỉnh liều theo tuổi/thận</td></tr>
-      <tr><td>Inclisiran (siRNA)</td><td>284 mg TDD, mũi 2 sau 3 tháng, sau đó mỗi 6 tháng</td><td>không cần chỉnh liều theo tuổi</td></tr>
-      <tr><td>Fenofibrate (nếu triglyceride rất cao)</td><td>145–160 mg/ngày</td><td>tránh nếu eGFR &lt;30</td></tr>
-      </table></div>`,
+      <div class="alert-box alert-warn">Người châu Á, cao tuổi, cân nặng thấp: nguy cơ tăng men gan/đau cơ cao hơn — nhiều hướng dẫn giới hạn rosuvastatin ≤20mg/ngày cho người châu Á trừ khi giám sát chặt.</div>
+      ${rt(["Liều tiêu chuẩn","Cao tuổi / thận yếu"],[
+        ["Atorvastatin","10–80 mg/ngày (cường độ cao 40–80mg)","khởi đầu 10–20 mg/ngày"],
+        ["Rosuvastatin","5–40 mg/ngày (cường độ cao 20–40mg)","khởi đầu 5–10mg; thận trọng &gt;20mg ở người châu Á/eGFR&lt;30"],
+        ["Ezetimibe","10 mg/ngày","không cần chỉnh theo tuổi"],
+        ["Evolocumab (PCSK9i)","140mg TDD/2 tuần hoặc 420mg/tháng","không cần chỉnh theo tuổi/thận"],
+        ["Alirocumab (PCSK9i)","75mg TDD/2 tuần (có thể tăng 150mg)","không cần chỉnh theo tuổi/thận"],
+        ["Inclisiran (siRNA)","284mg TDD, mũi 2 sau 3 tháng, sau đó mỗi 6 tháng","không cần chỉnh theo tuổi"],
+        ["Fenofibrate (TG rất cao)","145–160 mg/ngày","tránh nếu eGFR &lt;30"]
+      ])}`,
     khuyen_cao:`
-      <div class="tbl-wrap"><table><tr><th>Khuyến cáo</th><th>Mức</th></tr>
-      <tr><td>Statin cường độ cao là điều trị nền tảng ở nguy cơ cao/rất cao</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Thêm ezetimibe nếu statin đơn độc không đạt đích</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Thêm ức chế PCSK9 nếu vẫn không đạt đích ở nguy cơ rất cao</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Đo Lp(a) ít nhất một lần trong đời cho mỗi người trưởng thành</td><td><span class="badge badge-IIa">IIa</span></td></tr>
-      <tr><td>Ngưng statin khi đạt đích LDL-C</td><td><span class="badge badge-III">III</span></td></tr>
-      </table></div>`
+      ${rt(["Mức"],[
+        ["Statin cường độ cao là nền tảng ở nguy cơ cao/rất cao",'<span class="badge badge-I">I</span>'],
+        ["Thêm ezetimibe nếu statin đơn độc không đạt đích",'<span class="badge badge-I">I</span>'],
+        ["Thêm ức chế PCSK9 nếu vẫn không đạt đích ở nguy cơ rất cao",'<span class="badge badge-I">I</span>'],
+        ["Đo Lp(a) ít nhất một lần trong đời cho mỗi người trưởng thành",'<span class="badge badge-IIa">IIa</span>'],
+        ["Ngưng statin khi đạt đích LDL-C",'<span class="badge badge-III">III</span>']
+      ])}`
   },
   source:"2019 ESC/EAS Guidelines for the management of dyslipidaemias; 2021 ESC Guidelines on CVD prevention"
 },
@@ -442,95 +559,93 @@ const diseases = [
   guidelines:["ESC 2023 (Diabetes & CVD)","ADA Standards of Care 2025"],
   sections:{
     dinh_nghia:`
-      <p>Đái tháo đường típ 2 (ĐTĐ2) là bệnh chuyển hóa mạn tính đặc trưng bởi tăng glucose máu do đề kháng insulin và/hoặc suy giảm tiết insulin, làm tăng mạnh nguy cơ bệnh tim mạch do xơ vữa và suy tim.</p>
+      <p>ĐTĐ típ 2 là bệnh chuyển hóa mạn tính do đề kháng insulin và/hoặc suy giảm tiết insulin, làm tăng mạnh nguy cơ bệnh tim mạch do xơ vữa và suy tim.</p>
       <div class="subhead">Phân tầng nguy cơ tim mạch ở người ĐTĐ (ESC 2023)</div>
-      <p>Nguy cơ rất cao: đã có bệnh tim mạch do xơ vữa hoặc tổn thương cơ quan đích nặng (bệnh thận mạn giai đoạn 3-5, phì đại thất trái, bệnh võng mạc). Nguy cơ cao: ĐTĐ ≥10 năm không tổn thương cơ quan đích kèm ≥1 yếu tố nguy cơ khác. Nguy cơ trung bình: ĐTĐ trẻ tuổi (&lt;10 năm) không yếu tố nguy cơ khác.</p>`,
+      <p>Rất cao: đã có bệnh tim mạch do xơ vữa hoặc tổn thương cơ quan đích nặng (bệnh thận mạn giai đoạn 3–5, phì đại thất trái, bệnh võng mạc). Cao: ĐTĐ ≥10 năm không tổn thương cơ quan đích kèm ≥1 yếu tố nguy cơ khác. Trung bình: ĐTĐ trẻ tuổi (&lt;10 năm) không yếu tố nguy cơ khác.</p>`,
     chan_doan:`
-      <div class="tbl-wrap"><table><tr><th>Tiêu chuẩn</th><th>Ngưỡng chẩn đoán ĐTĐ</th></tr>
-      <tr><td>Glucose huyết tương đói (FPG)</td><td>≥126 mg/dL (7.0 mmol/L)</td></tr>
-      <tr><td>Glucose huyết tương 2h sau nghiệm pháp dung nạp 75g glucose</td><td>≥200 mg/dL (11.1 mmol/L)</td></tr>
-      <tr><td>HbA1c</td><td>≥6.5%</td></tr>
-      <tr><td>Glucose bất kỳ kèm triệu chứng kinh điển</td><td>≥200 mg/dL (11.1 mmol/L)</td></tr>
-      </table></div>
-      <p>Tiền ĐTĐ: FPG 100–125 mg/dL, HbA1c 5.7–6.4%, hoặc 2h-glucose 140–199 mg/dL. Ở người ĐTĐ, cần tầm soát bệnh tim mạch bằng ECG, đánh giá nguy cơ, và xét nghiệm chức năng thận/albumin niệu định kỳ vì bệnh thận-tim-chuyển hóa thường đi kèm.</p>`,
+      ${rt(["Ngưỡng chẩn đoán ĐTĐ"],[
+        ["Glucose huyết tương đói (FPG)","≥126 mg/dL (7.0 mmol/L)"],
+        ["Glucose 2h sau nghiệm pháp dung nạp 75g","≥200 mg/dL (11.1 mmol/L)"],
+        ["HbA1c","≥6.5%"],
+        ["Glucose bất kỳ kèm triệu chứng kinh điển","≥200 mg/dL (11.1 mmol/L)"]
+      ])}
+      <p>Tiền ĐTĐ: FPG 100–125 mg/dL, HbA1c 5.7–6.4%, hoặc 2h-glucose 140–199 mg/dL. Ở người ĐTĐ cần tầm soát tim mạch bằng ECG, đánh giá nguy cơ, xét nghiệm chức năng thận/albumin niệu định kỳ.</p>`,
     dieu_tri:`
-      <div class="alert-box alert-info"><b>Điểm mấu chốt ESC 2023:</b> ở người ĐTĐ có nguy cơ tim mạch cao/rất cao hoặc đã có bệnh tim mạch, <b>SGLT2i hoặc GLP-1 RA có bằng chứng lợi ích tim mạch nên được chỉ định độc lập với mức HbA1c và độc lập với dùng metformin hay chưa</b> — khác biệt lớn so với cách tiếp cận truyền thống "metformin trước".</div>
+      <div class="alert-box alert-info"><b>Điểm mấu chốt ESC 2023:</b> ở người ĐTĐ nguy cơ tim mạch cao/rất cao hoặc đã có bệnh tim mạch, <b>SGLT2i hoặc GLP-1 RA có bằng chứng lợi ích tim mạch nên được chỉ định độc lập với mức HbA1c và độc lập với dùng metformin hay chưa</b>.</div>
       <ul>
         <li><b>SGLT2i</b> (empagliflozin, dapagliflozin, canagliflozin): ưu tiên khi có suy tim hoặc bệnh thận mạn</li>
-        <li><b>GLP-1 RA</b> (semaglutide, liraglutide, dulaglutide) có bằng chứng lợi ích tim mạch: ưu tiên khi cần giảm cân nhiều hoặc nguy cơ xơ vữa động mạch chiếm ưu thế</li>
-        <li><b>Metformin</b> vẫn là nền tảng kiểm soát đường huyết ở đa số bệnh nhân, có thể phối hợp cùng SGLT2i/GLP-1RA</li>
-        <li>Kiểm soát đa yếu tố: HA đích &lt;130/80, LDL-C theo phân tầng nguy cơ (thường &lt;1.4 mmol/L nếu đã có biến cố), statin cường độ cao gần như thường quy</li>
+        <li><b>GLP-1 RA</b> (semaglutide, liraglutide, dulaglutide) có bằng chứng lợi ích tim mạch: ưu tiên khi cần giảm cân nhiều hoặc xơ vữa động mạch chiếm ưu thế</li>
+        <li><b>Metformin</b> vẫn là nền tảng kiểm soát đường huyết ở đa số bệnh nhân, có thể phối hợp SGLT2i/GLP-1RA</li>
+        <li>Kiểm soát đa yếu tố: HA đích &lt;130/80, LDL-C theo phân tầng nguy cơ, statin cường độ cao gần như thường quy</li>
       </ul>`,
     lieu_thuoc:`
-      <div class="alert-box alert-warn">Metformin: chống chỉ định nếu eGFR &lt;30; giảm liều nếu eGFR 30–45; ngưng tạm thời trước chụp cản quang/thủ thuật lớn ở người cao tuổi/suy thận.</div>
-      <div class="tbl-wrap"><table>
-      <tr><th>Thuốc</th><th>Liều khởi đầu → duy trì</th><th>Lưu ý theo tuổi/thận</th></tr>
-      <tr><td>Metformin</td><td>500 mg × 1–2 lần/ngày → tối đa 2000 mg/ngày</td><td>chống chỉ định eGFR&lt;30; giảm nửa liều eGFR 30–45</td></tr>
-      <tr><td>Empagliflozin</td><td>10 mg/ngày → có thể tăng 25 mg</td><td>hiệu quả giảm dần khi eGFR&lt;20; không cần chỉnh theo tuổi</td></tr>
-      <tr><td>Dapagliflozin</td><td>10 mg/ngày (liều cố định)</td><td>thận trọng nguy cơ nhiễm toan ceton, mất nước ở người cao tuổi</td></tr>
-      <tr><td>Semaglutide tiêm (Ozempic)</td><td>0.25mg/tuần (4 tuần) → 0.5mg → 1mg → tối đa 2mg/tuần</td><td>không cần chỉnh theo tuổi; giảm liều tăng chậm hơn nếu buồn nôn nhiều</td></tr>
-      <tr><td>Semaglutide uống (Rybelsus)</td><td>3mg/ngày (30 ngày) → 7mg → tối đa 14mg/ngày, lúc đói</td><td>uống với &lt;120mL nước, chờ 30 phút mới ăn</td></tr>
-      <tr><td>Liraglutide</td><td>0.6mg/ngày (1 tuần) → 1.2mg → tối đa 1.8mg/ngày</td><td>tăng liều chậm hơn ở người cao tuổi nếu không dung nạp</td></tr>
-      <tr><td>Dulaglutide</td><td>0.75mg/tuần → tối đa 1.5–4.5mg/tuần</td><td>không cần chỉnh liều theo tuổi</td></tr>
-      </table></div>`,
+      <div class="alert-box alert-warn">Metformin: chống chỉ định eGFR &lt;30; giảm liều eGFR 30–45; ngưng tạm thời trước chụp cản quang/thủ thuật lớn ở người cao tuổi/suy thận.</div>
+      ${rt(["Liều khởi đầu → duy trì","Lưu ý theo tuổi/thận"],[
+        ["Metformin","500mg×1–2/ngày → tối đa 2000mg/ngày","chống chỉ định eGFR&lt;30; giảm nửa liều eGFR 30–45"],
+        ["Empagliflozin","10mg/ngày → có thể tăng 25mg","hiệu quả giảm dần khi eGFR&lt;20"],
+        ["Dapagliflozin","10mg/ngày (liều cố định)","thận trọng mất nước/nhiễm toan ceton ở cao tuổi"],
+        ["Semaglutide tiêm","0.25mg/tuần×4 → 0.5 → 1 → tối đa 2mg/tuần","tăng liều chậm hơn nếu buồn nôn nhiều"],
+        ["Semaglutide uống","3mg/ngày×30 ngày → 7mg → tối đa 14mg/ngày","uống lúc đói, chờ 30 phút mới ăn"],
+        ["Liraglutide","0.6mg/ngày×1 tuần → 1.2 → tối đa 1.8mg/ngày","tăng liều chậm hơn ở cao tuổi nếu không dung nạp"],
+        ["Dulaglutide","0.75mg/tuần → tối đa 1.5–4.5mg/tuần","không cần chỉnh theo tuổi"]
+      ])}`,
     khuyen_cao:`
-      <div class="tbl-wrap"><table><tr><th>Khuyến cáo</th><th>Mức</th></tr>
-      <tr><td>SGLT2i/GLP-1RA có bằng chứng lợi ích tim mạch, độc lập với HbA1c, ở người ĐTĐ nguy cơ cao/rất cao</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>SGLT2i cho người ĐTĐ kèm suy tim hoặc bệnh thận mạn</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Statin cường độ cao ở người ĐTĐ nguy cơ cao/rất cao</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Metformin là bắt buộc phải dùng trước khi khởi động SGLT2i/GLP-1RA</td><td><span class="badge badge-III">III</span></td></tr>
-      </table></div>`
+      ${rt(["Mức"],[
+        ["SGLT2i/GLP-1RA có lợi ích tim mạch, độc lập HbA1c, ở người ĐTĐ nguy cơ cao/rất cao",'<span class="badge badge-I">I</span>'],
+        ["SGLT2i cho người ĐTĐ kèm suy tim hoặc bệnh thận mạn",'<span class="badge badge-I">I</span>'],
+        ["Statin cường độ cao ở người ĐTĐ nguy cơ cao/rất cao",'<span class="badge badge-I">I</span>'],
+        ["Metformin bắt buộc dùng trước khi khởi động SGLT2i/GLP-1RA",'<span class="badge badge-III">III</span>']
+      ])}`
   },
   source:"2023 ESC Guidelines on diabetes and cardiovascular disease; ADA Standards of Care in Diabetes 2025"
 },
 {
   id:"obesity", emoji:"⚖️", short:"Béo phì", title:"Béo phì & Hội chứng chuyển hóa",
-  guidelines:["AHA/ACC/TOS 2013 + cập nhật lâm sàng 2023–2024","IDF/AHA-NHLBI (Hội chứng chuyển hóa)"],
+  guidelines:["AHA/ACC/TOS 2013 + cập nhật lâm sàng 2023–2024","IDF/AHA-NHLBI"],
   sections:{
     dinh_nghia:`
       <div class="subhead">Phân loại BMI</div>
-      <div class="tbl-wrap"><table><tr><th>Phân loại</th><th>BMI chung</th><th>BMI người châu Á</th></tr>
-      <tr><td>Bình thường</td><td>18.5–24.9</td><td>18.5–22.9</td></tr>
-      <tr><td>Thừa cân</td><td>25–29.9</td><td>23–24.9</td></tr>
-      <tr><td>Béo phì</td><td>≥30</td><td>≥25</td></tr>
-      <tr><td>Béo phì nặng</td><td>≥40 (độ III)</td><td>≥35 (theo ngưỡng điều chỉnh)</td></tr>
-      </table></div>
+      ${rt(["BMI chung","BMI người châu Á"],[
+        ["Bình thường","18.5–24.9","18.5–22.9"],
+        ["Thừa cân","25–29.9","23–24.9"],
+        ["Béo phì","≥30","≥25"],
+        ["Béo phì nặng","≥40 (độ III)","≥35 (ngưỡng điều chỉnh)"]
+      ])}
       <div class="subhead">Hội chứng chuyển hóa</div>
       <p>Chẩn đoán khi có ≥3/5 tiêu chí: vòng eo tăng (theo dân tộc), triglyceride ≥150mg/dL, HDL-C thấp (&lt;40 nam/&lt;50 nữ mg/dL), HA ≥130/85 mmHg (hoặc đang điều trị THA), glucose đói ≥100mg/dL.</p>`,
     chan_doan:`
-      <p>Đánh giá BMI kết hợp <b>vòng eo</b> (chỉ số tốt hơn phản ánh mỡ nội tạng) và bệnh đồng mắc liên quan cân nặng (THA, ĐTĐ2, rối loạn lipid, ngưng thở khi ngủ, gan nhiễm mỡ, thoái hóa khớp).</p>
-      <div class="tbl-wrap"><table><tr><th>Vòng eo tăng nguy cơ (chuẩn châu Á)</th><th>Ngưỡng</th></tr>
-      <tr><td>Nam</td><td>≥90 cm</td></tr>
-      <tr><td>Nữ</td><td>≥80 cm</td></tr>
-      </table></div>`,
+      <p>Đánh giá BMI kết hợp <b>vòng eo</b> (phản ánh mỡ nội tạng tốt hơn) và bệnh đồng mắc liên quan cân nặng (THA, ĐTĐ2, rối loạn lipid, ngưng thở khi ngủ, gan nhiễm mỡ, thoái hóa khớp).</p>
+      ${rt(["Ngưỡng"],[
+        ["Vòng eo tăng nguy cơ – Nam (chuẩn châu Á)","≥90 cm"],
+        ["Vòng eo tăng nguy cơ – Nữ (chuẩn châu Á)","≥80 cm"]
+      ])}`,
     dieu_tri:`
       <div class="subhead">Nền tảng: can thiệp lối sống toàn diện</div>
-      <p>Giảm 500–750 kcal/ngày so với nhu cầu, tăng hoạt động thể lực ≥150 phút/tuần cường độ trung bình, liệu pháp hành vi. Mục tiêu giảm ≥5–10% cân nặng để cải thiện rõ rệt các bệnh đồng mắc chuyển hóa.</p>
-      <div class="subhead">Điều trị thuốc (khi BMI≥30, hoặc ≥27 kèm bệnh đồng mắc)</div>
-      <p><b>Nhóm đồng vận GLP-1/GIP</b> hiện là lựa chọn dược lý hiệu quả nhất, giảm 15–20% cân nặng, đồng thời cải thiện các yếu tố nguy cơ tim mạch-chuyển hóa đi kèm (semaglutide đã có bằng chứng giảm biến cố tim mạch ở người béo phì có bệnh tim mạch — nghiên cứu SELECT).</p>
+      <p>Giảm 500–750 kcal/ngày so nhu cầu, hoạt động thể lực ≥150 phút/tuần cường độ trung bình, liệu pháp hành vi. Mục tiêu giảm ≥5–10% cân nặng để cải thiện rõ rệt bệnh đồng mắc chuyển hóa.</p>
+      <div class="subhead">Điều trị thuốc (BMI≥30, hoặc ≥27 kèm bệnh đồng mắc)</div>
+      <p><b>Nhóm đồng vận GLP-1/GIP</b> hiện là lựa chọn dược lý hiệu quả nhất, giảm 15–20% cân nặng, cải thiện đồng thời các yếu tố nguy cơ tim mạch-chuyển hóa (semaglutide có bằng chứng giảm biến cố tim mạch ở người béo phì có bệnh tim mạch — nghiên cứu SELECT).</p>
       <div class="subhead">Phẫu thuật giảm cân (bariatric)</div>
-      <p>Cân nhắc khi BMI ≥40, hoặc ≥35 kèm bệnh đồng mắc liên quan cân nặng, sau khi đã thử can thiệp lối sống ± thuốc không đạt hiệu quả đủ.</p>`,
+      <p>Cân nhắc khi BMI ≥40, hoặc ≥35 kèm bệnh đồng mắc, sau khi đã thử lối sống ± thuốc không đạt hiệu quả đủ.</p>`,
     lieu_thuoc:`
-      <div class="alert-box alert-warn">Chống chỉ định GLP-1/GIP RA: tiền sử/gia đình ung thư tuyến giáp thể tủy, hội chứng đa u nội tiết típ 2, viêm tụy cấp gần đây. Người cao tuổi: tăng liều chậm hơn để giảm buồn nôn/nôn, theo dõi sụt cân quá mức/mất khối cơ.</div>
-      <div class="tbl-wrap"><table>
-      <tr><th>Thuốc</th><th>Phác đồ tăng liều</th></tr>
-      <tr><td>Semaglutide 2.4mg (Wegovy)</td><td>0.25mg → 0.5mg → 1mg → 1.7mg → 2.4mg/tuần, mỗi bậc cách nhau 4 tuần</td></tr>
-      <tr><td>Tirzepatide (Zepbound)</td><td>2.5mg → 5mg → 7.5mg → 10mg → 12.5mg → 15mg/tuần, mỗi bậc cách 4 tuần theo dung nạp</td></tr>
-      <tr><td>Liraglutide 3mg (Saxenda)</td><td>0.6mg → 1.2mg → 1.8mg → 2.4mg → 3mg/ngày, mỗi bậc cách 1 tuần</td></tr>
-      <tr><td>Orlistat</td><td>120 mg × 3 lần/ngày cùng bữa ăn chứa chất béo</td></tr>
-      </table></div>
+      <div class="alert-box alert-warn">Chống chỉ định GLP-1/GIP RA: tiền sử/gia đình ung thư tuyến giáp thể tủy, đa u nội tiết típ 2, viêm tụy cấp gần đây. Người cao tuổi: tăng liều chậm hơn, theo dõi sụt cân quá mức/mất khối cơ.</div>
+      ${rt(["Phác đồ tăng liều"],[
+        ["Semaglutide 2.4mg (Wegovy)","0.25→0.5→1→1.7→2.4mg/tuần, mỗi bậc cách 4 tuần"],
+        ["Tirzepatide (Zepbound)","2.5→5→7.5→10→12.5→15mg/tuần, mỗi bậc cách 4 tuần"],
+        ["Liraglutide 3mg (Saxenda)","0.6→1.2→1.8→2.4→3mg/ngày, mỗi bậc cách 1 tuần"],
+        ["Orlistat","120mg × 3 lần/ngày cùng bữa ăn có chất béo"]
+      ])}
       <div class="age-tag">Người cao tuổi (≥65)</div>
       <p>Ưu tiên bảo tồn khối cơ (kết hợp tập kháng lực), tránh giảm cân quá nhanh; cân nhắc kỹ lợi ích/nguy cơ phẫu thuật giảm cân theo thể trạng chung.</p>`,
     khuyen_cao:`
-      <div class="tbl-wrap"><table><tr><th>Khuyến cáo</th><th>Mức</th></tr>
-      <tr><td>Can thiệp lối sống toàn diện là nền tảng cho mọi bệnh nhân béo phì</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Thuốc GLP-1/GIP RA cho BMI≥30 (hoặc ≥27 kèm bệnh đồng mắc)</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Semaglutide để giảm biến cố tim mạch ở người béo phì có bệnh tim mạch xác định</td><td><span class="badge badge-IIa">IIa</span></td></tr>
-      <tr><td>Phẫu thuật giảm cân khi BMI≥40 hoặc ≥35 kèm bệnh đồng mắc, thất bại điều trị nội khoa</td><td><span class="badge badge-I">I</span></td></tr>
-      <tr><td>Dùng BMI đơn độc, không kèm vòng eo/bệnh đồng mắc, để quyết định điều trị</td><td><span class="badge badge-III">III</span></td></tr>
-      </table></div>`
+      ${rt(["Mức"],[
+        ["Can thiệp lối sống toàn diện là nền tảng cho mọi bệnh nhân béo phì",'<span class="badge badge-I">I</span>'],
+        ["Thuốc GLP-1/GIP RA cho BMI≥30 (hoặc ≥27 kèm bệnh đồng mắc)",'<span class="badge badge-I">I</span>'],
+        ["Semaglutide giảm biến cố tim mạch ở người béo phì có bệnh tim mạch xác định",'<span class="badge badge-IIa">IIa</span>'],
+        ["Phẫu thuật giảm cân khi BMI≥40 hoặc ≥35 kèm bệnh đồng mắc",'<span class="badge badge-I">I</span>'],
+        ["Dùng BMI đơn độc, không kèm vòng eo/bệnh đồng mắc, để quyết định điều trị",'<span class="badge badge-III">III</span>']
+      ])}`
   },
-  source:"AHA/ACC/TOS Guideline for Obesity Management 2013 (+ cập nhật lâm sàng dựa trên SELECT, SURMOUNT); IDF/AHA-NHLBI Metabolic Syndrome Criteria"
+  source:"AHA/ACC/TOS Guideline for Obesity Management 2013 (+ cập nhật dựa trên SELECT, SURMOUNT); IDF/AHA-NHLBI Metabolic Syndrome Criteria"
 }
 ];
 
@@ -603,7 +718,7 @@ function renderDiseaseContent(){
     `;
   });
 
-  html += `<div class="source-note" style="border:none;padding:0 4px;">📚 Nguồn: ${d.source}</div>`;
+  html += `<div class="source-note">📚 Nguồn: ${d.source}</div>`;
 
   container.innerHTML = html;
 }
