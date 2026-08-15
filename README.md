@@ -1,2 +1,2 @@
 # Internal Medicine
-https://bshuynhkhanhtai.github.io/Cardiology/
+https://bshuynhkhanhtai.github.io/Internal-Medicine/
