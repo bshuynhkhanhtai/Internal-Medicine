@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Phác Đồ Tim Mạch">
+<meta name="apple-mobile-web-app-title" content="Phác Đồ Bỏ Túi">
 <link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/180/00a896/heart-with-pulse.png">
-<title>Phác Đồ Tim Mạch – Chuyển Hóa (ESC/AHA)</title>
+<title>Phác Đồ Bỏ Túi Đa Chuyên Khoa (ESC/AHA/ADA/ACR/GINA/GOLD)</title>
 <style>
   :root{
     --tiffany-main:#00a896; --tiffany-dark:#028090; --tiffany-light:#e6f7f5;
@@ -24,21 +24,28 @@
   *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent;}
   html{height:-webkit-fill-available;scroll-behavior:smooth;}
   body{background:var(--bg-primary);color:var(--text-primary);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;display:flex;flex-direction:column;transition:background-color .3s,color .3s;overscroll-behavior-y:none;overflow-x:hidden;}
-  header{background:linear-gradient(135deg,var(--tiffany-main),var(--tiffany-dark));color:#fff;padding:14px 18px 12px;position:sticky;top:0;z-index:40;box-shadow:0 4px 12px rgba(0,0,0,.12);}
+  header{background:linear-gradient(135deg,var(--tiffany-main),var(--tiffany-dark));color:#fff;padding:14px 18px 12px;position:sticky;top:0;z-index:45;box-shadow:0 4px 12px rgba(0,0,0,.12);}
   .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
-  h1{font-size:17px;font-weight:800;letter-spacing:-.3px;}
-  .sub{font-size:11px;opacity:.85;font-weight:500;margin-top:1px;}
-  .theme-toggle-btn{background:rgba(255,255,255,.2);border:none;font-size:15px;padding:7px 12px;border-radius:18px;cursor:pointer;color:#fff;display:flex;align-items:center;gap:4px;backdrop-filter:blur(10px);}
+  h1{font-size:16px;font-weight:800;letter-spacing:-.3px;}
+  .sub{font-size:10.5px;opacity:.85;font-weight:500;margin-top:1px;}
+  .theme-toggle-btn{background:rgba(255,255,255,.2);border:none;font-size:15px;padding:7px 12px;border-radius:18px;cursor:pointer;color:#fff;display:flex;align-items:center;gap:4px;backdrop-filter:blur(10px);flex-shrink:0;}
   .theme-toggle-btn:active{background:rgba(255,255,255,.32);}
 
-  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:sticky;top:62px;z-index:35;}
+  .specialty-tabs-wrapper{background:var(--tiffany-dark);position:sticky;top:60px;z-index:44;}
+  .specialty-tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .specialty-tabs::-webkit-scrollbar{display:none;}
+  .sp-tab{flex-shrink:0;display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:16px;background:rgba(255,255,255,.14);color:#fff;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;border:1px solid rgba(255,255,255,.2);}
+  .sp-tab .emoji{font-size:14px;}
+  .sp-tab.active{background:#fff;color:var(--tiffany-dark);border-color:#fff;}
+
+  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:sticky;top:104px;z-index:40;}
   .disease-tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .disease-tabs::-webkit-scrollbar{display:none;}
   .d-tab{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;border-radius:14px;background:var(--bg-primary);color:var(--text-secondary);font-size:11.5px;font-weight:700;white-space:nowrap;cursor:pointer;min-width:60px;border:1px solid var(--border-color);}
   .d-tab .emoji{font-size:17px;line-height:1;margin-bottom:2px;}
   .d-tab.active{background:var(--tiffany-main);color:#fff;border-color:var(--tiffany-main);}
 
-  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:var(--tiffany-light);scrollbar-width:none;position:sticky;top:114px;z-index:30;border-bottom:1px solid var(--border-color);}
+  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:var(--tiffany-light);scrollbar-width:none;position:sticky;top:156px;z-index:35;border-bottom:1px solid var(--border-color);}
   .section-nav::-webkit-scrollbar{display:none;}
   .s-pill{flex-shrink:0;font-size:11.5px;font-weight:700;color:var(--tiffany-dark);background:var(--bg-card);padding:6px 11px;border-radius:12px;cursor:pointer;border:1px solid var(--border-color);}
   .s-pill.active{background:var(--tiffany-dark);color:#fff;border-color:var(--tiffany-dark);}
@@ -49,7 +56,7 @@
   .disease-header h2{font-size:18px;font-weight:800;color:var(--tiffany-dark);margin-bottom:4px;}
   .disease-header .guideline-tag{display:inline-block;font-size:10.5px;font-weight:700;background:var(--tiffany-main);color:#fff;padding:3px 9px;border-radius:8px;margin-top:6px;margin-right:6px;}
 
-  .card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:14px;box-shadow:var(--card-shadow);overflow:hidden;scroll-margin-top:165px;}
+  .card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:14px;box-shadow:var(--card-shadow);overflow:hidden;scroll-margin-top:205px;}
   .card-head{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;cursor:pointer;}
   .card-head-title{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:800;color:var(--text-primary);}
   .card-head-title .ic{font-size:16px;}
@@ -98,14 +105,18 @@
 <header>
   <div class="top-bar">
     <div>
-      <h1>Phác Đồ Tim Mạch – Chuyển Hóa</h1>
-      <div class="sub">Cập nhật theo ESC / AHA-ACC mới nhất</div>
+      <h1>📖 Phác Đồ Bỏ Túi Đa Chuyên Khoa</h1>
+      <div class="sub">Tim mạch · Nội tiết · Hô hấp · Tiêu hóa · Cơ xương khớp — ESC/AHA/ADA/ACR/GINA/GOLD</div>
     </div>
     <button class="theme-toggle-btn" onclick="toggleTheme()">
       <span id="themeIcon">☀️</span><span id="themeText">Sáng</span>
     </button>
   </div>
 </header>
+
+<div class="specialty-tabs-wrapper">
+  <div class="specialty-tabs" id="specialtyTabs"></div>
+</div>
 
 <div class="disease-tabs-wrapper">
   <div class="disease-tabs" id="diseaseTabs"></div>
@@ -115,7 +126,7 @@
 
 <div class="container" id="mainContainer"></div>
 
-<footer>⚠️ Tài liệu tổng hợp mang tính tham khảo lâm sàng, không thay thế tờ hướng dẫn sử dụng thuốc hoặc phán đoán của bác sĩ điều trị. Luôn đối chiếu chống chỉ định, tương tác thuốc và tình trạng cụ thể của người bệnh.</footer>
+<footer>⚠️ Tài liệu tổng hợp mang tính tham khảo lâm sàng nhanh, không thay thế tờ hướng dẫn sử dụng thuốc hoặc phán đoán của bác sĩ điều trị. Luôn đối chiếu chống chỉ định, tương tác thuốc, chức năng gan-thận và tình trạng cụ thể của người bệnh. Các liều/ngưỡng nên được xác nhận lại với guideline gốc/dược thư khi ra quyết định lâm sàng.</footer>
 
 <script>
 /* =========================================================
@@ -135,11 +146,23 @@ function rt(headers, rows){
 }
 
 /* =========================================================
-   DỮ LIỆU PHÁC ĐỒ — TIM MẠCH & CHUYỂN HÓA (ESC / AHA-ACC)
+   CHUYÊN KHOA
+   ========================================================= */
+const specialties = [
+  {id:"tim_mach", emoji:"❤️", label:"Tim mạch"},
+  {id:"noi_tiet", emoji:"🍬", label:"Nội tiết"},
+  {id:"ho_hap", emoji:"🫁", label:"Hô hấp"},
+  {id:"tieu_hoa", emoji:"🍽️", label:"Tiêu hóa"},
+  {id:"co_xuong_khop", emoji:"🦴", label:"Cơ xương khớp"}
+];
+
+/* =========================================================
+   DỮ LIỆU PHÁC ĐỒ THEO BỆNH
    ========================================================= */
 const diseases = [
+
 {
-  id:"htn", emoji:"🩸", short:"THA", title:"Tăng huyết áp",
+  spec:"tim_mach", id:"htn", emoji:"🩸", short:"THA", title:"Tăng huyết áp",
   guidelines:["ESC 2024","AHA/ACC 2017","ESH 2023"],
   sections:{
     dinh_nghia:`
@@ -212,7 +235,7 @@ const diseases = [
   source:"ESC Guidelines for Elevated Blood Pressure and Hypertension 2024 (Eur Heart J 2024); ACC/AHA/AAPA/ABC... 2017 Hypertension Guideline"
 },
 {
-  id:"hf", emoji:"💔", short:"Suy tim", title:"Suy tim (Heart Failure)",
+  spec:"tim_mach", id:"hf", emoji:"💔", short:"Suy tim", title:"Suy tim (Heart Failure)",
   guidelines:["ESC 2021 + cập nhật 2023","AHA/ACC/HFSA 2022"],
   sections:{
     dinh_nghia:`
@@ -281,7 +304,7 @@ const diseases = [
   source:"ESC Heart Failure Guidelines 2021 + 2023 Focused Update; 2022 AHA/ACC/HFSA Guideline for the Management of Heart Failure"
 },
 {
-  id:"af", emoji:"〰️", short:"RN", title:"Rung nhĩ (Atrial Fibrillation)",
+  spec:"tim_mach", id:"af", emoji:"〰️", short:"RN", title:"Rung nhĩ (Atrial Fibrillation)",
   guidelines:["ESC 2024 (AF-CARE)"],
   sections:{
     dinh_nghia:`
@@ -346,7 +369,7 @@ const diseases = [
   source:"2024 ESC Guidelines for the management of atrial fibrillation (AF-CARE), Eur Heart J 2024"
 },
 {
-  id:"tachy", emoji:"⚡", short:"Nhịp nhanh", title:"Rối loạn nhịp nhanh",
+  spec:"tim_mach", id:"tachy", emoji:"⚡", short:"Nhịp nhanh", title:"Rối loạn nhịp nhanh",
   guidelines:["ESC 2019 (SVT)","ESC 2022 (Loạn nhịp thất & đột tử)"],
   sections:{
     dinh_nghia:`
@@ -398,7 +421,7 @@ const diseases = [
   source:"2019 ESC Guidelines for SVT management; 2022 ESC Guidelines for ventricular arrhythmias and sudden cardiac death prevention"
 },
 {
-  id:"brady", emoji:"🐢", short:"Nhịp chậm", title:"Rối loạn nhịp chậm",
+  spec:"tim_mach", id:"brady", emoji:"🐢", short:"Nhịp chậm", title:"Rối loạn nhịp chậm",
   guidelines:["ESC 2021 (Tạo nhịp tim & CRT)"],
   sections:{
     dinh_nghia:`
@@ -447,7 +470,7 @@ const diseases = [
   source:"2021 ESC Guidelines on cardiac pacing and cardiac resynchronization therapy, Eur Heart J 2021"
 },
 {
-  id:"acs", emoji:"❤️‍🔥", short:"HCVC", title:"Hội chứng vành cấp",
+  spec:"tim_mach", id:"acs", emoji:"❤️‍🔥", short:"HCVC", title:"Hội chứng vành cấp",
   guidelines:["ESC 2023 (ACS)","AHA/ACC 2021 (đau ngực)"],
   sections:{
     dinh_nghia:`
@@ -503,7 +526,7 @@ const diseases = [
   source:"2023 ESC Guidelines for the management of acute coronary syndromes, Eur Heart J 2023"
 },
 {
-  id:"lipid", emoji:"🧈", short:"Lipid", title:"Rối loạn lipid máu",
+  spec:"tim_mach", id:"lipid", emoji:"🧈", short:"Lipid", title:"Rối loạn lipid máu",
   guidelines:["ESC/EAS 2019 (+ cập nhật phòng ngừa 2021)"],
   sections:{
     dinh_nghia:`
@@ -555,7 +578,7 @@ const diseases = [
   source:"2019 ESC/EAS Guidelines for the management of dyslipidaemias; 2021 ESC Guidelines on CVD prevention"
 },
 {
-  id:"dm", emoji:"🍬", short:"ĐTĐ", title:"Đái tháo đường & Tim mạch",
+  spec:"noi_tiet", id:"dm", emoji:"🍬", short:"ĐTĐ", title:"Đái tháo đường & Tim mạch",
   guidelines:["ESC 2023 (Diabetes & CVD)","ADA Standards of Care 2025"],
   sections:{
     dinh_nghia:`
@@ -600,7 +623,7 @@ const diseases = [
   source:"2023 ESC Guidelines on diabetes and cardiovascular disease; ADA Standards of Care in Diabetes 2025"
 },
 {
-  id:"obesity", emoji:"⚖️", short:"Béo phì", title:"Béo phì & Hội chứng chuyển hóa",
+  spec:"noi_tiet", id:"obesity", emoji:"⚖️", short:"Béo phì", title:"Béo phì & Hội chứng chuyển hóa",
   guidelines:["AHA/ACC/TOS 2013 + cập nhật lâm sàng 2023–2024","IDF/AHA-NHLBI"],
   sections:{
     dinh_nghia:`
@@ -646,6 +669,544 @@ const diseases = [
       ])}`
   },
   source:"AHA/ACC/TOS Guideline for Obesity Management 2013 (+ cập nhật dựa trên SELECT, SURMOUNT); IDF/AHA-NHLBI Metabolic Syndrome Criteria"
+},
+{
+  spec:"noi_tiet", id:"thyroid", emoji:"🦋", short:"Tuyến giáp", title:"Cường giáp & Suy giáp",
+  guidelines:["ATA 2016 (Cường giáp)","ATA 2014 (Suy giáp)","ETA 2018"],
+  sections:{
+    dinh_nghia:`
+      <p><b>Cường giáp:</b> hội chứng do dư thừa hormone tuyến giáp, nguyên nhân thường gặp nhất là <b>Basedow (Graves)</b>, tiếp theo bướu giáp đa nhân hóa độc và viêm giáp.</p>
+      <p><b>Suy giáp:</b> thiếu hụt hormone tuyến giáp, nguyên nhân thường gặp nhất là <b>viêm giáp Hashimoto</b> (tự miễn) tại vùng đủ i-ốt.</p>
+      <div class="subhead">Phân loại theo xét nghiệm</div>
+      ${rt(["TSH","FT4"],[
+        ["Cường giáp rõ (overt)","Giảm/ức chế","Tăng"],
+        ["Cường giáp dưới lâm sàng","Giảm","Bình thường"],
+        ["Suy giáp rõ (overt)","Tăng","Giảm"],
+        ["Suy giáp dưới lâm sàng","Tăng nhẹ (thường &lt;10)","Bình thường"]
+      ])}`,
+    chan_doan:`
+      <p><b>TSH</b> là xét nghiệm sàng lọc đầu tay. Khi TSH bất thường → đo thêm <b>FT4</b> (± FT3 khi nghi cường giáp có TSH thấp nhưng FT4 bình thường).</p>
+      <div class="subhead">Xác định nguyên nhân cường giáp</div>
+      <p>TRAb (kháng thể thụ thể TSH) dương tính gợi ý Basedow; xạ hình tuyến giáp bắt xạ lan tỏa (Basedow), bắt xạ ổ (nhân độc/bướu đa nhân), hoặc bắt xạ thấp (viêm giáp phá hủy, cường giáp do thuốc/i-ốt).</p>
+      <div class="subhead">Xác định nguyên nhân suy giáp</div>
+      <p>Anti-TPO dương tính gợi ý Hashimoto. Siêu âm tuyến giáp khi có bướu/nhân giáp kèm theo.</p>
+      <div class="alert-box alert-info">Ở phụ nữ có thai: ngưỡng TSH bình thường theo tam cá nguyệt thấp hơn người không mang thai — cần dùng ngưỡng riêng theo phòng xét nghiệm/quý thai kỳ, không áp ngưỡng chung.</div>`,
+    dieu_tri:`
+      <div class="subhead">Basedow (Graves)</div>
+      <ul>
+        <li><b>Thuốc kháng giáp (ATD)</b> methimazole là lựa chọn hàng đầu ngoài thai kỳ 3 tháng đầu — điều trị 12–18 tháng rồi thử ngưng, tỷ lệ tái phát ~50%</li>
+        <li><b>I-131 (i-ốt phóng xạ)</b> hoặc <b>phẫu thuật cắt giáp</b> khi tái phát, bướu lớn, nghi ác tính, hoặc bệnh nhân ưu tiên điều trị dứt điểm</li>
+        <li>Chẹn beta (propranolol) kiểm soát triệu chứng giao cảm (hồi hộp, run) trong lúc chờ ATD có tác dụng</li>
+      </ul>
+      <div class="subhead">Cơn bão giáp (thyroid storm)</div>
+      <p>Cấp cứu nội khoa: PTU liều cao (ưu tiên hơn methimazole giai đoạn cấp) → iodine (dung dịch Lugol, cho sau PTU ≥1h) → chẹn beta → hydrocortisone → hạ sốt, bù dịch, điều trị yếu tố khởi phát.</p>
+      <div class="subhead">Suy giáp</div>
+      <p><b>Levothyroxine (LT4)</b> uống lúc đói, cách xa thức ăn/canxi/sắt ≥30–60 phút, là điều trị chuẩn suốt đời. Chỉnh liều dựa vào TSH, kiểm tra lại sau 6–8 tuần mỗi lần đổi liều.</p>
+      <div class="subhead">Cường giáp/suy giáp dưới lâm sàng</div>
+      <p>Điều trị suy giáp dưới lâm sàng khi TSH ≥10 mIU/L, hoặc TSH 4.5–10 kèm triệu chứng/có thai/nguy cơ tim mạch cao. Điều trị cường giáp dưới lâm sàng khi TSH &lt;0.1 dai dẳng, đặc biệt ở người ≥65 tuổi hoặc có bệnh tim/loãng xương.</p>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-danger">Methimazole chống chỉ định 3 tháng đầu thai kỳ (nguy cơ dị tật) — dùng PTU thay thế trong tam cá nguyệt 1, sau đó có thể chuyển lại methimazole.</div>
+      ${rt(["Liều khởi đầu → duy trì","Lưu ý"],[
+        ["Methimazole","10–30mg/ngày (theo mức độ nặng) → 5–10mg/ngày","theo dõi công thức máu/men gan; ngưng ngay nếu sốt/đau họng (nghi mất bạch cầu hạt)"],
+        ["PTU","300–600mg/ngày chia 3 lần → 50–150mg/ngày","ưu tiên thai kỳ 3 tháng đầu và cơn bão giáp; nguy cơ độc gan hiếm gặp nhưng nặng"],
+        ["Propranolol","10–40mg × 3–4 lần/ngày","giảm liều/thận trọng ở người cao tuổi có suy tim/hen"],
+        ["Levothyroxine (người lớn tiêu chuẩn)","1.6 microgam/kg/ngày (khởi đầu đủ liều nếu trẻ, khỏe)","tái khám TSH sau 6–8 tuần, chỉnh liều 12.5–25mcg mỗi lần"],
+        ["Levothyroxine (cao tuổi/bệnh mạch vành)","khởi đầu 25–50 microgam/ngày, tăng chậm mỗi 4–6 tuần","tránh gây thiếu máu cơ tim/loạn nhịp do tăng chuyển hóa đột ngột"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Đích TSH suy giáp ở người ≥70 tuổi có thể nới lên 4–6 mIU/L thay vì mục tiêu chuẩn, tránh quá liều LT4 gây rung nhĩ/loãng xương.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["TSH là xét nghiệm sàng lọc đầu tay bệnh lý tuyến giáp",'<span class="badge badge-I">I</span>'],
+        ["Methimazole là ATD hàng đầu ngoài 3 tháng đầu thai kỳ",'<span class="badge badge-I">I</span>'],
+        ["PTU ưu tiên trong tam cá nguyệt 1 và cơn bão giáp",'<span class="badge badge-I">I</span>'],
+        ["Levothyroxine uống cùng lúc với canxi/sắt/thức ăn",'<span class="badge badge-III">III</span>'],
+        ["Điều trị suy giáp dưới lâm sàng khi TSH≥10 dai dẳng",'<span class="badge badge-I">I</span>'],
+        ["Điều trị thường quy suy giáp dưới lâm sàng khi TSH&lt;7 ở người không triệu chứng, không thai kỳ",'<span class="badge badge-IIb">IIb</span>']
+      ])}`
+  },
+  source:"2016 ATA Guidelines for Hyperthyroidism (Graves); 2014 ATA Guidelines for Hypothyroidism; 2018 ETA Guideline on Subclinical Hypothyroidism"
+},
+{
+  spec:"ho_hap", id:"asthma", emoji:"🌬️", short:"Hen PQ", title:"Hen phế quản",
+  guidelines:["GINA 2024"],
+  sections:{
+    dinh_nghia:`
+      <p>Hen phế quản là bệnh lý viêm mạn tính đường thở, đặc trưng bởi triệu chứng hô hấp thay đổi theo thời gian/cường độ (khò khè, khó thở, nặng ngực, ho) kèm giới hạn luồng khí thở ra thay đổi.</p>
+      <div class="alert-box alert-info"><b>Điểm mấu chốt GINA 2024:</b> không còn khuyến cáo điều trị chỉ bằng SABA đơn thuần (kể cả bậc nhẹ) ở người ≥12 tuổi — mọi bệnh nhân hen nên dùng phác đồ chứa ICS để giảm nguy cơ đợt cấp nặng/tử vong.</p>`,
+    chan_doan:`
+      <p>Chẩn đoán dựa vào bệnh sử triệu chứng thay đổi điển hình <b>và</b> bằng chứng giới hạn luồng khí thở ra thay đổi trên hô hấp ký.</p>
+      ${rt(["Tiêu chí"],[
+        ["Test hồi phục phế quản dương tính","FEV1 tăng &gt;12% và &gt;200mL sau salbutamol"],
+        ["Dao động PEF ngày (trung bình 2 tuần)","&gt;10% (người lớn)"],
+        ["FEV1 tăng sau 4 tuần điều trị kháng viêm","&gt;12% và &gt;200mL"]
+      ])}
+      <p>Đánh giá kiểm soát triệu chứng (4 câu hỏi GINA: triệu chứng ngày &gt;2 lần/tuần, thức giấc đêm, dùng SABA cắt cơn &gt;2 lần/tuần, giới hạn hoạt động) và đánh giá nguy cơ đợt cấp (tiền sử đợt cấp, FEV1 thấp, hút thuốc, kỹ thuật hít sai).</p>`,
+    dieu_tri:`
+      <div class="subhead">Bậc điều trị theo triệu chứng (GINA 2024, người lớn/thiếu niên)</div>
+      ${rt(["Điều trị kiểm soát nền","Cắt cơn"],[
+        ["Bậc 1 (triệu chứng &lt;2 lần/tháng)","ICS-formoterol liều thấp khi cần (MART)","ICS-formoterol liều thấp khi cần"],
+        ["Bậc 2","ICS liều thấp hàng ngày hoặc ICS-formoterol khi cần","ICS-formoterol liều thấp khi cần"],
+        ["Bậc 3","ICS-LABA liều thấp duy trì","ICS-formoterol liều thấp (MART) hoặc SABA riêng"],
+        ["Bậc 4","ICS-LABA liều trung bình (ưu tiên MART)","ICS-formoterol liều thấp (MART)"],
+        ["Bậc 5","ICS-LABA liều cao + LAMA; xét sinh học nếu hen type-2 nặng","ICS-formoterol liều thấp"]
+      ])}
+      <div class="subhead">Chiến lược MART (Maintenance And Reliever Therapy)</div>
+      <p>Dùng <b>một</b> bình hít ICS-formoterol (budesonide/formoterol hoặc beclomethasone/formoterol) vừa duy trì hàng ngày vừa cắt cơn khi có triệu chứng — được GINA ưu tiên vì giảm đợt cấp nặng so với phác đồ SABA cắt cơn riêng.</p>
+      <div class="subhead">Hen nặng (bậc 5 không kiểm soát)</div>
+      <p>Đánh giá kiểu hình viêm type-2 (bạch cầu ái toan máu, FeNO, IgE) để chọn thuốc sinh học: omalizumab (anti-IgE), mepolizumab/benralizumab (anti-IL5/5R), dupilumab (anti-IL4/13), tezepelumab (anti-TSLP, không cần kiểu hình type-2).</p>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-warn">Không dùng LABA đơn độc không kèm ICS trong điều trị hen (tăng nguy cơ tử vong do hen) — luôn phối hợp cố định ICS-LABA.</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Budesonide/formoterol (MART)","160/4.5mcg × 1–2 nhát, dùng khi cần, tối đa 8 nhát/ngày","dạy kỹ thuật hít đúng; súc miệng sau xịt tránh nấm miệng"],
+        ["Beclomethasone/formoterol (MART)","100/6mcg tương tự MART","tương tự"],
+        ["Fluticasone/salmeterol (duy trì cố định)","liều theo mức độ, không dùng cho MART","cần SABA riêng để cắt cơn nếu dùng phác đồ này"],
+        ["Prednisolone (đợt cấp)","40–50mg/ngày × 5–7 ngày","không cần giảm liều dần nếu đợt ngắn và không dùng corticoid trường diễn"],
+        ["Tiotropium (LAMA bổ sung, bậc 4–5)","2.5mcg × 2 nhát/ngày (Respimat)","thận trọng glaucoma góc đóng, phì đại tiền liệt tuyến"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Kiểm tra kỹ thuật hít và lực hít vào (ưu tiên bình định liều có buồng đệm nếu phối hợp kém với DPI); tầm soát bệnh đồng mắc tim mạch trước dùng LABA/LAMA liều cao.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Mọi bệnh nhân hen nên dùng phác đồ chứa ICS, không đơn trị SABA",'<span class="badge badge-I">I</span>'],
+        ["ICS-formoterol liều thấp (MART) ưu tiên hơn SABA cắt cơn đơn thuần",'<span class="badge badge-I">I</span>'],
+        ["Thuốc sinh học cho hen nặng type-2 không kiểm soát dù bậc 5",'<span class="badge badge-I">I</span>'],
+        ["LABA đơn độc không phối hợp ICS",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Global Initiative for Asthma (GINA) 2024 Global Strategy for Asthma Management and Prevention"
+},
+{
+  spec:"ho_hap", id:"copd", emoji:"🫁", short:"COPD", title:"Bệnh phổi tắc nghẽn mạn tính",
+  guidelines:["GOLD 2025"],
+  sections:{
+    dinh_nghia:`
+      <p>COPD là bệnh hô hấp mạn tính đặc trưng bởi triệu chứng hô hấp dai dẳng và giới hạn luồng khí thở ra không hồi phục hoàn toàn, do bất thường đường thở/phế nang, thường liên quan phơi nhiễm khói thuốc, khí độc, bụi nghề nghiệp.</p>
+      <div class="subhead">Phân loại mức độ tắc nghẽn (GOLD, sau test giãn phế quản FEV1/FVC&lt;0.7)</div>
+      ${rt(["FEV1 (%dự đoán)"],[
+        ["GOLD 1 – Nhẹ","≥80%"],
+        ["GOLD 2 – Trung bình","50–79%"],
+        ["GOLD 3 – Nặng","30–49%"],
+        ["GOLD 4 – Rất nặng","&lt;30%"]
+      ])}`,
+    chan_doan:`
+      <p>Chẩn đoán xác định cần <b>hô hấp ký sau test giãn phế quản</b>: FEV1/FVC &lt;0.7. Đánh giá triệu chứng bằng <b>mMRC</b> (khó thở) và <b>CAT</b> (ảnh hưởng chất lượng sống toàn diện), kèm tiền sử đợt cấp trong năm qua.</p>
+      <div class="subhead">Nhóm phân loại ABE (GOLD 2023–2025, đã bỏ nhóm C cũ)</div>
+      ${rt(["Đợt cấp/năm","Triệu chứng"],[
+        ["Nhóm A","0–1 (không nhập viện)","mMRC 0–1, CAT&lt;10"],
+        ["Nhóm B","0–1 (không nhập viện)","mMRC≥2, CAT≥10"],
+        ["Nhóm E","≥2 hoặc ≥1 phải nhập viện","bất kỳ mức triệu chứng"]
+      ])}
+      <p>Đếm bạch cầu ái toan máu (blood eosinophil count) giúp dự đoán đáp ứng ICS ở nhóm E.</p>`,
+    dieu_tri:`
+      <div class="subhead">Điều trị nền không dùng thuốc</div>
+      <p><b>Ngưng thuốc lá</b> là can thiệp quan trọng nhất; tiêm vắc-xin cúm, phế cầu, COVID-19, ho gà; phục hồi chức năng hô hấp cho nhóm B/E.</p>
+      <div class="subhead">Điều trị thuốc khởi đầu theo nhóm ABE</div>
+      ${rt(["Khởi trị"],[
+        ["Nhóm A","1 giãn phế quản tác dụng dài (LABA hoặc LAMA)"],
+        ["Nhóm B","LABA + LAMA phối hợp (ưu tiên hơn đơn trị)"],
+        ["Nhóm E","LABA + LAMA; thêm ICS nếu eosinophil máu ≥300 tế bào/µL"]
+      ])}
+      <div class="subhead">Theo dõi & leo thang</div>
+      <p>Nếu còn khó thở dai dẳng: kiểm tra kỹ thuật hít/tuân thủ trước khi đổi thuốc, sau đó chuyển đổi nhóm thuốc hoặc thêm nhóm. Nếu còn đợt cấp dai dẳng dù LABA+LAMA: thêm ICS nếu eosinophil ≥100, hoặc roflumilast (FEV1&lt;50%+viêm phế quản mạn), hoặc azithromycin dài hạn (ưu tiên người không hút thuốc).</p>
+      <div class="alert-box alert-warn">Tránh dùng ICS đơn độc không phối hợp LABA/LAMA trong COPD, và thận trọng ICS liều cao kéo dài do tăng nguy cơ viêm phổi, đặc biệt khi eosinophil thấp.</div>`,
+    lieu_thuoc:`
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Tiotropium (LAMA)","18mcg × 1 nhát/ngày (HandiHaler) hoặc 2.5mcg×2 nhát (Respimat)","thận trọng glaucoma góc đóng, bí tiểu do phì đại tiền liệt tuyến"],
+        ["Indacaterol/Glycopyrronium (LABA/LAMA)","110/50mcg × 1 nhát/ngày","kiểm tra kỹ thuật hít định kỳ"],
+        ["Budesonide/Formoterol (ICS/LABA khi có chỉ định)","160-320/4.5-9mcg × 2 nhát/ngày","súc miệng sau xịt"],
+        ["Roflumilast","500mcg/ngày","chống chỉ định gan suy vừa-nặng; theo dõi sụt cân/trầm cảm"],
+        ["Azithromycin dự phòng đợt cấp","250mg/ngày hoặc 500mg×3 lần/tuần","kiểm tra QTc và thính lực trước dùng dài hạn"],
+        ["Prednisolone (đợt cấp)","40mg/ngày × 5 ngày","không cần giảm liều dần nếu đợt ngắn"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Ưu tiên bình xịt định liều có buồng đệm hoặc bình hít bột khô dễ thao tác nếu lực hít vào yếu; đánh giá nguy cơ té ngã/loãng xương khi dùng corticoid toàn thân lặp lại.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Ngưng thuốc lá là can thiệp ưu tiên hàng đầu, mọi giai đoạn",'<span class="badge badge-I">I</span>'],
+        ["LABA+LAMA phối hợp ưu tiên hơn đơn trị ở nhóm B/E",'<span class="badge badge-I">I</span>'],
+        ["Thêm ICS ở nhóm E khi eosinophil máu ≥300 tế bào/µL",'<span class="badge badge-I">I</span>'],
+        ["Phục hồi chức năng hô hấp cho nhóm B và E",'<span class="badge badge-I">I</span>'],
+        ["ICS đơn trị không phối hợp giãn phế quản tác dụng dài",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Global Initiative for Chronic Obstructive Lung Disease (GOLD) 2025 Report"
+},
+{
+  spec:"ho_hap", id:"cap", emoji:"🦠", short:"VPCĐ", title:"Viêm phổi cộng đồng",
+  guidelines:["ATS/IDSA 2019","BTS 2023"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm phổi cộng đồng (CAP) là nhiễm trùng nhu mô phổi cấp tính mắc phải ngoài bệnh viện hoặc cơ sở chăm sóc y tế, biểu hiện bằng triệu chứng hô hấp cấp kèm tổn thương mới trên X-quang/CT ngực.</p>`,
+    chan_doan:`
+      <p>Chẩn đoán: triệu chứng hô hấp cấp (ho, sốt, khó thở, đau ngực kiểu màng phổi) + tổn thương thâm nhiễm mới trên hình ảnh học.</p>
+      <div class="subhead">Phân tầng độ nặng — CURB-65</div>
+      ${rt(["Điểm"],[
+        ["Lú lẫn (Confusion)","1"],
+        ["Ure máu &gt;7 mmol/L","1"],
+        ["Nhịp thở ≥30 lần/phút (Respiratory rate)","1"],
+        ["HA tâm thu&lt;90 hoặc tâm trương≤60 (Blood pressure)","1"],
+        ["Tuổi ≥65","1"]
+      ])}
+      <p>0–1 điểm: điều trị ngoại trú. 2 điểm: cân nhắc nhập viện ngắn/theo dõi sát. ≥3 điểm: nhập viện, cân nhắc ICU nếu ≥4.</p>`,
+    dieu_tri:`
+      <div class="subhead">Điều trị ngoại trú (không bệnh đồng mắc, chưa dùng KS gần đây)</div>
+      <p>Amoxicillin liều cao, hoặc doxycycline, hoặc macrolide (chỉ khi tỷ lệ phế cầu kháng macrolide tại chỗ &lt;25%).</p>
+      <div class="subhead">Ngoại trú có bệnh đồng mắc (tim/phổi/gan/thận mạn, ĐTĐ, nghiện rượu, suy giảm miễn dịch)</div>
+      <p>Phối hợp amoxicillin-clavulanate (hoặc cephalosporin) <b>+</b> macrolide/doxycycline, hoặc đơn trị fluoroquinolone hô hấp (levofloxacin/moxifloxacin).</p>
+      <div class="subhead">Nhập viện – không ICU</div>
+      <p>Beta-lactam (ampicillin-sulbactam/ceftriaxone/cefotaxime) <b>+</b> macrolide, hoặc đơn trị fluoroquinolone hô hấp.</p>
+      <div class="subhead">Nhập viện – ICU/nặng</div>
+      <p>Beta-lactam phổ rộng <b>+</b> macrolide hoặc <b>+</b> fluoroquinolone hô hấp. Thêm phủ MRSA (vancomycin/linezolid) và/hoặc Pseudomonas (piperacillin-tazobactam/cefepime) nếu có yếu tố nguy cơ/phân lập trước đó.</p>
+      <div class="alert-box alert-info">ATS/IDSA 2019 khuyến cáo <b>không</b> còn dùng thường quy nhóm HCAP (viêm phổi liên quan chăm sóc y tế) để chọn kháng sinh phổ rộng — quyết định dựa trên yếu tố nguy cơ MRSA/Pseudomonas cụ thể của từng bệnh nhân, không dựa nơi cư trú.</div>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-warn">Người cao tuổi/suy thận: chỉnh liều theo CrCl cho hầu hết kháng sinh nhóm beta-lactam và fluoroquinolone; thận trọng kéo dài QTc khi phối hợp macrolide/fluoroquinolone ở người có bệnh tim.</div>
+      ${rt(["Liều người lớn","Lưu ý"],[
+        ["Amoxicillin (ngoại trú)","1g × 3 lần/ngày","chỉnh liều theo CrCl&lt;30"],
+        ["Doxycycline","100mg × 2 lần/ngày","tránh nắng gắt do nhạy cảm ánh sáng"],
+        ["Azithromycin","500mg ngày 1 → 250mg ngày 2–5","theo dõi QTc nếu bệnh tim nền"],
+        ["Levofloxacin","750mg × 1 lần/ngày","chỉnh liều theo CrCl; thận trọng phình/bóc tách ĐMC, đứt gân ở người cao tuổi"],
+        ["Ceftriaxone (nhập viện)","1–2g × 1 lần/ngày TM","không cần chỉnh liều theo thận (thải chủ yếu qua mật)"],
+        ["Piperacillin-tazobactam (nghi Pseudomonas)","4.5g × 4 lần/ngày TM (truyền kéo dài)","chỉnh liều theo CrCl"],
+        ["Vancomycin (nghi MRSA)","15–20mg/kg × 2 lần/ngày TM, chỉnh theo nồng độ đáy","theo dõi chức năng thận sát ở người cao tuổi"]
+      ])}
+      <p><b>Thời gian điều trị:</b> tối thiểu 5 ngày, ngưng khi ổn định lâm sàng ≥48–72h (hết sốt, sinh hiệu ổn) — không cần kéo dài thường quy trừ biến chứng (áp xe, mủ màng phổi, vi khuẩn không điển hình nặng).</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Dùng thang điểm nặng (CURB-65/PSI) hỗ trợ quyết định nơi điều trị",'<span class="badge badge-I">I</span>'],
+        ["Phối hợp beta-lactam + macrolide hoặc đơn trị fluoroquinolone hô hấp khi nhập viện",'<span class="badge badge-I">I</span>'],
+        ["Ngưng kháng sinh sau tối thiểu 5 ngày nếu ổn định lâm sàng",'<span class="badge badge-I">I</span>'],
+        ["Dùng nhãn HCAP để quyết định phổ kháng sinh rộng thường quy",'<span class="badge badge-III">III</span>'],
+        ["Corticosteroid thường quy cho CAP không sốc nhiễm khuẩn",'<span class="badge badge-IIb">IIb</span>']
+      ])}`
+  },
+  source:"2019 ATS/IDSA Clinical Practice Guidelines for CAP in Adults; British Thoracic Society CAP Guideline 2023 update"
+},
+{
+  spec:"tieu_hoa", id:"gerd", emoji:"🔥", short:"GERD", title:"Trào ngược dạ dày-thực quản",
+  guidelines:["ACG 2022"],
+  sections:{
+    dinh_nghia:`
+      <p>GERD là tình trạng trào ngược nội dung dạ dày lên thực quản gây triệu chứng phiền toái (ợ nóng, trào ngược ≥2 lần/tuần) và/hoặc biến chứng (viêm thực quản, hẹp, Barrett thực quản).</p>
+      <div class="subhead">Phân loại kiểu hình</div>
+      <p>GERD không viêm trợt (NERD) — nội soi bình thường; GERD viêm trợt thực quản (phân độ Los Angeles A–D); Barrett thực quản — chuyển sản ruột trên nội soi có sinh thiết xác nhận.</p>`,
+    chan_doan:`
+      <p>Triệu chứng điển hình (ợ nóng, trào ngược) ở người không có dấu hiệu báo động → có thể điều trị thử PPI theo kinh nghiệm <b>không cần nội soi</b>.</p>
+      <div class="alert-box alert-danger">Dấu hiệu báo động cần nội soi sớm: nuốt khó/nuốt đau, sụt cân không chủ ý, xuất huyết tiêu hóa/thiếu máu, nôn dai dẳng, tuổi khởi phát &gt;60 hoặc tiền sử gia đình ung thư thực quản-dạ dày.</div>
+      <p>Nội soi thực quản-dạ dày-tá tràng khi có dấu hiệu báo động, triệu chứng dai dẳng dù đã điều trị PPI chuẩn, hoặc tầm soát Barrett ở người nguy cơ cao (nam, GERD mạn ≥5 năm, béo phì, hút thuốc, tiền sử gia đình). Đo pH-trở kháng thực quản 24h khi chẩn đoán không chắc chắn hoặc trước cân nhắc phẫu thuật chống trào ngược.</p>`,
+    dieu_tri:`
+      <div class="subhead">Nền tảng — thay đổi lối sống</div>
+      <p>Giảm cân nếu thừa cân/béo phì, tránh ăn trong vòng 2–3h trước ngủ, kê cao đầu giường, tránh thực phẩm/thức uống khởi phát triệu chứng (rượu, cà phê, socola, thức ăn nhiều dầu mỡ, thuốc lá).</p>
+      <div class="subhead">Điều trị thuốc</div>
+      <ul>
+        <li><b>PPI</b> liều chuẩn × <b>8 tuần</b> là điều trị đầu tay cho GERD viêm trợt hoặc triệu chứng điển hình dai dẳng, uống <b>30–60 phút trước bữa ăn sáng</b> để hiệu quả tối ưu</li>
+        <li>Sau đáp ứng: chỉnh xuống liều thấp nhất kiểm soát được triệu chứng hoặc dùng khi cần (on-demand) ở NERD; GERD viêm trợt độ C/D hoặc Barrett cần duy trì PPI dài hạn</li>
+        <li>Không đáp ứng PPI liều chuẩn: tăng gấp đôi liều (chia 2 lần/ngày) trước khi coi là "GERD kháng trị"</li>
+      </ul>
+      <div class="subhead">GERD kháng trị thật sự (đã loại trừ tuân thủ kém, chẩn đoán khác)</div>
+      <p>Cân nhắc phẫu thuật chống trào ngược (Nissen) hoặc thiết bị tăng cường cơ thắt thực quản dưới (LINX) ở bệnh nhân được chọn lọc kỹ dựa trên đo pH-trở kháng và áp lực thực quản.</p>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-warn">PPI dài hạn liều cao liên quan tăng nhẹ nguy cơ gãy xương, thiếu vitamin B12/magie, viêm thận kẽ — dùng liều thấp nhất hiệu quả, đánh giá lại chỉ định định kỳ mỗi 6–12 tháng.</div>
+      ${rt(["Liều chuẩn","Cao tuổi/thận yếu"],[
+        ["Omeprazole","20mg × 1 lần/ngày (trước ăn sáng)","không cần chỉnh liều theo thận; thận trọng tương tác clopidogrel"],
+        ["Esomeprazole","20–40mg × 1 lần/ngày","tương tự omeprazole"],
+        ["Pantoprazole","40mg × 1 lần/ngày","ít tương tác thuốc hơn, ưu tiên khi đa thuốc ở người cao tuổi"],
+        ["Rabeprazole","20mg × 1 lần/ngày","tương tự nhóm"],
+        ["Famotidine (bổ sung ban đêm/triệu chứng nhẹ)","20–40mg trước ngủ","giảm liều nếu eGFR&lt;50"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Điều trị thử PPI theo kinh nghiệm ở người triệu chứng điển hình không dấu hiệu báo động",'<span class="badge badge-I">I</span>'],
+        ["Nội soi khi có dấu hiệu báo động hoặc trước phẫu thuật chống trào ngược",'<span class="badge badge-I">I</span>'],
+        ["Uống PPI 30–60 phút trước bữa ăn để tối ưu hiệu quả",'<span class="badge badge-I">I</span>'],
+        ["Đo pH-trở kháng thực quản trước khi kết luận GERD kháng trị/chỉ định phẫu thuật",'<span class="badge badge-I">I</span>'],
+        ["Dùng PPI liều cao kéo dài không đánh giá lại chỉ định",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"American College of Gastroenterology (ACG) 2022 Clinical Guideline for GERD"
+},
+{
+  spec:"tieu_hoa", id:"pud", emoji:"🩹", short:"Loét DD-TT", title:"Loét dạ dày-tá tràng & H. pylori",
+  guidelines:["ACG 2024 (H. pylori)","ACG 2021 (Loét do NSAID)"],
+  sections:{
+    dinh_nghia:`
+      <p>Loét dạ dày-tá tràng là tổn thương mất niêm mạc sâu qua lớp cơ niêm, hai nguyên nhân chính: nhiễm <b>Helicobacter pylori</b> và dùng <b>NSAID/aspirin</b>.</p>`,
+    chan_doan:`
+      <div class="subhead">Xét nghiệm tìm H. pylori</div>
+      ${rt(["Đặc điểm"],[
+        ["Test hơi thở Urea (UBT)","Không xâm lấn, độ chính xác cao — xét nghiệm ưu tiên chẩn đoán và xác nhận tiệt trừ"],
+        ["Kháng nguyên phân (SAT)","Không xâm lấn, tương đương UBT, chi phí thấp hơn"],
+        ["Test nhanh urease/mô bệnh học qua nội soi","Khi đã có chỉ định nội soi vì lý do khác"],
+        ["Huyết thanh học (IgG)","Không dùng để xác nhận tiệt trừ (kháng thể tồn tại kéo dài); độ chính xác thấp hơn"]
+      ])}
+      <div class="alert-box alert-warn">Ngưng PPI ≥2 tuần và kháng sinh/bismuth ≥4 tuần trước khi làm UBT/SAT để tránh âm tính giả.</div>
+      <p>Nội soi dạ dày-tá tràng cho ổ loét, sinh thiết loét dạ dày để loại trừ ác tính (loét tá tràng hiếm ác tính, không bắt buộc sinh thiết thường quy) và xác nhận lành sau điều trị ở loét dạ dày lớn/nguy cơ cao.</p>`,
+    dieu_tri:`
+      <div class="subhead">Tiệt trừ H. pylori — chọn phác đồ theo tỷ lệ kháng clarithromycin tại chỗ</div>
+      <p>ACG 2024 khuyến cáo <b>phác đồ 4 thuốc chứa bismuth</b> hoặc <b>phác đồ 4 thuốc đồng thời (concomitant, không bismuth)</b> là lựa chọn đầu tay ở hầu hết khu vực do tỷ lệ kháng clarithromycin ngày càng tăng — <b>phác đồ 3 thuốc chuẩn chứa clarithromycin chỉ dùng khi biết chắc chắn tỷ lệ kháng tại chỗ &lt;15%</b>.</p>
+      <div class="subhead">Loét do NSAID</div>
+      <ul>
+        <li>Ngưng NSAID nếu có thể; nếu bắt buộc tiếp tục, phối hợp PPI dự phòng dài hạn hoặc chuyển COX-2 chọn lọc + PPI</li>
+        <li>Đánh giá và điều trị H. pylori đồng thời nếu dương tính (hai yếu tố nguy cơ độc lập cộng gộp)</li>
+        <li>Aspirin liều thấp dự phòng tim mạch: cân nhắc tiếp tục kèm PPI ở đa số trường hợp thay vì ngưng hẳn, trừ xuất huyết đang hoạt động</li>
+      </ul>
+      <p><b>Luôn xác nhận tiệt trừ H. pylori</b> bằng UBT/SAT ≥4 tuần sau kết thúc kháng sinh (và ≥2 tuần sau ngưng PPI).</p>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-warn">Dị ứng penicillin: dùng phác đồ 4 thuốc bismuth (không chứa amoxicillin) thay vì phác đồ đồng thời.</div>
+      ${rt(["Thành phần & liều","Thời gian"],[
+        ["4 thuốc Bismuth","PPI chuẩn×2/ngày + bismuth subcitrate 120-300mg×4 + tetracycline 500mg×4 + metronidazole 500mg×3-4","10–14 ngày"],
+        ["4 thuốc đồng thời (Concomitant)","PPI×2/ngày + amoxicillin 1g×2 + clarithromycin 500mg×2 + metronidazole 500mg×2","10–14 ngày"],
+        ["3 thuốc chuẩn (chỉ khi kháng clarithromycin&lt;15%)","PPI×2/ngày + amoxicillin 1g×2 + clarithromycin 500mg×2","14 ngày"],
+        ["PPI dự phòng loét do NSAID dài hạn","PPI liều chuẩn × 1 lần/ngày, dùng cùng NSAID","suốt thời gian dùng NSAID"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Kiểm tra tương tác thuốc (clarithromycin ức chế CYP3A4 — thận trọng statin/thuốc chống loạn nhịp); ưu tiên phác đồ bismuth nếu đa bệnh lý/đa thuốc để giảm tương tác.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Phác đồ 4 thuốc (bismuth hoặc đồng thời) ưu tiên hơn 3 thuốc chuẩn ở vùng kháng clarithromycin cao",'<span class="badge badge-I">I</span>'],
+        ["Xác nhận tiệt trừ bằng UBT/SAT sau điều trị ở mọi bệnh nhân",'<span class="badge badge-I">I</span>'],
+        ["PPI dự phòng dài hạn khi bắt buộc tiếp tục NSAID",'<span class="badge badge-I">I</span>'],
+        ["Dùng huyết thanh học IgG để xác nhận tiệt trừ",'<span class="badge badge-III">III</span>'],
+        ["Phác đồ 3 thuốc chuẩn khi chưa rõ tỷ lệ kháng clarithromycin tại chỗ",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACG Clinical Guideline: Treatment of Helicobacter pylori Infection 2024 update; ACG Guideline for Prevention of NSAID-Related GI Injury 2021"
+},
+{
+  spec:"tieu_hoa", id:"cirrhosis", emoji:"🫘", short:"Xơ gan", title:"Xơ gan & Biến chứng",
+  guidelines:["AASLD 2021 (Cổ trướng)","Baveno VII 2022 (Tăng áp cửa)"],
+  sections:{
+    dinh_nghia:`
+      <p>Xơ gan là giai đoạn cuối của xơ hóa gan tiến triển, đặc trưng bởi tái cấu trúc nốt tái tạo lan tỏa. Nguyên nhân thường gặp: viêm gan virus B/C, bệnh gan do rượu, và <b>MASLD</b> (gan nhiễm mỡ liên quan rối loạn chuyển hóa — tên gọi mới thay cho NAFLD theo đồng thuận đa hiệp hội 2023).</p>
+      <div class="subhead">Phân độ Child-Pugh</div>
+      ${rt(["1 điểm","2 điểm","3 điểm"],[
+        ["Bilirubin (mg/dL)","&lt;2","2–3","&gt;3"],
+        ["Albumin (g/dL)","&gt;3.5","2.8–3.5","&lt;2.8"],
+        ["INR","&lt;1.7","1.7–2.3","&gt;2.3"],
+        ["Cổ trướng","Không","Nhẹ, đáp ứng thuốc","Nhiều, kháng trị"],
+        ["Bệnh não gan","Không","Độ I–II","Độ III–IV"]
+      ])}
+      <p>Child A: 5–6 điểm · Child B: 7–9 điểm · Child C: 10–15 điểm. MELD-Na dùng để ưu tiên danh sách ghép gan.</p>`,
+    chan_doan:`
+      <p>Chẩn đoán không xâm lấn ưu tiên: <b>đo độ đàn hồi gan (FibroScan/VCTE)</b> hoặc chỉ số huyết thanh (FIB-4) kết hợp hình ảnh học gợi ý xơ gan (bờ gan không đều, lách to, tuần hoàn bàng hệ).</p>
+      <div class="subhead">Tầm soát định kỳ bắt buộc khi đã xơ gan</div>
+      <ul>
+        <li><b>Nội soi tiêu hóa trên</b> tầm soát giãn tĩnh mạch thực quản tại thời điểm chẩn đoán xơ gan (có thể hoãn nếu độ đàn hồi gan &lt;20kPa và tiểu cầu &gt;150.000 — tiêu chuẩn Baveno VI/VII)</li>
+        <li><b>Siêu âm bụng ± AFP mỗi 6 tháng</b> tầm soát ung thư biểu mô tế bào gan (HCC) ở mọi bệnh nhân xơ gan</li>
+      </ul>`,
+    dieu_tri:`
+      <div class="subhead">Cổ trướng</div>
+      <p>Hạn chế muối (&lt;2g Na/ngày) + lợi tiểu phối hợp spironolactone-furosemide tỷ lệ 100:40mg, tăng dần mỗi 3–5 ngày. Cổ trướng kháng trị: chọc tháo dịch cổ trướng thể tích lớn (LVP) + truyền albumin bù (6–8g/lít dịch tháo nếu &gt;5L); cân nhắc TIPS nếu tái phát thường xuyên.</p>
+      <div class="subhead">Dự phòng xuất huyết do vỡ giãn tĩnh mạch thực quản</div>
+      <p>Giãn tĩnh mạch trung bình-lớn: <b>chẹn beta không chọn lọc</b> (propranolol/carvedilol) hoặc thắt vòng cao su qua nội soi — chọn theo đặc điểm bệnh nhân/nguồn lực. Carvedilol có thể ưu tiên vì vừa hạ áp lực tĩnh mạch cửa vừa dễ dùng.</p>
+      <div class="subhead">Xuất huyết tiêu hóa cấp do giãn tĩnh mạch</div>
+      <p>Hồi sức + kháng sinh dự phòng (ceftriaxone) ngay khi nhập viện + thuốc vận mạch tạng (terlipressin/octreotide) + nội soi cấp cứu trong 12h thắt/chích xơ.</p>
+      <div class="subhead">Bệnh não gan</div>
+      <p>Lactulose là điều trị nền tảng (điều chỉnh liều để đạt 2–3 lần đi tiêu mềm/ngày); thêm rifaximin nếu tái phát dù lactulose tối ưu hoặc bệnh não gan tái diễn.</p>
+      <div class="alert-box alert-danger">Viêm phúc mạc nhiễm khuẩn nguyên phát (SBP): mọi cổ trướng nhập viện cần chọc dò chẩn đoán; bạch cầu đa nhân trung tính dịch cổ trướng ≥250/mm³ → kháng sinh ngay (cephalosporin thế hệ 3) + albumin TM ngày 1 và ngày 3 để giảm nguy cơ hội chứng gan-thận.</div>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-warn">Tránh NSAID (tăng nguy cơ suy thận/xuất huyết), thận trọng aminoglycoside, chỉnh liều thuốc chuyển hóa qua gan; theo dõi kali máu sát khi phối hợp lợi tiểu.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Spironolactone","100mg/ngày → tối đa 400mg/ngày","theo dõi kali máu, tăng nữ hóa tuyến vú nam giới"],
+        ["Furosemide","40mg/ngày → tối đa 160mg/ngày (giữ tỷ lệ 100:40 với spironolactone)","theo dõi natri/kali, chức năng thận"],
+        ["Propranolol (dự phòng xuất huyết)","20mg×2/ngày, tăng dần đến nhịp tim đích 55–60/phút","ngưng nếu HA tâm thu&lt;90 hoặc cổ trướng kháng trị nặng"],
+        ["Carvedilol","6.25mg/ngày → tối đa 12.5mg/ngày","hạ áp lực cửa tốt hơn propranolol liều tương đương"],
+        ["Lactulose","15–30mL × 2–3 lần/ngày, chỉnh theo số lần đi tiêu","quá liều gây tiêu chảy/rối loạn điện giải"],
+        ["Rifaximin","550mg × 2 lần/ngày","phối hợp lactulose, không đơn trị thay thế"],
+        ["Terlipressin (xuất huyết cấp)","2mg TM mỗi 4h → giảm 1mg mỗi 4h khi kiểm soát","chống chỉ định bệnh mạch vành/mạch máu ngoại biên nặng"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Tầm soát HCC bằng siêu âm ± AFP mỗi 6 tháng ở mọi bệnh nhân xơ gan",'<span class="badge badge-I">I</span>'],
+        ["Chẹn beta không chọn lọc hoặc thắt vòng cao su dự phòng xuất huyết giãn TM trung bình-lớn",'<span class="badge badge-I">I</span>'],
+        ["Albumin TM ngày 1&3 kèm kháng sinh trong SBP",'<span class="badge badge-I">I</span>'],
+        ["Kháng sinh dự phòng khi xuất huyết tiêu hóa cấp ở xơ gan",'<span class="badge badge-I">I</span>'],
+        ["NSAID thường quy để giảm đau ở người xơ gan mất bù",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"AASLD 2021 Practice Guidance on Ascites, SBP and Hepatorenal Syndrome; Baveno VII 2022 Consensus on Portal Hypertension"
+},
+{
+  spec:"co_xuong_khop", id:"gout", emoji:"🦶", short:"Gout", title:"Bệnh Gout (Gút)",
+  guidelines:["ACR 2020"],
+  sections:{
+    dinh_nghia:`
+      <p>Gout là bệnh viêm khớp do lắng đọng tinh thể monosodium urate trong khớp/mô mềm, hậu quả của tăng acid uric máu kéo dài.</p>
+      <div class="subhead">Các giai đoạn</div>
+      <p>Tăng acid uric máu không triệu chứng → cơn gout cấp → giai đoạn giữa các cơn → gout mạn tính có hạt tophi.</p>`,
+    chan_doan:`
+      <p><b>Tiêu chuẩn vàng:</b> soi dịch khớp/tophi dưới kính hiển vi phân cực thấy tinh thể urate hình kim, lưỡng chiết âm mạnh. Khi không chọc dịch được, chẩn đoán lâm sàng dựa tiêu chuẩn ACR/EULAR 2015 (khởi phát đột ngột, khớp bàn ngón chân cái, ban đỏ, đáp ứng nhanh colchicine).</p>
+      ${rt(["Ngưỡng"],[
+        ["Tăng acid uric máu","&gt;6.8 mg/dL (~404 µmol/L) — ngưỡng bão hòa hình thành tinh thể"],
+        ["Đích điều trị hạ urat","&lt;6.0 mg/dL (~360 µmol/L)"],
+        ["Đích ở gout có tophi/nặng","&lt;5.0 mg/dL (~300 µmol/L)"]
+      ])}
+      <p>Siêu âm khớp (dấu hiệu "double contour") hoặc CT năng lượng kép hỗ trợ chẩn đoán khi lâm sàng không điển hình.</p>`,
+    dieu_tri:`
+      <div class="subhead">Cơn gout cấp</div>
+      <p>Khởi trị càng sớm càng tốt (trong 24h đầu): NSAID, colchicine liều thấp, hoặc corticosteroid (uống/tiêm khớp) — hiệu quả tương đương, chọn theo bệnh đồng mắc/chống chỉ định. Điều trị đến khi cơn hết hoàn toàn (thường 5–7 ngày).</p>
+      <div class="subhead">Chỉ định điều trị hạ urat máu dài hạn (ULT)</div>
+      <p>ACR 2020 khuyến cáo <b>bắt đầu ULT ngay sau cơn gout đầu tiên</b> nếu có: ≥1 hạt tophi, tổn thương khớp trên hình ảnh do gout, ≥2 cơn/năm, hoặc bệnh thận mạn giai đoạn ≥3 kèm tăng acid uric máu — thay vì chỉ chờ gout tái phát nhiều lần như trước đây.</p>
+      <div class="subhead">Điều trị hạ urat</div>
+      <ul>
+        <li><b>Allopurinol</b> là thuốc hàng đầu cho mọi bệnh nhân kể cả có bệnh thận mạn, khởi liều thấp, <b>tăng liều từ từ (treat-to-target)</b> đến khi đạt đích acid uric</li>
+        <li>Febuxostat khi không dung nạp/chống chỉ định allopurinol — thận trọng ở người có bệnh tim mạch (cảnh báo tăng tử vong tim mạch trong nghiên cứu CARES)</li>
+        <li><b>Dự phòng cơn gout bùng phát</b> khi khởi động ULT: colchicine liều thấp hoặc NSAID liều thấp trong ≥3–6 tháng đầu (do huy động urat từ mô gây khởi phát cơn cấp nghịch lý)</li>
+      </ul>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-danger">Sàng lọc HLA-B*5801 trước dùng allopurinol ở quần thể nguy cơ cao (người gốc Á, đặc biệt Hán, Thái, Hàn) do nguy cơ hội chứng quá mẫn nặng (DRESS/SJS-TEN).</div>
+      ${rt(["Liều khởi đầu → duy trì","Lưu ý theo tuổi/thận"],[
+        ["Allopurinol","khởi đầu ≤100mg/ngày (≤50mg nếu eGFR&lt;30) → tăng dần mỗi 2–5 tuần đến đích","có thể dùng liều &gt;300mg/ngày kể cả suy thận nếu tăng liều từ từ và theo dõi sát"],
+        ["Febuxostat","40mg/ngày → tối đa 80mg/ngày","tránh nếu có bệnh tim mạch đã biết, ưu tiên allopurinol trước"],
+        ["Colchicine (cơn cấp)","1.2mg ngay → 0.6mg sau 1h (tổng ngày 1: 1.8mg)","giảm liều/tránh nếu eGFR&lt;30 hoặc dùng cùng clarithromycin/thuốc ức chế CYP3A4-P-gp mạnh"],
+        ["Colchicine (dự phòng bùng phát)","0.3–0.6mg × 1–2 lần/ngày","giảm liều ở người cao tuổi/suy thận"],
+        ["NSAID (cơn cấp, vd. naproxen)","500mg × 2 lần/ngày × 5–7 ngày","tránh nếu bệnh thận mạn/loét tiêu hóa/suy tim"],
+        ["Prednisolone (cơn cấp)","30–35mg/ngày × 5 ngày","lựa chọn ưu tiên khi chống chỉ định NSAID và colchicine"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Điều trị hạ urat ngay sau cơn đầu tiên nếu có tophi/tổn thương khớp/≥2 cơn/năm/bệnh thận mạn",'<span class="badge badge-I">I</span>'],
+        ["Allopurinol là ULT hàng đầu cho mọi bệnh nhân kể cả bệnh thận mạn",'<span class="badge badge-I">I</span>'],
+        ["Chiến lược treat-to-target theo nồng độ acid uric máu",'<span class="badge badge-I">I</span>'],
+        ["Dự phòng bùng phát bằng colchicine/NSAID liều thấp khi khởi động ULT",'<span class="badge badge-I">I</span>'],
+        ["Ngưng ULT khi hết triệu chứng lâm sàng mà chưa đạt đích acid uric",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2020 American College of Rheumatology Guideline for the Management of Gout"
+},
+{
+  spec:"co_xuong_khop", id:"ra", emoji:"🖐️", short:"VKDT", title:"Viêm khớp dạng thấp",
+  guidelines:["ACR 2021","EULAR 2023"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm khớp dạng thấp (RA) là bệnh tự miễn hệ thống mạn tính, gây viêm màng hoạt dịch đối xứng nhiều khớp nhỏ, có thể dẫn đến phá hủy khớp và biến chứng ngoài khớp nếu không kiểm soát sớm.</p>`,
+    chan_doan:`
+      <p>Tiêu chuẩn phân loại ACR/EULAR 2010 dựa điểm số: số khớp tổn thương, huyết thanh học (RF, anti-CCP), chỉ số viêm (CRP/ESR), thời gian triệu chứng ≥6 tuần. <b>Anti-CCP</b> đặc hiệu hơn RF cho chẩn đoán và tiên lượng nặng.</p>
+      <div class="alert-box alert-info">Nguyên tắc cốt lõi: chẩn đoán và điều trị <b>càng sớm càng tốt</b> ("window of opportunity") để ngăn tổn thương khớp không hồi phục — trì hoãn &gt;3–6 tháng làm giảm đáng kể khả năng đạt lui bệnh.</div>`,
+    dieu_tri:`
+      <div class="subhead">Chiến lược Treat-to-Target</div>
+      <p>Mục tiêu <b>lui bệnh</b> (hoặc hoạt động bệnh thấp nếu bệnh lâu năm khó lui hoàn toàn), đánh giá hoạt động bệnh định kỳ (DAS28, CDAI) mỗi 1–3 tháng và điều chỉnh thuốc tích cực cho đến đạt mục tiêu.</p>
+      <div class="subhead">Bậc thang điều trị (ACR 2021)</div>
+      <ul>
+        <li><b>Bước 1:</b> <b>Methotrexate</b> đơn trị là DMARD khởi đầu ưu tiên hàng đầu (trừ chống chỉ định), khởi liều 15mg/tuần, tăng đến 25mg/tuần nếu dung nạp</li>
+        <li><b>Bước 2</b> (không đạt mục tiêu sau 3 tháng dù đã tối ưu methotrexate): thêm DMARD sinh học (bDMARD — anti-TNF, abatacept, tocilizumab, rituximab) hoặc DMARD nhắm đích tổng hợp (tsDMARD — thuốc ức chế JAK)</li>
+        <li>Corticosteroid liều thấp/ngắn hạn có thể dùng như cầu nối trong lúc chờ DMARD nền có tác dụng, <b>không dùng thay thế DMARD dài hạn</b></li>
+      </ul>
+      <div class="alert-box alert-warn">Thuốc ức chế JAK (tofacitinib, baricitinib, upadacitinib): cảnh báo hộp đen (boxed warning) tăng nguy cơ biến cố tim mạch nặng, huyết khối, ung thư và tử vong ở người ≥50 tuổi có ≥1 yếu tố nguy cơ tim mạch (nghiên cứu ORAL Surveillance) — cân nhắc kỹ trước khi chọn, ưu tiên bDMARD nếu có yếu tố nguy cơ này.</div>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-warn">Sàng lọc lao tiềm ẩn và viêm gan B/C trước khởi động sinh học/JAK inhibitor; tiêm đủ vắc-xin (không sống) trước khi bắt đầu ức chế miễn dịch.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Methotrexate","khởi đầu 15mg/tuần (uống/TDD) → tối đa 25mg/tuần","bổ sung acid folic 1mg/ngày (trừ ngày dùng MTX) giảm độc tính"],
+        ["Hydroxychloroquine (phối hợp)","200–400mg/ngày","khám mắt định kỳ tầm soát bệnh võng mạc"],
+        ["Sulfasalazine (phối hợp)","2–3g/ngày chia liều","tăng liều từ từ giảm tác dụng phụ tiêu hóa"],
+        ["Adalimumab (anti-TNF)","40mg TDD mỗi 2 tuần","sàng lọc lao/viêm gan B trước dùng"],
+        ["Etanercept (anti-TNF)","50mg TDD mỗi tuần","tương tự"],
+        ["Tofacitinib (JAK inhibitor)","5mg × 2 lần/ngày","thận trọng/tránh nếu ≥65 tuổi hoặc có yếu tố nguy cơ tim mạch/huyết khối"],
+        ["Prednisolone (cầu nối, ngắn hạn)","≤10mg/ngày, giảm dần nhanh nhất có thể","tránh dùng kéo dài; bổ sung canxi/vitamin D, tầm soát loãng xương nếu dùng &gt;3 tháng"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Methotrexate là DMARD khởi đầu ưu tiên hàng đầu",'<span class="badge badge-I">I</span>'],
+        ["Chiến lược treat-to-target với đánh giá hoạt động bệnh định kỳ",'<span class="badge badge-I">I</span>'],
+        ["Thêm bDMARD/tsDMARD khi không đạt mục tiêu sau tối ưu methotrexate",'<span class="badge badge-I">I</span>'],
+        ["Ưu tiên bDMARD hơn JAK inhibitor ở người ≥50 tuổi có yếu tố nguy cơ tim mạch",'<span class="badge badge-IIa">IIa</span>'],
+        ["Dùng corticosteroid liều thấp dài hạn thay thế DMARD nền",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2021 American College of Rheumatology Guideline for the Treatment of RA; EULAR 2023 recommendations for management of RA"
+},
+{
+  spec:"co_xuong_khop", id:"oa", emoji:"🦴", short:"THK", title:"Thoái hóa khớp",
+  guidelines:["ACR/AF 2019 + cập nhật 2024","OARSI 2019"],
+  sections:{
+    dinh_nghia:`
+      <p>Thoái hóa khớp (OA) là bệnh khớp thoái hóa mạn tính phổ biến nhất, đặc trưng bởi mất sụn khớp, xơ xương dưới sụn, tạo gai xương, thường gặp ở khớp gối, háng, bàn tay, cột sống.</p>`,
+    chan_doan:`
+      <p>Chẩn đoán chủ yếu <b>dựa lâm sàng</b>: đau khớp cơ học (tăng khi vận động/chịu lực, giảm khi nghỉ), cứng khớp buổi sáng &lt;30 phút, tuổi thường &gt;45. X-quang hỗ trợ xác nhận (hẹp khe khớp, gai xương, xơ xương dưới sụn) nhưng <b>mức độ tổn thương X-quang không nhất thiết tương xứng mức độ đau</b> — không cần chụp X-quang thường quy nếu lâm sàng đã điển hình.</p>`,
+    dieu_tri:`
+      <div class="subhead">Nền tảng — không dùng thuốc (khuyến cáo mạnh nhất, ưu tiên hàng đầu)</div>
+      <ul>
+        <li><b>Tập thể dục</b> (aerobic, tăng cường cơ, thể dục dưới nước) — bằng chứng mạnh nhất trong mọi can thiệp OA gối/háng</li>
+        <li>Giảm cân nếu thừa cân/béo phì (giảm ≥5–10% cân nặng cải thiện rõ triệu chứng)</li>
+        <li>Chương trình tự quản lý, vật lý trị liệu, dụng cụ hỗ trợ (gậy, nẹp gối) khi cần</li>
+      </ul>
+      <div class="subhead">Điều trị thuốc</div>
+      <ul>
+        <li><b>NSAID bôi tại chỗ</b> là lựa chọn hàng đầu cho OA gối/tay (hiệu quả tương đương uống, ít tác dụng phụ toàn thân) — ưu tiên đặc biệt ở người cao tuổi</li>
+        <li><b>NSAID uống</b> khi bôi tại chỗ không đủ hiệu quả, dùng liều thấp nhất-thời gian ngắn nhất có hiệu quả</li>
+        <li>Tiêm corticosteroid nội khớp: giảm đau ngắn hạn (vài tuần), có thể lặp lại nhưng hạn chế tần suất</li>
+      </ul>
+      <div class="alert-box alert-danger">ACR 2019/2024 khuyến cáo <b>mạnh phản đối</b>: glucosamine/chondroitin, tiêm huyết tương giàu tiểu cầu (PRP), và opioid thường quy cho OA — bằng chứng hiệu quả không nhất quán/không vượt trội so nguy cơ.</div>
+      <p>Thay khớp toàn phần (gối/háng) khi đau/hạn chế chức năng nặng dai dẳng dù đã điều trị nội khoa tối ưu.</p>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-warn">NSAID uống ở người cao tuổi: nguy cơ xuất huyết tiêu hóa, suy thận, biến cố tim mạch tăng theo tuổi — ưu tiên tại chỗ, nếu dùng uống cần phối hợp PPI và dùng thời gian ngắn nhất.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Diclofenac gel 1%","bôi tại chỗ × 4 lần/ngày (khớp nhỏ) hoặc 2 lần/ngày (gel 2%)","tác dụng phụ tại chỗ (kích ứng da) thay vì toàn thân"],
+        ["Naproxen (uống)","250–500mg × 2 lần/ngày","thận trọng bệnh tim mạch/thận/tiêu hóa ở người cao tuổi"],
+        ["Celecoxib (COX-2 chọn lọc)","100–200mg × 1–2 lần/ngày","ít biến cố tiêu hóa hơn NSAID cổ điển, vẫn thận trọng tim mạch"],
+        ["Acetaminophen/Paracetamol","tối đa 3g/ngày (giảm liều ở gan yếu)","hiệu quả khiêm tốn hơn NSAID nhưng an toàn hơn nếu chống chỉ định NSAID"],
+        ["Triamcinolone tiêm khớp gối","40mg/lần, hạn chế ≤3–4 lần/năm/khớp","tránh tiêm quá thường xuyên (nguy cơ tổn thương sụn)"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Tập thể dục và giảm cân là điều trị nền tảng, ưu tiên hàng đầu",'<span class="badge badge-I">I</span>'],
+        ["NSAID bôi tại chỗ ưu tiên hơn uống, đặc biệt người cao tuổi",'<span class="badge badge-I">I</span>'],
+        ["Tiêm corticosteroid nội khớp giảm đau ngắn hạn",'<span class="badge badge-IIa">IIa</span>'],
+        ["Glucosamine/chondroitin",'<span class="badge badge-III">III</span>'],
+        ["Tiêm huyết tương giàu tiểu cầu (PRP) thường quy",'<span class="badge badge-III">III</span>'],
+        ["Opioid thường quy cho OA mạn tính",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2019 ACR/Arthritis Foundation Guideline for OA Management (Hand, Hip, Knee) + 2024 focused update; OARSI 2019 Guidelines"
+},
+{
+  spec:"co_xuong_khop", id:"osteoporosis", emoji:"🦴", short:"Loãng xương", title:"Loãng xương",
+  guidelines:["AACE/ACE 2020","ES 2019 (Sau mãn kinh)"],
+  sections:{
+    dinh_nghia:`
+      <p>Loãng xương là bệnh xương chuyển hóa đặc trưng bởi giảm mật độ khoáng xương và suy giảm vi cấu trúc xương, làm tăng nguy cơ gãy xương.</p>
+      <div class="subhead">Phân loại theo T-score (DXA, cổ xương đùi/cột sống thắt lưng)</div>
+      ${rt(["T-score"],[
+        ["Bình thường","≥ −1.0"],
+        ["Thiếu xương (Osteopenia)","−1.0 đến −2.5"],
+        ["Loãng xương","≤ −2.5"],
+        ["Loãng xương nặng","≤ −2.5 kèm ≥1 gãy xương do loãng xương"]
+      ])}`,
+    chan_doan:`
+      <p>Đo mật độ xương (DXA) cho: phụ nữ ≥65 tuổi, nam ≥70 tuổi, hoặc trẻ hơn kèm yếu tố nguy cơ (gãy xương sau chấn thương nhẹ, dùng corticosteroid kéo dài, mãn kinh sớm, tiền sử gia đình gãy xương háng).</p>
+      <p>Công cụ <b>FRAX</b> ước tính nguy cơ gãy xương 10 năm (gãy xương lớn do loãng xương và gãy xương háng), kết hợp T-score với tuổi, BMI, yếu tố nguy cơ lâm sàng — hỗ trợ quyết định điều trị ở nhóm thiếu xương ranh giới.</p>`,
+    dieu_tri:`
+      <div class="subhead">Nền tảng cho mọi bệnh nhân</div>
+      <p>Đủ canxi (1000–1200mg/ngày qua ăn uống ưu tiên hơn bổ sung), vitamin D (đích 25(OH)D ≥30 ng/mL), tập thể dục chịu trọng lực và tăng cường cơ, ngừng hút thuốc/hạn chế rượu, phòng ngừa té ngã.</p>
+      <div class="subhead">Chỉ định điều trị thuốc</div>
+      <p>T-score ≤ −2.5, hoặc đã có gãy xương do loãng xương (cột sống/háng), hoặc thiếu xương kèm nguy cơ FRAX cao (gãy xương lớn ≥20% hoặc gãy háng ≥3% trong 10 năm).</p>
+      <div class="subhead">Lựa chọn thuốc theo mức độ nguy cơ</div>
+      <ul>
+        <li><b>Nguy cơ cao thông thường:</b> Bisphosphonate uống (alendronate, risedronate) là hàng đầu — hiệu quả, chi phí thấp, bằng chứng lâu dài</li>
+        <li><b>Nguy cơ rất cao</b> (gãy xương gần đây, nhiều yếu tố nguy cơ, T-score rất thấp ≤ −3.0): ưu tiên khởi đầu bằng thuốc <b>đồng hóa xương</b> (teriparatide, abaloparatide, hoặc romosozumab) trước, sau đó chuyển sang bisphosphonate/denosumab để duy trì — chiến lược "anabolic-first" cho hiệu quả chống gãy xương tốt hơn thứ tự ngược lại</li>
+        <li><b>Denosumab</b>: lựa chọn khi chống chỉ định/không dung nạp bisphosphonate (đặc biệt suy thận nặng) — <b>không được ngưng đột ngột</b> vì gây tăng nguy cơ gãy xương cột sống dội ngược, cần chuyển tiếp bằng bisphosphonate khi ngưng</li>
+      </ul>`,
+    lieu_thuoc:`
+      <div class="alert-box alert-danger">Biến chứng hiếm nhưng cần cảnh giác khi dùng bisphosphonate/denosumab dài hạn (thường &gt;5 năm): hoại tử xương hàm, gãy xương đùi không điển hình — đánh giá lại lợi ích/nguy cơ định kỳ, cân nhắc "kỳ nghỉ thuốc" (drug holiday) sau 3–5 năm ở nguy cơ không quá cao.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Alendronate","70mg uống × 1 lần/tuần","uống lúc đói, ngồi/đứng thẳng ≥30 phút sau uống; tránh nếu eGFR&lt;35"],
+        ["Risedronate","35mg uống × 1 lần/tuần","tương tự alendronate"],
+        ["Zoledronic acid (TM)","5mg truyền TM × 1 lần/năm","bù đủ canxi/vitamin D trước truyền; tránh nếu eGFR&lt;35"],
+        ["Denosumab (TDD)","60mg TDD mỗi 6 tháng","không ngưng đột ngột; theo dõi canxi máu, đặc biệt suy thận"],
+        ["Teriparatide (đồng hóa xương)","20mcg TDD/ngày, tối đa 2 năm dùng trọn đời","chống chỉ định tiền sử ung thư xương/Paget/tia xạ xương"],
+        ["Romosozumab","210mg TDD/tháng × 12 tháng","chống chỉ định nếu tiền sử nhồi máu cơ tim/đột quỵ trong 1 năm qua"],
+        ["Canxi + Vitamin D3","canxi 1000-1200mg + vitamin D 800-2000 IU/ngày","chỉnh liều vitamin D theo nồng độ 25(OH)D đo được"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bisphosphonate uống là điều trị hàng đầu cho loãng xương nguy cơ thông thường",'<span class="badge badge-I">I</span>'],
+        ["Ưu tiên thuốc đồng hóa xương trước ở nhóm nguy cơ gãy xương rất cao",'<span class="badge badge-IIa">IIa</span>'],
+        ["Chuyển tiếp bằng bisphosphonate khi ngưng denosumab",'<span class="badge badge-I">I</span>'],
+        ["Đo FRAX hỗ trợ quyết định điều trị ở nhóm thiếu xương ranh giới",'<span class="badge badge-I">I</span>'],
+        ["Ngưng denosumab đột ngột không chuyển tiếp thuốc khác",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"AACE/ACE 2020 Clinical Practice Guidelines for Postmenopausal Osteoporosis; Endocrine Society 2019 Guideline"
 }
 ];
 
@@ -657,11 +1218,31 @@ const sectionMeta = [
   {key:"khuyen_cao", label:"Khuyến cáo", icon:"📋"}
 ];
 
-let activeDiseaseId = diseases[0].id;
+let activeSpecialty = specialties[0].id;
+let activeDiseaseId = diseases.find(d => d.spec === activeSpecialty).id;
+
+function renderSpecialtyTabs(){
+  const wrap = document.getElementById('specialtyTabs');
+  wrap.innerHTML = specialties.map(s => `
+    <div class="sp-tab ${s.id===activeSpecialty?'active':''}" onclick="selectSpecialty('${s.id}')">
+      <span class="emoji">${s.emoji}</span>${s.label}
+    </div>`).join('');
+}
+
+function selectSpecialty(id){
+  activeSpecialty = id;
+  const firstInSpec = diseases.find(d => d.spec === id);
+  activeDiseaseId = firstInSpec.id;
+  renderSpecialtyTabs();
+  renderDiseaseTabs();
+  renderDiseaseContent();
+  document.getElementById('mainContainer').scrollIntoView({behavior:'smooth'});
+}
 
 function renderDiseaseTabs(){
   const wrap = document.getElementById('diseaseTabs');
-  wrap.innerHTML = diseases.map(d => `
+  const list = diseases.filter(d => d.spec === activeSpecialty);
+  wrap.innerHTML = list.map(d => `
     <div class="d-tab ${d.id===activeDiseaseId?'active':''}" onclick="selectDisease('${d.id}')">
       <span class="emoji">${d.emoji}</span>${d.short}
     </div>`).join('');
@@ -733,6 +1314,7 @@ function toggleTheme(){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  renderSpecialtyTabs();
   renderDiseaseTabs();
   renderSectionNav();
   renderDiseaseContent();
