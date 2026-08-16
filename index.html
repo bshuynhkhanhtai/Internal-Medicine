@@ -97,6 +97,27 @@
 
   .source-note{font-size:10.5px;color:var(--text-secondary);font-style:italic;padding:2px 4px 0;}
 
+  /* Ô tính điểm tương tác (thang điểm lâm sàng) */
+  .score-box{background:var(--tiffany-light);border:1.5px solid var(--tiffany-main);border-radius:12px;padding:12px;margin-bottom:12px;}
+  .score-title{font-weight:800;font-size:13px;color:var(--tiffany-dark);margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+  .score-title .tag-auto{font-size:9.5px;font-weight:700;background:var(--tiffany-main);color:#fff;padding:1px 6px;border-radius:6px;}
+  .score-item{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px dashed var(--border-color);cursor:pointer;font-size:12.5px;}
+  .score-item:last-of-type{border-bottom:none;}
+  .score-item input[type=checkbox]{width:17px;height:17px;flex-shrink:0;accent-color:var(--tiffany-main);}
+  .score-item span.it-label{flex:1;color:var(--text-primary);line-height:1.4;}
+  .score-item span.it-pts{flex-shrink:0;font-weight:800;color:var(--tiffany-dark);font-size:11.5px;background:var(--bg-card);padding:1px 7px;border-radius:8px;}
+  .score-result{margin-top:10px;padding:9px 11px;background:var(--bg-card);border-radius:10px;font-size:13px;display:flex;flex-direction:column;gap:3px;border:1px solid var(--border-color);}
+  .score-result .sr-total{font-weight:800;color:var(--text-primary);}
+  .score-result .sr-total b{font-size:17px;color:var(--tiffany-dark);}
+  .score-result .sr-interp{font-weight:700;font-size:12.3px;}
+  .score-reset{margin-top:8px;font-size:11px;font-weight:700;color:var(--tiffany-dark);background:none;border:1px solid var(--tiffany-main);border-radius:8px;padding:4px 10px;cursor:pointer;}
+  .score-group{padding:7px 4px;border-bottom:1px dashed var(--border-color);}
+  .score-group:last-of-type{border-bottom:none;}
+  .sg-label{font-weight:700;font-size:12.3px;color:var(--text-primary);margin-bottom:5px;}
+  .sg-opts{display:flex;flex-direction:column;gap:5px;}
+  .score-radio-opt{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-secondary);cursor:pointer;}
+  .score-radio-opt input[type=radio]{width:15px;height:15px;flex-shrink:0;accent-color:var(--tiffany-main);}
+
   footer{text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px 20px;}
 </style>
 </head>
@@ -146,6 +167,98 @@ function rt(headers, rows){
 }
 
 /* =========================================================
+   HELPER: bảng tính điểm lâm sàng tương tác (tick chọn → tự cộng điểm)
+   calcId: mã định danh duy nhất
+   title: tiêu đề thang điểm
+   items: [{label, pts}, ...]
+   ========================================================= */
+function sc(calcId, title, items){
+  const rows = items.map((it,i) => `
+    <label class="score-item">
+      <input type="checkbox" data-pts="${it.pts}" onchange="updateScore('${calcId}')">
+      <span class="it-label">${it.label}</span>
+      <span class="it-pts">+${it.pts}</span>
+    </label>`).join('');
+  return `
+    <div class="score-box" data-calc="${calcId}">
+      <div class="score-title">🧮 ${title} <span class="tag-auto">Tự động tính</span></div>
+      ${rows}
+      <div class="score-result">
+        <div class="sr-total">Tổng điểm: <b id="${calcId}_total">0</b></div>
+        <div class="sr-interp" id="${calcId}_interp">${scoreInterp[calcId] ? scoreInterp[calcId](0) : ''}</div>
+      </div>
+      <button type="button" class="score-reset" onclick="resetScore('${calcId}')">↺ Đặt lại</button>
+    </div>`;
+}
+
+/* =========================================================
+   HELPER: bảng tính điểm dạng chọn 1 mức/tiêu chí (radio group)
+   dùng cho thang điểm có nhiều mức điểm mỗi tiêu chí (vd. Child-Pugh)
+   groups: [{label, options:[{text, pts}, ...]}, ...]
+   ========================================================= */
+function scr(calcId, title, groups){
+  const rows = groups.map((g,gi) => {
+    const opts = g.options.map((o,oi) => `
+      <label class="score-radio-opt">
+        <input type="radio" name="${calcId}_g${gi}" data-pts="${o.pts}" ${oi===0?'checked':''} onchange="updateScoreR('${calcId}')">
+        <span>${o.text}</span>
+      </label>`).join('');
+    return `<div class="score-group"><div class="sg-label">${g.label}</div><div class="sg-opts">${opts}</div></div>`;
+  }).join('');
+  return `
+    <div class="score-box" data-calcr="${calcId}" data-groups="${groups.length}">
+      <div class="score-title">🧮 ${title} <span class="tag-auto">Tự động tính</span></div>
+      ${rows}
+      <div class="score-result">
+        <div class="sr-total">Tổng điểm: <b id="${calcId}_total">${groups.reduce((s,g)=>s+g.options[0].pts,0)}</b></div>
+        <div class="sr-interp" id="${calcId}_interp">${scoreInterp[calcId] ? scoreInterp[calcId](groups.reduce((s,g)=>s+g.options[0].pts,0)) : ''}</div>
+      </div>
+    </div>`;
+}
+
+function updateScoreR(calcId){
+  const box = document.querySelector(`.score-box[data-calcr="${calcId}"]`);
+  if(!box) return;
+  const nGroups = parseInt(box.dataset.groups,10);
+  let total = 0;
+  for(let gi=0; gi<nGroups; gi++){
+    const checked = box.querySelector(`input[name="${calcId}_g${gi}"]:checked`);
+    if(checked) total += parseFloat(checked.dataset.pts);
+  }
+  const totalEl = document.getElementById(calcId+'_total');
+  const interpEl = document.getElementById(calcId+'_interp');
+  if(totalEl) totalEl.textContent = total;
+  if(interpEl && scoreInterp[calcId]) interpEl.innerHTML = scoreInterp[calcId](total);
+}
+
+const scoreInterp = {
+  cha2ds2va: (t) => t>=2 ? `⚠️ Nguy cơ đột quỵ cao — <b>khuyến cáo kháng đông</b> (Class I)` : t===1 ? `Nguy cơ trung bình — cân nhắc kháng đông theo đặc điểm bệnh nhân (Class IIa)` : `Nguy cơ thấp — có thể không cần kháng đông thường quy`,
+  hasbled: (t) => t>=3 ? `⚠️ Nguy cơ chảy máu cao — không loại trừ kháng đông, nhưng cần theo dõi sát/hiệu chỉnh yếu tố nguy cơ có thể sửa được` : `Nguy cơ chảy máu không cao — theo dõi định kỳ như thường quy`,
+  curb65: (t) => t<=1 ? `Nhẹ — có thể điều trị ngoại trú` : t===2 ? `Trung bình — cân nhắc nhập viện ngắn ngày/theo dõi sát` : `Nặng — khuyến cáo nhập viện, cân nhắc ICU nếu ≥4 điểm`,
+  childpugh: (t) => t<=6 ? `Child-Pugh A — xơ gan còn bù, tiên lượng tốt` : t<=9 ? `Child-Pugh B — mất bù trung bình` : `Child-Pugh C — mất bù nặng, cân nhắc đánh giá ghép gan`,
+  das28ra: (t) => t<3 ? `Kiểm soát tốt — hoạt động bệnh thấp/lui bệnh` : t<5 ? `Hoạt động bệnh trung bình — cân nhắc tối ưu/leo thang điều trị` : `Hoạt động bệnh cao — cần leo thang điều trị theo treat-to-target`
+};
+
+function updateScore(calcId){
+  const box = document.querySelector(`.score-box[data-calc="${calcId}"]`);
+  if(!box) return;
+  const checks = box.querySelectorAll('input[type=checkbox]');
+  let total = 0;
+  checks.forEach(c => { if(c.checked) total += parseFloat(c.dataset.pts); });
+  const totalEl = document.getElementById(calcId+'_total');
+  const interpEl = document.getElementById(calcId+'_interp');
+  if(totalEl) totalEl.textContent = total;
+  if(interpEl && scoreInterp[calcId]) interpEl.innerHTML = scoreInterp[calcId](total);
+}
+
+function resetScore(calcId){
+  const box = document.querySelector(`.score-box[data-calc="${calcId}"]`);
+  if(!box) return;
+  box.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = false);
+  updateScore(calcId);
+}
+
+/* =========================================================
    CHUYÊN KHOA
    ========================================================= */
 const specialties = [
@@ -153,7 +266,8 @@ const specialties = [
   {id:"noi_tiet", emoji:"🍬", label:"Nội tiết"},
   {id:"ho_hap", emoji:"🫁", label:"Hô hấp"},
   {id:"tieu_hoa", emoji:"🍽️", label:"Tiêu hóa"},
-  {id:"co_xuong_khop", emoji:"🦴", label:"Cơ xương khớp"}
+  {id:"co_xuong_khop", emoji:"🦴", label:"Cơ xương khớp"},
+  {id:"than", emoji:"🫘", label:"Thận"}
 ];
 
 /* =========================================================
@@ -209,8 +323,8 @@ const diseases = [
       </ul>
       <div class="alert-box alert-info">Chẹn beta <b>không còn là lựa chọn hàng đầu</b> thường quy (trừ khi có chỉ định riêng: bệnh mạch vành, suy tim, rung nhĩ cần kiểm soát tần số, phụ nữ có thai/dự định có thai).</div>
       <div class="subhead">THA kháng trị (không đạt đích dù 3 thuốc tối ưu gồm lợi tiểu)</div>
-      <p>Thêm <b>spironolactone</b> liều thấp (eplerenone nếu không dung nạp) → chẹn beta → thuốc khác (chẹn alpha, chẹn giao cảm trung ương). Có thể cân nhắc <b>đốt thần kinh giao cảm thận</b> — khuyến cáo mới lần đầu trong ESC 2024.</p>`,
-    lieu_thuoc:`
+      <p>Thêm <b>spironolactone</b> liều thấp (eplerenone nếu không dung nạp) → chẹn beta → thuốc khác (chẹn alpha, chẹn giao cảm trung ương). Có thể cân nhắc <b>đốt thần kinh giao cảm thận</b> — khuyến cáo mới lần đầu trong ESC 2024.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người cao tuổi (≥65–75), suy thận, suy gan: khởi liều thấp nhất, tăng liều chậm, theo dõi HA tư thế đứng để tránh hạ HA/té ngã.</div>
       ${rt(["Người lớn tiêu chuẩn","Cao tuổi / thận yếu"],[
         ["Amlodipine","5–10 mg × 1 lần/ngày","khởi đầu 2.5 mg/ngày"],
@@ -274,8 +388,8 @@ const diseases = [
         <li>Điều trị bệnh đồng mắc: THA, rung nhĩ, béo phì</li>
       </ul>
       <div class="subhead">Suy tim cấp mất bù</div>
-      <p>Lợi tiểu quai TM (furosemide) chỉnh liều theo đáp ứng; oxy nếu SpO2&lt;90%; xử trí nguyên nhân khởi phát; tránh ngưng đột ngột 4 trụ cột nếu huyết động ổn.</p>`,
-    lieu_thuoc:`
+      <p>Lợi tiểu quai TM (furosemide) chỉnh liều theo đáp ứng; oxy nếu SpO2&lt;90%; xử trí nguyên nhân khởi phát; tránh ngưng đột ngột 4 trụ cột nếu huyết động ổn.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người cao tuổi/suy thận: khởi liều thấp, tăng liều mỗi 2–4 tuần, theo dõi HA, K⁺, creatinine sau mỗi lần tăng liều.</div>
       ${rt(["Khởi đầu","Liều đích"],[
         ["Sacubitril/Valsartan","24/26 mg × 2 lần/ngày","97/103 mg × 2 lần/ngày"],
@@ -320,17 +434,29 @@ const diseases = [
       <p>Kịch phát (tự hết ≤7 ngày) · Dai dẳng (&gt;7 ngày) · Dai dẳng kéo dài (&gt;12 tháng) · Vĩnh viễn.</p>`,
     chan_doan:`
       <p>Chẩn đoán xác định cần <b>ECG 12 chuyển đạo hoặc bản ghi nhịp ≥30 giây</b> thể hiện rung nhĩ (RR không đều, không có sóng P rõ).</p>
-      <div class="subhead">CHA₂DS₂-VA (ESC 2024, bỏ tiêu chí giới tính)</div>
-      ${rt(["Điểm"],[
-        ["Suy tim/rối loạn chức năng thất trái","1"],
-        ["Tăng huyết áp","1"],
-        ["Tuổi ≥75","2"],
-        ["Đái tháo đường","1"],
-        ["Tiền sử đột quỵ/TIA/thuyên tắc","2"],
-        ["Bệnh mạch máu (mạch vành, ĐM ngoại biên, mảng xơ vữa ĐMC)","1"],
-        ["Tuổi 65–74","1"]
+      <div class="subhead">CHA₂DS₂-VA — nguy cơ đột quỵ (ESC 2024, bỏ tiêu chí giới tính)</div>
+      ${sc("cha2ds2va","Thang điểm CHA₂DS₂-VA",[
+        {label:"Suy tim/rối loạn chức năng thất trái",pts:1},
+        {label:"Tăng huyết áp",pts:1},
+        {label:"Tuổi ≥75",pts:2},
+        {label:"Đái tháo đường",pts:1},
+        {label:"Tiền sử đột quỵ/TIA/thuyên tắc",pts:2},
+        {label:"Bệnh mạch máu (mạch vành, ĐM ngoại biên, mảng xơ vữa ĐMC)",pts:1},
+        {label:"Tuổi 65–74",pts:1}
       ])}
-      <p>Điểm ≥2: khuyến cáo kháng đông. Đánh giá song song nguy cơ chảy máu bằng thang <b>HAS-BLED</b> để xác định yếu tố có thể điều chỉnh, không dùng để loại trừ kháng đông.</p>`,
+      <p>Điểm ≥2: khuyến cáo kháng đông. Đánh giá song song nguy cơ chảy máu bằng thang <b>HAS-BLED</b> bên dưới để xác định yếu tố có thể điều chỉnh — <b>không dùng HAS-BLED để loại trừ kháng đông</b>.</p>
+      <div class="subhead">HAS-BLED — nguy cơ chảy máu</div>
+      ${sc("hasbled","Thang điểm HAS-BLED",[
+        {label:"Tăng huyết áp (HA tâm thu &gt;160mmHg)",pts:1},
+        {label:"Chức năng thận bất thường (lọc máu/ghép/creatinine &gt;2.26mg/dL)",pts:1},
+        {label:"Chức năng gan bất thường (xơ gan/bilirubin&gt;2 lần hoặc AST/ALT/ALP&gt;3 lần)",pts:1},
+        {label:"Tiền sử đột quỵ",pts:1},
+        {label:"Tiền sử chảy máu/khuynh hướng chảy máu",pts:1},
+        {label:"INR dao động không ổn định (nếu dùng warfarin)",pts:1},
+        {label:"Tuổi &gt;65",pts:1},
+        {label:"Dùng thuốc làm tăng nguy cơ chảy máu (kháng kết tập tiểu cầu/NSAID)",pts:1},
+        {label:"Nghiện rượu (≥8 đơn vị/tuần)",pts:1}
+      ])}`,
     dieu_tri:`
       <div class="subhead">Phòng ngừa đột quỵ</div>
       <p><b>Kháng đông đường uống thế hệ mới (NOAC)</b> được ưu tiên hơn kháng vitamin K ở hầu hết bệnh nhân rung nhĩ không do bệnh van tim, trừ khi có van cơ học hoặc hẹp van 2 lá trung bình–nặng.</p>
@@ -341,8 +467,8 @@ const diseases = [
         <li>Kiểm soát tần số (chẹn beta, chẹn canxi non-DHP, digoxin) khi chiến lược kiểm soát nhịp không phù hợp.</li>
       </ul>
       <div class="subhead">Kiểm soát yếu tố nguy cơ (trụ C)</div>
-      <p>Giảm cân, điều trị ngưng thở khi ngủ, kiểm soát HA chặt, hạn chế rượu — can thiệp bắt buộc song song, giảm gánh nặng rung nhĩ và tái phát sau đốt điện.</p>`,
-    lieu_thuoc:`
+      <p>Giảm cân, điều trị ngưng thở khi ngủ, kiểm soát HA chặt, hạn chế rượu — can thiệp bắt buộc song song, giảm gánh nặng rung nhĩ và tái phát sau đốt điện.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-danger">Luôn chỉnh liều NOAC theo tuổi, cân nặng, chức năng thận (CrCl) — quá liều tăng nguy cơ xuất huyết, dưới liều tăng nguy cơ đột quỵ.</div>
       ${rt(["Liều chuẩn","Liều giảm & tiêu chí"],[
         ["Apixaban","5 mg × 2 lần/ngày","2.5mg×2 nếu ≥2/3: tuổi≥80, CN≤60kg, creatinin≥1.5"],
@@ -398,8 +524,8 @@ const diseases = [
       <ul>
         <li>ICD phòng ngừa <b>thứ phát</b>: sống sót sau ngừng tim do VT/VF không do nguyên nhân hồi phục</li>
         <li>ICD phòng ngừa <b>tiên phát</b>: EF≤35% sau NMCT ≥40 ngày, NYHA II–III dù điều trị nội khoa tối ưu</li>
-      </ul>`,
-    lieu_thuoc:`
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người cao tuổi: giảm liều amiodarone nạp/duy trì, theo dõi tuyến giáp/gan/phổi khi dùng dài hạn; tránh phối hợp verapamil/diltiazem với chẹn beta do nguy cơ block nặng.</div>
       ${rt(["Liều dùng","Lưu ý"],[
         ["Adenosine","6mg TM nhanh → 12mg → 12mg nếu chưa đáp ứng","giảm còn 3mg nếu qua catheter TM trung tâm/dùng dipyridamole"],
@@ -447,8 +573,8 @@ const diseases = [
         <li>Block AV độ II Mobitz II, độ III: cấy máy tạo nhịp <b>dù có triệu chứng hay không</b> do nguy cơ vô tâm thu</li>
       </ul>
       <div class="subhead">Chọn kiểu tạo nhịp</div>
-      <p>Ở bệnh nhân suy tim EF giảm cần tạo nhịp thất nhiều: cân nhắc tạo nhịp hai buồng thất (CRT) hoặc tạo nhịp bó His/nhánh trái để tránh mất đồng bộ thất do tạo nhịp thất phải đơn thuần gây ra.</p>`,
-    lieu_thuoc:`
+      <p>Ở bệnh nhân suy tim EF giảm cần tạo nhịp thất nhiều: cân nhắc tạo nhịp hai buồng thất (CRT) hoặc tạo nhịp bó His/nhánh trái để tránh mất đồng bộ thất do tạo nhịp thất phải đơn thuần gây ra.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Đây chủ yếu là xử trí cấp cứu tạm thời trong lúc chờ tạo nhịp; không có thuốc điều trị nền lâu dài thay thế máy tạo nhịp khi có chỉ định.</div>
       ${rt(["Liều dùng","Lưu ý"],[
         ["Atropine","0.5mg TM mỗi 3–5 phút, tối đa 3mg","kém hiệu quả với block vị trí dưới nút His (QRS rộng); liều &lt;0.5mg có thể gây chậm nhịp nghịch thường"],
@@ -500,8 +626,8 @@ const diseases = [
         <li>Chẹn beta sớm nếu không chống chỉ định (đặc biệt khi EF giảm)</li>
         <li>ACEi/ARB nếu EF giảm, THA, ĐTĐ, bệnh thận mạn</li>
         <li>Kháng đông giai đoạn cấp (heparin không phân đoạn, enoxaparin, hoặc fondaparinux trong NSTEMI)</li>
-      </ul>`,
-    lieu_thuoc:`
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người ≥75 tuổi: tránh liều nạp prasugrel; nếu dùng tiêu sợi huyết không dùng liều nạp clopidogrel; theo dõi sát nguy cơ chảy máu.</div>
       ${rt(["Liều nạp","Liều duy trì"],[
         ["Aspirin","150–300mg nhai (hoặc 75–250mg TM)","75–100 mg/ngày, suốt đời"],
@@ -554,8 +680,8 @@ const diseases = [
         <li><b>Bước 2:</b> thêm ezetimibe nếu chưa đạt đích</li>
         <li><b>Bước 3:</b> thêm ức chế PCSK9 nếu vẫn chưa đạt đích ở nguy cơ rất cao</li>
       </ul>
-      <div class="alert-box alert-info">Nguy cơ rất cao có biến cố tim mạch tái phát trong 2 năm dù đã statin liều tối đa: có thể xem xét đích LDL-C &lt;1.0 mmol/L (&lt;40 mg/dL).</div>`,
-    lieu_thuoc:`
+      <div class="alert-box alert-info">Nguy cơ rất cao có biến cố tim mạch tái phát trong 2 năm dù đã statin liều tối đa: có thể xem xét đích LDL-C &lt;1.0 mmol/L (&lt;40 mg/dL).</div>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người châu Á, cao tuổi, cân nặng thấp: nguy cơ tăng men gan/đau cơ cao hơn — nhiều hướng dẫn giới hạn rosuvastatin ≤20mg/ngày cho người châu Á trừ khi giám sát chặt.</div>
       ${rt(["Liều tiêu chuẩn","Cao tuổi / thận yếu"],[
         ["Atorvastatin","10–80 mg/ngày (cường độ cao 40–80mg)","khởi đầu 10–20 mg/ngày"],
@@ -600,8 +726,8 @@ const diseases = [
         <li><b>GLP-1 RA</b> (semaglutide, liraglutide, dulaglutide) có bằng chứng lợi ích tim mạch: ưu tiên khi cần giảm cân nhiều hoặc xơ vữa động mạch chiếm ưu thế</li>
         <li><b>Metformin</b> vẫn là nền tảng kiểm soát đường huyết ở đa số bệnh nhân, có thể phối hợp SGLT2i/GLP-1RA</li>
         <li>Kiểm soát đa yếu tố: HA đích &lt;130/80, LDL-C theo phân tầng nguy cơ, statin cường độ cao gần như thường quy</li>
-      </ul>`,
-    lieu_thuoc:`
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Metformin: chống chỉ định eGFR &lt;30; giảm liều eGFR 30–45; ngưng tạm thời trước chụp cản quang/thủ thuật lớn ở người cao tuổi/suy thận.</div>
       ${rt(["Liều khởi đầu → duy trì","Lưu ý theo tuổi/thận"],[
         ["Metformin","500mg×1–2/ngày → tối đa 2000mg/ngày","chống chỉ định eGFR&lt;30; giảm nửa liều eGFR 30–45"],
@@ -648,8 +774,8 @@ const diseases = [
       <div class="subhead">Điều trị thuốc (BMI≥30, hoặc ≥27 kèm bệnh đồng mắc)</div>
       <p><b>Nhóm đồng vận GLP-1/GIP</b> hiện là lựa chọn dược lý hiệu quả nhất, giảm 15–20% cân nặng, cải thiện đồng thời các yếu tố nguy cơ tim mạch-chuyển hóa (semaglutide có bằng chứng giảm biến cố tim mạch ở người béo phì có bệnh tim mạch — nghiên cứu SELECT).</p>
       <div class="subhead">Phẫu thuật giảm cân (bariatric)</div>
-      <p>Cân nhắc khi BMI ≥40, hoặc ≥35 kèm bệnh đồng mắc, sau khi đã thử lối sống ± thuốc không đạt hiệu quả đủ.</p>`,
-    lieu_thuoc:`
+      <p>Cân nhắc khi BMI ≥40, hoặc ≥35 kèm bệnh đồng mắc, sau khi đã thử lối sống ± thuốc không đạt hiệu quả đủ.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Chống chỉ định GLP-1/GIP RA: tiền sử/gia đình ung thư tuyến giáp thể tủy, đa u nội tiết típ 2, viêm tụy cấp gần đây. Người cao tuổi: tăng liều chậm hơn, theo dõi sụt cân quá mức/mất khối cơ.</div>
       ${rt(["Phác đồ tăng liều"],[
         ["Semaglutide 2.4mg (Wegovy)","0.25→0.5→1→1.7→2.4mg/tuần, mỗi bậc cách 4 tuần"],
@@ -703,8 +829,8 @@ const diseases = [
       <div class="subhead">Suy giáp</div>
       <p><b>Levothyroxine (LT4)</b> uống lúc đói, cách xa thức ăn/canxi/sắt ≥30–60 phút, là điều trị chuẩn suốt đời. Chỉnh liều dựa vào TSH, kiểm tra lại sau 6–8 tuần mỗi lần đổi liều.</p>
       <div class="subhead">Cường giáp/suy giáp dưới lâm sàng</div>
-      <p>Điều trị suy giáp dưới lâm sàng khi TSH ≥10 mIU/L, hoặc TSH 4.5–10 kèm triệu chứng/có thai/nguy cơ tim mạch cao. Điều trị cường giáp dưới lâm sàng khi TSH &lt;0.1 dai dẳng, đặc biệt ở người ≥65 tuổi hoặc có bệnh tim/loãng xương.</p>`,
-    lieu_thuoc:`
+      <p>Điều trị suy giáp dưới lâm sàng khi TSH ≥10 mIU/L, hoặc TSH 4.5–10 kèm triệu chứng/có thai/nguy cơ tim mạch cao. Điều trị cường giáp dưới lâm sàng khi TSH &lt;0.1 dai dẳng, đặc biệt ở người ≥65 tuổi hoặc có bệnh tim/loãng xương.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-danger">Methimazole chống chỉ định 3 tháng đầu thai kỳ (nguy cơ dị tật) — dùng PTU thay thế trong tam cá nguyệt 1, sau đó có thể chuyển lại methimazole.</div>
       ${rt(["Liều khởi đầu → duy trì","Lưu ý"],[
         ["Methimazole","10–30mg/ngày (theo mức độ nặng) → 5–10mg/ngày","theo dõi công thức máu/men gan; ngưng ngay nếu sốt/đau họng (nghi mất bạch cầu hạt)"],
@@ -754,8 +880,8 @@ const diseases = [
       <div class="subhead">Chiến lược MART (Maintenance And Reliever Therapy)</div>
       <p>Dùng <b>một</b> bình hít ICS-formoterol (budesonide/formoterol hoặc beclomethasone/formoterol) vừa duy trì hàng ngày vừa cắt cơn khi có triệu chứng — được GINA ưu tiên vì giảm đợt cấp nặng so với phác đồ SABA cắt cơn riêng.</p>
       <div class="subhead">Hen nặng (bậc 5 không kiểm soát)</div>
-      <p>Đánh giá kiểu hình viêm type-2 (bạch cầu ái toan máu, FeNO, IgE) để chọn thuốc sinh học: omalizumab (anti-IgE), mepolizumab/benralizumab (anti-IL5/5R), dupilumab (anti-IL4/13), tezepelumab (anti-TSLP, không cần kiểu hình type-2).</p>`,
-    lieu_thuoc:`
+      <p>Đánh giá kiểu hình viêm type-2 (bạch cầu ái toan máu, FeNO, IgE) để chọn thuốc sinh học: omalizumab (anti-IgE), mepolizumab/benralizumab (anti-IL5/5R), dupilumab (anti-IL4/13), tezepelumab (anti-TSLP, không cần kiểu hình type-2).</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Không dùng LABA đơn độc không kèm ICS trong điều trị hen (tăng nguy cơ tử vong do hen) — luôn phối hợp cố định ICS-LABA.</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
         ["Budesonide/formoterol (MART)","160/4.5mcg × 1–2 nhát, dùng khi cần, tối đa 8 nhát/ngày","dạy kỹ thuật hít đúng; súc miệng sau xịt tránh nấm miệng"],
@@ -809,8 +935,8 @@ const diseases = [
       ])}
       <div class="subhead">Theo dõi & leo thang</div>
       <p>Nếu còn khó thở dai dẳng: kiểm tra kỹ thuật hít/tuân thủ trước khi đổi thuốc, sau đó chuyển đổi nhóm thuốc hoặc thêm nhóm. Nếu còn đợt cấp dai dẳng dù LABA+LAMA: thêm ICS nếu eosinophil ≥100, hoặc roflumilast (FEV1&lt;50%+viêm phế quản mạn), hoặc azithromycin dài hạn (ưu tiên người không hút thuốc).</p>
-      <div class="alert-box alert-warn">Tránh dùng ICS đơn độc không phối hợp LABA/LAMA trong COPD, và thận trọng ICS liều cao kéo dài do tăng nguy cơ viêm phổi, đặc biệt khi eosinophil thấp.</div>`,
-    lieu_thuoc:`
+      <div class="alert-box alert-warn">Tránh dùng ICS đơn độc không phối hợp LABA/LAMA trong COPD, và thận trọng ICS liều cao kéo dài do tăng nguy cơ viêm phổi, đặc biệt khi eosinophil thấp.</div>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
         ["Tiotropium (LAMA)","18mcg × 1 nhát/ngày (HandiHaler) hoặc 2.5mcg×2 nhát (Respimat)","thận trọng glaucoma góc đóng, bí tiểu do phì đại tiền liệt tuyến"],
         ["Indacaterol/Glycopyrronium (LABA/LAMA)","110/50mcg × 1 nhát/ngày","kiểm tra kỹ thuật hít định kỳ"],
@@ -841,12 +967,12 @@ const diseases = [
     chan_doan:`
       <p>Chẩn đoán: triệu chứng hô hấp cấp (ho, sốt, khó thở, đau ngực kiểu màng phổi) + tổn thương thâm nhiễm mới trên hình ảnh học.</p>
       <div class="subhead">Phân tầng độ nặng — CURB-65</div>
-      ${rt(["Điểm"],[
-        ["Lú lẫn (Confusion)","1"],
-        ["Ure máu &gt;7 mmol/L","1"],
-        ["Nhịp thở ≥30 lần/phút (Respiratory rate)","1"],
-        ["HA tâm thu&lt;90 hoặc tâm trương≤60 (Blood pressure)","1"],
-        ["Tuổi ≥65","1"]
+      ${sc("curb65","Thang điểm CURB-65",[
+        {label:"Lú lẫn mới xuất hiện (Confusion)",pts:1},
+        {label:"Ure máu &gt;7 mmol/L (Urea)",pts:1},
+        {label:"Nhịp thở ≥30 lần/phút (Respiratory rate)",pts:1},
+        {label:"HA tâm thu&lt;90 hoặc tâm trương≤60 mmHg (Blood pressure)",pts:1},
+        {label:"Tuổi ≥65",pts:1}
       ])}
       <p>0–1 điểm: điều trị ngoại trú. 2 điểm: cân nhắc nhập viện ngắn/theo dõi sát. ≥3 điểm: nhập viện, cân nhắc ICU nếu ≥4.</p>`,
     dieu_tri:`
@@ -858,8 +984,21 @@ const diseases = [
       <p>Beta-lactam (ampicillin-sulbactam/ceftriaxone/cefotaxime) <b>+</b> macrolide, hoặc đơn trị fluoroquinolone hô hấp.</p>
       <div class="subhead">Nhập viện – ICU/nặng</div>
       <p>Beta-lactam phổ rộng <b>+</b> macrolide hoặc <b>+</b> fluoroquinolone hô hấp. Thêm phủ MRSA (vancomycin/linezolid) và/hoặc Pseudomonas (piperacillin-tazobactam/cefepime) nếu có yếu tố nguy cơ/phân lập trước đó.</p>
-      <div class="alert-box alert-info">ATS/IDSA 2019 khuyến cáo <b>không</b> còn dùng thường quy nhóm HCAP (viêm phổi liên quan chăm sóc y tế) để chọn kháng sinh phổ rộng — quyết định dựa trên yếu tố nguy cơ MRSA/Pseudomonas cụ thể của từng bệnh nhân, không dựa nơi cư trú.</div>`,
-    lieu_thuoc:`
+      <div class="alert-box alert-info">ATS/IDSA 2019 khuyến cáo <b>không</b> còn dùng thường quy nhóm HCAP (viêm phổi liên quan chăm sóc y tế) để chọn kháng sinh phổ rộng — quyết định dựa trên yếu tố nguy cơ MRSA/Pseudomonas cụ thể của từng bệnh nhân, không dựa nơi cư trú.</div>
+      <div class="subhead">🧑‍⚕️ Kháng sinh theo từng đối tượng bệnh nền</div>
+      ${rt(["Khuyến nghị kháng sinh","Lý do/lưu ý"],[
+        ["Suy thận mạn (eGFR&lt;30 hoặc lọc máu)","Ceftriaxone (không cần chỉnh liều) + azithromycin; tránh/giảm liều fluoroquinolone và piperacillin-tazobactam theo CrCl","Ceftriaxone thải qua mật nên an toàn hơn ở suy thận nặng; theo dõi tích lũy nếu dùng kéo dài"],
+        ["Suy gan nặng (Child B–C)","Ưu tiên beta-lactam (ceftriaxone) + azithromycin; thận trọng liều nạp azithromycin nếu vàng da nặng","Tránh/giảm liều thuốc chuyển hóa qua gan; theo dõi men gan nếu phối hợp nhiều thuốc"],
+        ["Dị ứng penicillin (nhẹ, không phản vệ)","Cephalosporin thế hệ 3 (ceftriaxone) thường an toàn (chéo phản ứng thấp &lt;2%)","Nếu tiền sử phản vệ với penicillin: chuyển fluoroquinolone hô hấp đơn trị hoặc aztreonam thay beta-lactam"],
+        ["Dị ứng penicillin nặng (phản vệ/SJS)","Fluoroquinolone hô hấp đơn trị (levofloxacin/moxifloxacin)","Tránh mọi beta-lactam kể cả cephalosporin thế hệ sau"],
+        ["Phụ nữ có thai","Beta-lactam (amoxicillin/ceftriaxone) + azithromycin","Tránh doxycycline (ảnh hưởng răng-xương thai) và fluoroquinolone (ảnh hưởng sụn khớp) trừ khi không còn lựa chọn khác"],
+        ["Người cao tuổi tại viện dưỡng lão/sống phụ thuộc","Đánh giá nguy cơ MRSA/Pseudomonas cụ thể thay vì mặc định phổ rộng; ceftriaxone+azithromycin là lựa chọn hợp lý nếu không có yếu tố nguy cơ đặc biệt","Không dùng nhãn 'viêm phổi liên quan chăm sóc y tế' để tự động mở rộng phổ kháng sinh"],
+        ["Nguy cơ MRSA (lọc máu, từng phân lập MRSA hô hấp, dùng KS TM gần đây, cúm nặng gần đây)","Thêm vancomycin hoặc linezolid vào phác đồ nền","Ngưng nếu cấy/PCR mũi âm tính MRSA và lâm sàng cải thiện (chiến lược xuống thang)"],
+        ["Nguy cơ Pseudomonas (COPD nặng/giãn phế quản cấu trúc, dùng corticosteroid kéo dài, từng phân lập Pseudomonas)","Thêm piperacillin-tazobactam hoặc cefepime hoặc meropenem thay ceftriaxone","Xuống thang theo kháng sinh đồ khi có kết quả cấy"],
+        ["Nghi hít sặc/áp xe phổi (nghiện rượu, rối loạn nuốt, động kinh)","Ampicillin-sulbactam hoặc phối hợp phủ kỵ khí (metronidazole/clindamycin)","Cân nhắc kéo dài thời gian điều trị nếu có áp xe/mủ màng phổi"],
+        ["Suy giảm miễn dịch (ghép tạng, hóa trị, giảm bạch cầu hạt, HIV CD4 thấp)","Phối hợp phổ rộng theo hội chẩn chuyên khoa nhiễm; cân nhắc phủ nấm/PJP/virus theo bệnh cảnh","Ngưỡng nhập viện thấp hơn; xét nghiệm vi sinh mở rộng (galactomannan, PCR virus hô hấp, nhuộm PJP nếu nghi ngờ)"]
+      ])}
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người cao tuổi/suy thận: chỉnh liều theo CrCl cho hầu hết kháng sinh nhóm beta-lactam và fluoroquinolone; thận trọng kéo dài QTc khi phối hợp macrolide/fluoroquinolone ở người có bệnh tim.</div>
       ${rt(["Liều người lớn","Lưu ý"],[
         ["Amoxicillin (ngoại trú)","1g × 3 lần/ngày","chỉnh liều theo CrCl&lt;30"],
@@ -883,6 +1022,116 @@ const diseases = [
   source:"2019 ATS/IDSA Clinical Practice Guidelines for CAP in Adults; British Thoracic Society CAP Guideline 2023 update"
 },
 {
+  spec:"noi_tiet", id:"cushing", emoji:"🌙", short:"Cushing", title:"Hội chứng Cushing",
+  guidelines:["Endocrine Society 2015 (chẩn đoán)","Endocrine Society 2021 (điều trị)"],
+  sections:{
+    dinh_nghia:`
+      <p>Hội chứng Cushing là tình trạng dư thừa glucocorticoid mạn tính, biểu hiện bằng béo trung tâm, mặt tròn đỏ, rạn da tím, teo cơ-yếu cơ gốc chi, tăng huyết áp, rối loạn dung nạp glucose, loãng xương, dễ bầm tím.</p>
+      <div class="subhead">Phân loại nguyên nhân</div>
+      ${rt(["Đặc điểm"],[
+        ["Ngoại sinh (do thuốc)","Nguyên nhân thường gặp nhất tuyệt đối — dùng corticosteroid liều cao/kéo dài (uống, hít, khớp, ngoài da) — luôn khai thác kỹ tiền sử dùng thuốc trước khi tìm nguyên nhân nội sinh"],
+        ["ACTH-dependent — Bệnh Cushing (u tuyến yên tiết ACTH)","Nguyên nhân nội sinh thường gặp nhất (~70%), thường u tuyến yên nhỏ (microadenoma)"],
+        ["ACTH-dependent — ACTH lạc chỗ (ectopic)","U thần kinh nội tiết (carcinoid phế quản, ung thư phổi tế bào nhỏ...) tiết ACTH lạc chỗ"],
+        ["ACTH-independent — U thượng thận","U tuyến hoặc ung thư biểu mô vỏ thượng thận tiết cortisol tự chủ, ACTH bị ức chế"]
+      ])}`,
+    chan_doan:`
+      <p><b>Bước 1 — Xác định tăng cortisol thật sự (2 trong số các test sau dương tính):</b></p>
+      ${rt(["Ngưỡng dương tính"],[
+        ["Cortisol nước bọt đêm khuya (×2 đêm khác nhau)","Tăng so với ngưỡng phòng xét nghiệm"],
+        ["Cortisol tự do niệu 24h (UFC, ×2 lần)","&gt;giới hạn trên bình thường"],
+        ["Test ức chế dexamethasone liều thấp qua đêm (1mg lúc 23h, đo cortisol 8h sáng)","Cortisol sáng &gt;1.8 µg/dL (không bị ức chế)"]
+      ])}
+      <p><b>Bước 2 — Định vị nguyên nhân (chỉ thực hiện sau khi đã xác định chắc chắn tăng cortisol):</b> đo ACTH huyết tương lúc 8h sáng — ACTH thấp/ức chế gợi ý nguyên nhân thượng thận (chụp CT thượng thận); ACTH bình thường/cao gợi ý nguyên nhân tuyến yên/lạc chỗ (MRI tuyến yên, nếu âm tính hoặc nghi ngờ → lấy máu xoang đá dưới hai bên (IPSS) để phân biệt bệnh Cushing với ACTH lạc chỗ).</p>
+      <div class="alert-box alert-info">Luôn loại trừ giả-Cushing (trầm cảm nặng, nghiện rượu, béo phì nặng, đái tháo đường kiểm soát kém) có thể gây dương tính giả nhẹ trên test sàng lọc — cần lâm sàng điển hình + ít nhất 2 test dương tính đồng thuận.</div>`,
+    dieu_tri:`
+      <div class="subhead">Bước 1 — Phẫu thuật (điều trị đầu tay cho mọi nguyên nhân nội sinh có thể phẫu thuật)</div>
+      <ul>
+        <li><b>Bệnh Cushing (u tuyến yên):</b> phẫu thuật cắt u tuyến yên qua đường xuyên bướm (transsphenoidal) — tỷ lệ khỏi bệnh 70–90% với phẫu thuật viên kinh nghiệm ở microadenoma</li>
+        <li><b>U thượng thận:</b> cắt thượng thận một bên (nội soi ưu tiên nếu u nhỏ, lành tính)</li>
+        <li><b>ACTH lạc chỗ:</b> cắt bỏ u nguyên phát nếu định vị được và còn khả năng phẫu thuật</li>
+      </ul>
+      <div class="subhead">Bước 2 — Điều trị nội khoa (khi không phẫu thuật được, chờ phẫu thuật, hoặc bắc cầu trước xạ trị)</div>
+      <ul>
+        <li><b>Ketoconazole hoặc metyrapone</b> (ức chế tổng hợp steroid) — lựa chọn hàng đầu để kiểm soát nhanh triệu chứng nặng trước can thiệp dứt điểm</li>
+        <li><b>Osilodrostat</b> (ức chế 11β-hydroxylase, uống) — thuốc mới hơn, hiệu quả kiểm soát cortisol tốt, FDA phê duyệt cho bệnh Cushing</li>
+        <li><b>Pasireotide</b> (đồng vận somatostatin, nhắm thụ thể trên u tuyến yên) — cho bệnh Cushing không đáp ứng/không phù hợp phẫu thuật, cảnh báo tăng đường huyết đáng kể</li>
+        <li><b>Mifepristone</b> (đối kháng thụ thể glucocorticoid) — chỉ định riêng cho hội chứng Cushing kèm đái tháo đường/rối loạn dung nạp glucose không kiểm soát được bằng thuốc khác; lưu ý không thể theo dõi hiệu quả bằng đo cortisol (thuốc chẹn thụ thể chứ không hạ cortisol máu)</li>
+      </ul>
+      <div class="subhead">Bước 3 — Xạ trị/Cắt thượng thận hai bên (khi phẫu thuật thất bại/tái phát)</div>
+      <p>Xạ trị tuyến yên bổ sung sau phẫu thuật thất bại ở bệnh Cushing; <b>cắt thượng thận hai bên</b> là biện pháp cuối cùng cho bệnh Cushing kháng trị nặng — cần điều trị thay thế corticoid suốt đời sau đó và theo dõi hội chứng Nelson (u tuyến yên phát triển nhanh do mất phản hồi âm).</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      <div class="alert-box alert-danger">Ketoconazole liều cao gây độc gan đáng kể — theo dõi men gan mỗi 1–2 tuần lúc đầu điều trị; tránh phối hợp thuốc kéo dài QTc.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Ketoconazole","200mg×2-3/ngày → tối đa 1200mg/ngày chia liều","theo dõi men gan sát; tương tác CYP3A4 nhiều thuốc"],
+        ["Metyrapone","500mg×3-4/ngày → tối đa 6g/ngày","gây tích tụ tiền chất có hoạt tính androgen/mineralocorticoid — theo dõi mụn/rậm lông, kali máu"],
+        ["Osilodrostat","2mg×2/ngày, tăng dần mỗi 2 tuần theo đáp ứng","theo dõi kali/magie máu, kéo dài QTc"],
+        ["Pasireotide","0.3-0.9mg TDD×2/ngày","theo dõi đường huyết sát (nguy cơ tăng đường huyết cao), có thể cần thêm thuốc hạ đường huyết"],
+        ["Mifepristone","300mg/ngày → tối đa 1200mg/ngày","không dùng cùng thai kỳ; theo dõi dấu hiệu suy thượng thận lâm sàng (không dựa cortisol máu)"]
+      ])}
+      <div class="age-tag">Người cao tuổi/nhiều bệnh đồng mắc</div>
+      <p>Kiểm soát tích cực biến chứng tim mạch-chuyển hóa (HA, đường huyết, loãng xương) song song trong lúc chờ điều trị đặc hiệu; cân nhắc điều trị nội khoa bắc cầu trước khi phẫu thuật ở người nguy cơ phẫu thuật cao.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Xác định tăng cortisol bằng ≥2 test trước khi định vị nguyên nhân",'<span class="badge badge-I">I</span>'],
+        ["Phẫu thuật cắt u là điều trị đầu tay cho mọi nguyên nhân có thể phẫu thuật",'<span class="badge badge-I">I</span>'],
+        ["Điều trị nội khoa bắc cầu khi triệu chứng nặng chờ phẫu thuật/không phẫu thuật được",'<span class="badge badge-I">I</span>'],
+        ["Theo dõi hội chứng Nelson sau cắt thượng thận hai bên",'<span class="badge badge-I">I</span>'],
+        ["Chẩn đoán chỉ dựa 1 test sàng lọc dương tính đơn độc",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Endocrine Society Clinical Practice Guideline 2015 (Diagnosis) & 2021 (Treatment) for Cushing's Syndrome"
+},
+{
+  spec:"noi_tiet", id:"addison", emoji:"🔻", short:"Suy TT", title:"Suy thượng thận",
+  guidelines:["Endocrine Society 2016"],
+  sections:{
+    dinh_nghia:`
+      <p>Suy thượng thận là tình trạng thiếu hụt glucocorticoid (± mineralocorticoid), phân loại theo vị trí tổn thương:</p>
+      ${rt(["Đặc điểm","ACTH"],[
+        ["Nguyên phát (bệnh Addison)","Tổn thương trực tiếp vỏ thượng thận — tự miễn (thường gặp nhất ở nước phát triển), lao (thường gặp ở nước đang phát triển), xuất huyết thượng thận, di căn","Cao (mất phản hồi âm)"],
+        ["Thứ phát","Thiếu ACTH do bệnh lý tuyến yên (u, phẫu thuật, xạ trị, viêm tuyến yên)","Thấp/không tăng phù hợp"],
+        ["Tam phát (thường gặp nhất trên lâm sàng)","Ức chế trục dưới đồi-tuyến yên-thượng thận do dùng corticosteroid ngoại sinh kéo dài rồi ngưng đột ngột","Thấp/không tăng phù hợp"]
+      ])}
+      <p>Suy thượng thận nguyên phát còn kèm thiếu <b>aldosterone</b> (mất muối, tăng kali, hạ HA tư thế) — đặc điểm không có ở suy thượng thận thứ phát/tam phát.</p>`,
+    chan_doan:`
+      <p><b>Cortisol máu buổi sáng (8h):</b> &lt;3 µg/dL gần như chẩn đoán xác định; &gt;15–18 µg/dL loại trừ; giá trị trung gian cần làm thêm test kích thích.</p>
+      <p><b>Test kích thích ACTH (cosyntropin 250µg TM/TB):</b> đo cortisol tại 0, 30, 60 phút — cortisol đỉnh &lt;18–20 µg/dL xác định suy thượng thận (tiêu chuẩn vàng để xác định, đặc biệt hữu ích phân biệt tam phát/thứ phát giai đoạn sớm có thể còn đáp ứng nhẹ).</p>
+      <p>Đo <b>ACTH huyết tương</b> đồng thời với cortisol nền để phân biệt nguyên phát (ACTH cao) với thứ phát/tam phát (ACTH thấp/không tăng phù hợp). Đo renin-aldosterone khi nghi nguyên phát (renin cao, aldosterone thấp/không tăng phù hợp). Kháng thể kháng 21-hydroxylase dương tính xác định nguyên nhân tự miễn.</p>`,
+    dieu_tri:`
+      <div class="subhead">Thay thế glucocorticoid (nền tảng, mọi bệnh nhân)</div>
+      <p><b>Hydrocortisone</b> chia 2–3 liều/ngày, mô phỏng nhịp tiết cortisol sinh lý (liều cao buổi sáng, giảm dần trong ngày) — thuốc hàng đầu do thời gian bán hủy ngắn, ít tích lũy. Prednisolone liều thấp 1 lần/ngày là lựa chọn thay thế thuận tiện hơn nếu tuân thủ kém với hydrocortisone chia liều.</p>
+      <div class="subhead">Thay thế mineralocorticoid (chỉ suy thượng thận nguyên phát)</div>
+      <p><b>Fludrocortisone</b> 1 lần/ngày, chỉnh liều theo huyết áp tư thế, kali máu, và hoạt tính renin huyết tương (đích: renin ở giới hạn trên bình thường).</p>
+      <div class="subhead">Quy tắc "ngày ốm" (Sick Day Rules) — giáo dục bắt buộc mọi bệnh nhân</div>
+      <ul>
+        <li>Sốt/nhiễm trùng/stress vừa: <b>gấp đôi hoặc gấp ba liều hydrocortisone uống</b> cho đến khi hồi phục</li>
+        <li>Nôn ói không giữ được thuốc uống, chấn thương nặng, phẫu thuật: <b>tiêm bắp hydrocortisone khẩn cấp</b> (100mg) và đến cấp cứu ngay</li>
+        <li>Mọi bệnh nhân cần mang theo <b>bộ tiêm hydrocortisone khẩn cấp</b> và đeo vòng/thẻ cảnh báo y tế</li>
+      </ul>
+      <div class="subhead">Cơn suy thượng thận cấp (cấp cứu nội khoa)</div>
+      <p><b>Hydrocortisone 100mg TM ngay</b> (không chờ kết quả xét nghiệm nếu nghi ngờ lâm sàng) → 50mg TM/TB mỗi 6 giờ hoặc truyền liên tục 200mg/24h + bù dịch tích cực (NaCl 0.9% + glucose nếu hạ đường huyết) + tìm và điều trị yếu tố khởi phát. Không cần fludrocortisone bổ sung khi dùng hydrocortisone liều cao (đã có đủ hoạt tính mineralocorticoid ở liều này).</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Hydrocortisone (duy trì)","15–25mg/ngày chia 2–3 liều (vd. 10mg sáng-5mg trưa-5mg chiều)","liều thấp nhất kiểm soát triệu chứng, tránh quá liều gây hội chứng Cushing do thuốc"],
+        ["Prednisolone (thay thế, thuận tiện hơn)","3–5mg/ngày × 1 lần/ngày (buổi sáng)","thay thế khi tuân thủ kém với hydrocortisone chia liều"],
+        ["Fludrocortisone (chỉ nguyên phát)","50–200 microgam/ngày × 1 lần/ngày","chỉnh theo HA tư thế, kali máu, renin; giảm liều nếu phù/tăng HA"],
+        ["Hydrocortisone (cơn cấp)","100mg TM bolus → 50mg mỗi 6h hoặc truyền 200mg/24h","kèm bù dịch tích cực, tìm yếu tố khởi phát"],
+        ["Hydrocortisone tiêm bắp khẩn cấp (tại nhà)","100mg TB khi không uống được thuốc","hướng dẫn bệnh nhân/người nhà tự tiêm khi cần"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Theo dõi sát tương tác thuốc chuyển hóa qua CYP3A4 (ảnh hưởng chuyển hóa hydrocortisone), nguy cơ loãng xương/đái tháo đường do liều glucocorticoid tích lũy — dùng liều thấp nhất hiệu quả và tái đánh giá định kỳ.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Hydrocortisone chia liều mô phỏng nhịp sinh lý là điều trị nền tảng",'<span class="badge badge-I">I</span>'],
+        ["Fludrocortisone bổ sung ở suy thượng thận nguyên phát",'<span class="badge badge-I">I</span>'],
+        ["Giáo dục quy tắc ngày ốm và cấp phát bộ tiêm khẩn cấp cho mọi bệnh nhân",'<span class="badge badge-I">I</span>'],
+        ["Hydrocortisone liều cao TM ngay khi nghi cơn suy thượng thận cấp, không chờ xét nghiệm",'<span class="badge badge-I">I</span>'],
+        ["Ngưng corticosteroid ngoại sinh đột ngột sau dùng kéo dài",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Endocrine Society 2016 Clinical Practice Guideline: Diagnosis and Treatment of Primary Adrenal Insufficiency"
+},
+{
   spec:"tieu_hoa", id:"gerd", emoji:"🔥", short:"GERD", title:"Trào ngược dạ dày-thực quản",
   guidelines:["ACG 2022"],
   sections:{
@@ -904,8 +1153,8 @@ const diseases = [
         <li>Không đáp ứng PPI liều chuẩn: tăng gấp đôi liều (chia 2 lần/ngày) trước khi coi là "GERD kháng trị"</li>
       </ul>
       <div class="subhead">GERD kháng trị thật sự (đã loại trừ tuân thủ kém, chẩn đoán khác)</div>
-      <p>Cân nhắc phẫu thuật chống trào ngược (Nissen) hoặc thiết bị tăng cường cơ thắt thực quản dưới (LINX) ở bệnh nhân được chọn lọc kỹ dựa trên đo pH-trở kháng và áp lực thực quản.</p>`,
-    lieu_thuoc:`
+      <p>Cân nhắc phẫu thuật chống trào ngược (Nissen) hoặc thiết bị tăng cường cơ thắt thực quản dưới (LINX) ở bệnh nhân được chọn lọc kỹ dựa trên đo pH-trở kháng và áp lực thực quản.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">PPI dài hạn liều cao liên quan tăng nhẹ nguy cơ gãy xương, thiếu vitamin B12/magie, viêm thận kẽ — dùng liều thấp nhất hiệu quả, đánh giá lại chỉ định định kỳ mỗi 6–12 tháng.</div>
       ${rt(["Liều chuẩn","Cao tuổi/thận yếu"],[
         ["Omeprazole","20mg × 1 lần/ngày (trước ăn sáng)","không cần chỉnh liều theo thận; thận trọng tương tác clopidogrel"],
@@ -950,8 +1199,8 @@ const diseases = [
         <li>Đánh giá và điều trị H. pylori đồng thời nếu dương tính (hai yếu tố nguy cơ độc lập cộng gộp)</li>
         <li>Aspirin liều thấp dự phòng tim mạch: cân nhắc tiếp tục kèm PPI ở đa số trường hợp thay vì ngưng hẳn, trừ xuất huyết đang hoạt động</li>
       </ul>
-      <p><b>Luôn xác nhận tiệt trừ H. pylori</b> bằng UBT/SAT ≥4 tuần sau kết thúc kháng sinh (và ≥2 tuần sau ngưng PPI).</p>`,
-    lieu_thuoc:`
+      <p><b>Luôn xác nhận tiệt trừ H. pylori</b> bằng UBT/SAT ≥4 tuần sau kết thúc kháng sinh (và ≥2 tuần sau ngưng PPI).</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Dị ứng penicillin: dùng phác đồ 4 thuốc bismuth (không chứa amoxicillin) thay vì phác đồ đồng thời.</div>
       ${rt(["Thành phần & liều","Thời gian"],[
         ["4 thuốc Bismuth","PPI chuẩn×2/ngày + bismuth subcitrate 120-300mg×4 + tetracycline 500mg×4 + metronidazole 500mg×3-4","10–14 ngày"],
@@ -973,18 +1222,135 @@ const diseases = [
   source:"ACG Clinical Guideline: Treatment of Helicobacter pylori Infection 2024 update; ACG Guideline for Prevention of NSAID-Related GI Injury 2021"
 },
 {
+  spec:"tieu_hoa", id:"ibs", emoji:"🌀", short:"IBS", title:"Hội chứng ruột kích thích",
+  guidelines:["ACG 2021","Rome IV Criteria 2016"],
+  sections:{
+    dinh_nghia:`
+      <p>Hội chứng ruột kích thích (IBS) là rối loạn chức năng ruột-não mạn tính, đặc trưng bởi đau bụng tái phát liên quan đến đại tiện và thay đổi thói quen đại tiện, không có bất thường cấu trúc/sinh hóa giải thích được.</p>
+      <div class="subhead">Tiêu chuẩn Rome IV</div>
+      <p>Đau bụng tái phát <b>≥1 ngày/tuần trong 3 tháng gần nhất</b>, khởi phát triệu chứng ≥6 tháng trước chẩn đoán, kèm <b>≥2 trong 3</b> tiêu chí: (1) liên quan đến đại tiện, (2) kèm thay đổi tần suất đại tiện, (3) kèm thay đổi hình dạng/độ đặc phân.</p>
+      <div class="subhead">Phân nhóm theo thang điểm Bristol</div>
+      ${rt(["Đặc điểm"],[
+        ["IBS-C (táo bón chiếm ưu thế)","&gt;25% số lần đại tiện phân cứng (Bristol 1-2), &lt;25% phân lỏng"],
+        ["IBS-D (tiêu chảy chiếm ưu thế)","&gt;25% số lần đại tiện phân lỏng (Bristol 6-7), &lt;25% phân cứng"],
+        ["IBS-M (hỗn hợp)","≥25% cả phân cứng và phân lỏng"],
+        ["IBS-U (không phân loại được)","không đủ tiêu chí phân nhóm trên"]
+      ])}`,
+    chan_doan:`
+      <p>Chẩn đoán chủ yếu <b>dựa lâm sàng theo tiêu chuẩn Rome IV</b>, hạn chế xét nghiệm ở người không có dấu hiệu báo động.</p>
+      <div class="alert-box alert-danger">Dấu hiệu báo động cần tầm soát thêm: khởi phát &gt;50 tuổi, sụt cân không chủ ý, xuất huyết tiêu hóa/thiếu máu, tiêu chảy về đêm, sốt, tiền sử gia đình ung thư đại-trực tràng/IBD/bệnh celiac, khối bụng sờ thấy.</div>
+      <p>Xét nghiệm tối thiểu khuyến cáo: CBC, CRP hoặc <b>calprotectin phân</b> (giúp phân biệt IBS với IBD — độ nhạy cao để loại trừ viêm ruột), huyết thanh học celiac (đặc biệt IBS-D/IBS-M). Nội soi đại tràng chỉ định khi có dấu hiệu báo động hoặc ≥45 tuổi chưa tầm soát ung thư đại-trực tràng theo lịch thường quy.</p>`,
+    dieu_tri:`
+      <div class="subhead">Nền tảng chung (mọi kiểu hình)</div>
+      <ul>
+        <li>Giáo dục bệnh nhân về bản chất lành tính, mối liên hệ ruột-não; giảm stress, tập thể dục đều đặn</li>
+        <li><b>Chế độ ăn low-FODMAP</b> có bằng chứng tốt nhất trong 4–6 tuần, sau đó tái đưa từng nhóm thực phẩm để cá thể hóa dài hạn (nên có chuyên gia dinh dưỡng hỗ trợ)</li>
+        <li>Chất xơ hòa tan (psyllium) giúp cải thiện triệu chứng chung, đặc biệt IBS-C; tránh chất xơ không hòa tan (cám) có thể làm nặng thêm chướng bụng</li>
+      </ul>
+      <div class="subhead">IBS-C — bậc thang điều trị</div>
+      <ul>
+        <li><b>Bước 1:</b> chất xơ hòa tan + nhuận tràng thẩm thấu (polyethylene glycol)</li>
+        <li><b>Bước 2</b> (không đáp ứng): thuốc chủ vận guanylate cyclase-C (<b>linaclotide, plecanatide</b>) — hiệu quả cả táo bón lẫn đau bụng, bằng chứng mạnh nhất nhóm IBS-C</li>
+        <li><b>Bước 3:</b> lubiprostone (kích hoạt kênh clorua) nếu vẫn không đáp ứng</li>
+      </ul>
+      <div class="subhead">IBS-D — bậc thang điều trị</div>
+      <ul>
+        <li><b>Bước 1:</b> loperamide kiểm soát triệu chứng theo nhu cầu (không cải thiện đau bụng nền)</li>
+        <li><b>Bước 2:</b> <b>rifaximin</b> (kháng sinh không hấp thu, đợt 2 tuần) — có thể lặp lại nếu tái phát sau đáp ứng ban đầu; hoặc eluxadoline (đồng vận µ-opioid/đối kháng δ-opioid, tránh nếu đã cắt túi mật/nghiện rượu)</li>
+        <li><b>Bước 3:</b> thuốc gắn acid mật (cholestyramine) nếu nghi kèm kém hấp thu acid mật</li>
+      </ul>
+      <div class="subhead">Đau bụng chiếm ưu thế/kháng trị (mọi kiểu hình)</div>
+      <p><b>Thuốc chống trầm cảm 3 vòng liều thấp</b> (amitriptyline) là lựa chọn hàng đầu cho đau bụng dai dẳng qua cơ chế điều hòa đau ruột-não (không phải để điều trị trầm cảm); SSRI là lựa chọn thay thế. Liệu pháp tâm lý hướng ruột (gut-directed CBT, thôi miên trị liệu ruột) cho trường hợp kháng trị với thuốc.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Linaclotide (IBS-C)","290mcg × 1 lần/ngày lúc đói","tác dụng phụ tiêu chảy liều-phụ thuộc; chống chỉ định tắc ruột cơ học"],
+        ["Lubiprostone (IBS-C)","8mcg × 2 lần/ngày (liều IBS, thấp hơn liều táo bón mạn)","uống cùng thức ăn giảm buồn nôn; tránh thai kỳ"],
+        ["Loperamide (IBS-D)","2mg sau mỗi lần tiêu chảy, tối đa 16mg/ngày","không vượt liều tối đa (nguy cơ loạn nhịp ở liều rất cao)"],
+        ["Rifaximin (IBS-D)","550mg × 3 lần/ngày × 14 ngày","hấp thu toàn thân tối thiểu, an toàn ở suy gan nhẹ-trung bình"],
+        ["Eluxadoline (IBS-D)","100mg × 2 lần/ngày (75mg nếu không dung nạp/không còn túi mật)","chống chỉ định tuyệt đối nếu đã cắt túi mật (nguy cơ viêm tụy cấp nặng)"],
+        ["Amitriptyline (đau bụng)","10–25mg trước ngủ, tăng dần nếu cần","thận trọng người cao tuổi (kháng cholinergic, té ngã); bắt đầu liều rất thấp"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Khởi phát triệu chứng IBS lần đầu ở người &gt;50 tuổi cần tầm soát kỹ hơn trước khi kết luận IBS (loại trừ ung thư đại-trực tràng, thiếu máu mạc treo); thận trọng thuốc kháng cholinergic/3 vòng do tác dụng phụ té ngã, bí tiểu, lú lẫn.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Chẩn đoán dựa tiêu chuẩn Rome IV, hạn chế xét nghiệm nếu không có dấu hiệu báo động",'<span class="badge badge-I">I</span>'],
+        ["Calprotectin phân giúp phân biệt IBS với IBD ở người không có dấu hiệu báo động",'<span class="badge badge-I">I</span>'],
+        ["Chế độ ăn low-FODMAP có giám sát dinh dưỡng",'<span class="badge badge-I">I</span>'],
+        ["Linaclotide/plecanatide cho IBS-C không đáp ứng nhuận tràng đơn thuần",'<span class="badge badge-I">I</span>'],
+        ["Rifaximin cho IBS-D không đáp ứng loperamide",'<span class="badge badge-I">I</span>'],
+        ["Nội soi đại tràng thường quy cho mọi bệnh nhân IBS không dấu hiệu báo động",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACG Clinical Guideline: Management of Irritable Bowel Syndrome 2021; Rome IV Diagnostic Criteria for Functional GI Disorders"
+},
+{
+  spec:"tieu_hoa", id:"ibd", emoji:"🔥", short:"IBD", title:"Viêm ruột mạn (Crohn/Viêm loét ĐT)",
+  guidelines:["ACG 2019 (UC)","ACG 2018 (Crohn)","AGA 2021 (điều trị bằng thuốc)"],
+  sections:{
+    dinh_nghia:`
+      <p>Bệnh viêm ruột mạn (IBD) gồm 2 thể chính, tiến triển từng đợt-thuyên giảm mạn tính do rối loạn đáp ứng miễn dịch niêm mạc ruột:</p>
+      ${rt(["Vị trí tổn thương","Đặc điểm mô bệnh học"],[
+        ["Viêm loét đại tràng (UC)","Chỉ đại-trực tràng, liên tục từ trực tràng lan lên","Viêm niêm mạc-dưới niêm mạc, áp xe hốc tuyến (crypt abscess)"],
+        ["Bệnh Crohn","Bất kỳ đoạn nào từ miệng đến hậu môn, thường hồi tràng cuối","Viêm xuyên thành, tổn thương dạng vệt (skip lesions), có thể có u hạt"]
+      ])}`,
+    chan_doan:`
+      <p>Nội soi đại-trực tràng kèm sinh thiết là tiêu chuẩn chẩn đoán: UC cho hình ảnh viêm liên tục từ trực tràng; Crohn cho tổn thương dạng vệt, loét sâu, hình ảnh "đá lát" (cobblestoning). <b>Calprotectin phân</b> tăng cao hỗ trợ chẩn đoán và theo dõi đáp ứng điều trị không xâm lấn. Cộng hưởng từ ruột non (MR enterography) đánh giá tổn thương ruột non/xuyên thành/biến chứng (hẹp, rò) trong Crohn. Luôn loại trừ viêm đại tràng nhiễm trùng (cấy phân, độc tố C. difficile) trước khi bắt đầu ức chế miễn dịch.</p>`,
+    dieu_tri:`
+      <div class="subhead">Viêm loét đại tràng (UC) — nhẹ đến trung bình</div>
+      <ul>
+        <li><b>Bước 1:</b> 5-ASA (mesalamine) uống ± dạng đặt trực tràng/thụt — điều trị đầu tay cho cảm ứng lẫn duy trì lui bệnh</li>
+        <li><b>Bước 2</b> (không đáp ứng 5-ASA): corticosteroid đường uống để cảm ứng lui bệnh (<b>không dùng duy trì dài hạn</b>) + bắt đầu cân nhắc bước 3 song song nếu phụ thuộc/kháng steroid</li>
+      </ul>
+      <div class="subhead">UC trung bình-nặng hoặc phụ thuộc/kháng corticosteroid</div>
+      <p>Sinh học/thuốc nhắm đích: <b>anti-TNF</b> (infliximab, adalimumab), <b>vedolizumab</b> (chọn lọc ruột), <b>ustekinumab</b>, hoặc <b>tofacitinib/upadacitinib</b> (JAK inhibitor) — lựa chọn theo đặc điểm bệnh nhân, bệnh đồng mắc, nguy cơ nhiễm trùng/huyết khối.</p>
+      <div class="subhead">UC nặng/bùng phát cấp cần nhập viện</div>
+      <p>Corticosteroid tiêm tĩnh mạch liều cao → nếu không đáp ứng sau 3 ngày: "cứu vãn" bằng <b>infliximab</b> hoặc <b>cyclosporine</b> TM → phẫu thuật cắt đại tràng nếu vẫn kháng trị hoặc biến chứng nặng (phình đại tràng nhiễm độc, thủng).</p>
+      <div class="subhead">Bệnh Crohn</div>
+      <ul>
+        <li>5-ASA hiệu quả hạn chế trong Crohn (khác UC) — không phải lựa chọn đầu tay chính</li>
+        <li>Corticosteroid cảm ứng lui bệnh cho đợt cấp nhẹ-trung bình, không dùng duy trì</li>
+        <li><b>Chiến lược "top-down" sớm bằng sinh học (anti-TNF)</b> được khuyến cáo ở bệnh nhân nguy cơ cao (tổn thương xuyên thành sâu, bệnh quanh hậu môn, khởi phát trẻ, cần corticosteroid sớm) thay vì chờ thất bại điều trị bước thang truyền thống — cải thiện kết cục dài hạn, giảm biến chứng/phẫu thuật</li>
+        <li>Thuốc điều hòa miễn dịch (azathioprine, 6-mercaptopurine, methotrexate) dùng phối hợp với sinh học (tăng hiệu quả, giảm kháng thể kháng thuốc) hoặc đơn trị duy trì sau cảm ứng bằng corticosteroid</li>
+      </ul>
+      <div class="subhead">Vai trò phẫu thuật</div>
+      <p>Cắt đại tràng có thể <b>chữa khỏi UC</b> (chỉ định: kháng trị nội khoa, loạn sản/ung thư, biến chứng cấp). Phẫu thuật trong Crohn <b>không chữa khỏi</b> (bệnh tái phát sau mổ gần như chắc chắn) — chỉ giải quyết biến chứng khu trú (hẹp, rò, áp xe), bảo tồn ruột tối đa.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      <div class="alert-box alert-warn">Trước khởi động sinh học/JAK inhibitor: sàng lọc lao tiềm ẩn, viêm gan B/C, cập nhật vắc-xin không sống; JAK inhibitor có cảnh báo hộp đen tương tự RA (biến cố tim mạch/huyết khối/ung thư) ở người ≥50 tuổi có yếu tố nguy cơ tim mạch.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Mesalamine (UC)","2.4–4.8g/ngày uống ± 1g thụt/đặt tối","liều cao hơn cho bệnh lan rộng; kết hợp uống+tại chỗ hiệu quả hơn đơn trị"],
+        ["Prednisone (cảm ứng)","40–60mg/ngày → giảm dần trong 8–12 tuần","không duy trì dài hạn; bổ sung canxi-vitamin D, tầm soát loãng xương nếu dùng lặp lại"],
+        ["Infliximab (anti-TNF)","5mg/kg TM tuần 0,2,6 → mỗi 8 tuần duy trì","phối hợp azathioprine giảm kháng thể kháng thuốc; theo dõi phản ứng truyền"],
+        ["Adalimumab (anti-TNF)","160mg→80mg→40mg TDD mỗi 2 tuần","có thể tự tiêm tại nhà"],
+        ["Azathioprine (điều hòa miễn dịch)","2–2.5mg/kg/ngày","kiểm tra hoạt độ TPMT/NUDT15 trước dùng nếu có thể; theo dõi công thức máu định kỳ"],
+        ["Vedolizumab (chọn lọc ruột)","300mg TM tuần 0,2,6 → mỗi 8 tuần","hồ sơ an toàn nhiễm trùng toàn thân thấp hơn anti-TNF do tác dụng chọn lọc ruột"]
+      ])}
+      <div class="age-tag">Người cao tuổi/thai kỳ</div>
+      <p>Người cao tuổi khởi phát IBD: ưu tiên vedolizumab/thuốc chọn lọc ruột nếu có thể do ít ảnh hưởng miễn dịch toàn thân hơn; anti-TNF và hầu hết sinh học tương đối an toàn trong thai kỳ (tiếp tục điều trị duy trì bệnh ổn định thường an toàn hơn để bệnh bùng phát) — cần hội chẩn chuyên khoa để cá thể hóa thời điểm liều cuối trước sinh.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["5-ASA là điều trị đầu tay cảm ứng và duy trì UC nhẹ-trung bình",'<span class="badge badge-I">I</span>'],
+        ["Sinh học sớm (top-down) cho Crohn nguy cơ cao thay vì chờ thất bại điều trị bước thang",'<span class="badge badge-IIa">IIa</span>'],
+        ["Corticosteroid TM + cứu vãn infliximab/cyclosporine cho UC nặng không đáp ứng sau 3 ngày",'<span class="badge badge-I">I</span>'],
+        ["Phối hợp thuốc điều hòa miễn dịch với anti-TNF để giảm kháng thể kháng thuốc",'<span class="badge badge-IIa">IIa</span>'],
+        ["Corticosteroid duy trì dài hạn để kiểm soát bệnh",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACG Clinical Guideline: Ulcerative Colitis in Adults 2019; ACG Clinical Guideline: Crohn's Disease in Adults 2018; AGA Clinical Practice Guidelines on Pharmacologic Management 2021"
+},
+{
   spec:"tieu_hoa", id:"cirrhosis", emoji:"🫘", short:"Xơ gan", title:"Xơ gan & Biến chứng",
   guidelines:["AASLD 2021 (Cổ trướng)","Baveno VII 2022 (Tăng áp cửa)"],
   sections:{
     dinh_nghia:`
       <p>Xơ gan là giai đoạn cuối của xơ hóa gan tiến triển, đặc trưng bởi tái cấu trúc nốt tái tạo lan tỏa. Nguyên nhân thường gặp: viêm gan virus B/C, bệnh gan do rượu, và <b>MASLD</b> (gan nhiễm mỡ liên quan rối loạn chuyển hóa — tên gọi mới thay cho NAFLD theo đồng thuận đa hiệp hội 2023).</p>
       <div class="subhead">Phân độ Child-Pugh</div>
-      ${rt(["1 điểm","2 điểm","3 điểm"],[
-        ["Bilirubin (mg/dL)","&lt;2","2–3","&gt;3"],
-        ["Albumin (g/dL)","&gt;3.5","2.8–3.5","&lt;2.8"],
-        ["INR","&lt;1.7","1.7–2.3","&gt;2.3"],
-        ["Cổ trướng","Không","Nhẹ, đáp ứng thuốc","Nhiều, kháng trị"],
-        ["Bệnh não gan","Không","Độ I–II","Độ III–IV"]
+      ${scr("childpugh","Thang điểm Child-Pugh",[
+        {label:"Bilirubin (mg/dL)", options:[{text:"&lt;2 (1đ)",pts:1},{text:"2–3 (2đ)",pts:2},{text:"&gt;3 (3đ)",pts:3}]},
+        {label:"Albumin (g/dL)", options:[{text:"&gt;3.5 (1đ)",pts:1},{text:"2.8–3.5 (2đ)",pts:2},{text:"&lt;2.8 (3đ)",pts:3}]},
+        {label:"INR", options:[{text:"&lt;1.7 (1đ)",pts:1},{text:"1.7–2.3 (2đ)",pts:2},{text:"&gt;2.3 (3đ)",pts:3}]},
+        {label:"Cổ trướng", options:[{text:"Không (1đ)",pts:1},{text:"Nhẹ, đáp ứng thuốc (2đ)",pts:2},{text:"Nhiều, kháng trị (3đ)",pts:3}]},
+        {label:"Bệnh não gan", options:[{text:"Không (1đ)",pts:1},{text:"Độ I–II (2đ)",pts:2},{text:"Độ III–IV (3đ)",pts:3}]}
       ])}
       <p>Child A: 5–6 điểm · Child B: 7–9 điểm · Child C: 10–15 điểm. MELD-Na dùng để ưu tiên danh sách ghép gan.</p>`,
     chan_doan:`
@@ -1003,8 +1369,8 @@ const diseases = [
       <p>Hồi sức + kháng sinh dự phòng (ceftriaxone) ngay khi nhập viện + thuốc vận mạch tạng (terlipressin/octreotide) + nội soi cấp cứu trong 12h thắt/chích xơ.</p>
       <div class="subhead">Bệnh não gan</div>
       <p>Lactulose là điều trị nền tảng (điều chỉnh liều để đạt 2–3 lần đi tiêu mềm/ngày); thêm rifaximin nếu tái phát dù lactulose tối ưu hoặc bệnh não gan tái diễn.</p>
-      <div class="alert-box alert-danger">Viêm phúc mạc nhiễm khuẩn nguyên phát (SBP): mọi cổ trướng nhập viện cần chọc dò chẩn đoán; bạch cầu đa nhân trung tính dịch cổ trướng ≥250/mm³ → kháng sinh ngay (cephalosporin thế hệ 3) + albumin TM ngày 1 và ngày 3 để giảm nguy cơ hội chứng gan-thận.</div>`,
-    lieu_thuoc:`
+      <div class="alert-box alert-danger">Viêm phúc mạc nhiễm khuẩn nguyên phát (SBP): mọi cổ trướng nhập viện cần chọc dò chẩn đoán; bạch cầu đa nhân trung tính dịch cổ trướng ≥250/mm³ → kháng sinh ngay (cephalosporin thế hệ 3) + albumin TM ngày 1 và ngày 3 để giảm nguy cơ hội chứng gan-thận.</div>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Tránh NSAID (tăng nguy cơ suy thận/xuất huyết), thận trọng aminoglycoside, chỉnh liều thuốc chuyển hóa qua gan; theo dõi kali máu sát khi phối hợp lợi tiểu.</div>
       ${rt(["Liều dùng","Lưu ý"],[
         ["Spironolactone","100mg/ngày → tối đa 400mg/ngày","theo dõi kali máu, tăng nữ hóa tuyến vú nam giới"],
@@ -1052,8 +1418,8 @@ const diseases = [
         <li><b>Allopurinol</b> là thuốc hàng đầu cho mọi bệnh nhân kể cả có bệnh thận mạn, khởi liều thấp, <b>tăng liều từ từ (treat-to-target)</b> đến khi đạt đích acid uric</li>
         <li>Febuxostat khi không dung nạp/chống chỉ định allopurinol — thận trọng ở người có bệnh tim mạch (cảnh báo tăng tử vong tim mạch trong nghiên cứu CARES)</li>
         <li><b>Dự phòng cơn gout bùng phát</b> khi khởi động ULT: colchicine liều thấp hoặc NSAID liều thấp trong ≥3–6 tháng đầu (do huy động urat từ mô gây khởi phát cơn cấp nghịch lý)</li>
-      </ul>`,
-    lieu_thuoc:`
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-danger">Sàng lọc HLA-B*5801 trước dùng allopurinol ở quần thể nguy cơ cao (người gốc Á, đặc biệt Hán, Thái, Hàn) do nguy cơ hội chứng quá mẫn nặng (DRESS/SJS-TEN).</div>
       ${rt(["Liều khởi đầu → duy trì","Lưu ý theo tuổi/thận"],[
         ["Allopurinol","khởi đầu ≤100mg/ngày (≤50mg nếu eGFR&lt;30) → tăng dần mỗi 2–5 tuần đến đích","có thể dùng liều &gt;300mg/ngày kể cả suy thận nếu tăng liều từ từ và theo dõi sát"],
@@ -1092,8 +1458,8 @@ const diseases = [
         <li><b>Bước 2</b> (không đạt mục tiêu sau 3 tháng dù đã tối ưu methotrexate): thêm DMARD sinh học (bDMARD — anti-TNF, abatacept, tocilizumab, rituximab) hoặc DMARD nhắm đích tổng hợp (tsDMARD — thuốc ức chế JAK)</li>
         <li>Corticosteroid liều thấp/ngắn hạn có thể dùng như cầu nối trong lúc chờ DMARD nền có tác dụng, <b>không dùng thay thế DMARD dài hạn</b></li>
       </ul>
-      <div class="alert-box alert-warn">Thuốc ức chế JAK (tofacitinib, baricitinib, upadacitinib): cảnh báo hộp đen (boxed warning) tăng nguy cơ biến cố tim mạch nặng, huyết khối, ung thư và tử vong ở người ≥50 tuổi có ≥1 yếu tố nguy cơ tim mạch (nghiên cứu ORAL Surveillance) — cân nhắc kỹ trước khi chọn, ưu tiên bDMARD nếu có yếu tố nguy cơ này.</div>`,
-    lieu_thuoc:`
+      <div class="alert-box alert-warn">Thuốc ức chế JAK (tofacitinib, baricitinib, upadacitinib): cảnh báo hộp đen (boxed warning) tăng nguy cơ biến cố tim mạch nặng, huyết khối, ung thư và tử vong ở người ≥50 tuổi có ≥1 yếu tố nguy cơ tim mạch (nghiên cứu ORAL Surveillance) — cân nhắc kỹ trước khi chọn, ưu tiên bDMARD nếu có yếu tố nguy cơ này.</div>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Sàng lọc lao tiềm ẩn và viêm gan B/C trước khởi động sinh học/JAK inhibitor; tiêm đủ vắc-xin (không sống) trước khi bắt đầu ức chế miễn dịch.</div>
       ${rt(["Liều dùng","Lưu ý"],[
         ["Methotrexate","khởi đầu 15mg/tuần (uống/TDD) → tối đa 25mg/tuần","bổ sung acid folic 1mg/ngày (trừ ngày dùng MTX) giảm độc tính"],
@@ -1137,8 +1503,8 @@ const diseases = [
         <li>Tiêm corticosteroid nội khớp: giảm đau ngắn hạn (vài tuần), có thể lặp lại nhưng hạn chế tần suất</li>
       </ul>
       <div class="alert-box alert-danger">ACR 2019/2024 khuyến cáo <b>mạnh phản đối</b>: glucosamine/chondroitin, tiêm huyết tương giàu tiểu cầu (PRP), và opioid thường quy cho OA — bằng chứng hiệu quả không nhất quán/không vượt trội so nguy cơ.</div>
-      <p>Thay khớp toàn phần (gối/háng) khi đau/hạn chế chức năng nặng dai dẳng dù đã điều trị nội khoa tối ưu.</p>`,
-    lieu_thuoc:`
+      <p>Thay khớp toàn phần (gối/háng) khi đau/hạn chế chức năng nặng dai dẳng dù đã điều trị nội khoa tối ưu.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">NSAID uống ở người cao tuổi: nguy cơ xuất huyết tiêu hóa, suy thận, biến cố tim mạch tăng theo tuổi — ưu tiên tại chỗ, nếu dùng uống cần phối hợp PPI và dùng thời gian ngắn nhất.</div>
       ${rt(["Liều dùng","Lưu ý"],[
         ["Diclofenac gel 1%","bôi tại chỗ × 4 lần/ngày (khớp nhỏ) hoặc 2 lần/ngày (gel 2%)","tác dụng phụ tại chỗ (kích ứng da) thay vì toàn thân"],
@@ -1185,8 +1551,8 @@ const diseases = [
         <li><b>Nguy cơ cao thông thường:</b> Bisphosphonate uống (alendronate, risedronate) là hàng đầu — hiệu quả, chi phí thấp, bằng chứng lâu dài</li>
         <li><b>Nguy cơ rất cao</b> (gãy xương gần đây, nhiều yếu tố nguy cơ, T-score rất thấp ≤ −3.0): ưu tiên khởi đầu bằng thuốc <b>đồng hóa xương</b> (teriparatide, abaloparatide, hoặc romosozumab) trước, sau đó chuyển sang bisphosphonate/denosumab để duy trì — chiến lược "anabolic-first" cho hiệu quả chống gãy xương tốt hơn thứ tự ngược lại</li>
         <li><b>Denosumab</b>: lựa chọn khi chống chỉ định/không dung nạp bisphosphonate (đặc biệt suy thận nặng) — <b>không được ngưng đột ngột</b> vì gây tăng nguy cơ gãy xương cột sống dội ngược, cần chuyển tiếp bằng bisphosphonate khi ngưng</li>
-      </ul>`,
-    lieu_thuoc:`
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-danger">Biến chứng hiếm nhưng cần cảnh giác khi dùng bisphosphonate/denosumab dài hạn (thường &gt;5 năm): hoại tử xương hàm, gãy xương đùi không điển hình — đánh giá lại lợi ích/nguy cơ định kỳ, cân nhắc "kỳ nghỉ thuốc" (drug holiday) sau 3–5 năm ở nguy cơ không quá cao.</div>
       ${rt(["Liều dùng","Lưu ý"],[
         ["Alendronate","70mg uống × 1 lần/tuần","uống lúc đói, ngồi/đứng thẳng ≥30 phút sau uống; tránh nếu eGFR&lt;35"],
@@ -1207,14 +1573,294 @@ const diseases = [
       ])}`
   },
   source:"AACE/ACE 2020 Clinical Practice Guidelines for Postmenopausal Osteoporosis; Endocrine Society 2019 Guideline"
+},
+{
+  spec:"than", id:"ckd", emoji:"🫘", short:"BTM", title:"Bệnh thận mạn (CKD)",
+  guidelines:["KDIGO 2024"],
+  sections:{
+    dinh_nghia:`
+      <p>Bệnh thận mạn (CKD) là bất thường cấu trúc/chức năng thận kéo dài <b>&gt;3 tháng</b>, ảnh hưởng sức khỏe, được xác định bằng eGFR &lt;60 mL/phút/1.73m² và/hoặc dấu ấn tổn thương thận (albumin niệu, bất thường cặn lắng nước tiểu, bất thường hình ảnh học/mô bệnh học).</p>
+      <div class="subhead">Phân độ theo eGFR (G) — KDIGO</div>
+      ${rt(["eGFR (mL/phút/1.73m²)"],[
+        ["G1","≥90 (kèm dấu ấn tổn thương thận)"],
+        ["G2","60–89 (kèm dấu ấn tổn thương thận)"],
+        ["G3a","45–59"],
+        ["G3b","30–44"],
+        ["G4","15–29"],
+        ["G5","&lt;15 (bệnh thận giai đoạn cuối)"]
+      ])}
+      <div class="subhead">Phân độ theo albumin niệu (A)</div>
+      ${rt(["ACR (mg/g hoặc mg/mmol)"],[
+        ["A1 – Bình thường/nhẹ","&lt;30 mg/g (&lt;3 mg/mmol)"],
+        ["A2 – Tăng trung bình","30–300 mg/g (3–30 mg/mmol)"],
+        ["A3 – Tăng nặng","&gt;300 mg/g (&gt;30 mg/mmol)"]
+      ])}
+      <p>Nguy cơ tiến triển/biến chứng tăng dần theo tổ hợp G×A (bản đồ nhiệt KDIGO "heat map") — G3a-A1 nguy cơ thấp-trung bình, trong khi G1-A3 hoặc G4-A2 trở lên đã ở mức nguy cơ cao-rất cao dù eGFR còn khá.</p>`,
+    chan_doan:`
+      <p>Chẩn đoán cần <b>lặp lại xét nghiệm cách nhau ≥3 tháng</b> để xác nhận tính mạn tính (loại trừ tổn thương thận cấp). Đánh giá gồm: creatinine máu → tính eGFR (công thức CKD-EPI 2021, không dùng hệ số hiệu chỉnh chủng tộc), tỷ lệ albumin/creatinine niệu (uACR) mẫu nước tiểu buổi sáng, siêu âm thận khi nghi bất thường cấu trúc/tắc nghẽn.</p>
+      <div class="alert-box alert-info"><b>KDIGO 2024:</b> khuyến cáo tầm soát CKD định kỳ hàng năm (eGFR + uACR) ở người có yếu tố nguy cơ: đái tháo đường, tăng huyết áp, bệnh tim mạch, tiền sử gia đình suy thận, tuổi cao, từng tổn thương thận cấp.</p>
+      <p>Xác định nguyên nhân nền (đái tháo đường, tăng huyết áp, viêm cầu thận, bệnh thận đa nang...) để định hướng điều trị đặc hiệu; sinh thiết thận khi nguyên nhân không rõ ràng hoặc nghi bệnh cầu thận nguyên phát.</p>`,
+    dieu_tri:`
+      <div class="subhead">Bước 1 — Kiểm soát huyết áp & ức chế hệ RAAS (nền tảng, mọi bệnh nhân có albumin niệu)</div>
+      <p><b>ACEi hoặc ARB</b> (không phối hợp cả hai) là điều trị nền tảng khi có albumin niệu ≥A2, chỉnh liều tối đa dung nạp được. Đích HA tâm thu &lt;120mmHg (đo chuẩn hóa) theo KDIGO 2024 ở hầu hết bệnh nhân CKD không đái tháo đường có nguy cơ tim mạch cao, trừ khi không dung nạp.</p>
+      <div class="subhead">Bước 2 — Ức chế SGLT2 (khuyến cáo mới, mở rộng chỉ định)</div>
+      <p><b>SGLT2i</b> (dapagliflozin, empagliflozin) được khuyến cáo cho mọi bệnh nhân CKD có eGFR ≥20 mL/phút/1.73m² kèm albumin niệu ≥A2, <b>bất kể có đái tháo đường hay không</b> — giảm tiến triển CKD, biến cố tim mạch và tử vong (DAPA-CKD, EMPA-KIDNEY).</p>
+      <div class="subhead">Bước 3 — Finerenone (đối kháng thụ thể mineralocorticoid không steroid)</div>
+      <p>Thêm <b>finerenone</b> ở bệnh nhân CKD kèm đái tháo đường típ 2, albumin niệu dai dẳng dù đã tối ưu ACEi/ARB + SGLT2i, eGFR ≥25 và kali máu bình thường — giảm thêm biến cố thận và tim mạch (FIDELIO-DKD, FIGARO-DKD).</p>
+      <div class="subhead">Các biện pháp bổ trợ</div>
+      <ul>
+        <li>Statin cường độ trung bình-cao cho hầu hết người lớn CKD (nguy cơ tim mạch cao)</li>
+        <li>Hạn chế protein khẩu phần vừa phải (0.8g/kg/ngày) ở CKD tiến triển không lọc máu, tránh hạn chế quá mức gây suy dinh dưỡng</li>
+        <li>Tránh thuốc độc thận (NSAID, cản quang liều cao không cần thiết, aminoglycoside) và điều chỉnh liều thuốc theo eGFR</li>
+        <li>Chuyển chuyên khoa thận khi eGFR &lt;30, tiến triển nhanh (giảm eGFR &gt;5/năm), albumin niệu nặng A3, hoặc bất thường điện giải khó kiểm soát</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      <div class="alert-box alert-warn">Theo dõi kali máu và creatinine 1–2 tuần sau khởi động/tăng liều ACEi-ARB, SGLT2i, hoặc finerenone — tăng creatinine &lt;30% so nền là chấp nhận được (phản ánh hiệu ứng huyết động có lợi), không phải lý do ngưng thuốc.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Losartan/Enalapril (ACEi/ARB)","khởi đầu thấp, tăng dần mỗi 2–4 tuần đến liều tối đa dung nạp","ngưng nếu kali&gt;5.5 dai dẳng hoặc creatinine tăng&gt;30%"],
+        ["Dapagliflozin","10mg × 1 lần/ngày","hiệu quả bảo vệ thận vẫn còn đến eGFR thấp; ngưng tạm thời khi bệnh cấp tính/nhịn ăn kéo dài (nguy cơ nhiễm toan ceton)"],
+        ["Empagliflozin","10mg × 1 lần/ngày","tương tự dapagliflozin"],
+        ["Finerenone","10mg/ngày nếu eGFR 25–&lt;60, 20mg/ngày nếu eGFR≥60 → tăng đến 20mg/ngày","kiểm tra kali máu trước và sau khởi động; chống chỉ định kali&gt;5.0"],
+        ["Atorvastatin","20–40mg/ngày","không cần chỉnh liều nhiều theo eGFR (chuyển hóa gan)"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Cân nhắc lợi ích/nguy cơ điều trị tích cực ở người rất cao tuổi/nhiều bệnh đồng mắc — mục tiêu có thể cá thể hóa (ít nghiêm ngặt hơn) nếu kỳ vọng sống hạn chế hoặc nguy cơ tác dụng phụ (hạ HA, tổn thương thận cấp) vượt lợi ích.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["ACEi/ARB liều tối đa dung nạp khi có albumin niệu ≥A2",'<span class="badge badge-I">I</span>'],
+        ["SGLT2i cho CKD có albumin niệu, bất kể có ĐTĐ hay không, eGFR≥20",'<span class="badge badge-I">I</span>'],
+        ["Thêm finerenone ở CKD-ĐTĐ còn albumin niệu dù đã tối ưu ACEi/ARB+SGLT2i",'<span class="badge badge-I">I</span>'],
+        ["Chuyển chuyên khoa thận khi eGFR&lt;30 hoặc tiến triển nhanh",'<span class="badge badge-I">I</span>'],
+        ["Phối hợp đồng thời ACEi và ARB",'<span class="badge badge-III">III</span>'],
+        ["Hạn chế protein rất thấp (&lt;0.6g/kg) thường quy",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of CKD"
+},
+{
+  spec:"than", id:"aki", emoji:"⚡", short:"TTTC", title:"Tổn thương thận cấp (AKI)",
+  guidelines:["KDIGO 2012 (còn hiệu lực)"],
+  sections:{
+    dinh_nghia:`
+      <p>Tổn thương thận cấp (AKI) là tình trạng giảm chức năng thận đột ngột (giờ-ngày), được định nghĩa theo bất kỳ tiêu chí nào sau:</p>
+      ${rt(["Tiêu chí KDIGO"],[
+        ["Creatinine tăng ≥0.3 mg/dL","trong 48 giờ"],
+        ["Creatinine tăng ≥1.5 lần nền","trong 7 ngày qua (đã biết/nghi ngờ)"],
+        ["Thể tích nước tiểu","&lt;0.5 mL/kg/giờ trong ≥6 giờ"]
+      ])}
+      <div class="subhead">Phân độ nặng AKI</div>
+      ${rt(["Creatinine","Nước tiểu"],[
+        ["Giai đoạn 1","tăng 1.5–1.9 lần nền hoặc ≥0.3mg/dL","&lt;0.5mL/kg/h × 6–12h"],
+        ["Giai đoạn 2","tăng 2.0–2.9 lần nền","&lt;0.5mL/kg/h ×≥12h"],
+        ["Giai đoạn 3","tăng ≥3 lần nền hoặc ≥4.0mg/dL hoặc cần lọc máu","&lt;0.3mL/kg/h×≥24h hoặc vô niệu≥12h"]
+      ])}`,
+    chan_doan:`
+      <p>Tiếp cận theo <b>3 nhóm nguyên nhân</b> để định hướng chẩn đoán và xử trí:</p>
+      <div class="subhead">Trước thận (Prerenal) — phổ biến nhất</div>
+      <p>Giảm tưới máu thận do giảm thể tích (mất dịch, xuất huyết), giảm cung lượng tim (suy tim), giãn mạch (sốc nhiễm khuẩn), hoặc hẹp động mạch thận. Đáp ứng bù dịch nếu do giảm thể tích thật sự.</p>
+      <div class="subhead">Tại thận (Intrinsic)</div>
+      <p>Hoại tử ống thận cấp (ATN — nguyên nhân thường gặp nhất, do thiếu máu kéo dài hoặc độc thận), viêm thận kẽ cấp (do thuốc), viêm cầu thận cấp, tắc mạch thận.</p>
+      <div class="subhead">Sau thận (Postrenal)</div>
+      <p>Tắc nghẽn đường tiết niệu (sỏi, phì đại tiền liệt tuyến, khối u chèn ép) — siêu âm hệ tiết niệu để loại trừ ứ nước thận.</p>
+      <p>Cận lâm sàng: tổng phân tích nước tiểu + cặn lắng (trụ hạt bùn "muddy brown" gợi ý ATN, trụ hồng cầu gợi ý viêm cầu thận), FeNa (phân suất thải natri &lt;1% gợi ý trước thận, &gt;2% gợi ý ATN — kém tin cậy nếu đã dùng lợi tiểu), siêu âm thận loại trừ tắc nghẽn ở mọi trường hợp AKI không rõ nguyên nhân.</p>`,
+    dieu_tri:`
+      <div class="subhead">Nguyên tắc chung</div>
+      <ul>
+        <li>Xác định và điều trị nguyên nhân nền càng sớm càng tốt</li>
+        <li>Ngưng ngay các thuốc độc thận (NSAID, aminoglycoside, thuốc cản quang không cần thiết) và <b>chỉnh liều mọi thuốc theo eGFR hiện tại</b></li>
+        <li>Bù dịch tinh thể cân bằng (không dùng saline 0.9% liều lớn kéo dài) nếu nguyên nhân trước thận do giảm thể tích — tránh quá tải dịch</li>
+        <li>Theo dõi sát điện giải, đặc biệt <b>kali máu</b> (nguy cơ tăng kali đe dọa tính mạng)</li>
+      </ul>
+      <div class="subhead">Chỉ định lọc máu cấp cứu (khẩn cấp)</div>
+      <p>Ghi nhớ "AEIOU": <b>A</b>cidosis nặng kháng trị · <b>E</b>lectrolyte (tăng kali máu nặng/kháng trị) · <b>I</b>ntoxication (ngộ độc thẩm tách được) · <b>O</b>verload (quá tải dịch kháng lợi tiểu) · <b>U</b>remia có triệu chứng (viêm màng ngoài tim, bệnh não do ure).</p>
+      <div class="subhead">💊 Xử trí tăng kali máu cấp (biến chứng nguy hiểm nhất)</div>
+      ${rt(["Liều dùng","Cơ chế/thời gian tác dụng"],[
+        ["Calcium gluconate 10%","10mL TM chậm 2–3 phút, lặp lại nếu ECG còn bất thường","ổn định màng tế bào cơ tim, tác dụng trong vài phút, không hạ kali"],
+        ["Insulin nhanh + Glucose","10 đơn vị insulin + 25g glucose TM","đẩy kali vào nội bào, tác dụng sau 15–30 phút, kéo dài 4–6h; theo dõi hạ đường huyết"],
+        ["Salbutamol khí dung liều cao","10–20mg khí dung","đẩy kali vào nội bào, hỗ trợ thêm insulin-glucose"],
+        ["Natri bicarbonate (nếu toan chuyển hóa kèm theo)","50mEq TM","hỗ trợ khi có toan máu đi kèm, không phải điều trị chuẩn đơn độc"],
+        ["Furosemide (nếu còn nước tiểu)","40–80mg TM","tăng thải kali qua thận, hiệu quả phụ thuộc chức năng thận còn lại"],
+        ["Lọc máu cấp cứu","—","chỉ định khi kali &gt;6.5 kèm bất thường ECG hoặc kháng trị nội khoa"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Nguy cơ AKI cao hơn do giảm dự trữ thận sinh lý, đa thuốc (đặc biệt phối hợp ACEi/ARB+NSAID+lợi tiểu — "bộ ba nguy hiểm"); cân nhắc tạm ngưng ACEi/ARB/lợi tiểu/NSAID khi có bệnh cấp tính gây mất dịch ("sick day rules").</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Siêu âm hệ tiết niệu để loại trừ tắc nghẽn ở AKI không rõ nguyên nhân",'<span class="badge badge-I">I</span>'],
+        ["Ngưng thuốc độc thận và chỉnh liều thuốc theo eGFR ngay khi phát hiện AKI",'<span class="badge badge-I">I</span>'],
+        ["Calcium gluconate ngay khi tăng kali máu có biến đổi ECG",'<span class="badge badge-I">I</span>'],
+        ["Dùng saline 0.9% liều lớn kéo dài không cân nhắc dịch cân bằng",'<span class="badge badge-IIb">IIb</span>'],
+        ["Lọc máu dự phòng thường quy khi chưa đạt tiêu chí AEIOU",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"KDIGO 2012 Clinical Practice Guideline for Acute Kidney Injury (vẫn là khung tham chiếu chính hiện hành)"
+},
+{
+  spec:"than", id:"uti", emoji:"🦠", short:"NTT", title:"Nhiễm trùng tiểu",
+  guidelines:["IDSA 2019 (Viêm bàng quang không biến chứng)","IDSA/ESCMID 2010 (Viêm thận-bể thận)"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhiễm trùng tiểu (UTI) phân loại theo vị trí và có biến chứng hay không:</p>
+      <ul>
+        <li><b>Viêm bàng quang không biến chứng:</b> phụ nữ khỏe mạnh, không mang thai, đường tiết niệu bình thường về giải phẫu-chức năng</li>
+        <li><b>Viêm thận-bể thận cấp:</b> nhiễm trùng lan lên đài bể thận, có sốt/đau hông lưng</li>
+        <li><b>UTI có biến chứng:</b> nam giới, phụ nữ mang thai, bất thường giải phẫu/chức năng đường niệu, đặt catheter, suy giảm miễn dịch, đái tháo đường kiểm soát kém</li>
+      </ul>`,
+    chan_doan:`
+      <p>Viêm bàng quang không biến chứng ở phụ nữ triệu chứng điển hình (tiểu buốt, tiểu gấp, tiểu nhiều lần, không tiết dịch/kích ứng âm đạo): <b>có thể chẩn đoán lâm sàng, không bắt buộc cấy nước tiểu</b> nếu triệu chứng điển hình rõ.</p>
+      <p>Cấy nước tiểu (kèm kháng sinh đồ) chỉ định khi: viêm thận-bể thận, UTI có biến chứng, UTI tái phát, triệu chứng không điển hình, hoặc thất bại điều trị kinh nghiệm ban đầu.</p>
+      <div class="alert-box alert-danger"><b>Không điều trị vi khuẩn niệu không triệu chứng</b> (asymptomatic bacteriuria) trừ khi đang mang thai hoặc chuẩn bị thủ thuật tiết niệu xâm lấn niêm mạc — đây là khuyến cáo mạnh, tránh lạm dụng kháng sinh không cần thiết.</div>`,
+    dieu_tri:`
+      <div class="subhead">Viêm bàng quang không biến chứng — kháng sinh đầu tay (ưu tiên theo thứ tự)</div>
+      <ul>
+        <li><b>Nitrofurantoin</b> 100mg × 2 lần/ngày × 5 ngày — lựa chọn hàng đầu do ít gây kháng thuốc lan rộng, tránh nếu nghi viêm thận-bể thận sớm (nồng độ mô thận thấp) hoặc eGFR&lt;30</li>
+        <li><b>Fosfomycin trometamol</b> liều duy nhất 3g — thuận tiện, ít ảnh hưởng hệ vi sinh đường ruột</li>
+        <li><b>TMP-SMX</b> (nếu tỷ lệ kháng E. coli tại chỗ &lt;20%) × 3 ngày</li>
+        <li>Fluoroquinolone (ciprofloxacin/levofloxacin): <b>không còn là lựa chọn đầu tay</b> cho viêm bàng quang đơn thuần do lo ngại tác dụng phụ nghiêm trọng (đứt gân, bệnh thần kinh ngoại biên, phình/bóc tách ĐMC) — dành riêng cho viêm thận-bể thận hoặc khi các lựa chọn khác không phù hợp</li>
+      </ul>
+      <div class="subhead">Viêm thận-bể thận cấp — ngoại trú (không dấu hiệu nặng)</div>
+      <p>Fluoroquinolone uống (ciprofloxacin 500mg×2/ngày hoặc levofloxacin 750mg/ngày) × 5–7 ngày nếu tỷ lệ kháng tại chỗ &lt;10%, hoặc liều nạp kháng sinh tiêm tác dụng dài trước khi chuyển uống nếu nghi kháng thuốc.</p>
+      <div class="subhead">Viêm thận-bể thận cấp — nhập viện/nặng</div>
+      <p>Kháng sinh tiêm phổ rộng ban đầu (ceftriaxone, fluoroquinolone TM, hoặc piperacillin-tazobactam nếu nghi kháng thuốc/nhiễm trùng huyết) → xuống thang theo kháng sinh đồ, tổng thời gian 7–14 ngày tùy đáp ứng.</p>
+      <div class="subhead">🧑‍⚕️ Kháng sinh theo từng đối tượng bệnh nền</div>
+      ${rt(["Khuyến nghị","Lý do/lưu ý"],[
+        ["Phụ nữ có thai (kể cả vi khuẩn niệu không triệu chứng)","Nitrofurantoin (tránh gần ngày sinh) hoặc amoxicillin-clavulanate hoặc cephalexin × 5–7 ngày","Tránh TMP-SMX 3 tháng đầu/cuối thai kỳ (dị tật ống thần kinh/vàng da nhân) và fluoroquinolone suốt thai kỳ"],
+        ["Nam giới","Coi như UTI có biến chứng, cấy nước tiểu trước điều trị, thời gian điều trị dài hơn (7 ngày), tầm soát bất thường tiền liệt tuyến nếu tái phát","Nếu nghi viêm tiền liệt tuyến kèm theo: fluoroquinolone hoặc TMP-SMX × 2–4 tuần do thấm tốt vào mô tuyến"],
+        ["Đặt catheter tiểu lâu dài","Chỉ điều trị khi có triệu chứng thật sự; đổi/rút catheter trước hoặc khi bắt đầu kháng sinh","Vi khuẩn niệu ở người đặt catheter gần như luôn có — không cấy/điều trị nếu không triệu chứng"],
+        ["Suy thận (eGFR&lt;30)","Ưu tiên fosfomycin (viêm bàng quang) hoặc ceftriaxone (viêm thận-bể thận); tránh nitrofurantoin","Nitrofurantoin không đạt nồng độ hiệu quả trong nước tiểu khi eGFR thấp, tăng nguy cơ độc tính phổi/gan"],
+        ["Đái tháo đường/suy giảm miễn dịch","Coi như UTI có biến chứng, ngưỡng cấy nước tiểu và theo dõi thấp hơn, thời gian điều trị dài hơn","Nguy cơ viêm thận-bể thận sinh khí (emphysematous), áp xe thận cao hơn — chụp hình ảnh nếu đáp ứng chậm"],
+        ["Người cao tuổi tại viện dưỡng lão","Chỉ điều trị khi có triệu chứng tiết niệu cụ thể (không dựa nước tiểu đục/mùi hoặc lú lẫn đơn thuần)","Vi khuẩn niệu không triệu chứng rất phổ biến ở nhóm này — điều trị quá mức gây kháng thuốc không cần thiết"],
+        ["Dị ứng penicillin/sulfa","Fosfomycin hoặc nitrofurantoin (viêm bàng quang); fluoroquinolone (viêm thận-bể thận) nếu không còn lựa chọn khác","Kiểm tra chức năng thận trước dùng fluoroquinolone kéo dài ở người cao tuổi"]
+      ])}
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều & thời gian","Lưu ý"],[
+        ["Nitrofurantoin","100mg × 2 lần/ngày × 5 ngày","tránh nếu eGFR&lt;30 hoặc nghi viêm thận-bể thận"],
+        ["Fosfomycin trometamol","3g liều duy nhất (pha nước, uống lúc đói)","chỉ dùng cho viêm bàng quang, không dùng viêm thận-bể thận"],
+        ["TMP-SMX","160/800mg × 2 lần/ngày × 3 ngày","tránh nếu dị ứng sulfa, thận trọng phối hợp warfarin/ACEi ở người cao tuổi (tăng kali)"],
+        ["Ciprofloxacin (viêm thận-bể thận)","500mg × 2 lần/ngày × 7 ngày","thận trọng người cao tuổi (nguy cơ đứt gân, kéo dài QT, rối loạn tâm thần)"],
+        ["Ceftriaxone (nhập viện)","1–2g × 1 lần/ngày TM","không cần chỉnh liều theo thận"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Tránh chẩn đoán UTI chỉ dựa vào nước tiểu đục/mùi hôi hoặc thay đổi tri giác đơn thuần ở người cao tuổi không có triệu chứng tiết niệu cụ thể — dễ dẫn đến điều trị quá mức vi khuẩn niệu không triệu chứng; ưu tiên nitrofurantoin/fosfomycin hơn fluoroquinolone do tác dụng phụ thần kinh-gân cơ.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Nitrofurantoin hoặc fosfomycin là kháng sinh đầu tay cho viêm bàng quang không biến chứng",'<span class="badge badge-I">I</span>'],
+        ["Không điều trị vi khuẩn niệu không triệu chứng (trừ thai kỳ/trước thủ thuật niệu xâm lấn)",'<span class="badge badge-III">III</span>'],
+        ["Fluoroquinolone là lựa chọn đầu tay cho viêm bàng quang đơn thuần",'<span class="badge badge-III">III</span>'],
+        ["Cấy nước tiểu thường quy cho viêm bàng quang triệu chứng điển hình không biến chứng",'<span class="badge badge-III">III</span>'],
+        ["Cấy nước tiểu + kháng sinh đồ cho viêm thận-bể thận/UTI có biến chứng",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"IDSA 2019 Clinical Practice Guideline: Asymptomatic Bacteriuria; IDSA/ESCMID 2010 Guideline for Acute Pyelonephritis"
+},
+{
+  spec:"than", id:"nephrotic", emoji:"💧", short:"HCTH", title:"Hội chứng thận hư",
+  guidelines:["KDIGO 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>Hội chứng thận hư (HCTH) là một <b>hội chứng lâm sàng</b> (không phải chẩn đoán mô bệnh học cụ thể — xem thêm bài "Bệnh cầu thận" để tra cứu điều trị đặc hiệu theo type mô bệnh học), xác định bởi tứ chứng:</p>
+      ${rt(["Ngưỡng"],[
+        ["Protein niệu nặng","&gt;3.5g/24h (người lớn) hoặc tỷ lệ protein/creatinine niệu &gt;3–3.5 mg/mg"],
+        ["Albumin máu giảm","&lt;3.0 g/dL"],
+        ["Phù","Thường phù toàn thân, ấn lõm, có thể tràn dịch đa màng"],
+        ["Tăng lipid máu","Tăng LDL-C và triglyceride thứ phát do tăng tổng hợp lipoprotein ở gan"]
+      ])}
+      <p>Nguyên nhân: nguyên phát (bệnh cầu thận thay đổi tối thiểu, bệnh thận màng, FSGS) hoặc thứ phát (đái tháo đường, lupus, amyloidosis, thuốc — NSAID/lithium/bisphosphonate TM, nhiễm trùng — viêm gan B/C/HIV, ác tính — đặc biệt bệnh thận màng ở người &gt;50 tuổi).</p>`,
+    chan_doan:`
+      <p>Xác định hội chứng qua xét nghiệm nước tiểu (tỷ lệ protein/creatinine hoặc thu 24h), albumin máu, lipid máu. Tìm nguyên nhân thứ phát: đường huyết/HbA1c, ANA/anti-dsDNA, bổ thể, huyết thanh viêm gan B/C, điện di protein huyết thanh + tự do chuỗi nhẹ (loại trừ amyloidosis/đa u tủy ở người lớn tuổi), và <b>tầm soát ác tính phù hợp tuổi</b> đặc biệt khi nghi bệnh thận màng mới khởi phát ở người &gt;50 tuổi.</p>
+      <p><b>Sinh thiết thận</b> gần như luôn cần thiết ở người lớn để xác định type mô bệnh học và định hướng điều trị đặc hiệu, trừ khi lâm sàng đã rất điển hình cho một nguyên nhân cụ thể (vd. bệnh thận đái tháo đường tiến triển kèm bệnh võng mạc rõ, không cần sinh thiết thường quy).</p>`,
+    dieu_tri:`
+      <div class="subhead">Điều trị hỗ trợ nền tảng — áp dụng cho MỌI nguyên nhân (song song điều trị đặc hiệu theo mô bệnh học)</div>
+      <div class="subhead">1. Kiểm soát phù</div>
+      <p>Hạn chế muối (&lt;2g Na/ngày) + <b>lợi tiểu quai</b> (furosemide) là nền tảng, có thể cần liều cao hơn bình thường do giảm gắn kết protein-thuốc và giảm hấp thu ruột do phù thành ruột; phối hợp thêm lợi tiểu thiazide nếu kháng lợi tiểu quai đơn độc.</p>
+      <div class="subhead">2. Giảm protein niệu</div>
+      <p><b>ACEi/ARB</b> liều tối đa dung nạp là điều trị nền tảng không đặc hiệu, giảm protein niệu qua cơ chế huyết động, độc lập với nguyên nhân nền.</p>
+      <div class="subhead">3. Dự phòng huyết khối — biến chứng cần chủ động tầm soát</div>
+      <div class="alert-box alert-danger">HCTH gây tình trạng tăng đông (mất antithrombin III, protein S qua nước tiểu + tăng yếu tố đông máu gan tổng hợp bù trừ) — nguy cơ huyết khối tĩnh mạch sâu/thuyên tắc phổi và <b>đặc biệt cao ở bệnh thận màng</b>. Cân nhắc <b>kháng đông dự phòng</b> khi albumin máu &lt;2.0–2.5 g/dL kèm ≥1 yếu tố nguy cơ khác (bất động, bệnh thận màng, protein niệu rất nặng &gt;10g/ngày), đặc biệt cân nhắc mạnh ở bệnh thận màng có albumin &lt;2.0-2.5.</div>
+      <div class="subhead">4. Kiểm soát tăng lipid máu</div>
+      <p>Statin cường độ trung bình-cao — HCTH là tình trạng nguy cơ tim mạch cao tương đương các yếu tố nguy cơ truyền thống khác.</p>
+      <div class="subhead">5. Dự phòng nhiễm trùng</div>
+      <p>Mất IgG và protein bổ thể qua nước tiểu làm tăng nguy cơ nhiễm trùng, đặc biệt do vi khuẩn có vỏ bọc (phế cầu) — tiêm <b>vắc-xin phế cầu</b>, cân nhắc kháng sinh dự phòng thời gian phù nặng ở trẻ em (ít áp dụng thường quy ở người lớn nhưng cần cảnh giác lâm sàng, đặc biệt viêm phúc mạc nguyên phát).</p>
+      <div class="subhead">Điều trị đặc hiệu theo nguyên nhân</div>
+      <p>Xem chi tiết phác đồ ức chế miễn dịch theo type mô bệnh học (bệnh cầu thận thay đổi tối thiểu, bệnh thận màng, FSGS...) tại bài <b>"Bệnh cầu thận"</b> trong cùng chuyên khoa Thận.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Furosemide (kiểm soát phù)","40–120mg/ngày (có thể cần liều cao hơn bình thường), chia 2 lần","theo dõi điện giải/creatinine sát; phối hợp albumin TM chỉ khi phù kháng trị nặng có triệu chứng"],
+        ["Losartan/Enalapril","liều tối đa dung nạp, tăng dần","theo dõi kali/creatinine sau mỗi lần tăng liều, đặc biệt khi phối hợp lợi tiểu"],
+        ["Atorvastatin","20–40mg/ngày","điều chỉnh theo LDL-C đích và dung nạp"],
+        ["Warfarin/DOAC dự phòng huyết khối (khi có chỉ định)","theo cân nặng/chức năng thận, đích INR 2–3 nếu dùng warfarin","cân nhắc kỹ lợi ích/nguy cơ chảy máu cá thể hóa; DOAC dữ liệu còn hạn chế ở albumin rất thấp"],
+        ["Vắc-xin phế cầu liên hợp/polysaccharide","theo lịch tiêm chủng người lớn nguy cơ cao","tiêm trước khi bắt đầu ức chế miễn dịch liều cao nếu có thể"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Bệnh thận màng mới khởi phát ở người cao tuổi cần tầm soát ác tính tiềm ẩn kỹ hơn (có thể là hội chứng cận ung thư); thận trọng liều lợi tiểu/kháng đông do nguy cơ rối loạn điện giải và chảy máu cao hơn.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["ACEi/ARB liều tối đa dung nạp cho mọi nguyên nhân HCTH có protein niệu",'<span class="badge badge-I">I</span>'],
+        ["Statin cường độ trung bình-cao do nguy cơ tim mạch cao",'<span class="badge badge-I">I</span>'],
+        ["Cân nhắc kháng đông dự phòng khi albumin&lt;2.0-2.5g/dL kèm yếu tố nguy cơ khác",'<span class="badge badge-IIa">IIa</span>'],
+        ["Sinh thiết thận ở người lớn để xác định type mô bệnh học trước điều trị đặc hiệu",'<span class="badge badge-I">I</span>'],
+        ["Tầm soát ác tính khi bệnh thận màng mới khởi phát ở người &gt;50 tuổi",'<span class="badge badge-IIa">IIa</span>'],
+        ["Kháng đông dự phòng thường quy cho mọi bệnh nhân HCTH bất kể albumin máu",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"KDIGO 2021 Clinical Practice Guideline for the Management of Glomerular Diseases (phần Hội chứng thận hư & biến chứng)"
+},
+{
+  spec:"than", id:"gn", emoji:"🔬", short:"BCT", title:"Bệnh cầu thận",
+  guidelines:["KDIGO 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>Bệnh cầu thận là nhóm bệnh lý tổn thương cầu thận nguyên phát hoặc thứ phát, biểu hiện qua 2 hội chứng lâm sàng chính:</p>
+      <div class="subhead">Hội chứng thận hư</div>
+      <p>Protein niệu nặng (&gt;3.5g/24h), albumin máu giảm (&lt;3g/dL), phù, tăng lipid máu. Nguyên nhân thường gặp: bệnh cầu thận thay đổi tối thiểu (trẻ em), bệnh thận màng, xơ hóa cầu thận khu trú từng phần (FSGS), bệnh thận đái tháo đường.</p>
+      <div class="subhead">Hội chứng viêm thận cấp (nephritic)</div>
+      <p>Tiểu máu (thường kèm trụ hồng cầu), protein niệu mức độ trung bình, tăng huyết áp, giảm mức lọc cầu thận cấp. Nguyên nhân: bệnh thận IgA, viêm cầu thận sau nhiễm liên cầu, viêm mạch máu nhỏ (ANCA), lupus ban đỏ hệ thống, hội chứng Goodpasture.</p>`,
+    chan_doan:`
+      <p>Đánh giá ban đầu: tổng phân tích nước tiểu + cặn lắng, tỷ lệ protein/creatinine niệu hoặc thu nước tiểu 24h, chức năng thận, albumin máu, bổ thể (C3/C4), ANA, ANCA, kháng thể kháng phospholipase A2 receptor (anti-PLA2R — đặc hiệu bệnh thận màng nguyên phát), điện di protein huyết thanh/nước tiểu ở người lớn tuổi (loại trừ bệnh đa u tủy).</p>
+      <div class="alert-box alert-info"><b>Sinh thiết thận</b> là tiêu chuẩn chẩn đoán xác định type mô bệnh học, cần thiết ở hầu hết trường hợp hội chứng thận hư người lớn hoặc viêm thận cấp không rõ nguyên nhân, trừ khi lâm sàng đã rất điển hình (vd. bệnh thận đái tháo đường có bệnh võng mạc kèm theo, không cần sinh thiết thường quy).</div>`,
+    dieu_tri:`
+      <div class="subhead">Điều trị nền tảng không đặc hiệu (mọi bệnh cầu thận có protein niệu)</div>
+      <ul>
+        <li><b>ACEi/ARB</b> liều tối đa dung nạp — giảm protein niệu qua cơ chế huyết động, nền tảng cho mọi bệnh cầu thận có protein niệu bất kể nguyên nhân</li>
+        <li><b>SGLT2i</b> bổ sung khi có protein niệu đáng kể, tương tự CKD nói chung (bằng chứng từ DAPA-CKD bao gồm cả bệnh cầu thận không đái tháo đường)</li>
+        <li>Kiểm soát HA đích &lt;120/80, statin, lợi tiểu kiểm soát phù, dự phòng huyết khối nếu albumin máu rất thấp (&lt;2g/dL, đặc biệt bệnh thận màng — nguy cơ huyết khối tĩnh mạch cao)</li>
+      </ul>
+      <div class="subhead">Điều trị đặc hiệu theo type mô bệnh học (sau sinh thiết)</div>
+      <ul>
+        <li><b>Bệnh cầu thận thay đổi tối thiểu:</b> corticosteroid liều cao (prednisone) là điều trị đầu tay, đáp ứng tốt (&gt;80%)</li>
+        <li><b>Bệnh thận màng nguy cơ cao (anti-PLA2R hiệu giá cao/protein niệu nặng dai dẳng):</b> rituximab hoặc cyclophosphamide+corticosteroid theo phác đồ Ponticelli, hoặc ức chế calcineurin</li>
+        <li><b>FSGS tiên phát:</b> corticosteroid liều cao kéo dài (nhiều tháng), thêm ức chế calcineurin nếu kháng steroid</li>
+        <li><b>Bệnh thận IgA nguy cơ cao (protein niệu&gt;1g/ngày dù đã tối ưu RAASi):</b> cân nhắc corticosteroid hệ thống hoặc budesonide phóng thích hồi tràng (nhắm mảng Peyer) theo KDIGO 2021; SGLT2i cũng có bằng chứng lợi ích rõ</li>
+        <li><b>Viêm thận lupus, viêm mạch ANCA:</b> corticosteroid liều cao phối hợp cyclophosphamide hoặc rituximab giai đoạn tấn công, sau đó duy trì bằng thuốc ức chế miễn dịch nhẹ hơn (azathioprine/mycophenolate)</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      <div class="alert-box alert-warn">Corticosteroid liều cao kéo dài: bổ sung canxi-vitamin D, dự phòng loét tiêu hóa, theo dõi đường huyết/HA, tầm soát loãng xương nếu dùng &gt;3 tháng — đặc biệt thận trọng ở người cao tuổi/đái tháo đường.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Prednisone (bệnh cầu thận thay đổi tối thiểu)","1mg/kg/ngày (tối đa 80mg) × 4–16 tuần, giảm dần","theo dõi đường huyết, HA, nguy cơ nhiễm trùng"],
+        ["Losartan/Enalapril","liều tối đa dung nạp, tăng dần","theo dõi kali/creatinine sau mỗi lần tăng liều"],
+        ["Dapagliflozin","10mg/ngày","hiệu quả cả bệnh cầu thận không đái tháo đường"],
+        ["Rituximab (bệnh thận màng/lupus)","375mg/m² × 4 tuần hoặc 1g × 2 liều cách 2 tuần","sàng lọc viêm gan B trước dùng; theo dõi phản ứng truyền"],
+        ["Cyclophosphamide (viêm mạch ANCA/lupus nặng)","theo phác đồ chuyên khoa, TM hoặc uống","theo dõi công thức máu, bảo tồn khả năng sinh sản nếu còn trẻ"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Cân nhắc kỹ lợi ích/nguy cơ ức chế miễn dịch mạnh (nhiễm trùng, loãng xương, đường huyết) — ưu tiên phác đồ ít độc hơn (rituximab) thay vì cyclophosphamide khi có thể; tầm soát ác tính tiềm ẩn ở bệnh thận màng mới chẩn đoán tuổi cao (có thể là hội chứng cận ung thư).</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["ACEi/ARB liều tối đa dung nạp là nền tảng cho mọi bệnh cầu thận có protein niệu",'<span class="badge badge-I">I</span>'],
+        ["Sinh thiết thận để xác định type mô bệnh học trước điều trị đặc hiệu",'<span class="badge badge-I">I</span>'],
+        ["Corticosteroid liều cao là điều trị đầu tay bệnh cầu thận thay đổi tối thiểu",'<span class="badge badge-I">I</span>'],
+        ["SGLT2i bổ sung ở bệnh cầu thận có protein niệu đáng kể",'<span class="badge badge-IIa">IIa</span>'],
+        ["Bắt đầu ức chế miễn dịch mạnh trước khi có kết quả sinh thiết ở trường hợp không cấp cứu",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"KDIGO 2021 Clinical Practice Guideline for the Management of Glomerular Diseases"
 }
 ];
 
 const sectionMeta = [
   {key:"dinh_nghia", label:"Định nghĩa", icon:"📘"},
-  {key:"chan_doan", label:"Tiêu chuẩn chẩn đoán", icon:"🔍"},
-  {key:"dieu_tri", label:"Điều trị", icon:"💊"},
-  {key:"lieu_thuoc", label:"Liều thuốc theo tuổi", icon:"⚕️"},
+  {key:"chan_doan", label:"Chẩn đoán", icon:"🔍"},
+  {key:"dieu_tri", label:"Điều trị & Liều dùng", icon:"💊"},
   {key:"khuyen_cao", label:"Khuyến cáo", icon:"📋"}
 ];
 
