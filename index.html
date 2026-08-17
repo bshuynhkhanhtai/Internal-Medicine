@@ -117,6 +117,7 @@
   .sg-opts{display:flex;flex-direction:column;gap:5px;}
   .score-radio-opt{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-secondary);cursor:pointer;}
   .score-radio-opt input[type=radio]{width:15px;height:15px;flex-shrink:0;accent-color:var(--tiffany-main);}
+  .score-select{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:12.5px;font-weight:600;-webkit-appearance:none;appearance:none;}
 
   footer{text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px 20px;}
 </style>
@@ -231,12 +232,130 @@ function updateScoreR(calcId){
   if(interpEl && scoreInterp[calcId]) interpEl.innerHTML = scoreInterp[calcId](total);
 }
 
+/* =========================================================
+   HELPER: ước tính nhanh SCORE2/SCORE2-OP bằng dropdown chọn
+   (mô hình xấp xỉ theo xu hướng gradient nguy cơ ESC — chỉ mang tính sàng lọc)
+   ========================================================= */
+function sc2(){
+  return `
+    <div class="score-box" data-calc2="score2">
+      <div class="score-title">🧮 Ước tính SCORE2 <span class="tag-auto">Ước tính gần đúng</span></div>
+      <div class="score-group">
+        <div class="sg-label">Tuổi</div>
+        <select class="score-select" id="score2_age" onchange="calcSCORE2()">
+          <option value="45">40–49</option>
+          <option value="55" selected>50–59</option>
+          <option value="65">60–69</option>
+          <option value="75">70–79 (SCORE2-OP)</option>
+          <option value="85">≥80 (SCORE2-OP)</option>
+        </select>
+      </div>
+      <div class="score-group">
+        <div class="sg-label">Giới tính</div>
+        <select class="score-select" id="score2_sex" onchange="calcSCORE2()">
+          <option value="male">Nam</option>
+          <option value="female">Nữ</option>
+        </select>
+      </div>
+      <div class="score-group">
+        <div class="sg-label">Hút thuốc lá hiện tại</div>
+        <select class="score-select" id="score2_smoke" onchange="calcSCORE2()">
+          <option value="no">Không hút</option>
+          <option value="yes">Đang hút</option>
+        </select>
+      </div>
+      <div class="score-group">
+        <div class="sg-label">Huyết áp tâm thu (mmHg)</div>
+        <select class="score-select" id="score2_sbp" onchange="calcSCORE2()">
+          <option value="110">&lt;120</option>
+          <option value="130" selected>120–139</option>
+          <option value="150">140–159</option>
+          <option value="170">160–179</option>
+          <option value="185">≥180</option>
+        </select>
+      </div>
+      <div class="score-group">
+        <div class="sg-label">Non-HDL Cholesterol</div>
+        <select class="score-select" id="score2_chol" onchange="calcSCORE2()">
+          <option value="3.0">&lt;3.0 mmol/L (~116 mg/dL)</option>
+          <option value="3.8" selected>3.0–3.9 mmol/L (~116-150)</option>
+          <option value="4.5">4.0–4.9 mmol/L (~150-190)</option>
+          <option value="5.5">5.0–5.9 mmol/L (~190-230)</option>
+          <option value="6.5">≥6.0 mmol/L (~230+)</option>
+        </select>
+      </div>
+      <div class="score-group">
+        <div class="sg-label">Vùng nguy cơ quốc gia (theo phân vùng ESC)</div>
+        <select class="score-select" id="score2_region" onchange="calcSCORE2()">
+          <option value="0.65">Nguy cơ thấp</option>
+          <option value="1.0" selected>Nguy cơ trung bình</option>
+          <option value="1.5">Nguy cơ cao</option>
+          <option value="2.2">Nguy cơ rất cao</option>
+        </select>
+      </div>
+      <div class="score-result">
+        <div class="sr-total">Ước tính nguy cơ 10 năm: <b id="score2_pct">—</b></div>
+        <div class="sr-interp" id="score2_interp">Chọn đủ các mục ở trên để xem ước tính</div>
+      </div>
+    </div>`;
+}
+
+function calcSCORE2(){
+  const age = parseFloat(document.getElementById('score2_age').value);
+  const sex = document.getElementById('score2_sex').value;
+  const smoke = document.getElementById('score2_smoke').value;
+  const sbp = parseFloat(document.getElementById('score2_sbp').value);
+  const chol = parseFloat(document.getElementById('score2_chol').value);
+  const region = parseFloat(document.getElementById('score2_region').value);
+
+  // Base rate xấp xỉ theo tuổi/giới (tham chiếu: không hút thuốc, SBP~120, non-HDL~3.5, vùng nguy cơ trung bình)
+  const baseRates = { male:{45:1.5,55:4,65:9,75:17,85:28}, female:{45:0.7,55:2,65:5,75:11,85:20} };
+  let base = baseRates[sex][age];
+
+  // Hệ số nhân xấp xỉ theo mỗi yếu tố (mô phỏng gradient tương đối của SCORE2)
+  const smokeMult = smoke === 'yes' ? 1.6 : 1.0;
+  const sbpMult = 1 + Math.max(0, (sbp - 120) / 20) * 0.18;
+  const cholMult = 1 + Math.max(0, (chol - 3.5) / 1.5) * 0.18;
+
+  let risk = base * smokeMult * sbpMult * cholMult * region;
+  risk = Math.min(risk, 90); // trần hợp lý
+
+  const pctEl = document.getElementById('score2_pct');
+  const interpEl = document.getElementById('score2_interp');
+  const pctText = risk < 1 ? '<1%' : risk.toFixed(1) + '%';
+  pctEl.textContent = pctText + ' (ước tính)';
+
+  // Diễn giải theo ngưỡng tuổi ESC 2021
+  let category, colorNote;
+  const ageNum = age;
+  if(ageNum < 50){
+    category = risk < 2.5 ? 'Thấp-Trung bình' : risk < 7.5 ? 'Cao' : 'Rất cao';
+  } else if(ageNum < 70){
+    category = risk < 5 ? 'Thấp-Trung bình' : risk < 10 ? 'Cao' : 'Rất cao';
+  } else {
+    category = risk < 7.5 ? 'Thấp-Trung bình' : risk < 15 ? 'Cao' : 'Rất cao';
+  }
+  interpEl.innerHTML = `Phân loại tham khảo: <b>Nguy cơ ${category}</b> — đây là ước tính gần đúng, xác nhận lại bằng công cụ SCORE2 chính thức trước khi quyết định điều trị statin.`;
+}
+
 const scoreInterp = {
   cha2ds2va: (t) => t>=2 ? `⚠️ Nguy cơ đột quỵ cao — <b>khuyến cáo kháng đông</b> (Class I)` : t===1 ? `Nguy cơ trung bình — cân nhắc kháng đông theo đặc điểm bệnh nhân (Class IIa)` : `Nguy cơ thấp — có thể không cần kháng đông thường quy`,
   hasbled: (t) => t>=3 ? `⚠️ Nguy cơ chảy máu cao — không loại trừ kháng đông, nhưng cần theo dõi sát/hiệu chỉnh yếu tố nguy cơ có thể sửa được` : `Nguy cơ chảy máu không cao — theo dõi định kỳ như thường quy`,
   curb65: (t) => t<=1 ? `Nhẹ — có thể điều trị ngoại trú` : t===2 ? `Trung bình — cân nhắc nhập viện ngắn ngày/theo dõi sát` : `Nặng — khuyến cáo nhập viện, cân nhắc ICU nếu ≥4 điểm`,
   childpugh: (t) => t<=6 ? `Child-Pugh A — xơ gan còn bù, tiên lượng tốt` : t<=9 ? `Child-Pugh B — mất bù trung bình` : `Child-Pugh C — mất bù nặng, cân nhắc đánh giá ghép gan`,
-  das28ra: (t) => t<3 ? `Kiểm soát tốt — hoạt động bệnh thấp/lui bệnh` : t<5 ? `Hoạt động bệnh trung bình — cân nhắc tối ưu/leo thang điều trị` : `Hoạt động bệnh cao — cần leo thang điều trị theo treat-to-target`
+  das28ra: (t) => t<3 ? `Kiểm soát tốt — hoạt động bệnh thấp/lui bệnh` : t<5 ? `Hoạt động bệnh trung bình — cân nhắc tối ưu/leo thang điều trị` : `Hoạt động bệnh cao — cần leo thang điều trị theo treat-to-target`,
+  findrisc: (t) => t<7 ? `Nguy cơ thấp — ước tính ~1% sẽ mắc ĐTĐ type 2 trong 10 năm` : t<=11 ? `Nguy cơ hơi tăng — ước tính ~4% trong 10 năm` : t<=14 ? `Nguy cơ trung bình — ước tính ~17% trong 10 năm, nên xét nghiệm glucose/HbA1c` : t<=20 ? `⚠️ Nguy cơ cao — ước tính ~33% trong 10 năm, khuyến cáo xét nghiệm glucose/HbA1c và tư vấn thay đổi lối sống` : `⚠️ Nguy cơ rất cao — ước tính ~50% trong 10 năm, cần xét nghiệm glucose/HbA1c ngay`,
+  gbs: (t) => t===0 ? `Nguy cơ rất thấp — có thể cân nhắc điều trị ngoại trú, không cần nội soi cấp cứu` : t<=5 ? `Nguy cơ thấp-trung bình — cân nhắc nhập viện theo dõi, nội soi trong vòng 24h` : `⚠️ Nguy cơ cao — cần nhập viện, hồi sức tích cực, nội soi sớm trong vòng 24h (càng sớm càng tốt nếu huyết động không ổn)`,
+  rockallpre: (t) => t===0 ? `Nguy cơ tử vong/tái xuất huyết rất thấp (điểm trước nội soi)` : t<=2 ? `Nguy cơ thấp (điểm trước nội soi)` : `Nguy cơ cao (điểm trước nội soi) — cần đánh giá khẩn, tính lại điểm đầy đủ sau nội soi`,
+  rockallfull: (t) => t<=2 ? `Nguy cơ thấp — tử vong &lt;5%, có thể cân nhắc xuất viện sớm nếu ổn định` : t<=5 ? `Nguy cơ trung bình — tử vong ~5-15%, cần theo dõi sát tại bệnh viện` : `⚠️ Nguy cơ cao — tử vong &gt;15-40% tùy điểm, cần hồi sức tích cực/ICU và theo dõi sát nguy cơ tái xuất huyết`,
+  kocher: (t) => t===0 ? `Nguy cơ nhiễm trùng khớp rất thấp (&lt;3%)` : t===1 ? `Nguy cơ thấp (~3%) — theo dõi sát, cân nhắc chọc dò nếu nghi ngờ lâm sàng cao` : t===2 ? `Nguy cơ trung bình (~40%) — cân nhắc chọc dò dịch khớp` : t===3 ? `⚠️ Nguy cơ cao (~93%) — khuyến cáo chọc dò dịch khớp khẩn cấp` : `⚠️ Nguy cơ rất cao (&gt;99%) — xử trí như viêm khớp nhiễm trùng cho đến khi loại trừ`,
+  bisap: (t) => t<3 ? `Nguy cơ thấp — tiên lượng thuận lợi` : `⚠️ Nguy cơ cao (BISAP≥3) — tăng đáng kể nguy cơ tử vong/biến chứng nặng, cân nhắc theo dõi sát/ICU sớm`,
+  timi: (t) => t<=1 ? `Nguy cơ thấp (~5% biến cố trong 14 ngày)` : t<=3 ? `Nguy cơ trung bình — cân nhắc chiến lược can thiệp xâm lấn sớm` : t<=5 ? `⚠️ Nguy cơ cao — ủng hộ can thiệp xâm lấn sớm` : `⚠️ Nguy cơ rất cao — ưu tiên can thiệp xâm lấn sớm`,
+  act: (t) => t>=20 ? `Hen được kiểm soát tốt` : t>=16 ? `Hen chưa được kiểm soát tốt — cân nhắc leo thang điều trị` : `⚠️ Hen kiểm soát kém — cần leo thang điều trị và đánh giá lại kỹ thuật hít/tuân thủ`,
+  cat: (t) => t<10 ? `Ảnh hưởng thấp lên chất lượng cuộc sống` : t<=20 ? `Ảnh hưởng trung bình` : t<=30 ? `⚠️ Ảnh hưởng cao` : `⚠️ Ảnh hưởng rất cao lên chất lượng cuộc sống`,
+  wellspe: (t) => t<2 ? `Xác suất thấp — (2 mức: ≤4 = "PE ít khả năng", làm D-dimer trước khi quyết định chụp CT)` : t<=6 ? `Xác suất trung bình — cân nhắc D-dimer hoặc CTPA tùy ngưỡng 2-mức (≤4 vs &gt;4)` : `⚠️ Xác suất cao (&gt;6đ, hoặc &gt;4đ theo thang 2-mức) — cân nhắc CTPA trực tiếp, không cần chờ D-dimer`,
+  years: (t) => t===0 ? `0 tiêu chí dương tính — loại trừ PE nếu D-dimer &lt;1000 ng/mL` : `⚠️ ${t} tiêu chí dương tính — cần ngưỡng D-dimer thấp hơn (&lt;500 ng/mL) mới loại trừ được PE`,
+  spesi: (t) => t===0 ? `Nguy cơ tử vong 30 ngày rất thấp — có thể cân nhắc điều trị ngoại trú nếu phù hợp` : `⚠️ sPESI≥1 — nguy cơ tăng, cân nhắc nhập viện theo dõi`
 };
 
 function updateScore(calcId){
@@ -525,6 +644,22 @@ const diseases = [
         <li>ICD phòng ngừa <b>thứ phát</b>: sống sót sau ngừng tim do VT/VF không do nguyên nhân hồi phục</li>
         <li>ICD phòng ngừa <b>tiên phát</b>: EF≤35% sau NMCT ≥40 ngày, NYHA II–III dù điều trị nội khoa tối ưu</li>
       </ul>
+      <div class="subhead">⚡ Sốc điện chuyển nhịp — Đồng bộ (Synchronized Cardioversion)</div>
+      <p>Dùng cho loạn nhịp <b>có phức bộ QRS xác định được</b> (tránh sốc trúng đỉnh sóng T gây rung thất) — máy đồng bộ với sóng R. Chỉ định: SVT/rung nhĩ/cuồng nhĩ huyết động không ổn hoặc kháng thuốc; VT đơn dạng có mạch huyết động không ổn.</p>
+      ${rt(["Mức năng lượng khởi đầu (máy 2 pha/biphasic)","Ghi chú"],[
+        ["Rung nhĩ","120–200 J đồng bộ","cuồng nhĩ thường đáp ứng năng lượng thấp hơn rung nhĩ"],
+        ["Cuồng nhĩ","50–100 J đồng bộ","tăng dần nếu không cắt được cơn"],
+        ["SVT (AVNRT/AVRT)","50–100 J đồng bộ","thường đáp ứng năng lượng thấp"],
+        ["VT đơn dạng có mạch (huyết động không ổn)","100 J đồng bộ (tăng dần nếu thất bại)","nếu chuyển thành VT vô mạch/VF giữa chừng → chuyển ngay sang phá rung không đồng bộ"]
+      ])}
+      <div class="subhead">⚡ Phá rung — Không đồng bộ (Unsynchronized Defibrillation)</div>
+      <p>Dùng cho <b>VT vô mạch, rung thất (VF), hoặc VT đa dạng/xoắn đỉnh (Torsades)</b> — không chờ đồng bộ sóng R vì không xác định được QRS rõ ràng hoặc bệnh nhân không có mạch, cần khử rung ngay lập tức theo phác đồ ACLS/hồi sinh tim phổi.</p>
+      ${rt(["Mức năng lượng","Ghi chú"],[
+        ["Sốc lần 1","120–200 J không đồng bộ (máy 2 pha) hoặc 360J (máy 1 pha)","tiếp tục CPR ngay sau sốc, không dừng để bắt mạch/kiểm tra nhịp"],
+        ["Các lần sốc tiếp theo","200 J (hoặc mức tối đa máy) không đồng bộ","xen kẽ chu kỳ CPR 2 phút giữa các lần sốc, cho adrenaline mỗi 3–5 phút theo ACLS"],
+        ["VT đa dạng/xoắn đỉnh huyết động không ổn","xử trí như VF — phá rung không đồng bộ ngay","bổ sung magie sulfate TM nếu nghi xoắn đỉnh do QT dài"]
+      ])}
+      <div class="alert-box alert-danger">Ghi nhớ nguyên tắc an toàn: <b>QRS đều, xác định rõ, còn mạch → sốc ĐỒNG BỘ</b>; <b>vô mạch hoặc QRS không xác định được (VF/đa dạng) → phá rung KHÔNG ĐỒNG BỘ ngay, không trì hoãn</b>. An thần/giảm đau trước sốc điện đồng bộ có chuẩn bị (không cấp cứu tối khẩn) nếu bệnh nhân còn tỉnh.</div>
       <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người cao tuổi: giảm liều amiodarone nạp/duy trì, theo dõi tuyến giáp/gan/phổi khi dùng dài hạn; tránh phối hợp verapamil/diltiazem với chẹn beta do nguy cơ block nặng.</div>
       ${rt(["Liều dùng","Lưu ý"],[
@@ -610,7 +745,18 @@ const diseases = [
         ["Xác định NMCT","hs-cTn cao lúc 0h, hoặc tăng rõ rệt sau 1h"],
         ["Vùng quan sát","các trường hợp còn lại → theo dõi thêm, cân nhắc chẩn đoán hình ảnh"]
       ])}
-      <p>Thang điểm <b>GRACE</b> giúp phân tầng nguy cơ và quyết định thời điểm can thiệp trong NSTEMI (nguy cơ rất cao: can thiệp &lt;2h; nguy cơ cao: &lt;24h).</p>`,
+      <p>Thang điểm <b>GRACE</b> giúp phân tầng nguy cơ và quyết định thời điểm can thiệp trong NSTEMI (nguy cơ rất cao: can thiệp &lt;2h; nguy cơ cao: &lt;24h) — GRACE dùng nhiều biến liên tục (tuổi, nhịp tim, HA tâm thu, creatinine...) nên cần công cụ tính chuyên dụng (app/website GRACE chính thức) thay vì bảng tính điểm đơn giản.</p>
+      <div class="subhead">🧮 Thang điểm TIMI (UA/NSTEMI) — dễ tính nhanh tại giường</div>
+      ${sc("timi","Thang điểm TIMI Risk Score (UA/NSTEMI)",[
+        {label:"Tuổi ≥65",pts:1},
+        {label:"≥3 yếu tố nguy cơ bệnh mạch vành (THA, ĐTĐ, rối loạn lipid, hút thuốc, tiền sử gia đình)",pts:1},
+        {label:"Đã biết hẹp mạch vành ≥50% (tiền sử)",pts:1},
+        {label:"Dùng aspirin trong 7 ngày qua",pts:1},
+        {label:"Đau thắt ngực nặng gần đây (≥2 cơn trong 24h)",pts:1},
+        {label:"Thay đổi đoạn ST ≥0.5mm trên ECG",pts:1},
+        {label:"Tăng men tim (troponin/CK-MB)",pts:1}
+      ])}
+      <p>0–1 điểm: nguy cơ thấp (~5% biến cố trong 14 ngày). 2–3: nguy cơ trung bình. 4–5: nguy cơ cao. 6–7: nguy cơ rất cao — điểm càng cao càng ủng hộ chiến lược can thiệp xâm lấn sớm.</p>`,
     dieu_tri:`
       <div class="subhead">STEMI</div>
       <ul>
@@ -652,6 +798,61 @@ const diseases = [
   source:"2023 ESC Guidelines for the management of acute coronary syndromes, Eur Heart J 2023"
 },
 {
+  spec:"tim_mach", id:"ccs", emoji:"🫀", short:"HCVM", title:"Hội chứng vành mạn (CCS)",
+  guidelines:["ESC 2024","ACC/AHA/ACP 2023"],
+  sections:{
+    dinh_nghia:`
+      <p>Hội chứng vành mạn (Chronic Coronary Syndrome — CCS, trước đây gọi là "bệnh mạch vành ổn định") là thuật ngữ ESC 2024 dùng để mô tả các giai đoạn tiến triển khác nhau của bệnh động mạch vành, <b>ngoại trừ</b> giai đoạn cấp tính (ACS). Bao gồm: đau thắt ngực ổn định do hẹp mạch vành thượng tâm mạc, co thắt mạch vành (vasospastic angina), rối loạn chức năng vi mạch vành (INOCA/ANOCA), bệnh nhân sau ACS/tái thông mạch vành đã ổn định, và bệnh nhân được phát hiện tình cờ có bệnh mạch vành qua hình ảnh học.</p>`,
+    chan_doan:`
+      <p><b>Xác suất tiền nghiệm (pre-test probability)</b> dựa vào tuổi, giới, đặc điểm đau ngực (điển hình/không điển hình/không do tim) định hướng lựa chọn xét nghiệm chẩn đoán tiếp theo.</p>
+      <div class="subhead">Lựa chọn xét nghiệm không xâm lấn theo xác suất tiền nghiệm (ESC 2024)</div>
+      ${rt(["Xét nghiệm ưu tiên"],[
+        ["Xác suất thấp (&lt;5%)","Không cần thêm xét nghiệm tim mạch đặc hiệu, tìm nguyên nhân khác"],
+        ["Xác suất thấp–trung bình (5–15%)","CT mạch vành (CCTA) là lựa chọn hàng đầu — độ nhạy cao loại trừ bệnh mạch vành tắc nghẽn"],
+        ["Xác suất trung bình–cao (&gt;15%)","CCTA hoặc xét nghiệm chức năng có hình ảnh (siêu âm tim gắng sức, xạ hình tưới máu cơ tim, MRI tim gắng sức) tùy đặc điểm bệnh nhân và sẵn có tại chỗ"],
+        ["Nghi ngờ rối loạn chức năng vi mạch/co thắt mạch vành (INOCA)","Chụp mạch vành có đo dự trữ lưu lượng vành (FFR/iFR) và test kích thích co thắt (acetylcholine) nếu mạch vành thượng tâm mạc không tắc nghẽn đáng kể trên hình ảnh"]
+      ])}
+      <div class="alert-box alert-info"><b>Điểm mới ESC 2024:</b> CCTA được nâng lên vị trí ưu tiên hàng đầu ở nhóm xác suất thấp-trung bình nhờ giá trị tiên đoán âm rất cao, giúp loại trừ an toàn bệnh mạch vành tắc nghẽn mà không cần xét nghiệm xâm lấn.</div>`,
+    dieu_tri:`
+      <div class="subhead">Điều trị nội khoa tối ưu (OMT) — nền tảng cho mọi bệnh nhân CCS</div>
+      <div class="subhead">1. Thuốc cải thiện tiên lượng (bắt buộc, không phụ thuộc triệu chứng)</div>
+      <ul>
+        <li><b>Aspirin liều thấp</b> (75–100mg/ngày) suốt đời trừ chống chỉ định</li>
+        <li><b>Statin cường độ cao</b>, đích LDL-C &lt;55mg/dL (&lt;1.4mmol/L) và giảm ≥50% so nền — thêm ezetimibe/ức chế PCSK9 nếu không đạt đích</li>
+        <li><b>ACEi/ARB</b> nếu kèm đái tháo đường, suy tim EF giảm, tăng huyết áp, hoặc bệnh thận mạn</li>
+      </ul>
+      <div class="subhead">2. Thuốc kiểm soát triệu chứng đau thắt ngực (bậc thang)</div>
+      <ul>
+        <li><b>Bước 1:</b> <b>Chẹn beta</b> hoặc <b>chẹn kênh canxi</b> (chọn theo tần số tim, huyết áp, chức năng thất trái, bệnh đồng mắc) — cả hai đều là lựa chọn hàng đầu ngang nhau theo ESC 2024, không còn ưu tiên tuyệt đối chẹn beta như trước</li>
+        <li><b>Bước 2</b> (không đáp ứng đơn trị): phối hợp chẹn beta + chẹn kênh canxi (loại dihydropyridine)</li>
+        <li><b>Bước 3</b> (còn triệu chứng dù đã phối hợp bước 2): thêm thuốc hàng hai — nitrat tác dụng dài, ivabradine (nếu nhịp xoang nhanh, EF giảm), nicorandil, ranolazine, hoặc trimetazidine tùy đặc điểm bệnh nhân</li>
+      </ul>
+      <div class="subhead">3. Tái thông mạch vành (PCI/CABG)</div>
+      <p>Chỉ định khi: <b>còn triệu chứng dù đã điều trị nội khoa tối ưu</b>, hoặc vùng thiếu máu cơ tim rộng trên xét nghiệm chức năng, hoặc giải phẫu nguy cơ cao (hẹp thân chung, bệnh 3 nhánh kèm rối loạn chức năng thất trái). <b>CABG ưu tiên hơn PCI</b> ở bệnh nhân đái tháo đường có bệnh nhiều nhánh mạch vành phức tạp (theo thang điểm SYNTAX cao).</p>
+      <div class="alert-box alert-warn">Nghiên cứu ISCHEMIA khẳng định: ở CCS ổn định, tái thông mạch vành <b>không</b> giảm tử vong/NMCT so với điều trị nội khoa tối ưu đơn thuần (trừ hẹp thân chung) — vai trò chính của can thiệp là <b>cải thiện triệu chứng</b>, không phải cải thiện tiên lượng sống còn ở đa số trường hợp không nguy cơ cao.</div>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Bisoprolol (chẹn beta)","2.5mg/ngày → tối đa 10mg/ngày","giảm liều khởi đầu ở người cao tuổi/COPD (dùng chọn lọc β1)"],
+        ["Amlodipine (chẹn kênh canxi)","5mg/ngày → tối đa 10mg/ngày","phù ngoại biên phụ thuộc liều, không do giữ dịch"],
+        ["Diltiazem (nếu không dùng cùng chẹn beta)","60–120mg × 2-3 lần/ngày dạng phóng thích thường, hoặc phóng thích chậm 1 lần/ngày","tránh phối hợp cùng chẹn beta (nguy cơ block nhĩ-thất nặng)"],
+        ["Isosorbide mononitrate (nitrat tác dụng dài)","30–60mg/ngày × 1 lần","cần khoảng trống không nitrat 10–12h/ngày tránh dung nạp thuốc"],
+        ["Ivabradine (nếu nhịp xoang≥70/phút)","5mg×2/ngày → tối đa 7.5mg×2/ngày","chỉ hiệu quả nếu còn nhịp xoang; theo dõi nhìn mờ/rối loạn thị giác"],
+        ["Trimetazidine","35mg × 2 lần/ngày","tránh ở bệnh Parkinson/rối loạn vận động; chống chỉ định suy thận nặng"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Khởi liều thấp hơn cho chẹn beta/chẹn kênh canxi, theo dõi hạ huyết áp tư thế/nhịp chậm quá mức; cân nhắc kỹ lợi ích tái thông mạch vành ở người rất cao tuổi/nhiều bệnh đồng mắc dựa trên kỳ vọng sống và mục tiêu điều trị cá thể hóa.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["CCTA là xét nghiệm hàng đầu ở nhóm xác suất tiền nghiệm thấp-trung bình",'<span class="badge badge-I">I</span>'],
+        ["Statin cường độ cao + đích LDL-C&lt;55mg/dL cho mọi bệnh nhân CCS",'<span class="badge badge-I">I</span>'],
+        ["Chẹn beta và chẹn kênh canxi là lựa chọn hàng đầu ngang nhau cho kiểm soát triệu chứng",'<span class="badge badge-I">I</span>'],
+        ["Tái thông mạch vành khi còn triệu chứng dù đã điều trị nội khoa tối ưu",'<span class="badge badge-I">I</span>'],
+        ["Tái thông mạch vành thường quy để cải thiện tiên lượng sống còn ở CCS nguy cơ thấp-trung bình (trừ hẹp thân chung)",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2024 ESC Guidelines for the management of chronic coronary syndromes, Eur Heart J 2024; 2023 AHA/ACC/ACCP/ASPC/NLA/PCNA Guideline for Chronic Coronary Disease"
+},
+{
   spec:"tim_mach", id:"lipid", emoji:"🧈", short:"Lipid", title:"Rối loạn lipid máu",
   guidelines:["ESC/EAS 2019 (+ cập nhật phòng ngừa 2021)"],
   sections:{
@@ -660,6 +861,17 @@ const diseases = [
       <div class="subhead">Phân tầng nguy cơ tim mạch (SCORE2/SCORE2-OP)</div>
       <p>Rất cao: đã có bệnh tim mạch do xơ vữa, ĐTĐ có tổn thương cơ quan đích, bệnh thận mạn nặng, tăng cholesterol máu gia đình kèm yếu tố nguy cơ khác. Cao/trung bình/thấp: theo thang điểm nguy cơ 10 năm.</p>`,
     chan_doan:`
+      <div class="subhead">🧮 Ước tính nhanh nguy cơ tim mạch 10 năm — SCORE2 / SCORE2-OP</div>
+      <div class="alert-box alert-info">Công cụ dưới đây cho ước tính <b>gần đúng, mang tính sàng lọc nhanh</b> dựa theo xu hướng phân tầng nguy cơ SCORE2/SCORE2-OP của ESC — <b>không thay thế</b> công cụ tính chính thức khi ra quyết định điều trị statin. Đối với quyết định lâm sàng chính xác, dùng máy tính SCORE2 chính thức (u-prevent.com hoặc ứng dụng ESC CVD-Risk-Calculation).</div>
+      ${sc2()}
+      <div class="subhead">Ngưỡng phân loại nguy cơ theo tuổi (ESC 2021)</div>
+      ${rt(["Nguy cơ thấp-TB","Nguy cơ cao","Nguy cơ rất cao"],[
+        ["Tuổi &lt;50","&lt;2.5%","2.5–&lt;7.5%","≥7.5%"],
+        ["Tuổi 50–69","&lt;5%","5–&lt;10%","≥10%"],
+        ["Tuổi ≥70 (SCORE2-OP)","&lt;7.5%","7.5–&lt;15%","≥15%"]
+      ])}
+      <div class="subhead">Phân tầng nguy cơ theo bệnh cảnh lâm sàng (áp dụng trực tiếp — không cần tính SCORE2)</div>
+      <p>Rất cao: đã có bệnh tim mạch do xơ vữa, ĐTĐ có tổn thương cơ quan đích, bệnh thận mạn nặng, tăng cholesterol máu gia đình kèm yếu tố nguy cơ khác — nhóm này xếp thẳng vào nguy cơ rất cao, không cần tính SCORE2.</p>
       <p>Bilan lipid máu (không nhất thiết nhịn đói): cholesterol toàn phần, LDL-C, HDL-C, triglyceride, non-HDL-C; đo <b>Lp(a) ít nhất một lần trong đời</b>.</p>
       ${rt(["Ngưỡng cần lưu ý"],[
         ["LDL-C gợi ý tăng cholesterol máu gia đình","&gt;4.9 mmol/L (~190 mg/dL) không điều trị"],
@@ -704,6 +916,144 @@ const diseases = [
   source:"2019 ESC/EAS Guidelines for the management of dyslipidaemias; 2021 ESC Guidelines on CVD prevention"
 },
 {
+  spec:"tim_mach", id:"pad", emoji:"🦵", short:"BĐMNB", title:"Bệnh động mạch ngoại biên (PAD)",
+  guidelines:["ESC 2024 (PAD)","AHA/ACC 2016 (còn tham chiếu)"],
+  sections:{
+    dinh_nghia:`
+      <p>Bệnh động mạch ngoại biên (PAD) là hẹp/tắc động mạch chi dưới do xơ vữa, biểu hiện từ không triệu chứng, đau cách hồi (claudication) khi gắng sức, đến thiếu máu chi trầm trọng mạn tính (CLTI) đe dọa mất chi.</p>`,
+    chan_doan:`
+      <div class="subhead">Chỉ số cổ chân-cánh tay (ABI — Ankle-Brachial Index)</div>
+      ${rt(["Diễn giải"],[
+        ["&gt;1.40","Mạch máu cứng/vôi hóa không nén được — cần xét nghiệm bổ sung (chỉ số ngón chân-cánh tay, sóng Doppler)"],
+        ["1.00–1.40","Bình thường"],
+        ["0.91–0.99","Ranh giới (borderline)"],
+        ["0.41–0.90","PAD nhẹ-trung bình"],
+        ["≤0.40","PAD nặng — nguy cơ thiếu máu chi trầm trọng"]
+      ])}
+      <p>ABI đo lúc nghỉ; nếu bình thường nhưng lâm sàng vẫn nghi ngờ cao (đau cách hồi điển hình) → đo ABI sau gắng sức (giảm ≥20% gợi ý PAD). Chụp mạch (CTA/MRA/DSA) khi cần lập kế hoạch tái thông mạch.</p>
+      <div class="alert-box alert-danger"><b>Thiếu máu chi trầm trọng cấp tính (Acute Limb Ischemia)</b> — cấp cứu mạch máu thật sự, nhận biết qua "6P": Pain (đau đột ngột), Pallor (nhợt), Pulselessness (mất mạch), Paresthesia (dị cảm), Paralysis (liệt), Poikilothermia (lạnh chi) — cần hội chẩn mạch máu/can thiệp tái thông khẩn cấp trong vài giờ để cứu chi.</div>`,
+    dieu_tri:`
+      <div class="subhead">Điều trị nội khoa nền tảng — mọi bệnh nhân PAD (tương đương bệnh nhân bệnh mạch vành)</div>
+      <ul>
+        <li><b>Ngưng thuốc lá</b> — can thiệp đơn lẻ quan trọng nhất, cải thiện rõ rệt tiên lượng cả về chi lẫn tim mạch toàn thân</li>
+        <li><b>Statin cường độ cao</b> cho mọi bệnh nhân PAD bất kể LDL-C nền, đích LDL-C&lt;55mg/dL tương tự bệnh mạch vành</li>
+        <li><b>Kháng kết tập tiểu cầu đơn</b> (aspirin hoặc clopidogrel) cho PAD có triệu chứng; cân nhắc phối hợp aspirin liều thấp + rivaroxaban liều rất thấp (2.5mg×2/ngày) ở nhóm nguy cơ cao theo nghiên cứu COMPASS/VOYAGER-PAD</li>
+        <li>Kiểm soát tối ưu các yếu tố nguy cơ khác: HA, đường huyết nếu ĐTĐ</li>
+      </ul>
+      <div class="subhead">Điều trị đau cách hồi (claudication)</div>
+      <ul>
+        <li><b>Chương trình tập luyện có giám sát</b> (supervised exercise therapy) là điều trị đầu tay, bằng chứng mạnh ngang hoặc vượt trội can thiệp mạch máu về cải thiện khoảng cách đi bộ</li>
+        <li><b>Cilostazol</b> cải thiện triệu chứng đau cách hồi nếu tập luyện không đủ hiệu quả (chống chỉ định nếu có suy tim)</li>
+        <li>Tái thông mạch (nong bóng/đặt stent hoặc phẫu thuật bắc cầu) khi triệu chứng ảnh hưởng đáng kể chất lượng sống dù đã tối ưu điều trị nội khoa + tập luyện</li>
+      </ul>
+      <div class="subhead">Thiếu máu chi trầm trọng mạn tính (CLTI)</div>
+      <p>Cần tái thông mạch (nội mạch hoặc phẫu thuật bắc cầu) sớm để cứu chi — trì hoãn làm tăng nguy cơ cắt cụt chi; chăm sóc vết thương đa chuyên khoa song song.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Aspirin","75-100mg/ngày","suốt đời trừ chống chỉ định"],
+        ["Clopidogrel (thay thế/phối hợp)","75mg/ngày","có thể ưu tiên hơn aspirin đơn độc theo một số bằng chứng ở PAD triệu chứng"],
+        ["Rivaroxaban liều thấp (phối hợp, nguy cơ cao)","2.5mg × 2 lần/ngày kèm aspirin 100mg/ngày","chống chỉ định nếu nguy cơ chảy máu cao"],
+        ["Cilostazol","100mg × 2 lần/ngày","chống chỉ định tuyệt đối nếu có suy tim (mọi mức độ)"],
+        ["Atorvastatin (cường độ cao)","40-80mg/ngày","đích LDL-C&lt;55mg/dL"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Đánh giá nguy cơ té ngã/chảy máu trước khi phối hợp kháng kết tập tiểu cầu kép hoặc thêm kháng đông liều thấp; cân nhắc kỹ nguy cơ phẫu thuật khi quyết định tái thông mạch ở người có nhiều bệnh đồng mắc.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["ABI là xét nghiệm chẩn đoán đầu tay không xâm lấn",'<span class="badge badge-I">I</span>'],
+        ["Statin cường độ cao và kháng kết tập tiểu cầu cho mọi PAD có triệu chứng",'<span class="badge badge-I">I</span>'],
+        ["Chương trình tập luyện có giám sát là điều trị đầu tay cho đau cách hồi",'<span class="badge badge-I">I</span>'],
+        ["Tái thông mạch khẩn cấp khi nghi thiếu máu chi cấp tính (6P)",'<span class="badge badge-I">I</span>'],
+        ["Cilostazol ở bệnh nhân có suy tim",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2024 ESC Guidelines for the management of peripheral arterial and aortic diseases, Eur Heart J 2024"
+},
+{
+  spec:"tim_mach", id:"pe", emoji:"🫁", short:"TTP", title:"Thuyên tắc phổi (PE)",
+  guidelines:["ESC 2019 (+ cập nhật 2020)","CHEST 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>Thuyên tắc phổi (PE) là tắc nghẽn động mạch phổi do huyết khối, thường xuất phát từ huyết khối tĩnh mạch sâu (DVT) chi dưới di chuyển lên — PE và DVT được xem là hai biểu hiện của cùng một bệnh lý: thuyên tắc huyết khối tĩnh mạch (VTE).</p>
+      <div class="subhead">Phân tầng nguy cơ theo huyết động (ESC 2019) — quyết định chiến lược điều trị</div>
+      ${rt(["Đặc điểm"],[
+        ["Nguy cơ cao (massive/high-risk)","Sốc hoặc tụt huyết áp (HA tâm thu&lt;90mmHg hoặc giảm≥40mmHg kéo dài&gt;15 phút, không do nguyên nhân khác) — đe dọa tính mạng ngay lập tức"],
+        ["Nguy cơ trung bình-cao (submassive)","Huyết động ổn định NHƯNG có rối loạn chức năng thất phải (trên siêu âm tim/CT) VÀ tăng troponin/BNP"],
+        ["Nguy cơ trung bình-thấp","Huyết động ổn định, chỉ có 1 trong 2 dấu hiệu rối loạn thất phải hoặc tăng men tim (không cả hai)"],
+        ["Nguy cơ thấp","Huyết động ổn định, không rối loạn chức năng thất phải, không tăng men tim, PESI/sPESI thấp"]
+      ])}`,
+    chan_doan:`
+      <div class="subhead">🧮 Thang điểm Wells (PE) — xác suất lâm sàng trước xét nghiệm</div>
+      ${sc("wellspe","Thang điểm Wells cho Thuyên tắc phổi",[
+        {label:"Dấu hiệu lâm sàng của huyết khối tĩnh mạch sâu (sưng/đau khi ấn dọc tĩnh mạch chi dưới)",pts:3},
+        {label:"Chẩn đoán khác ít khả năng hơn PE",pts:3},
+        {label:"Nhịp tim &gt;100 lần/phút",pts:1.5},
+        {label:"Bất động ≥3 ngày hoặc phẫu thuật trong 4 tuần qua",pts:1.5},
+        {label:"Tiền sử DVT/PE trước đây",pts:1.5},
+        {label:"Ho ra máu",pts:1},
+        {label:"Ung thư đang hoạt động (điều trị trong 6 tháng qua hoặc giảm nhẹ)",pts:1}
+      ])}
+      <p><b>Phân loại 3 mức:</b> &lt;2đ = xác suất thấp; 2–6đ = xác suất trung bình; &gt;6đ = xác suất cao. <b>Phân loại 2 mức (thường dùng lâm sàng):</b> ≤4đ = "PE ít khả năng" (làm D-dimer trước); &gt;4đ = "PE nhiều khả năng" (chụp CTPA trực tiếp, không cần D-dimer).</p>
+      <div class="subhead">🧮 Thuật toán YEARS — đơn giản hóa, giảm số ca cần chụp CTPA</div>
+      <p>Đánh giá 3 tiêu chí lâm sàng, kết hợp ngưỡng D-dimer <b>thay đổi tùy số tiêu chí dương tính</b> (khác với Wells dùng ngưỡng D-dimer cố định 500ng/mL cho mọi mức xác suất):</p>
+      ${sc("years","Tiêu chí YEARS",[
+        {label:"Dấu hiệu lâm sàng của huyết khối tĩnh mạch sâu (DVT)",pts:1},
+        {label:"Ho ra máu",pts:1},
+        {label:"PE là chẩn đoán khả năng nhất",pts:1}
+      ])}
+      <div class="alert-box alert-info"><b>Áp dụng ngưỡng D-dimer theo số tiêu chí YEARS dương tính:</b> Nếu <b>0 tiêu chí</b> dương tính VÀ D-dimer &lt;1000 ng/mL → loại trừ PE an toàn, không cần CTPA. Nếu <b>≥1 tiêu chí</b> dương tính, cần ngưỡng D-dimer thấp hơn: &lt;500 ng/mL mới loại trừ được PE — ngược lại (≥1 tiêu chí và D-dimer≥500, hoặc 0 tiêu chí và D-dimer≥1000) → chỉ định chụp CTPA. Thuật toán YEARS giúp giảm ~14% số ca cần chụp CT so với Wells + ngưỡng D-dimer cố định.</div>
+      <div class="subhead">Chẩn đoán hình ảnh xác định</div>
+      <p><b>CT mạch máu phổi (CTPA)</b> là tiêu chuẩn vàng. Xạ hình thông khí-tưới máu (V/Q scan) là lựa chọn thay thế ở người chống chỉ định cản quang/suy thận nặng/thai kỳ (giảm phơi nhiễm tia xạ vú). Siêu âm tim tại giường hữu ích đánh giá nhanh rối loạn chức năng thất phải ở bệnh nhân huyết động không ổn định không thể di chuyển đi chụp CT.</p>
+      <div class="subhead">🧮 PESI đơn giản hóa (sPESI) — tiên lượng, hỗ trợ quyết định điều trị ngoại trú</div>
+      ${sc("spesi","sPESI (Simplified PESI)",[
+        {label:"Tuổi &gt;80",pts:1},
+        {label:"Ung thư",pts:1},
+        {label:"Suy tim mạn hoặc bệnh phổi mạn tính",pts:1},
+        {label:"Nhịp tim ≥110 lần/phút",pts:1},
+        {label:"Huyết áp tâm thu &lt;100mmHg",pts:1},
+        {label:"SpO2 &lt;90%",pts:1}
+      ])}
+      <p>sPESI = 0: nguy cơ tử vong 30 ngày rất thấp — có thể cân nhắc điều trị ngoại trú ở bệnh nhân PE nguy cơ thấp phù hợp. sPESI ≥1: nguy cơ tăng, cân nhắc nhập viện theo dõi.</p>`,
+    dieu_tri:`
+      <div class="subhead">PE nguy cơ cao (sốc/tụt huyết áp) — cấp cứu tối khẩn</div>
+      <p><b>Tiêu sợi huyết toàn thân</b> ngay lập tức (trừ chống chỉ định tuyệt đối) — ưu tiên hàng đầu để cứu mạng. Nếu chống chỉ định tiêu sợi huyết hoặc thất bại: <b>lấy huyết khối qua catheter</b> hoặc <b>phẫu thuật lấy huyết khối</b> tùy nguồn lực sẵn có.</p>
+      <div class="subhead">PE nguy cơ trung bình-cao</div>
+      <p>Kháng đông ngay + theo dõi sát tại đơn vị theo dõi tích cực — <b>không tiêu sợi huyết thường quy</b> (chỉ cân nhắc "cứu vãn" nếu huyết động xấu đi trong quá trình theo dõi); can thiệp qua catheter có thể cân nhắc ở trung tâm có kinh nghiệm.</p>
+      <div class="subhead">PE nguy cơ trung bình-thấp và thấp</div>
+      <p>Kháng đông đơn thuần — <b>DOAC (thuốc kháng đông đường uống trực tiếp)</b> là lựa chọn hàng đầu ở đa số bệnh nhân, thay thế warfarin nhờ không cần theo dõi INR, ít tương tác thuốc-thức ăn hơn. Bệnh nhân sPESI=0 phù hợp có thể điều trị ngoại trú hoàn toàn bằng DOAC.</p>
+      <div class="subhead">Thời gian kháng đông</div>
+      ${rt(["Thời gian khuyến cáo"],[
+        ["PE có yếu tố khởi phát thoáng qua rõ ràng (phẫu thuật, bất động, chấn thương)","3 tháng"],
+        ["PE không rõ yếu tố khởi phát (unprovoked)","Kháng đông kéo dài (xem xét vô thời hạn nếu nguy cơ chảy máu thấp-trung bình, đánh giá lại định kỳ hàng năm)"],
+        ["PE kèm ung thư đang hoạt động","Kháng đông kéo dài trong suốt thời gian ung thư còn hoạt động"],
+        ["PE tái phát (đợt thứ 2 trở lên không rõ yếu tố khởi phát)","Kháng đông kéo dài vô thời hạn"]
+      ])}
+      <div class="subhead">Lưới lọc tĩnh mạch chủ dưới (IVC filter)</div>
+      <p>Chỉ định khi có <b>chống chỉ định tuyệt đối với kháng đông</b> hoặc PE tái phát dù đã kháng đông đầy đủ — không dùng thường quy như biện pháp bổ sung ở bệnh nhân dung nạp kháng đông bình thường.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Alteplase (tiêu sợi huyết, PE nguy cơ cao)","100mg truyền TM trong 2 giờ (hoặc phác đồ nhanh 0.6mg/kg tối đa 50mg trong 15 phút nếu ngừng tim)","chống chỉ định tuyệt đối: xuất huyết nội sọ, đột quỵ thiếu máu &lt;3 tháng, xuất huyết tiêu hóa gần đây, phẫu thuật lớn gần đây"],
+        ["Enoxaparin (bắc cầu trước DOAC/warfarin)","1mg/kg × 2 lần/ngày TDD","giảm liều nếu eGFR&lt;30 (1mg/kg×1 lần/ngày)"],
+        ["Rivaroxaban","15mg×2/ngày × 21 ngày → 20mg×1/ngày duy trì","không cần bắc cầu heparin, uống cùng thức ăn"],
+        ["Apixaban","10mg×2/ngày × 7 ngày → 5mg×2/ngày duy trì","không cần bắc cầu heparin"],
+        ["Dabigatran/Edoxaban","cần bắc cầu heparin/enoxaparin 5-10 ngày trước khi chuyển","khác với rivaroxaban/apixaban có thể dùng ngay từ đầu"],
+        ["Warfarin (khi DOAC không phù hợp, vd. hội chứng kháng phospholipid)","bắc cầu heparin/enoxaparin đến khi INR 2-3 trong ≥24h","đích INR 2.0-3.0"]
+      ])}
+      <div class="age-tag">Người cao tuổi/suy thận</div>
+      <p>Ưu tiên apixaban ở người cao tuổi/suy thận nhẹ-trung bình (dữ liệu an toàn chảy máu tốt hơn trong nhóm này); tránh DOAC nếu eGFR rất thấp (&lt;15-30 tùy thuốc) — chuyển sang warfarin có bắc cầu heparin.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Dùng Wells hoặc YEARS để đánh giá xác suất lâm sàng trước xét nghiệm",'<span class="badge badge-I">I</span>'],
+        ["Tiêu sợi huyết ngay cho PE nguy cơ cao (sốc/tụt HA) trừ chống chỉ định",'<span class="badge badge-I">I</span>'],
+        ["DOAC là kháng đông hàng đầu cho đa số bệnh nhân PE huyết động ổn định",'<span class="badge badge-I">I</span>'],
+        ["Điều trị ngoại trú cho PE nguy cơ thấp có sPESI=0 phù hợp",'<span class="badge badge-IIa">IIa</span>'],
+        ["Tiêu sợi huyết thường quy cho PE nguy cơ trung bình-cao (huyết động còn ổn định)",'<span class="badge badge-III">III</span>'],
+        ["IVC filter thường quy ở bệnh nhân dung nạp kháng đông bình thường",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2019 ESC Guidelines for the diagnosis and management of acute pulmonary embolism (+ 2020 focused update); CHEST 2021 Antithrombotic Therapy for VTE Disease"
+},
+{
   spec:"noi_tiet", id:"dm", emoji:"🍬", short:"ĐTĐ", title:"Đái tháo đường & Tim mạch",
   guidelines:["ESC 2023 (Diabetes & CVD)","ADA Standards of Care 2025"],
   sections:{
@@ -712,6 +1062,19 @@ const diseases = [
       <div class="subhead">Phân tầng nguy cơ tim mạch ở người ĐTĐ (ESC 2023)</div>
       <p>Rất cao: đã có bệnh tim mạch do xơ vữa hoặc tổn thương cơ quan đích nặng (bệnh thận mạn giai đoạn 3–5, phì đại thất trái, bệnh võng mạc). Cao: ĐTĐ ≥10 năm không tổn thương cơ quan đích kèm ≥1 yếu tố nguy cơ khác. Trung bình: ĐTĐ trẻ tuổi (&lt;10 năm) không yếu tố nguy cơ khác.</p>`,
     chan_doan:`
+      <div class="subhead">🧮 Tầm soát nguy cơ ĐTĐ type 2 trước xét nghiệm — Thang điểm FINDRISC</div>
+      <p>Công cụ sàng lọc không xâm lấn giúp xác định người cần làm xét nghiệm glucose/HbA1c chẩn đoán, dựa hoàn toàn vào đặc điểm lâm sàng dễ thu thập.</p>
+      ${scr("findrisc","Thang điểm FINDRISC (nguy cơ ĐTĐ type 2 trong 10 năm)",[
+        {label:"Tuổi", options:[{text:"&lt;45 tuổi (0đ)",pts:0},{text:"45–54 tuổi (2đ)",pts:2},{text:"55–64 tuổi (3đ)",pts:3},{text:"&gt;64 tuổi (4đ)",pts:4}]},
+        {label:"BMI (chỉ số khối cơ thể)", options:[{text:"&lt;25 kg/m² (0đ)",pts:0},{text:"25–30 kg/m² (1đ)",pts:1},{text:"&gt;30 kg/m² (3đ)",pts:3}]},
+        {label:"Vòng eo (Nam: &lt;94/94-102/&gt;102cm — Nữ: &lt;80/80-88/&gt;88cm)", options:[{text:"Bình thường (0đ)",pts:0},{text:"Tăng nhẹ (3đ)",pts:3},{text:"Tăng nhiều (4đ)",pts:4}]},
+        {label:"Hoạt động thể lực ≥30 phút/ngày (công việc hoặc giải trí)", options:[{text:"Có (0đ)",pts:0},{text:"Không (2đ)",pts:2}]},
+        {label:"Tần suất ăn rau củ/trái cây hàng ngày", options:[{text:"Hàng ngày (0đ)",pts:0},{text:"Không phải hàng ngày (1đ)",pts:1}]},
+        {label:"Từng dùng thuốc điều trị tăng huyết áp", options:[{text:"Không (0đ)",pts:0},{text:"Có (2đ)",pts:2}]},
+        {label:"Từng được phát hiện glucose máu cao (khám sức khỏe/ốm/thai kỳ)", options:[{text:"Không (0đ)",pts:0},{text:"Có (5đ)",pts:5}]},
+        {label:"Tiền sử gia đình mắc ĐTĐ", options:[{text:"Không (0đ)",pts:0},{text:"Có — họ hàng xa (cô/dì/chú/bác/anh chị em họ) (3đ)",pts:3},{text:"Có — quan hệ trực hệ (bố/mẹ/anh chị em ruột/con) (5đ)",pts:5}]}
+      ])}
+      <div class="subhead">Ngưỡng chẩn đoán xác định ĐTĐ (xét nghiệm)</div>
       ${rt(["Ngưỡng chẩn đoán ĐTĐ"],[
         ["Glucose huyết tương đói (FPG)","≥126 mg/dL (7.0 mmol/L)"],
         ["Glucose 2h sau nghiệm pháp dung nạp 75g","≥200 mg/dL (11.1 mmol/L)"],
@@ -867,8 +1230,29 @@ const diseases = [
         ["Dao động PEF ngày (trung bình 2 tuần)","&gt;10% (người lớn)"],
         ["FEV1 tăng sau 4 tuần điều trị kháng viêm","&gt;12% và &gt;200mL"]
       ])}
-      <p>Đánh giá kiểm soát triệu chứng (4 câu hỏi GINA: triệu chứng ngày &gt;2 lần/tuần, thức giấc đêm, dùng SABA cắt cơn &gt;2 lần/tuần, giới hạn hoạt động) và đánh giá nguy cơ đợt cấp (tiền sử đợt cấp, FEV1 thấp, hút thuốc, kỹ thuật hít sai).</p>`,
+      <p>Đánh giá kiểm soát triệu chứng (4 câu hỏi GINA: triệu chứng ngày &gt;2 lần/tuần, thức giấc đêm, dùng SABA cắt cơn &gt;2 lần/tuần, giới hạn hoạt động) và đánh giá nguy cơ đợt cấp (tiền sử đợt cấp, FEV1 thấp, hút thuốc, kỹ thuật hít sai).</p>
+      <div class="subhead">🚨 Phân độ nặng đợt cấp hen (GINA)</div>
+      ${rt(["Nói chuyện","Nhịp thở/Nhịp tim","SpO2","PEF","Tri giác/Dấu hiệu khác"],[
+        ["Nhẹ – Trung bình","Nói câu/cụm từ trọn vẹn","Thở nhanh, có thể dùng cơ hô hấp phụ","≥90%","≥50% giá trị tốt nhất/dự đoán","Tỉnh táo, có thể kích thích nhẹ"],
+        ["Nặng","Nói từng từ, ưu tiên ngồi cúi người ra trước","Nhịp thở &gt;30/phút, nhịp tim &gt;120/phút, co kéo cơ hô hấp phụ rõ","&lt;90%","≤50% giá trị tốt nhất/dự đoán","Kích thích vật vã"],
+        ["Nguy kịch (đe dọa tính mạng)","Không nói được / lồng ngực im lặng (silent chest)","Ngực di động nghịch thường, kiệt sức hô hấp, có thể nhịp chậm nghịch lý","&lt;90% hoặc tím tái","Không đo được/rất thấp","Lơ mơ, lú lẫn, hôn mê"]
+      ])}
+      <div class="alert-box alert-danger"><b>"Lồng ngực im lặng" (silent chest)</b> — mất tiếng khò khè do luồng khí gần như không di chuyển — là dấu hiệu nguy kịch, KHÔNG phải dấu hiệu cải thiện, cần xử trí cấp cứu tối khẩn ngay (adrenaline, hỗ trợ hô hấp, cân nhắc đặt nội khí quản).</div>
+      <div class="subhead">🧮 Bộ câu hỏi kiểm soát hen — ACT (Asthma Control Test, 4 tuần gần nhất)</div>
+      ${scr("act","ACT — Asthma Control Test",[
+        {label:"Hen ảnh hưởng đến công việc/học tập/sinh hoạt bao nhiêu thời gian?", options:[{text:"Luôn luôn (1đ)",pts:1},{text:"Phần lớn thời gian (2đ)",pts:2},{text:"Một phần thời gian (3đ)",pts:3},{text:"Rất ít thời gian (4đ)",pts:4},{text:"Không ảnh hưởng (5đ)",pts:5}]},
+        {label:"Tần suất khó thở?", options:[{text:"Hơn 1 lần/ngày (1đ)",pts:1},{text:"1 lần/ngày (2đ)",pts:2},{text:"3-6 lần/tuần (3đ)",pts:3},{text:"1-2 lần/tuần (4đ)",pts:4},{text:"Không có (5đ)",pts:5}]},
+        {label:"Tần suất thức giấc ban đêm/dậy sớm hơn do triệu chứng hen?", options:[{text:"≥4 đêm/tuần (1đ)",pts:1},{text:"2-3 đêm/tuần (2đ)",pts:2},{text:"1 đêm/tuần (3đ)",pts:3},{text:"1-2 lần/4 tuần (4đ)",pts:4},{text:"Không có (5đ)",pts:5}]},
+        {label:"Tần suất dùng thuốc cắt cơn (SABA)?", options:[{text:"≥3 lần/ngày (1đ)",pts:1},{text:"1-2 lần/ngày (2đ)",pts:2},{text:"2-3 lần/tuần (3đ)",pts:3},{text:"≤1 lần/tuần (4đ)",pts:4},{text:"Không dùng (5đ)",pts:5}]},
+        {label:"Tự đánh giá mức độ kiểm soát hen của bản thân?", options:[{text:"Không kiểm soát được (1đ)",pts:1},{text:"Kiểm soát kém (2đ)",pts:2},{text:"Kiểm soát phần nào (3đ)",pts:3},{text:"Kiểm soát tốt (4đ)",pts:4},{text:"Kiểm soát hoàn toàn (5đ)",pts:5}]}
+      ])}`,
     dieu_tri:`
+      <div class="subhead">🚑 Xử trí đợt cấp hen theo mức độ nặng</div>
+      ${rt(["Xử trí"],[
+        ["Nhẹ–Trung bình (ngoại trú/cấp cứu)","SABA khí dung/MDI qua buồng đệm lặp lại mỗi 20 phút ×3 liều đầu + corticosteroid uống sớm (prednisolone) + đánh giá lại sau 1h"],
+        ["Nặng (cấp cứu/nhập viện)","SABA + ipratropium khí dung liên tục/lặp lại + corticosteroid toàn thân (uống hoặc TM nếu không uống được) + oxy đích SpO2 93–95% + theo dõi sát PEF/khí máu"],
+        ["Nguy kịch (đe dọa tính mạng)","Nhập ICU: SABA+ipratropium khí dung liên tục, corticosteroid TM, magie sulfate TM, cân nhắc adrenaline TB nếu kèm phản vệ/không đáp ứng, chuẩn bị hỗ trợ thông khí (NIV thận trọng hoặc đặt nội khí quản nếu kiệt sức/ngừng thở)"]
+      ])}
       <div class="subhead">Bậc điều trị theo triệu chứng (GINA 2024, người lớn/thiếu niên)</div>
       ${rt(["Điều trị kiểm soát nền","Cắt cơn"],[
         ["Bậc 1 (triệu chứng &lt;2 lần/tháng)","ICS-formoterol liều thấp khi cần (MART)","ICS-formoterol liều thấp khi cần"],
@@ -917,14 +1301,42 @@ const diseases = [
       ])}`,
     chan_doan:`
       <p>Chẩn đoán xác định cần <b>hô hấp ký sau test giãn phế quản</b>: FEV1/FVC &lt;0.7. Đánh giá triệu chứng bằng <b>mMRC</b> (khó thở) và <b>CAT</b> (ảnh hưởng chất lượng sống toàn diện), kèm tiền sử đợt cấp trong năm qua.</p>
+      <div class="subhead">🧮 Bộ câu hỏi CAT (COPD Assessment Test) — mỗi mục chọn mức 0 (không ảnh hưởng) đến 5 (ảnh hưởng nặng nhất)</div>
+      ${scr("cat","CAT — COPD Assessment Test (tổng 0-40)",[
+        {label:"Ho", options:[{text:"0 – Không bao giờ ho",pts:0},{text:"1",pts:1},{text:"2",pts:2},{text:"3",pts:3},{text:"4",pts:4},{text:"5 – Ho liên tục",pts:5}]},
+        {label:"Đờm/khạc đờm", options:[{text:"0 – Không có đờm",pts:0},{text:"1",pts:1},{text:"2",pts:2},{text:"3",pts:3},{text:"4",pts:4},{text:"5 – Đầy đờm trong ngực",pts:5}]},
+        {label:"Cảm giác tức ngực", options:[{text:"0 – Không tức ngực",pts:0},{text:"1",pts:1},{text:"2",pts:2},{text:"3",pts:3},{text:"4",pts:4},{text:"5 – Rất tức ngực",pts:5}]},
+        {label:"Khó thở khi leo dốc/lên cầu thang", options:[{text:"0 – Không khó thở",pts:0},{text:"1",pts:1},{text:"2",pts:2},{text:"3",pts:3},{text:"4",pts:4},{text:"5 – Rất khó thở",pts:5}]},
+        {label:"Giới hạn hoạt động tại nhà", options:[{text:"0 – Không giới hạn",pts:0},{text:"1",pts:1},{text:"2",pts:2},{text:"3",pts:3},{text:"4",pts:4},{text:"5 – Giới hạn nhiều",pts:5}]},
+        {label:"Tự tin ra khỏi nhà dù có bệnh phổi", options:[{text:"0 – Rất tự tin",pts:0},{text:"1",pts:1},{text:"2",pts:2},{text:"3",pts:3},{text:"4",pts:4},{text:"5 – Không tự tin chút nào",pts:5}]},
+        {label:"Giấc ngủ", options:[{text:"0 – Ngủ ngon",pts:0},{text:"1",pts:1},{text:"2",pts:2},{text:"3",pts:3},{text:"4",pts:4},{text:"5 – Ngủ không ngon do bệnh phổi",pts:5}]},
+        {label:"Năng lượng/sức lực", options:[{text:"0 – Tràn đầy năng lượng",pts:0},{text:"1",pts:1},{text:"2",pts:2},{text:"3",pts:3},{text:"4",pts:4},{text:"5 – Không còn chút năng lượng nào",pts:5}]}
+      ])}
       <div class="subhead">Nhóm phân loại ABE (GOLD 2023–2025, đã bỏ nhóm C cũ)</div>
       ${rt(["Đợt cấp/năm","Triệu chứng"],[
         ["Nhóm A","0–1 (không nhập viện)","mMRC 0–1, CAT&lt;10"],
         ["Nhóm B","0–1 (không nhập viện)","mMRC≥2, CAT≥10"],
         ["Nhóm E","≥2 hoặc ≥1 phải nhập viện","bất kỳ mức triệu chứng"]
       ])}
-      <p>Đếm bạch cầu ái toan máu (blood eosinophil count) giúp dự đoán đáp ứng ICS ở nhóm E.</p>`,
+      <p>Đếm bạch cầu ái toan máu (blood eosinophil count) giúp dự đoán đáp ứng ICS ở nhóm E.</p>
+      <div class="subhead">🚨 Phân độ nặng đợt cấp COPD (theo tiêu chuẩn Anthonisen & mức độ suy hô hấp)</div>
+      <p><b>Tiêu chuẩn Anthonisen</b> (đánh giá cần kháng sinh): tăng khó thở, tăng thể tích đờm, đờm chuyển mủ — đủ cả 3 (type I) hoặc 2/3 kèm đờm mủ (type II) → có chỉ định kháng sinh.</p>
+      ${rt(["Đặc điểm lâm sàng","Khí máu động mạch"],[
+        ["Nhẹ","Khó thở tăng nhẹ, tự kiểm soát bằng thuốc cắt cơn tại nhà","Không cần đo khí máu thường quy"],
+        ["Trung bình","Cần điều trị bằng corticosteroid ± kháng sinh, có thể cần cấp cứu","SpO2 88–92%, còn bù"],
+        ["Nặng — Suy hô hấp type I (giảm oxy)","Khó thở nhiều, tím tái, dùng cơ hô hấp phụ","PaO2&lt;60mmHg, PaCO2 bình thường/giảm"],
+        ["Nặng — Suy hô hấp type II (tăng CO2, còn bù)","Ngủ gà nhẹ, đau đầu buổi sáng","PaO2&lt;60mmHg, PaCO2&gt;45mmHg, pH≥7.35 (còn bù)"],
+        ["Nguy kịch — Suy hô hấp type II mất bù","Lú lẫn, kiệt sức hô hấp, thở nghịch thường bụng-ngực, có thể ngừng thở","PaO2&lt;60mmHg, PaCO2&gt;45mmHg, pH&lt;7.35 (toan hô hấp mất bù)"]
+      ])}
+      <div class="alert-box alert-danger">Suy hô hấp type II mất bù (pH&lt;7.35) là chỉ định thông khí không xâm lấn (NIV/BiPAP) khẩn cấp — đây là can thiệp làm giảm tỷ lệ tử vong rõ rệt nhất trong đợt cấp COPD nặng, nên khởi động sớm thay vì trì hoãn đến khi cần đặt nội khí quản.</div>`,
     dieu_tri:`
+      <div class="subhead">🚑 Xử trí đợt cấp COPD theo mức độ nặng</div>
+      ${rt(["Xử trí"],[
+        ["Nhẹ–Trung bình (ngoại trú)","Tăng liều/tần suất SABA±SAMA, corticosteroid uống (prednisolone 40mg/ngày×5 ngày), kháng sinh nếu đủ tiêu chuẩn Anthonisen I/II"],
+        ["Nặng (nhập viện, còn bù)","Khí dung SABA+SAMA liên tục, corticosteroid toàn thân, kháng sinh, oxy liệu pháp có kiểm soát đích SpO2 88–92% (tránh tăng oxy quá mức gây ức chế hô hấp ở người giữ CO2 mạn)"],
+        ["Nặng (type II còn bù, pH≥7.35)","Như trên + cân nhắc NIV sớm nếu còn khó thở/tăng công thở dù đã điều trị nội khoa tối ưu"],
+        ["Nguy kịch (type II mất bù, pH&lt;7.35)","NIV (BiPAP) khẩn cấp là ưu tiên hàng đầu nếu còn tỉnh táo hợp tác; đặt nội khí quản-thở máy xâm lấn nếu NIV thất bại, rối loạn tri giác, ngừng thở, huyết động không ổn"]
+      ])}
       <div class="subhead">Điều trị nền không dùng thuốc</div>
       <p><b>Ngưng thuốc lá</b> là can thiệp quan trọng nhất; tiêm vắc-xin cúm, phế cầu, COVID-19, ho gà; phục hồi chức năng hô hấp cho nhóm B/E.</p>
       <div class="subhead">Điều trị thuốc khởi đầu theo nhóm ABE</div>
@@ -1020,6 +1432,146 @@ const diseases = [
       ])}`
   },
   source:"2019 ATS/IDSA Clinical Practice Guidelines for CAP in Adults; British Thoracic Society CAP Guideline 2023 update"
+},
+{
+  spec:"ho_hap", id:"bronchitis", emoji:"🤧", short:"VPQ cấp", title:"Viêm phế quản cấp",
+  guidelines:["ACP/CDC/ATS 2016","BTS"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm phế quản cấp là tình trạng viêm cấp tính đường thở lớn, biểu hiện chủ yếu bằng <b>ho cấp tính kéo dài (thường 1–3 tuần, có thể đến 3 tuần ở người khỏe mạnh)</b>, thường do <b>virus</b> (&gt;90% trường hợp ở người lớn khỏe mạnh không có bệnh phổi nền), ho có thể kèm khạc đờm nhưng không nhất thiết.</p>
+      <div class="alert-box alert-info">Phân biệt với viêm phổi: viêm phế quản cấp <b>không có</b> tổn thương thâm nhiễm mới trên X-quang ngực, không sốt cao kéo dài, không có ran nổ khu trú/hội chứng đông đặc rõ trên khám.</div>`,
+    chan_doan:`
+      <p>Chẩn đoán chủ yếu lâm sàng — ho cấp tính ± khạc đờm, có thể kèm khò khè nhẹ do co thắt phế quản phản ứng, không sốt cao kéo dài, khám phổi không có ran nổ khu trú.</p>
+      <div class="alert-box alert-danger">Chỉ định chụp X-quang ngực để loại trừ viêm phổi khi có: sốt &gt;38°C kéo dài, mạch &gt;100/phút, nhịp thở &gt;24/phút, ran nổ/giảm rì rào phế nang khu trú khi khám, hoặc SpO2 giảm — các dấu hiệu này gợi ý viêm phổi thay vì viêm phế quản đơn thuần.</div>
+      <p>Không cần xét nghiệm vi sinh thường quy trừ nghi cúm mùa (test nhanh cúm trong mùa dịch, đặc biệt nếu cân nhắc thuốc kháng virus) hoặc nghi ho gà (PCR) khi có tiếp xúc dịch tễ/ho kịch phát điển hình.</p>`,
+    dieu_tri:`
+      <div class="alert-box alert-danger"><b>KHÔNG kê kháng sinh thường quy</b> cho viêm phế quản cấp ở người lớn khỏe mạnh không có bệnh phổi nền — đây là khuyến cáo mạnh của ACP/CDC/ATS 2016, vì &gt;90% do virus, kháng sinh không rút ngắn thời gian bệnh nhưng góp phần đề kháng kháng sinh và tác dụng phụ không cần thiết. Đây là một trong những nguyên nhân kê đơn kháng sinh không phù hợp phổ biến nhất.</div>
+      <div class="subhead">Điều trị triệu chứng (nền tảng)</div>
+      <ul>
+        <li>Thuốc giảm ho khi ho nhiều ảnh hưởng sinh hoạt/giấc ngủ (dextromethorphan); mật ong có bằng chứng giảm ho nhẹ-trung bình ở người lớn</li>
+        <li>Thuốc giãn phế quản hít (SABA) nếu có khò khè rõ do co thắt phế quản phản ứng đi kèm</li>
+        <li>Giảm đau-hạ sốt (paracetamol/NSAID) nếu cần; bù đủ nước</li>
+      </ul>
+      <div class="subhead">Trường hợp cân nhắc kháng sinh</div>
+      <ul>
+        <li>Nghi ho gà (Bordetella pertussis) — macrolide (azithromycin) giúp giảm lây truyền dù ít thay đổi diễn tiến triệu chứng nếu đã trễ &gt;1-2 tuần</li>
+        <li>Đợt cấp trên nền COPD/giãn phế quản có đủ tiêu chuẩn Anthonisen — xem bài "COPD"</li>
+        <li>Nghi cúm trong 48h đầu ở người nguy cơ cao biến chứng: oseltamivir</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Dextromethorphan","10-20mg mỗi 4h hoặc 30mg mỗi 6-8h, tối đa 120mg/ngày","tránh phối hợp MAOI"],
+        ["Salbutamol (nếu khò khè)","100-200mcg xịt khi cần, tối đa 4 lần/ngày","chỉ dùng khi có bằng chứng co thắt phế quản rõ"],
+        ["Azithromycin (nghi ho gà)","500mg ngày 1 → 250mg ngày 2-5","hiệu quả giảm lây truyền tốt nhất nếu dùng trong 1-2 tuần đầu triệu chứng"],
+        ["Oseltamivir (nghi cúm, trong 48h đầu, nguy cơ cao)","75mg × 2 lần/ngày × 5 ngày","chỉnh liều theo eGFR nếu suy thận"]
+      ])}
+      <div class="age-tag">Người cao tuổi/bệnh phổi nền</div>
+      <p>Ngưỡng chỉ định chụp X-quang ngực và cân nhắc kháng sinh nên thấp hơn ở người cao tuổi, COPD, suy tim, suy giảm miễn dịch — nhóm này dễ diễn tiến viêm phổi thật sự hoặc đợt cấp COPD cần kháng sinh.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Không kê kháng sinh thường quy cho viêm phế quản cấp ở người lớn khỏe mạnh",'<span class="badge badge-III">III</span>'],
+        ["Chụp X-quang ngực khi có dấu hiệu sinh tồn bất thường/nghe phổi bất thường khu trú",'<span class="badge badge-I">I</span>'],
+        ["Điều trị triệu chứng là nền tảng chính",'<span class="badge badge-I">I</span>'],
+        ["Macrolide khi nghi ho gà trong giai đoạn sớm",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"ACP/CDC/ATS 2016 Advice on Antibiotic Use for Acute Respiratory Tract Infection in Adults, Ann Intern Med"
+},
+{
+  spec:"ho_hap", id:"pcp", emoji:"🫧", short:"PCP", title:"Viêm phổi do Pneumocystis (PCP)",
+  guidelines:["IDSA/HIVMA 2024 (Cơ hội nhiễm trùng ở HIV)"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm phổi do <i>Pneumocystis jirovecii</i> (PCP, trước đây gọi PCP = Pneumocystis carinii pneumonia) là nhiễm trùng cơ hội nặng gặp ở người <b>suy giảm miễn dịch tế bào</b> — kinh điển nhất ở người nhiễm HIV có CD4&lt;200 tế bào/µL chưa điều trị/dự phòng, nhưng ngày càng gặp nhiều ở người không nhiễm HIV dùng corticosteroid kéo dài liều cao, hóa trị, ghép tạng, thuốc sinh học ức chế miễn dịch mạnh.</p>`,
+    chan_doan:`
+      <p>Bệnh cảnh kinh điển: khởi phát <b>bán cấp</b> (vài ngày-vài tuần, khác CAP điển hình khởi phát cấp) với sốt, ho khan, khó thở tăng dần khi gắng sức, <b>giảm oxy máu không tương xứng</b> với mức độ tổn thương thấy trên X-quang thường quy.</p>
+      <div class="subhead">Cận lâm sàng</div>
+      ${rt(["Đặc điểm"],[
+        ["X-quang ngực","Thâm nhiễm mô kẽ lan tỏa 2 bên, có thể bình thường giai đoạn sớm"],
+        ["CT ngực độ phân giải cao","Kính mờ lan tỏa 2 bên — nhạy hơn X-quang thường quy, hữu ích khi X-quang chưa rõ"],
+        ["LDH máu","Thường tăng cao — không đặc hiệu nhưng gợi ý và có giá trị tiên lượng"],
+        ["Beta-D-glucan huyết thanh","Độ nhạy cao, hỗ trợ chẩn đoán không xâm lấn khi dương tính (không đặc hiệu tuyệt đối cho PCP)"],
+        ["Nhuộm/PCR đờm khạc hoặc dịch rửa phế quản-phế nang (BAL)","Xác định P. jirovecii — BAL có độ nhạy cao hơn đờm khạc đáng kể, cần thiết nếu đờm âm tính mà lâm sàng vẫn nghi ngờ cao"]
+      ])}`,
+    dieu_tri:`
+      <div class="subhead">Điều trị đặc hiệu — hàng đầu cho mọi mức độ nặng</div>
+      <p><b>TMP-SMX (Trimethoprim-Sulfamethoxazole) liều cao</b> là điều trị đầu tay cho cả thể nhẹ-trung bình lẫn nặng, đường uống nếu nhẹ-trung bình dung nạp được, đường tĩnh mạch nếu nặng/không hấp thu tốt qua đường tiêu hóa. Tổng thời gian điều trị <b>21 ngày</b>.</p>
+      <div class="subhead">Lựa chọn thay thế khi không dung nạp/dị ứng TMP-SMX</div>
+      <ul>
+        <li><b>Thể nhẹ-trung bình:</b> dapsone + trimethoprim, hoặc clindamycin + primaquine, hoặc atovaquone</li>
+        <li><b>Thể nặng:</b> pentamidine tĩnh mạch, hoặc clindamycin + primaquine</li>
+      </ul>
+      <div class="subhead">Corticosteroid bổ trợ — chỉ định quan trọng khi thiếu oxy máu nặng</div>
+      <p><b>Corticosteroid phụ trợ sớm (trong vòng 72h)</b> khi PaO2&lt;70mmHg khí phòng hoặc chênh áp oxy phế nang-động mạch (A-a gradient) &gt;35mmHg — giảm nguy cơ suy hô hấp cấp/tử vong đáng kể, cần bắt đầu <b>đồng thời hoặc trước</b> kháng sinh đặc hiệu, không chờ.</p>
+      <div class="subhead">Dự phòng — quan trọng không kém điều trị</div>
+      <p>Dự phòng tiên phát/thứ phát bằng TMP-SMX liều thấp ở người HIV có CD4&lt;200, hoặc người dùng corticosteroid kéo dài (prednisone≥20mg/ngày &gt;1 tháng) kèm yếu tố nguy cơ suy giảm miễn dịch khác, hoặc sau ghép tạng — duy trì đến khi CD4 phục hồi bền vững &gt;200 (ở HIV) hoặc hết giai đoạn ức chế miễn dịch mạnh.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      <div class="alert-box alert-warn">TMP-SMX liều cao thường gây tác dụng phụ: phát ban, sốt do thuốc, giảm bạch cầu/tiểu cầu, tăng kali máu, tăng creatinine giả (ức chế bài tiết ống thận, không phản ánh giảm GFR thật) — theo dõi công thức máu và điện giải trong quá trình điều trị.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["TMP-SMX (điều trị)","15-20mg/kg/ngày thành phần trimethoprim, chia 3-4 lần × 21 ngày","chỉnh liều theo CrCl nếu suy thận; bù đủ nước tránh tinh thể niệu"],
+        ["Prednisone (bổ trợ, PaO2&lt;70mmHg)","40mg×2/ngày (ngày 1-5) → 40mg/ngày (ngày 6-10) → 20mg/ngày (ngày 11-21)","bắt đầu cùng lúc/trước kháng sinh đặc hiệu, không trì hoãn"],
+        ["Pentamidine TM (thể nặng, không dung nạp TMP-SMX)","4mg/kg/ngày TM truyền chậm","theo dõi hạ đường huyết, rối loạn nhịp tim, viêm tụy, độc thận"],
+        ["Clindamycin + Primaquine (thay thế)","Clindamycin 600mg×3/ngày + Primaquine 30mg/ngày","kiểm tra G6PD trước dùng primaquine (nguy cơ tán huyết)"],
+        ["TMP-SMX (dự phòng tiên phát/thứ phát)","1 viên đơn (single-strength) hoặc 1 viên kép (double-strength) × 1 lần/ngày, hoặc 3 lần/tuần","liều thấp hơn nhiều so liều điều trị, dung nạp tốt hơn"]
+      ])}
+      <div class="age-tag">Suy giảm miễn dịch không do HIV</div>
+      <p>Ngưỡng nghi ngờ PCP nên thấp ở người dùng corticosteroid kéo dài/hóa trị/sinh học ức chế miễn dịch có triệu chứng hô hấp bán cấp không giải thích được — tỷ lệ tử vong PCP ở nhóm không HIV thường <b>cao hơn</b> nhóm HIV do chẩn đoán trễ và đáp ứng viêm mạnh hơn.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["TMP-SMX liều cao là điều trị đầu tay cho mọi mức độ nặng",'<span class="badge badge-I">I</span>'],
+        ["Corticosteroid bổ trợ sớm khi PaO2&lt;70mmHg hoặc A-a gradient&gt;35mmHg",'<span class="badge badge-I">I</span>'],
+        ["Dự phòng TMP-SMX ở người HIV CD4&lt;200 hoặc dùng corticosteroid kéo dài liều cao",'<span class="badge badge-I">I</span>'],
+        ["Trì hoãn corticosteroid đến khi bắt đầu kháng sinh vài ngày",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"IDSA/HIVMA 2024 Guidelines for the Prevention and Treatment of Opportunistic Infections in Adults and Adolescents with HIV"
+},
+{
+  spec:"noi_tiet", id:"hypoglycemia", emoji:"📉", short:"Hạ ĐH", title:"Hạ đường huyết",
+  guidelines:["Endocrine Society 2009 (+ ADA 2024)"],
+  sections:{
+    dinh_nghia:`
+      <p>Hạ đường huyết được xác định bằng <b>tam chứng Whipple</b>: (1) triệu chứng phù hợp hạ đường huyết, (2) glucose máu thấp đo được đồng thời, (3) triệu chứng cải thiện sau khi glucose máu được nâng lên — cả 3 tiêu chí cần có để xác nhận chẩn đoán, tránh chẩn đoán quá mức dựa chỉ vào triệu chứng đơn thuần.</p>
+      <div class="subhead">Phân độ theo ADA (dùng trong ĐTĐ đang điều trị)</div>
+      ${rt(["Ngưỡng glucose máu"],[
+        ["Mức 1 — Cảnh báo (glucose thấp)","&lt;70 mg/dL (3.9 mmol/L) và ≥54 mg/dL"],
+        ["Mức 2 — Có ý nghĩa lâm sàng","&lt;54 mg/dL (3.0 mmol/L)"],
+        ["Mức 3 — Nặng","Bất kỳ mức glucose nào kèm rối loạn tri giác/thể chất cần người khác hỗ trợ xử trí"]
+      ])}`,
+    chan_doan:`
+      <p><b>Ở người đái tháo đường đang điều trị bằng insulin/sulfonylurea:</b> chẩn đoán thường rõ ràng qua bệnh sử dùng thuốc + glucose máu thấp — không cần xét nghiệm mở rộng trừ trường hợp không giải thích được bằng liều thuốc/chế độ ăn.</p>
+      <p><b>Ở người không có ĐTĐ (hạ đường huyết ngoài ĐTĐ):</b> cần tìm nguyên nhân — u tiết insulin (insulinoma), suy thượng thận, suy gan nặng, u ngoài tụy tiết IGF-2, hạ đường huyết phản ứng sau ăn, hạ đường huyết giả tạo do lạm dụng insulin/sulfonylurea ngoại sinh. Xét nghiệm khi đang hạ đường huyết tự nhiên hoặc qua nghiệm pháp nhịn đói 72h có giám sát: glucose, insulin, C-peptide, proinsulin, beta-hydroxybutyrate, sàng lọc sulfonylurea trong máu/nước tiểu.</p>`,
+    dieu_tri:`
+      <div class="subhead">Xử trí cấp — "Quy tắc 15-15" cho hạ đường huyết nhẹ-trung bình (còn tỉnh, nuốt được)</div>
+      <p>Uống <b>15g carbohydrate hấp thu nhanh</b> (viên/gel glucose, nước ngọt có đường, nước trái cây) → chờ <b>15 phút</b> → đo lại glucose → lặp lại nếu vẫn &lt;70mg/dL. Sau khi glucose ổn định, ăn bữa ăn/snack có carbohydrate phức hợp để tránh tái hạ đường huyết, đặc biệt nếu nguyên nhân do insulin/sulfonylurea tác dụng kéo dài.</p>
+      <div class="subhead">Hạ đường huyết nặng (không tỉnh táo/không nuốt được) — cấp cứu</div>
+      <ul>
+        <li><b>Tại cơ sở y tế/có đường truyền TM:</b> Glucose 20-50% TM (D50W 25-50mL) tiêm chậm, lặp lại nếu cần, sau đó truyền duy trì glucose 10% nếu nguy cơ tái hạ (do sulfonylurea/insulin tác dụng kéo dài)</li>
+        <li><b>Không có đường truyền TM (tại nhà/cộng đồng):</b> <b>Glucagon</b> tiêm bắp/dưới da (dạng bơm tiêm truyền thống) hoặc <b>glucagon dạng xịt mũi</b> (thế hệ mới, không cần pha chế, dễ dùng cho người không chuyên) — đây là bước tiến quan trọng giúp người nhà/giáo viên xử trí hạ đường huyết nặng ngoài bệnh viện dễ dàng hơn</li>
+      </ul>
+      <div class="alert-box alert-warn">Glucagon kém hiệu quả hơn ở người nghiện rượu/suy dinh dưỡng/dự trữ glycogen gan thấp (glucagon cần glycogen gan để phát huy tác dụng) — ưu tiên glucose TM trực tiếp nếu có đường truyền.</div>
+      <div class="subhead">Hạ đường huyết do sulfonylurea</div>
+      <p>Nguy cơ tái hạ đường huyết kéo dài nhiều giờ-ngày do thời gian bán hủy dài — cần <b>nhập viện theo dõi glucose liên tục ≥24 giờ</b>, khác với hạ đường huyết do insulin tác dụng nhanh thường hồi phục nhanh hơn.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Glucose uống (viên/gel)","15g, lặp lại sau 15 phút nếu cần","cách xử trí đầu tay nếu bệnh nhân còn tỉnh táo, nuốt được"],
+        ["Dextrose 50% TM (D50W)","25-50mL (12.5-25g) tiêm TM chậm","qua đường truyền tĩnh mạch lớn, tránh thoát mạch (gây hoại tử mô)"],
+        ["Glucagon tiêm bắp/dưới da","1mg (người lớn)","có thể gây buồn nôn/nôn sau tỉnh; kém hiệu quả nếu dự trữ glycogen gan thấp"],
+        ["Glucagon xịt mũi (thế hệ mới)","3mg xịt 1 liều duy nhất vào 1 bên mũi","không cần pha chế, dễ sử dụng cho người không chuyên môn y tế"],
+        ["Octreotide (hạ đường huyết do sulfonylurea nặng/tái phát)","50-100mcg TDD mỗi 6-8h","ức chế tiết insulin thêm do sulfonylurea kích thích, hữu ích trong ngộ độc sulfonylurea"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Nới lỏng mục tiêu đường huyết (HbA1c đích cao hơn) ở người cao tuổi nhiều bệnh đồng mắc/kỳ vọng sống hạn chế để giảm nguy cơ hạ đường huyết — hạ đường huyết ở người cao tuổi liên quan tăng nguy cơ té ngã, rối loạn nhịp tim, sa sút trí tuệ.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Quy tắc 15-15 cho hạ đường huyết nhẹ-trung bình còn tỉnh táo",'<span class="badge badge-I">I</span>'],
+        ["Glucagon (tiêm hoặc xịt mũi) kê đơn sẵn cho người ĐTĐ dùng insulin có nguy cơ hạ đường huyết nặng",'<span class="badge badge-I">I</span>'],
+        ["Nhập viện theo dõi ≥24h cho hạ đường huyết do sulfonylurea",'<span class="badge badge-I">I</span>'],
+        ["Nới lỏng mục tiêu đường huyết ở người cao tuổi nguy cơ hạ đường huyết cao",'<span class="badge badge-I">I</span>'],
+        ["Chẩn đoán hạ đường huyết chỉ dựa triệu chứng không đo glucose đồng thời",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Endocrine Society 2009 Clinical Practice Guideline: Evaluation and Management of Adult Hypoglycemic Disorders; ADA Standards of Care 2024"
 },
 {
   spec:"noi_tiet", id:"cushing", emoji:"🌙", short:"Cushing", title:"Hội chứng Cushing",
@@ -1132,6 +1684,99 @@ const diseases = [
   source:"Endocrine Society 2016 Clinical Practice Guideline: Diagnosis and Treatment of Primary Adrenal Insufficiency"
 },
 {
+  spec:"noi_tiet", id:"aldo", emoji:"🧂", short:"Cường Aldo", title:"Cường Aldosterone nguyên phát",
+  guidelines:["Endocrine Society 2016 (+ cập nhật thực hành 2022)"],
+  sections:{
+    dinh_nghia:`
+      <p>Cường Aldosterone nguyên phát (hội chứng Conn) là nguyên nhân nội tiết thường gặp nhất của tăng huyết áp thứ phát (~5–10% người tăng huyết áp, cao hơn nhiều ở nhóm tăng huyết áp kháng trị), do tuyến thượng thận tiết aldosterone tự chủ, không phụ thuộc hệ renin-angiotensin.</p>
+      <div class="subhead">Phân loại nguyên nhân</div>
+      ${rt(["Đặc điểm"],[
+        ["U tuyến thượng thận tiết aldosterone (APA)","Một bên, thường đáp ứng tốt với phẫu thuật cắt thượng thận"],
+        ["Tăng sản thượng thận hai bên (BAH)","Nguyên nhân thường gặp nhất tổng thể — điều trị nội khoa bằng đối kháng mineralocorticoid"],
+        ["Cường Aldosterone đáp ứng glucocorticoid (hiếm, di truyền)","Đột biến gen lai CYP11B1/CYP11B2 — đáp ứng với corticosteroid liều thấp"]
+      ])}`,
+    chan_doan:`
+      <div class="alert-box alert-info"><b>Chỉ định tầm soát</b> (Endocrine Society): THA độ 2-3 (≥140/90 kháng trị hoặc cần ≥3 thuốc), THA kèm hạ kali máu tự phát/do lợi tiểu, THA kèm u thượng thận tình cờ phát hiện, THA khởi phát trẻ (&lt;40 tuổi), THA kèm ngưng thở khi ngủ, tiền sử gia đình THA khởi phát sớm/đột quỵ &lt;40 tuổi, hoặc mọi người thân thế hệ 1 của bệnh nhân cường Aldosterone.</div>
+      <div class="subhead">Bước 1 — Xét nghiệm tầm soát</div>
+      <p><b>Tỷ lệ Aldosterone/Renin (ARR)</b> — tỷ lệ tăng cao (thường ARR&gt;20-30 tùy đơn vị phòng xét nghiệm, kèm aldosterone huyết tương tuyệt đối tăng) gợi ý cường Aldosterone nguyên phát. Cần ngưng thuốc ảnh hưởng trục RAAS trước xét nghiệm nếu có thể (đặc biệt đối kháng mineralocorticoid ≥4 tuần); nếu không ngưng được thuốc hạ áp, dùng thuốc ít ảnh hưởng ARR hơn (chẹn kênh canxi dihydropyridine, chẹn alpha) để kiểm soát HA trong thời gian xét nghiệm.</p>
+      <div class="subhead">Bước 2 — Test xác định chẩn đoán</div>
+      <p>Test ức chế bằng truyền nước muối sinh lý (saline suppression test) hoặc test captopril — aldosterone không bị ức chế sau tải natri/captopril xác định chẩn đoán cường Aldosterone nguyên phát.</p>
+      <div class="subhead">Bước 3 — Định vị nguyên nhân (chỉ sau khi đã xác định chẩn đoán)</div>
+      <p>CT thượng thận độ phân giải cao là bước đầu; nếu có chỉ định phẫu thuật và bệnh nhân &lt;35 tuổi có u một bên rõ ràng trên CT kèm kali máu thấp có thể phẫu thuật thẳng. Ở hầu hết trường hợp khác, cần <b>lấy máu tĩnh mạch thượng thận hai bên (AVS)</b> để xác định bên tăng tiết thật sự trước khi quyết định phẫu thuật — CT đơn thuần có thể gây nhầm lẫn do u không chức năng tình cờ.</p>`,
+    dieu_tri:`
+      <div class="subhead">U tuyến một bên (APA) — điều trị đầu tay: Phẫu thuật</div>
+      <p><b>Cắt thượng thận nội soi một bên</b> — chữa khỏi hạ kali máu ở gần như 100% và kiểm soát/khỏi hoàn toàn THA ở 30-60% trường hợp (phần còn lại cải thiện đáng kể mức độ THA dù không khỏi hẳn, đặc biệt nếu THA đã kéo dài lâu năm).</p>
+      <div class="subhead">Tăng sản thượng thận hai bên (BAH) hoặc không thể phẫu thuật — điều trị đầu tay: Nội khoa</div>
+      <ul>
+        <li><b>Đối kháng thụ thể mineralocorticoid</b> (spironolactone hoặc eplerenone) là điều trị nền tảng — kiểm soát cả huyết áp lẫn hạ kali máu</li>
+        <li><b>Spironolactone</b> hiệu quả mạnh hơn nhưng tác dụng phụ kháng androgen (nữ hóa tuyến vú nam, rối loạn kinh nguyệt) nhiều hơn; <b>eplerenone</b> chọn lọc hơn, ít tác dụng phụ nội tiết nhưng hiệu lực yếu hơn cần liều cao hơn/chia 2 lần/ngày</li>
+        <li>Thêm thuốc hạ áp khác (chẹn kênh canxi, ACEi/ARB) nếu chưa đạt đích huyết áp dù đã tối ưu đối kháng mineralocorticoid</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      <div class="alert-box alert-warn">Theo dõi kali máu và creatinine 1 tuần sau khởi động/tăng liều đối kháng mineralocorticoid, đặc biệt nếu phối hợp ACEi/ARB — nguy cơ tăng kali máu.</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Spironolactone","12.5–25mg/ngày → tối đa 100mg/ngày (có thể đến 400mg nếu cần)","tác dụng phụ kháng androgen liều-phụ thuộc; theo dõi kali máu sát"],
+        ["Eplerenone","25mg × 2 lần/ngày → tối đa 100mg/ngày chia 2 lần","lựa chọn khi không dung nạp tác dụng phụ nội tiết của spironolactone"],
+        ["Amiloride (thay thế nếu không dung nạp đối kháng mineralocorticoid)","5–10mg × 2 lần/ngày","tác động lợi tiểu giữ kali qua kênh natri biểu mô, không qua thụ thể mineralocorticoid"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Cân nhắc kỹ lợi ích phẫu thuật so với điều trị nội khoa dựa kỳ vọng sống và nguy cơ phẫu thuật; theo dõi chức năng thận/kali sát hơn khi phối hợp nhiều thuốc ảnh hưởng kali máu.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Tầm soát bằng ARR ở mọi bệnh nhân THA kháng trị hoặc THA kèm hạ kali máu",'<span class="badge badge-I">I</span>'],
+        ["AVS trước phẫu thuật ở hầu hết trường hợp (trừ tuổi trẻ có u rõ một bên trên CT)",'<span class="badge badge-I">I</span>'],
+        ["Phẫu thuật cắt thượng thận một bên cho APA xác định qua AVS",'<span class="badge badge-I">I</span>'],
+        ["Đối kháng mineralocorticoid là điều trị nền tảng cho BAH",'<span class="badge badge-I">I</span>'],
+        ["Quyết định phẫu thuật chỉ dựa CT đơn thuần không làm AVS ở người &gt;35 tuổi",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Endocrine Society Clinical Practice Guideline 2016 (Case Detection, Diagnosis, and Treatment of Primary Aldosteronism)"
+},
+{
+  spec:"noi_tiet", id:"pheo", emoji:"💥", short:"U tủy TT", title:"U tủy thượng thận (Pheochromocytoma)",
+  guidelines:["Endocrine Society 2014"],
+  sections:{
+    dinh_nghia:`
+      <p>U tủy thượng thận (Pheochromocytoma) là u tiết catecholamine xuất phát từ tế bào ưa crôm tủy thượng thận; u cùng bản chất mô học ngoài thượng thận gọi là <b>paraganglioma</b>. Tuân theo "quy tắc 10%" kinh điển (dù nay đã biết tỷ lệ thực tế cao hơn với các thể di truyền): ~10% hai bên, ~10% ác tính, ~10-40% có nền di truyền (SDHx, VHL, RET-MEN2, NF1...).</p>
+      <div class="alert-box alert-warn">Luôn tầm soát hội chứng di truyền ở người trẻ, u hai bên, đa u, hoặc tiền sử gia đình — tư vấn di truyền và xét nghiệm gen được khuyến cáo cho <b>mọi</b> bệnh nhân pheochromocytoma/paraganglioma theo Endocrine Society, không chỉ nhóm nguy cơ cao.</div>`,
+    chan_doan:`
+      <div class="subhead">Xét nghiệm sinh hóa — bước đầu tiên bắt buộc trước khi định vị hình ảnh</div>
+      <p><b>Metanephrine/normetanephrine tự do huyết tương</b> hoặc <b>metanephrine phân đoạn niệu 24h</b> — độ nhạy rất cao (&gt;95%), là xét nghiệm sàng lọc/chẩn đoán đầu tay. Giá trị tăng &gt;4 lần giới hạn trên gần như chẩn đoán xác định; giá trị tăng nhẹ cần loại trừ dương tính giả (ngưng thuốc chống trầm cảm 3 vòng, thuốc chẹn alpha/lợi tiểu nếu có thể trước xét nghiệm, lấy máu ở tư thế nằm nghỉ ngơi ≥20 phút).</p>
+      <div class="subhead">Định vị hình ảnh — chỉ sau khi xác định sinh hóa dương tính</div>
+      <p>CT hoặc MRI bụng-chậu là bước đầu (MRI ưu tiên ở trẻ em/thai kỳ để tránh tia xạ). Xạ hình <b>MIBG</b> hoặc PET với đồng vị phóng xạ (⁶⁸Ga-DOTATATE nhạy hơn MIBG) khi nghi đa ổ/di căn/ngoài thượng thận hoặc trước điều trị bằng MIBG phóng xạ.</p>`,
+    dieu_tri:`
+      <div class="subhead">Chuẩn bị trước phẫu thuật — BẮT BUỘC, không thể bỏ qua</div>
+      <div class="alert-box alert-danger">Phẫu thuật cắt u mà <b>chưa chẹn alpha đầy đủ trước</b> có thể gây cơn tăng huyết áp kịch phát đe dọa tính mạng khi thao tác vào khối u (giải phóng ồ ạt catecholamine) — đây là nguyên tắc an toàn tối quan trọng, không có ngoại lệ.</div>
+      <ul>
+        <li><b>Bước 1 — Chẹn alpha</b> (phenoxybenzamine hoặc doxazosin) khởi động ít nhất <b>7–14 ngày trước mổ</b>, chỉnh liều đến khi kiểm soát huyết áp và có hạ huyết áp tư thế nhẹ (dấu hiệu chẹn đủ)</li>
+        <li><b>Bước 2 — Chẹn beta</b> chỉ thêm <b>SAU khi</b> đã chẹn alpha đầy đủ (thường 2–3 ngày trước mổ) nếu còn nhịp nhanh phản xạ — <b>tuyệt đối không chẹn beta trước khi chẹn alpha</b> vì mất đối kháng giãn mạch của thụ thể alpha, gây cơn tăng huyết áp kịch phát nặng hơn do catecholamine tác động không đối kháng lên thụ thể alpha</li>
+        <li><b>Bước 3 — Bù đủ thể tích dịch/muối</b> trước mổ (chế độ ăn giàu muối + đủ nước) để giảm nguy cơ tụt huyết áp nặng sau khi cắt bỏ nguồn tiết catecholamine</li>
+      </ul>
+      <div class="subhead">Phẫu thuật</div>
+      <p><b>Cắt thượng thận nội soi</b> là điều trị dứt điểm cho hầu hết trường hợp u khu trú; theo dõi huyết áp/đường huyết sát trong và sau mổ (hạ huyết áp/hạ đường huyết phản ứng thường gặp ngay sau cắt u do mất đột ngột tác động catecholamine).</p>
+      <div class="subhead">Bệnh di căn/không thể phẫu thuật</div>
+      <p>MIBG phóng xạ liều điều trị (nếu u bắt xạ MIBG), hóa trị phối hợp (CVD: cyclophosphamide-vincristine-dacarbazine), hoặc liệu pháp nhắm đích/ức chế điểm kiểm soát miễn dịch theo hội chẩn ung bướu chuyên khoa; luôn duy trì chẹn alpha kiểm soát triệu chứng dù không phẫu thuật được.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Phenoxybenzamine (chẹn alpha không chọn lọc)","10mg×2/ngày → tăng dần mỗi vài ngày đến 1mg/kg/ngày chia liều","tác dụng kéo dài, khó chỉnh nhanh; nghẹt mũi và hạ HA tư thế là tác dụng phụ thường gặp"],
+        ["Doxazosin (chẹn alpha-1 chọn lọc, thay thế)","1–2mg/ngày → tăng dần đến 16mg/ngày chia liều","dễ chỉnh liều hơn phenoxybenzamine, ít hạ HA tư thế hơn"],
+        ["Propranolol (chẹn beta, chỉ thêm sau chẹn alpha đủ)","10–40mg×3-4/ngày, bắt đầu 2-3 ngày trước mổ","không dùng đơn độc/dùng trước chẹn alpha trong bất kỳ hoàn cảnh nào"],
+        ["Metyrosine (ức chế tổng hợp catecholamine, trường hợp đặc biệt)","250mg×4/ngày → tăng dần","dùng bổ sung khi kiểm soát bằng chẹn alpha/beta chưa đủ hoặc u không mổ được"]
+      ])}
+      <div class="age-tag">Mọi lứa tuổi</div>
+      <p>Tư vấn di truyền và xét nghiệm gen nên được đề nghị cho tất cả bệnh nhân bất kể tuổi khởi phát, vì ảnh hưởng đến tầm soát người thân và theo dõi tái phát/đa u lâu dài.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Metanephrine tự do huyết tương/niệu là xét nghiệm sàng lọc đầu tay",'<span class="badge badge-I">I</span>'],
+        ["Chẹn alpha đầy đủ ≥7-14 ngày trước mổ ở mọi trường hợp",'<span class="badge badge-I">I</span>'],
+        ["Chẹn beta chỉ thêm sau khi đã chẹn alpha đầy đủ",'<span class="badge badge-I">I</span>'],
+        ["Tư vấn/xét nghiệm di truyền cho mọi bệnh nhân pheochromocytoma/paraganglioma",'<span class="badge badge-I">I</span>'],
+        ["Chẹn beta đơn độc hoặc chẹn beta trước chẹn alpha",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Endocrine Society Clinical Practice Guideline 2014: Pheochromocytoma and Paraganglioma"
+},
+{
   spec:"tieu_hoa", id:"gerd", emoji:"🔥", short:"GERD", title:"Trào ngược dạ dày-thực quản",
   guidelines:["ACG 2022"],
   sections:{
@@ -1173,6 +1818,141 @@ const diseases = [
       ])}`
   },
   source:"American College of Gastroenterology (ACG) 2022 Clinical Guideline for GERD"
+},
+{
+  spec:"tieu_hoa", id:"pancreatitis", emoji:"🔶", short:"VT cấp", title:"Viêm tụy cấp",
+  guidelines:["ACG 2024","IAP/APA 2013 (còn tham chiếu)"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm tụy cấp được chẩn đoán khi có <b>≥2/3 tiêu chí</b>: (1) đau bụng điển hình (thượng vị, lan sau lưng), (2) lipase hoặc amylase máu ≥3 lần giới hạn trên bình thường, (3) hình ảnh học (CT/MRI/siêu âm) phù hợp viêm tụy cấp.</p>
+      <p>Nguyên nhân thường gặp nhất: <b>sỏi mật</b> (~40%) và <b>rượu</b> (~30%); các nguyên nhân khác: tăng triglyceride máu nặng (&gt;1000mg/dL), thuốc, sau ERCP, tăng canxi máu, u tụy, tự miễn.</p>`,
+    chan_doan:`
+      <div class="alert-box alert-info">Không cần cả amylase và lipase cùng lúc — <b>lipase đặc hiệu hơn amylase</b> và tăng kéo dài hơn, là xét nghiệm ưu tiên. Mức độ tăng men tụy <b>không tương quan</b> với độ nặng bệnh — không dùng để tiên lượng hay theo dõi đáp ứng điều trị.</div>
+      <div class="subhead">🧮 Thang điểm BISAP — tiên lượng độ nặng sớm (trong 24h đầu)</div>
+      <p>Ưu điểm so với Ranson/APACHE II: tính được ngay khi nhập viện, không cần chờ đủ 48h.</p>
+      ${sc("bisap","Thang điểm BISAP",[
+        {label:"BUN &gt;25 mg/dL (8.9 mmol/L)",pts:1},
+        {label:"Rối loạn tri giác (Impaired mental status)",pts:1},
+        {label:"Hội chứng đáp ứng viêm hệ thống — SIRS (≥2 tiêu chí: mạch&gt;90, thở&gt;20 hoặc PaCO2&lt;32, nhiệt độ&lt;36 hoặc&gt;38, BC&lt;4.000 hoặc&gt;12.000)",pts:1},
+        {label:"Tuổi &gt;60",pts:1},
+        {label:"Tràn dịch màng phổi trên hình ảnh học",pts:1}
+      ])}
+      <p>BISAP ≥3: nguy cơ tử vong và biến chứng nặng tăng đáng kể (nguy cơ tử vong có thể lên đến ~15-20% ở điểm cao) — cân nhắc theo dõi sát/ICU sớm.</p>
+      <p>Hình ảnh học: siêu âm bụng thường quy tìm sỏi mật ở mọi bệnh nhân; CT bụng có cản quang <b>không cần thiết thường quy lúc nhập viện</b> trừ khi chẩn đoán không chắc chắn — chỉ định CT khi triệu chứng không cải thiện sau 48-72h để đánh giá biến chứng (hoại tử, nang giả tụy, ổ dịch).</p>`,
+    dieu_tri:`
+      <div class="subhead">Nền tảng — mọi mức độ nặng</div>
+      <ul>
+        <li><b>Bù dịch tinh thể sớm và đầy đủ</b> trong 24h đầu — dịch Ringer lactate được ưu tiên hơn NaCl 0.9% (ít gây toan chuyển hóa tăng clo hơn); theo dõi đáp ứng qua nước tiểu, không bù dịch quá mức gây hội chứng khoang bụng/phù phổi</li>
+        <li><b>Cho ăn sớm qua đường miệng</b> ngay khi dung nạp được (thường trong 24h đầu nếu không buồn nôn/nôn/đau nhiều) — ACG 2024 khuyến cáo mạnh việc cho ăn sớm thay vì nhịn ăn kéo dài như quan niệm cũ, giúp giảm biến chứng nhiễm trùng và rút ngắn thời gian nằm viện</li>
+        <li>Giảm đau đầy đủ (opioid nếu cần, không còn khuyến cáo tránh morphine như quan niệm cũ về co thắt Oddi)</li>
+      </ul>
+      <div class="subhead">Viêm tụy cấp do sỏi mật</div>
+      <p><b>Cắt túi mật nội soi trong cùng đợt nhập viện</b> (viêm tụy nhẹ) sau khi triệu chứng cải thiện — trì hoãn cắt túi mật làm tăng đáng kể nguy cơ tái phát viêm tụy/biến chứng đường mật trước lần phẫu thuật theo lịch hẹn. ERCP cấp cứu chỉ định khi kèm viêm đường mật cấp hoặc tắc mật kéo dài rõ ràng.</p>
+      <div class="subhead">Kháng sinh</div>
+      <div class="alert-box alert-warn"><b>Không dùng kháng sinh dự phòng thường quy</b> cho viêm tụy cấp hoại tử vô trùng — chỉ dùng khi có bằng chứng/nghi ngờ nhiễm trùng thật sự (hoại tử nhiễm trùng xác nhận qua chọc hút/cấy, hoặc nhiễm trùng ngoài tụy đi kèm như viêm đường mật).</div>
+      <div class="subhead">Biến chứng tại chỗ (hoại tử, nang giả tụy, ổ dịch)</div>
+      <p>Hoại tử nhiễm trùng có triệu chứng: can thiệp dẫn lưu (ưu tiên nội soi qua thành dạ dày hoặc qua da) theo chiến lược "step-up" tối thiểu xâm lấn trước khi cân nhắc phẫu thuật mở — trì hoãn can thiệp đến khi hoại tử "khu trú hóa" (thường sau 4 tuần) nếu tình trạng lâm sàng cho phép.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Ringer lactate (bù dịch 24h đầu)","5-10mL/kg/giờ ban đầu, điều chỉnh theo đáp ứng lâm sàng/nước tiểu","theo dõi sát ở người cao tuổi/suy tim tránh quá tải dịch"],
+        ["Morphine/Fentanyl (giảm đau)","theo bậc thang giảm đau, chuẩn độ theo đáp ứng","không còn chống chỉ định morphine do lo ngại co thắt Oddi như quan niệm cũ"],
+        ["Meropenem (chỉ khi xác định/nghi hoại tử nhiễm trùng)","1g × 3 lần/ngày TM","không dùng dự phòng thường quy khi chưa có bằng chứng nhiễm trùng"],
+        ["Insulin (nếu do tăng triglyceride nặng)","truyền TM liên tục theo phác đồ hạ triglyceride cấp","kèm/thay thế plasmapheresis nếu triglyceride rất cao (&gt;1000mg/dL) kèm viêm tụy nặng"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Ngưỡng nghi ngờ biến chứng nên thấp hơn (triệu chứng có thể kín đáo); thận trọng tốc độ bù dịch ở người suy tim/bệnh thận mạn — theo dõi sát hơn dấu hiệu quá tải dịch.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Lipase là xét nghiệm men tụy ưu tiên hơn amylase",'<span class="badge badge-I">I</span>'],
+        ["Bù dịch Ringer lactate sớm trong 24h đầu",'<span class="badge badge-I">I</span>'],
+        ["Cho ăn sớm qua đường miệng ngay khi dung nạp được",'<span class="badge badge-I">I</span>'],
+        ["Cắt túi mật cùng đợt nhập viện cho viêm tụy do sỏi mật mức độ nhẹ",'<span class="badge badge-I">I</span>'],
+        ["Kháng sinh dự phòng thường quy cho hoại tử tụy vô trùng",'<span class="badge badge-III">III</span>'],
+        ["Nhịn ăn kéo dài thường quy chờ men tụy về bình thường",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACG Clinical Guideline: Management of Acute Pancreatitis 2024; IAP/APA Evidence-Based Guidelines for Acute Pancreatitis 2013"
+},
+{
+  spec:"tieu_hoa", id:"gib", emoji:"🩸", short:"XHTH", title:"Xuất huyết tiêu hóa",
+  guidelines:["ACG 2021 (XHTH trên không do giãn TM)","Baveno VII 2022 (XHTH do giãn TM)","ACG 2016 (XHTH dưới)"],
+  sections:{
+    dinh_nghia:`
+      <p>Xuất huyết tiêu hóa (XHTH) phân loại theo vị trí giải phẫu tương đối với góc Treitz:</p>
+      ${rt(["Đặc điểm","Nguyên nhân thường gặp"],[
+        ["XHTH trên","Nguồn chảy máu ở thực quản-dạ dày-tá tràng (trên góc Treitz)","Loét dạ dày-tá tràng, giãn tĩnh mạch thực quản-dạ dày, viêm trợt dạ dày, hội chứng Mallory-Weiss, ung thư"],
+        ["XHTH dưới","Nguồn chảy máu từ đại-trực tràng","Túi thừa đại tràng, bệnh trĩ, viêm ruột, loạn sản mạch máu, ung thư đại-trực tràng"]
+      ])}
+      <p>Biểu hiện: nôn máu/nôn dịch nâu đen (thường XHTH trên), đi tiêu phân đen (melena — thường XHTH trên hoặc ruột non/đại tràng phải), đi tiêu máu đỏ tươi (hematochezia — thường XHTH dưới, nhưng có thể gặp trong XHTH trên lượng nhiều/tốc độ nhanh).</p>`,
+    chan_doan:`
+      <div class="subhead">🧮 Thang điểm Glasgow-Blatchford (GBS) — phân tầng nguy cơ TRƯỚC nội soi</div>
+      <p>Dùng ngay tại thời điểm tiếp nhận (không cần nội soi) để xác định bệnh nhân nguy cơ rất thấp có thể quản lý ngoại trú an toàn, không cần nhập viện/nội soi cấp cứu.</p>
+      ${scr("gbs","Thang điểm Glasgow-Blatchford",[
+        {label:"Ure máu (mmol/L)", options:[{text:"&lt;6.5 (0đ)",pts:0},{text:"6.5–&lt;8.0 (2đ)",pts:2},{text:"8.0–&lt;10.0 (3đ)",pts:3},{text:"10.0–&lt;25.0 (4đ)",pts:4},{text:"≥25.0 (6đ)",pts:6}]},
+        {label:"Hemoglobin — Nam (g/dL)", options:[{text:"≥13 (0đ)",pts:0},{text:"12–&lt;13 (1đ)",pts:1},{text:"10–&lt;12 (3đ)",pts:3},{text:"&lt;10 (6đ)",pts:6}]},
+        {label:"Hemoglobin — Nữ (g/dL, bỏ qua nếu đã chọn ở dòng Nam)", options:[{text:"Không áp dụng/đã tính ở dòng Nam (0đ)",pts:0},{text:"≥12 (0đ)",pts:0},{text:"10–&lt;12 (1đ)",pts:1},{text:"&lt;10 (6đ)",pts:6}]},
+        {label:"Huyết áp tâm thu (mmHg)", options:[{text:"≥110 (0đ)",pts:0},{text:"100–109 (1đ)",pts:1},{text:"90–99 (2đ)",pts:2},{text:"&lt;90 (3đ)",pts:3}]},
+        {label:"Mạch ≥100 lần/phút", options:[{text:"Không (0đ)",pts:0},{text:"Có (1đ)",pts:1}]},
+        {label:"Đi tiêu phân đen (melena)", options:[{text:"Không (0đ)",pts:0},{text:"Có (1đ)",pts:1}]},
+        {label:"Ngất/tiền ngất", options:[{text:"Không (0đ)",pts:0},{text:"Có (2đ)",pts:2}]},
+        {label:"Bệnh gan mạn (tiền sử/lâm sàng)", options:[{text:"Không (0đ)",pts:0},{text:"Có (2đ)",pts:2}]},
+        {label:"Suy tim", options:[{text:"Không (0đ)",pts:0},{text:"Có (2đ)",pts:2}]}
+      ])}
+      <div class="alert-box alert-info"><b>GBS = 0</b>: nguy cơ cực thấp cần can thiệp (truyền máu, nội soi, phẫu thuật) hoặc tử vong — nhóm này có thể an toàn điều trị ngoại trú, không cần nhập viện, theo khuyến cáo ACG 2021/NICE.</div>
+      <div class="subhead">🧮 Thang điểm Rockall — TRƯỚC nội soi (đánh giá ban đầu)</div>
+      ${scr("rockallpre","Rockall trước nội soi (tối đa 7 điểm)",[
+        {label:"Tuổi", options:[{text:"&lt;60 (0đ)",pts:0},{text:"60–79 (1đ)",pts:1},{text:"≥80 (2đ)",pts:2}]},
+        {label:"Tình trạng huyết động (sốc)", options:[{text:"Không sốc: SBP≥100, mạch&lt;100 (0đ)",pts:0},{text:"Mạch nhanh: SBP≥100, mạch≥100 (1đ)",pts:1},{text:"Hạ huyết áp: SBP&lt;100 (2đ)",pts:2}]},
+        {label:"Bệnh đồng mắc", options:[{text:"Không có bệnh nặng kèm theo (0đ)",pts:0},{text:"Suy tim/thiếu máu cơ tim/bệnh đồng mắc nặng khác (2đ)",pts:2},{text:"Suy thận/suy gan/ung thư di căn (3đ)",pts:3}]}
+      ])}
+      <div class="subhead">🧮 Thang điểm Rockall — ĐẦY ĐỦ (sau nội soi)</div>
+      ${scr("rockallfull","Rockall đầy đủ (tối đa 11 điểm — bao gồm 3 mục trên + 2 mục dưới)",[
+        {label:"Tuổi", options:[{text:"&lt;60 (0đ)",pts:0},{text:"60–79 (1đ)",pts:1},{text:"≥80 (2đ)",pts:2}]},
+        {label:"Tình trạng huyết động (sốc)", options:[{text:"Không sốc (0đ)",pts:0},{text:"Mạch nhanh, còn HA (1đ)",pts:1},{text:"Hạ huyết áp (2đ)",pts:2}]},
+        {label:"Bệnh đồng mắc", options:[{text:"Không (0đ)",pts:0},{text:"Suy tim/TMCB tim/bệnh nặng khác (2đ)",pts:2},{text:"Suy thận/suy gan/ung thư di căn (3đ)",pts:3}]},
+        {label:"Chẩn đoán qua nội soi", options:[{text:"Mallory-Weiss/không thấy tổn thương/không dấu hiệu chảy máu (0đ)",pts:0},{text:"Chẩn đoán khác (loét, viêm trợt...) (1đ)",pts:1},{text:"Ung thư đường tiêu hóa trên (2đ)",pts:2}]},
+        {label:"Dấu hiệu chảy máu gần đây trên nội soi", options:[{text:"Không có/chỉ có chấm đen đáy ổ loét (0đ)",pts:0},{text:"Máu trong lòng ống tiêu hóa/cục máu đông bám/mạch máu lộ hoặc đang chảy (2đ)",pts:2}]}
+      ])}
+      <p>Nội soi tiêu hóa trên trong vòng <b>24 giờ</b> ở hầu hết trường hợp XHTH trên; <b>trong 12 giờ</b> nếu huyết động không ổn/nghi xuất huyết do giãn tĩnh mạch. XHTH dưới ổn định: nội soi đại tràng có chuẩn bị trong vòng 24–48h.</p>`,
+    dieu_tri:`
+      <div class="subhead">Hồi sức ban đầu (mọi trường hợp XHTH cấp)</div>
+      <ul>
+        <li>Hai đường truyền tĩnh mạch lớn, bù dịch tinh thể; <b>truyền máu khi Hb&lt;7g/dL</b> (chiến lược truyền máu hạn chế — restrictive strategy) ở hầu hết bệnh nhân, ngưỡng cao hơn (Hb&lt;8-9g/dL) nếu bệnh mạch vành nặng/huyết động không ổn</li>
+        <li>Đảo ngược/ngưng kháng đông nếu có (cân nhắc lợi ích/nguy cơ huyết khối nền)</li>
+        <li>Đặt nội khí quản bảo vệ đường thở nếu nôn máu ồ ạt/rối loạn tri giác trước khi nội soi</li>
+      </ul>
+      <div class="subhead">XHTH trên không do giãn tĩnh mạch (loét dạ dày-tá tràng...)</div>
+      <ul>
+        <li><b>PPI liều cao TM</b> trước nội soi (giảm mức độ tổn thương thấy được, giảm nhu cầu can thiệp nội soi) — tiếp tục PPI liều cao sau nội soi nếu tổn thương nguy cơ cao (mạch máu lộ/đang chảy/cục máu đông bám)</li>
+        <li><b>Nội soi can thiệp cầm máu</b> (kẹp clip, tiêm cầm máu, đốt điện) cho tổn thương nguy cơ cao; không can thiệp nếu đáy ổ loét sạch/chấm đen (nguy cơ tái xuất huyết rất thấp)</li>
+        <li>Sau cầm máu nội soi thành công: PPI TM liều cao truyền liên tục hoặc ngắt quãng 72 giờ đầu, sau đó chuyển PPI uống</li>
+        <li>Xét nghiệm và điều trị <b>H. pylori</b> nếu loét dạ dày-tá tràng (xem bài "Loét dạ dày-tá tràng & H. pylori")</li>
+      </ul>
+      <div class="subhead">XHTH do giãn tĩnh mạch thực quản-dạ dày (xơ gan)</div>
+      <p>Xem chi tiết đầy đủ tại bài <b>"Xơ gan & Biến chứng"</b> — tóm tắt: kháng sinh dự phòng (ceftriaxone) + thuốc vận mạch tạng (terlipressin/octreotide) ngay khi nhập viện + nội soi cấp cứu trong 12h để thắt vòng cao su/chích xơ.</p>
+      <div class="subhead">XHTH dưới</div>
+      <p>Đa số tự cầm; ổn định huyết động → nội soi đại tràng có chuẩn bị ruột trong 24–48h; can thiệp cầm máu qua nội soi (kẹp clip, tiêm, đốt) nếu xác định được nguồn chảy máu đang hoạt động; chụp mạch số hóa xóa nền (DSA) can thiệp tắc mạch hoặc phẫu thuật nếu nội soi thất bại/không xác định được nguồn chảy máu và huyết động không ổn.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Pantoprazole/Esomeprazole (PPI TM trước nội soi)","80mg TM bolus → truyền 8mg/giờ × 72 giờ (hoặc 40mg TM×2 lần/ngày nếu không có bơm tiêm truyền liên tục)","chuyển uống sau khi ổn định lâm sàng và ngưng truyền TM"],
+        ["Terlipressin (nghi giãn TM)","2mg TM mỗi 4 giờ → giảm còn 1mg mỗi 4 giờ khi kiểm soát chảy máu","chống chỉ định bệnh mạch vành/mạch máu ngoại biên nặng"],
+        ["Octreotide (thay thế terlipressin)","50mcg TM bolus → truyền 50mcg/giờ × 2-5 ngày","ít chống chỉ định tim mạch hơn terlipressin"],
+        ["Ceftriaxone (dự phòng nhiễm trùng ở xơ gan)","1g × 1 lần/ngày TM × tối đa 7 ngày","giảm nguy cơ nhiễm trùng và tái xuất huyết ở bệnh nhân xơ gan"],
+        ["Truyền hồng cầu khối","ngưỡng Hb&lt;7g/dL (ngưỡng&lt;8-9g/dL nếu bệnh mạch vành nặng)","tránh truyền quá mức (Hb đích không vượt quá 9g/dL — nguy cơ tăng áp lực tĩnh mạch cửa gây tái xuất huyết ở xơ gan)"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Ngưỡng truyền máu có thể cần cá thể hóa cao hơn nếu bệnh mạch vành/thiếu máu cơ tim nền; thận trọng bù dịch quá mức ở người suy tim; cân nhắc kỹ nguy cơ/lợi ích khi phải ngưng kháng đông/kháng kết tập tiểu cầu đang dùng cho bệnh lý tim mạch nền.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Glasgow-Blatchford=0: có thể điều trị ngoại trú, không cần nhập viện/nội soi cấp cứu",'<span class="badge badge-I">I</span>'],
+        ["PPI liều cao TM trước nội soi ở XHTH trên nghi do loét",'<span class="badge badge-I">I</span>'],
+        ["Nội soi trong 24h (12h nếu nghi giãn TM/huyết động không ổn)",'<span class="badge badge-I">I</span>'],
+        ["Chiến lược truyền máu hạn chế (ngưỡng Hb&lt;7g/dL) ở đa số bệnh nhân",'<span class="badge badge-I">I</span>'],
+        ["Truyền máu tự do đến Hb&gt;9-10g/dL thường quy",'<span class="badge badge-III">III</span>'],
+        ["Nội soi cấp cứu ngay lập tức (&lt;6h) thường quy cho mọi XHTH trên ổn định huyết động",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACG Clinical Guideline: Upper GI and Ulcer Bleeding 2021; Baveno VII Consensus on Portal Hypertension 2022; ACG Clinical Guideline: Acute Lower GI Bleeding 2016"
 },
 {
   spec:"tieu_hoa", id:"pud", emoji:"🩹", short:"Loét DD-TT", title:"Loét dạ dày-tá tràng & H. pylori",
@@ -1439,6 +2219,158 @@ const diseases = [
       ])}`
   },
   source:"2020 American College of Rheumatology Guideline for the Management of Gout"
+},
+{
+  spec:"co_xuong_khop", id:"sle", emoji:"🦋", short:"Lupus", title:"Lupus ban đỏ hệ thống (SLE)",
+  guidelines:["EULAR/ACR 2019 (phân loại)","EULAR 2023 (điều trị)"],
+  sections:{
+    dinh_nghia:`
+      <p>Lupus ban đỏ hệ thống (SLE) là bệnh tự miễn hệ thống mạn tính đặc trưng bởi tổn thương đa cơ quan (da, khớp, thận, huyết học, thần kinh, tim-phổi, huyết thanh học) do lắng đọng phức hợp miễn dịch, gặp chủ yếu ở phụ nữ trẻ trong độ tuổi sinh sản.</p>`,
+    chan_doan:`
+      <div class="subhead">Tiêu chuẩn phân loại EULAR/ACR 2019 (điều kiện tiên quyết)</div>
+      <p><b>ANA dương tính hiệu giá ≥1:80</b> là điều kiện bắt buộc để bắt đầu tính điểm phân loại; sau đó cộng điểm theo 10 nhóm tiêu chí lâm sàng-miễn dịch (mỗi nhóm chỉ tính điểm cao nhất) — <b>tổng ≥10 điểm</b> đủ tiêu chuẩn phân loại SLE.</p>
+      <p>Các nhóm tiêu chí chính (điểm minh họa, không đầy đủ toàn bộ chi tiết): sốt (2đ), giảm bạch cầu/tiểu cầu (3-4đ), tổn thương da cấp/mạn tính (2-6đ), rụng tóc không sẹo (2đ), loét niêm mạc miệng/mũi (2đ), viêm khớp (6đ), viêm thanh dịch (5-6đ), tổn thương thận (viêm cầu thận lupus, 8-10đ theo type mô bệnh học), tổn thương thần kinh (co giật/loạn thần, 5-8đ), kháng thể kháng phospholipid, giảm bổ thể C3/C4, kháng thể đặc hiệu (anti-dsDNA, anti-Sm).</p>
+      <div class="subhead">Xét nghiệm theo dõi hoạt động bệnh</div>
+      <p><b>Anti-dsDNA</b> và <b>bổ thể C3/C4</b> là 2 dấu ấn theo dõi hoạt động bệnh hữu ích nhất — anti-dsDNA tăng + bổ thể giảm thường tương quan đợt bùng phát, đặc biệt viêm thận lupus. <b>Sinh thiết thận</b> bắt buộc khi có protein niệu ≥0.5g/24h hoặc cặn lắng nước tiểu hoạt động (trụ hồng cầu/bạch cầu) để phân loại type viêm thận lupus (I-VI theo ISN/RPS) và định hướng điều trị.</p>`,
+    dieu_tri:`
+      <div class="subhead">Nền tảng — mọi bệnh nhân SLE (bất kể mức độ nặng)</div>
+      <p><b>Hydroxychloroquine</b> được khuyến cáo cho <b>tất cả</b> bệnh nhân SLE trừ chống chỉ định — giảm đợt bùng phát, cải thiện sống còn dài hạn, giảm tổn thương tích lũy cơ quan; khám mắt định kỳ tầm soát bệnh võng mạc (nguy cơ tăng theo thời gian dùng/liều tích lũy).</p>
+      <div class="subhead">Bậc thang theo mức độ nặng/cơ quan tổn thương</div>
+      <ul>
+        <li><b>SLE nhẹ</b> (da, khớp, không tổn thương tạng lớn): hydroxychloroquine ± NSAID/corticosteroid liều thấp ± thêm methotrexate/azathioprine nếu cần kiểm soát thêm</li>
+        <li><b>SLE trung bình-nặng</b> (viêm thận, thần kinh, huyết học nặng): corticosteroid liều cao cảm ứng (uống hoặc liều xung TM) + thuốc ức chế miễn dịch (mycophenolate mofetil hoặc cyclophosphamide cho viêm thận lupus tăng sinh) ± <b>belimumab</b> hoặc <b>anifrolumab</b> (sinh học nhắm đích, bổ sung nền hydroxychloroquine+corticosteroid) để giảm liều corticosteroid và giảm đợt bùng phát</li>
+        <li><b>Viêm thận lupus tăng sinh (class III/IV):</b> cảm ứng bằng mycophenolate mofetil hoặc cyclophosphamide liều thấp (phác đồ Euro-Lupus) + corticosteroid, sau đó duy trì bằng mycophenolate hoặc azathioprine liều thấp hơn</li>
+      </ul>
+      <div class="alert-box alert-warn">EULAR 2023 nhấn mạnh mục tiêu <b>giảm liều corticosteroid xuống ≤5mg/ngày prednisone hoặc ngưng hẳn</b> khi có thể — corticosteroid liều duy trì cao kéo dài là yếu tố nguy cơ độc lập gây tổn thương tích lũy cơ quan không do bệnh lupus (loãng xương, đái tháo đường, nhiễm trùng, hoại tử vô mạch).</div>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Hydroxychloroquine","200-400mg/ngày (≤5mg/kg/ngày cân nặng thực)","khám mắt (OCT/thị trường) khi bắt đầu và định kỳ hàng năm sau 5 năm dùng"],
+        ["Prednisone (cảm ứng đợt nặng)","0.5-1mg/kg/ngày → giảm dần nhanh nhất có thể xuống ≤5mg/ngày duy trì","bổ sung canxi-vitamin D, dự phòng loãng xương nếu dùng kéo dài"],
+        ["Mycophenolate mofetil (viêm thận lupus)","cảm ứng 2-3g/ngày chia 2 lần → duy trì 1-2g/ngày","tránh thai kỳ (gây quái thai); theo dõi công thức máu"],
+        ["Cyclophosphamide (phác đồ Euro-Lupus, viêm thận nặng)","500mg TM mỗi 2 tuần × 6 liều","bảo tồn khả năng sinh sản nếu còn trẻ; theo dõi công thức máu sát"],
+        ["Belimumab (sinh học bổ sung)","10mg/kg TM mỗi 4 tuần (sau liều nạp) hoặc 200mg TDD/tuần","bổ sung nền HCQ+corticosteroid, không đơn trị thay thế"],
+        ["Azathioprine (duy trì, thay thế thai kỳ)","1-2.5mg/kg/ngày","an toàn hơn mycophenolate trong thai kỳ nếu cần ức chế miễn dịch"]
+      ])}
+      <div class="age-tag">Phụ nữ trong độ tuổi sinh sản</div>
+      <p>Tư vấn kế hoạch hóa gia đình bắt buộc — mycophenolate và cyclophosphamide gây quái thai, cần chuyển sang azathioprine/hydroxychloroquine (an toàn thai kỳ) trước khi có thai theo kế hoạch; kháng thể kháng phospholipid dương tính cần đánh giá nguy cơ huyết khối/biến chứng thai kỳ.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Hydroxychloroquine cho mọi bệnh nhân SLE trừ chống chỉ định",'<span class="badge badge-I">I</span>'],
+        ["Sinh thiết thận khi có protein niệu≥0.5g/24h hoặc cặn lắng hoạt động",'<span class="badge badge-I">I</span>'],
+        ["Mục tiêu giảm corticosteroid duy trì ≤5mg/ngày hoặc ngưng hẳn khi có thể",'<span class="badge badge-I">I</span>'],
+        ["Mycophenolate/cyclophosphamide + corticosteroid cho viêm thận lupus tăng sinh",'<span class="badge badge-I">I</span>'],
+        ["Duy trì corticosteroid liều cao dài hạn để kiểm soát bệnh ổn định",'<span class="badge badge-III">III</span>'],
+        ["Mycophenolate trong thai kỳ",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2019 EULAR/ACR Classification Criteria for SLE; EULAR 2023 Recommendations for the Management of SLE"
+},
+{
+  spec:"co_xuong_khop", id:"ssc", emoji:"🧊", short:"Xơ cứng bì", title:"Xơ cứng bì hệ thống",
+  guidelines:["ACR/EULAR 2013 (phân loại)","EULAR/EUSTAR 2017 (điều trị)"],
+  sections:{
+    dinh_nghia:`
+      <p>Xơ cứng bì hệ thống (Systemic Sclerosis — SSc) là bệnh tự miễn hiếm gặp đặc trưng bởi xơ hóa da và nội tạng lan tỏa, bệnh lý vi mạch máu, và bất thường miễn dịch tự thân.</p>
+      <div class="subhead">Phân thể lâm sàng</div>
+      ${rt(["Đặc điểm"],[
+        ["Thể da giới hạn (Limited cutaneous SSc)","Tổn thương da giới hạn ở đầu chi/mặt (xa gốc chi), thường có hội chứng CREST, nguy cơ tăng áp phổi độc lập cao hơn"],
+        ["Thể da lan tỏa (Diffuse cutaneous SSc)","Tổn thương da lan rộng đến thân mình/gốc chi, tiến triển nhanh hơn, nguy cơ tổn thương nội tạng sớm (phổi, tim, thận) cao hơn"]
+      ])}
+      <p>Hội chứng <b>CREST</b>: Calcinosis (vôi hóa mô mềm), Raynaud phenomenon (hiện tượng Raynaud), Esophageal dysmotility (rối loạn vận động thực quản), Sclerodactyly (xơ cứng ngón tay), Telangiectasia (giãn mao mạch).</p>`,
+    chan_doan:`
+      <p>Tiêu chuẩn phân loại ACR/EULAR 2013 dựa điểm số: xơ da hai bàn tay lan đến khớp bàn-ngón (tiêu chí đủ, tự động phân loại) hoặc tổng hợp điểm từ nhiều tiêu chí (xơ ngón tay, tổn thương đầu ngón, giãn mao mạch, bất thường mao mạch nền móng, tăng áp phổi/bệnh phổi mô kẽ, hiện tượng Raynaud, tự kháng thể đặc hiệu SSc).</p>
+      <div class="subhead">Tự kháng thể đặc hiệu — giá trị tiên lượng</div>
+      ${rt(["Liên quan lâm sàng"],[
+        ["Anti-centromere","Thường gặp thể da giới hạn, nguy cơ tăng áp phổi cao, tiến triển da chậm"],
+        ["Anti-Scl-70 (anti-topoisomerase I)","Thường gặp thể da lan tỏa, nguy cơ bệnh phổi mô kẽ cao"],
+        ["Anti-RNA polymerase III","Nguy cơ cơn xơ cứng bì-thận cấp cao, thường kèm thể da lan tỏa tiến triển nhanh"]
+      ])}
+      <div class="subhead">Tầm soát bắt buộc định kỳ (mọi bệnh nhân SSc)</div>
+      <p>Đo chức năng hô hấp (hô hấp ký + DLCO) và siêu âm tim mỗi năm để tầm soát bệnh phổi mô kẽ và tăng áp động mạch phổi — hai biến chứng gây tử vong hàng đầu, thường tiến triển âm thầm không triệu chứng giai đoạn sớm.</p>`,
+    dieu_tri:`
+      <div class="subhead">Hiện tượng Raynaud & loét đầu ngón</div>
+      <p><b>Chẹn kênh canxi dihydropyridine</b> (nifedipine) là điều trị đầu tay; thêm ức chế PDE-5 (sildenafil) hoặc thuốc đối kháng thụ thể endothelin (bosentan) nếu loét đầu ngón tái phát/kháng trị.</p>
+      <div class="subhead">Bệnh phổi mô kẽ liên quan SSc (SSc-ILD)</div>
+      <p><b>Mycophenolate mofetil</b> là điều trị đầu tay (hiệu quả tương đương cyclophosphamide nhưng dung nạp tốt hơn dài hạn); <b>nintedanib</b> (thuốc kháng xơ) được phê duyệt bổ sung làm chậm tiến triển giảm chức năng phổi; tocilizumab là lựa chọn khác ở bệnh có yếu tố viêm nổi trội.</p>
+      <div class="subhead">Tăng áp động mạch phổi liên quan SSc (SSc-PAH)</div>
+      <p>Điều trị theo phác đồ tăng áp phổi chuyên biệt (ức chế thụ thể endothelin, ức chế PDE-5, chủ vận thụ thể prostacyclin) — cần hội chẩn chuyên khoa tim mạch/hô hấp, thường phối hợp đa thuốc ngay từ đầu ở thể trung bình-nặng.</p>
+      <div class="subhead">Cơn xơ cứng bì-thận cấp (Scleroderma Renal Crisis) — cấp cứu nội khoa</div>
+      <div class="alert-box alert-danger">Biểu hiện: tăng huyết áp cấp tính mới xuất hiện + suy thận cấp tiến triển nhanh ở bệnh nhân SSc (đặc biệt thể da lan tỏa, anti-RNA polymerase III dương tính, dùng corticosteroid liều cao gần đây — <b>là yếu tố khởi phát cần tránh</b>). <b>ACEi (captopril)</b> là điều trị đặc hiệu cứu mạng, khởi động ngay khi nghi ngờ, chỉnh liều tăng nhanh theo đáp ứng huyết áp — KHÔNG trì hoãn chờ xác định chẩn đoán hoàn toàn.</div>
+      <div class="subhead">Xơ cứng da</div>
+      <p>Methotrexate có thể cải thiện nhẹ độ xơ da giai đoạn sớm-viêm; mycophenolate hoặc thuốc ức chế miễn dịch khác cân nhắc ở thể lan tỏa tiến triển nhanh.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Nifedipine (Raynaud)","30mg/ngày phóng thích chậm → tối đa 90mg/ngày","tác dụng phụ phù ngoại biên, đau đầu, hạ HA"],
+        ["Mycophenolate mofetil (SSc-ILD)","2-3g/ngày chia 2 lần","tránh thai kỳ; theo dõi công thức máu"],
+        ["Nintedanib (SSc-ILD, kháng xơ)","150mg × 2 lần/ngày","tác dụng phụ tiêu chảy thường gặp; theo dõi men gan"],
+        ["Captopril (cơn thận cấp — KHÔNG TRÌ HOÃN)","6.25-12.5mg khởi đầu, tăng nhanh mỗi 4-8h đến khi kiểm soát HA","ACEi tác dụng ngắn ưu tiên trong cấp cứu để chỉnh liều linh hoạt nhanh"],
+        ["Methotrexate (xơ da giai đoạn sớm)","15-25mg/tuần","bổ sung acid folic; tránh thai kỳ"]
+      ])}
+      <div class="age-tag">Mọi bệnh nhân SSc</div>
+      <p>Tránh corticosteroid liều cao (&gt;15mg/ngày prednisone) không cần thiết, đặc biệt thể da lan tỏa — liên quan tăng nguy cơ khởi phát cơn xơ cứng bì-thận cấp; theo dõi huyết áp tại nhà định kỳ ở người nguy cơ cao (thể lan tỏa, anti-RNA pol III+).</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Tầm soát ILD/PAH hàng năm bằng hô hấp ký-DLCO và siêu âm tim ở mọi bệnh nhân SSc",'<span class="badge badge-I">I</span>'],
+        ["ACEi khởi động ngay khi nghi cơn xơ cứng bì-thận cấp",'<span class="badge badge-I">I</span>'],
+        ["Mycophenolate mofetil là điều trị đầu tay cho SSc-ILD",'<span class="badge badge-I">I</span>'],
+        ["Nifedipine là điều trị đầu tay cho hiện tượng Raynaud",'<span class="badge badge-I">I</span>'],
+        ["Corticosteroid liều cao (&gt;15mg/ngày) kéo dài không cần thiết, đặc biệt thể lan tỏa",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2013 ACR/EULAR Classification Criteria for Systemic Sclerosis; EULAR/EUSTAR 2017 Recommendations for Treatment of Systemic Sclerosis"
+},
+{
+  spec:"co_xuong_khop", id:"septic_arthritis", emoji:"🦠", short:"VK nhiễm trùng", title:"Viêm khớp nhiễm trùng",
+  guidelines:["IDSA (tiếp cận chung)","BSR 2006 (còn tham chiếu)"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm khớp nhiễm trùng là nhiễm trùng trong khoang khớp do vi khuẩn (thường gặp nhất), hiếm hơn do nấm/mycobacteria — là <b>cấp cứu cơ xương khớp thật sự</b> vì có thể phá hủy sụn khớp không hồi phục trong vòng 24-48 giờ nếu không được dẫn lưu và điều trị kháng sinh kịp thời.</p>
+      <p>Đường lây: theo đường máu (thường gặp nhất ở người lớn), lan từ ổ nhiễm trùng lân cận (viêm xương tủy, nhiễm trùng mô mềm), hoặc trực tiếp sau chấn thương/thủ thuật khớp (tiêm nội khớp, phẫu thuật, thay khớp nhân tạo).</p>`,
+    chan_doan:`
+      <p><b>Chọc dò dịch khớp là bắt buộc và khẩn cấp</b> ở bất kỳ khớp sưng-nóng-đỏ-đau cấp tính nào nghi nhiễm trùng — không trì hoãn để chờ hình ảnh học. Gửi dịch khớp: đếm tế bào + công thức, nhuộm Gram, cấy vi khuẩn (kèm cấy máu), soi tinh thể (loại trừ gout/giả gout đồng mắc — có thể cùng tồn tại với nhiễm trùng).</p>
+      ${rt(["Gợi ý"],[
+        ["Bạch cầu dịch khớp &lt;25.000/mm³, có thể viêm không nhiễm trùng","Ít nghi nhiễm trùng nhưng không loại trừ hoàn toàn"],
+        ["Bạch cầu dịch khớp 25.000–50.000/mm³","Nghi ngờ, cần đánh giá thêm theo bệnh cảnh lâm sàng"],
+        ["Bạch cầu dịch khớp &gt;50.000/mm³, đa số đa nhân trung tính (&gt;90%)","Rất nghi ngờ viêm khớp nhiễm trùng — điều trị kinh nghiệm ngay trong khi chờ kết quả cấy"]
+      ])}
+      <div class="subhead">🧮 Tiêu chuẩn Kocher — hỗ trợ phân biệt viêm khớp nhiễm trùng háng với viêm khớp thoáng qua (chủ yếu áp dụng trẻ em, tham khảo thêm ở người lớn)</div>
+      ${sc("kocher","Tiêu chuẩn Kocher (khớp háng)",[
+        {label:"Không chịu được sức nặng (không đi lại được trên chân đó)",pts:1},
+        {label:"Sốt &gt;38.5°C",pts:1},
+        {label:"Bạch cầu máu &gt;12.000/mm³",pts:1},
+        {label:"Tốc độ máu lắng (ESR) &gt;40mm/giờ",pts:1}
+      ])}
+      <p>0 yếu tố: nguy cơ nhiễm trùng thấp (&lt;2%). 4 yếu tố: nguy cơ rất cao (&gt;99% trong nghiên cứu gốc) — tuy vậy tiêu chuẩn này được xây dựng chủ yếu ở trẻ em, cần kết hợp CRP và đánh giá lâm sàng toàn diện, không thay thế chọc dò dịch khớp khi nghi ngờ lâm sàng cao.</p>`,
+    dieu_tri:`
+      <div class="subhead">Dẫn lưu khớp — can thiệp bắt buộc, song song kháng sinh</div>
+      <p>Dẫn lưu mủ khớp là bắt buộc để giảm áp lực nội khớp và loại bỏ enzym phá hủy sụn — bằng chọc hút lặp lại, nội soi khớp rửa, hoặc phẫu thuật mở khớp dẫn lưu tùy vị trí khớp/mức độ đáp ứng (khớp háng thường cần can thiệp phẫu thuật sớm hơn do khó theo dõi/chọc hút lặp lại).</p>
+      <div class="subhead">Kháng sinh kinh nghiệm ban đầu (trước kết quả cấy, điều chỉnh theo Gram/kháng sinh đồ)</div>
+      ${rt(["Kháng sinh kinh nghiệm"],[
+        ["Người lớn khỏe mạnh, không yếu tố nguy cơ đặc biệt","Vancomycin (phủ MRSA) — Staphylococcus aureus là nguyên nhân thường gặp nhất"],
+        ["Nghi lậu cầu (người trẻ, hoạt động tình dục, tổn thương da kèm theo/viêm khớp di chuyển)","Ceftriaxone TM"],
+        ["Nguy cơ trực khuẩn Gram âm (người cao tuổi, suy giảm miễn dịch, tiêm chích ma túy)","Vancomycin + cephalosporin thế hệ 3/4 hoặc kháng sinh phổ rộng phủ Gram âm"],
+        ["Khớp nhân tạo nhiễm trùng","Hội chẩn ngoại khoa chỉnh hình sớm — thường cần tháo khớp nhân tạo/thay khớp thì 2, phác đồ kháng sinh kéo dài chuyên biệt"]
+      ])}
+      <p><b>Xuống thang</b> theo kết quả nhuộm Gram/cấy khi có, tổng thời gian điều trị thường <b>3–4 tuần</b> (2 tuần TM chuyển uống nếu đáp ứng tốt, tùy vi khuẩn và đáp ứng lâm sàng).</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Vancomycin","15-20mg/kg × 2 lần/ngày TM, chỉnh theo nồng độ đáy","theo dõi chức năng thận sát, đặc biệt người cao tuổi"],
+        ["Ceftriaxone (nghi lậu cầu)","1-2g × 1 lần/ngày TM","kèm điều trị đồng nhiễm Chlamydia theo kinh nghiệm nếu nghi lậu cầu lan tỏa"],
+        ["Cefepime (nghi Gram âm/Pseudomonas)","2g × 2-3 lần/ngày TM","chỉnh liều theo eGFR"],
+        ["Chuyển kháng sinh uống (sau đáp ứng TM ban đầu)","theo kháng sinh đồ và độ nhạy, đủ sinh khả dụng đường uống","chỉ chuyển khi lâm sàng cải thiện rõ và đã xác định vi khuẩn/độ nhạy"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Triệu chứng viêm có thể kín đáo hơn (sốt nhẹ/không sốt), ngưỡng chọc dò khớp nên thấp; nguy cơ trực khuẩn Gram âm và đa vi khuẩn cao hơn — cân nhắc phổ kháng sinh rộng hơn kinh nghiệm ban đầu.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Chọc dò dịch khớp khẩn cấp ở mọi khớp sưng-nóng-đỏ cấp nghi nhiễm trùng",'<span class="badge badge-I">I</span>'],
+        ["Dẫn lưu khớp (chọc hút lặp lại/nội soi/phẫu thuật) song song kháng sinh",'<span class="badge badge-I">I</span>'],
+        ["Kháng sinh kinh nghiệm phủ MRSA (vancomycin) khi chưa có kết quả cấy",'<span class="badge badge-I">I</span>'],
+        ["Trì hoãn chọc dò khớp để chờ chụp X-quang/MRI trước",'<span class="badge badge-III">III</span>'],
+        ["Chỉ dùng kháng sinh đơn thuần không dẫn lưu ổ mủ khớp rõ",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"IDSA General Approach to Septic Arthritis; Kocher et al. J Bone Joint Surg 1999/2004 (Kocher Criteria)"
 },
 {
   spec:"co_xuong_khop", id:"ra", emoji:"🖐️", short:"VKDT", title:"Viêm khớp dạng thấp",
@@ -1804,6 +2736,68 @@ const diseases = [
       ])}`
   },
   source:"KDIGO 2021 Clinical Practice Guideline for the Management of Glomerular Diseases (phần Hội chứng thận hư & biến chứng)"
+},
+{
+  spec:"than", id:"kidney_stone", emoji:"🪨", short:"Sỏi thận", title:"Sỏi tiết niệu",
+  guidelines:["AUA/Endourological Society 2024","EAU 2023"],
+  sections:{
+    dinh_nghia:`
+      <p>Sỏi tiết niệu hình thành do kết tinh các chất hòa tan trong nước tiểu (chủ yếu canxi oxalat &gt;80%, còn lại acid uric, struvite/sỏi nhiễm trùng, cystine hiếm gặp), gây tắc nghẽn và đau quặn thận khi di chuyển qua niệu quản.</p>`,
+    chan_doan:`
+      <p>Đau quặn thận điển hình: đau dữ dội vùng hông lưng lan xuống bẹn/bộ phận sinh dục, khởi phát đột ngột, bệnh nhân vật vã không tìm được tư thế giảm đau (khác đau bụng ngoại khoa thường nằm yên), có thể kèm tiểu máu vi thể/đại thể, buồn nôn-nôn.</p>
+      <div class="subhead">Hình ảnh học</div>
+      ${rt(["Đặc điểm"],[
+        ["CT bụng không cản quang (KUB-CT)","Tiêu chuẩn vàng — độ nhạy/đặc hiệu cao nhất, xác định kích thước-vị trí-mật độ sỏi, đánh giá mức độ ứ nước thận"],
+        ["Siêu âm bụng","Không tia xạ, ưu tiên ở phụ nữ có thai/trẻ em, độ nhạy thấp hơn CT với sỏi niệu quản nhỏ nhưng phát hiện tốt ứ nước thận"],
+        ["X-quang bụng không chuẩn bị (KUB)","Chỉ thấy sỏi cản quang (canxi), không thấy sỏi acid uric — ít dùng để chẩn đoán ban đầu, hữu ích theo dõi sỏi cản quang đã biết"]
+      ])}
+      <div class="subhead">Yếu tố tiên đoán khả năng tự đào thải sỏi</div>
+      <p>Kích thước là yếu tố quan trọng nhất: sỏi &lt;5mm có khả năng tự đào thải &gt;90%; sỏi 5-10mm khoảng 50%; sỏi &gt;10mm khả năng tự đào thải thấp, thường cần can thiệp. Vị trí sỏi ở đoạn niệu quản xa (gần bàng quang) có tỷ lệ tự đào thải cao hơn đoạn gần.</p>`,
+    dieu_tri:`
+      <div class="subhead">Xử trí cơn đau quặn thận cấp</div>
+      <ul>
+        <li><b>NSAID</b> (ketorolac TM/tiêm bắp hoặc uống) là thuốc giảm đau đầu tay — hiệu quả tương đương hoặc vượt trội opioid, ít tác dụng phụ buồn nôn/an thần hơn</li>
+        <li>Opioid dự phòng/bổ sung nếu NSAID không đủ hiệu quả hoặc chống chỉ định (suy thận, loét tiêu hóa)</li>
+        <li>Chống nôn nếu cần</li>
+      </ul>
+      <div class="subhead">Điều trị tống sỏi bằng thuốc (Medical Expulsive Therapy — MET)</div>
+      <p><b>Chẹn alpha-1</b> (tamsulosin) cho sỏi niệu quản 5-10mm giúp giãn cơ trơn niệu quản, tăng tỷ lệ và rút ngắn thời gian tự đào thải — hiệu quả rõ nhất ở sỏi đoạn xa kích thước lớn hơn trong ngưỡng có thể tự đào thải.</p>
+      <div class="subhead">Chỉ định can thiệp</div>
+      ${rt(["Chỉ định can thiệp"],[
+        ["Sỏi lớn không khả năng tự đào thải (&gt;10mm)","Tán sỏi ngoài cơ thể (SWL), nội soi niệu quản tán sỏi laser (URS), hoặc tán sỏi qua da (PCNL) tùy kích thước/vị trí"],
+        ["Đau không kiểm soát được dù đã điều trị nội khoa tối ưu","Can thiệp giải áp/lấy sỏi"],
+        ["Sốt/nhiễm trùng đường tiết niệu kèm tắc nghẽn (cấp cứu tiết niệu)","Dẫn lưu khẩn cấp (đặt JJ niệu quản hoặc mở thận ra da) NGAY, trì hoãn tán sỏi đến khi hết nhiễm trùng"],
+        ["Suy thận cấp do tắc nghẽn hai bên/thận độc nhất","Dẫn lưu khẩn cấp"]
+      ])}
+      <div class="alert-box alert-danger">Sỏi niệu quản tắc nghẽn kèm sốt/dấu hiệu nhiễm trùng đường tiết niệu trên là <b>cấp cứu tiết niệu</b> — nguy cơ nhiễm trùng huyết đường niệu (urosepsis) nhanh chóng nếu không dẫn lưu kịp thời, cần dẫn lưu khẩn cấp trước, tán sỏi để sau.</div>
+      <div class="subhead">Dự phòng tái phát (sau cơn cấp, đánh giá lâu dài)</div>
+      <ul>
+        <li>Tăng lượng nước uống (đích nước tiểu ≥2.5 lít/ngày) — biện pháp nền tảng cho mọi loại sỏi</li>
+        <li>Sỏi canxi oxalat tái phát: hạn chế natri khẩu phần, duy trì lượng canxi khẩu phần bình thường (không hạn chế canxi quá mức — nghịch lý làm tăng hấp thu oxalat ruột), <b>thiazide</b> nếu tăng canxi niệu</li>
+        <li>Sỏi acid uric: kiềm hóa nước tiểu (kali citrate), allopurinol nếu tăng acid uric máu/niệu kèm theo</li>
+        <li>Phân tích thành phần sỏi (nếu thu được) và xét nghiệm nước tiểu 24h định hướng dự phòng đặc hiệu theo loại sỏi</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Ketorolac (giảm đau cơn cấp)","30mg TM/TB hoặc 10mg uống mỗi 6h, tối đa 5 ngày","tránh nếu suy thận/loét tiêu hóa hoạt động"],
+        ["Tamsulosin (MET, sỏi 5-10mm)","0.4mg × 1 lần/ngày × đến 4 tuần hoặc đến khi tống sỏi","theo dõi hạ HA tư thế, đặc biệt người cao tuổi"],
+        ["Kali citrate (kiềm hóa nước tiểu)","10-20mEq × 2-3 lần/ngày","chỉnh liều theo pH nước tiểu đích 6.5-7.0"],
+        ["Allopurinol (sỏi acid uric kèm tăng acid uric máu)","100-300mg/ngày","xem chi tiết chỉnh liều theo thận tại bài Gout"],
+        ["Hydrochlorothiazide (tăng canxi niệu)","25-50mg/ngày","theo dõi kali/natri máu"]
+      ])}
+      <div class="age-tag">Người cao tuổi</div>
+      <p>Ngưỡng nghi ngờ nhiễm trùng đường niệu trên kèm tắc nghẽn nên thấp (biểu hiện có thể không điển hình); thận trọng NSAID nếu bệnh thận mạn/suy tim nền — cân nhắc opioid liều thấp thay thế.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["CT bụng không cản quang là tiêu chuẩn chẩn đoán hình ảnh học",'<span class="badge badge-I">I</span>'],
+        ["NSAID là giảm đau đầu tay cho cơn đau quặn thận cấp",'<span class="badge badge-I">I</span>'],
+        ["Dẫn lưu khẩn cấp khi tắc nghẽn kèm sốt/nhiễm trùng đường niệu",'<span class="badge badge-I">I</span>'],
+        ["Tamsulosin (MET) cho sỏi niệu quản 5-10mm",'<span class="badge badge-IIa">IIa</span>'],
+        ["Hạn chế canxi khẩu phần quá mức để dự phòng sỏi canxi oxalat",'<span class="badge badge-III">III</span>'],
+        ["Tán sỏi khi đang có nhiễm trùng đường niệu chưa kiểm soát",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"AUA/Endourological Society Guideline on Surgical Management of Stones 2024; EAU Guidelines on Urolithiasis 2023"
 },
 {
   spec:"than", id:"gn", emoji:"🔬", short:"BCT", title:"Bệnh cầu thận",
