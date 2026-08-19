@@ -355,8 +355,14 @@ const scoreInterp = {
   cat: (t) => t<10 ? `Ảnh hưởng thấp lên chất lượng cuộc sống` : t<=20 ? `Ảnh hưởng trung bình` : t<=30 ? `⚠️ Ảnh hưởng cao` : `⚠️ Ảnh hưởng rất cao lên chất lượng cuộc sống`,
   wellspe: (t) => t<2 ? `Xác suất thấp — (2 mức: ≤4 = "PE ít khả năng", làm D-dimer trước khi quyết định chụp CT)` : t<=6 ? `Xác suất trung bình — cân nhắc D-dimer hoặc CTPA tùy ngưỡng 2-mức (≤4 vs &gt;4)` : `⚠️ Xác suất cao (&gt;6đ, hoặc &gt;4đ theo thang 2-mức) — cân nhắc CTPA trực tiếp, không cần chờ D-dimer`,
   years: (t) => t===0 ? `0 tiêu chí dương tính — loại trừ PE nếu D-dimer &lt;1000 ng/mL` : `⚠️ ${t} tiêu chí dương tính — cần ngưỡng D-dimer thấp hơn (&lt;500 ng/mL) mới loại trừ được PE`,
-  spesi: (t) => t===0 ? `Nguy cơ tử vong 30 ngày rất thấp — có thể cân nhắc điều trị ngoại trú nếu phù hợp` : `⚠️ sPESI≥1 — nguy cơ tăng, cân nhắc nhập viện theo dõi`
+  spesi: (t) => t===0 ? `Nguy cơ tử vong 30 ngày rất thấp — có thể cân nhắc điều trị ngoại trú nếu phù hợp` : `⚠️ sPESI≥1 — nguy cơ tăng, cân nhắc nhập viện theo dõi`,
+  grace: (t) => t<=108 ? `Nguy cơ thấp (&lt;1% tử vong nội viện) — chiến lược xâm lấn có thể trong 72h/chọn lọc` : t<=140 ? `Nguy cơ trung bình (1-3% tử vong nội viện) — can thiệp xâm lấn sớm trong &lt;24h` : `⚠️ Nguy cơ cao (&gt;3% tử vong nội viện) — can thiệp xâm lấn ngay trong &lt;2h`,
+  framingham: (t) => t>=4 ? `✅ Đủ tiêu chuẩn chẩn đoán suy tim theo Framingham (tương đương ≥2 chính, hoặc 1 chính+2 phụ)` : `Chưa đủ tiêu chuẩn Framingham — cần thêm NT-proBNP/siêu âm tim để đánh giá`,
+  bova: (t) => t<=2 ? `Giai đoạn I — nguy cơ thấp biến chứng liên quan PE trong 30 ngày` : t<=4 ? `Giai đoạn II — nguy cơ trung bình` : `⚠️ Giai đoạn III — nguy cơ cao biến chứng liên quan PE trong 30 ngày`,
+  addrs: (t) => t===0 ? `Nguy cơ thấp — cân nhắc D-dimer để loại trừ AAS` : t===1 ? `Nguy cơ trung bình — làm D-dimer; nếu ≥500 ng/mL → CTA` : `⚠️ Nguy cơ cao — CTA khẩn cấp, không chờ D-dimer`,
+  hcmriskscd: (t) => t===0 ? `Chưa có yếu tố nguy cơ chính liệt kê — tính công thức đầy đủ HCM Risk-SCD để ước tính %` : `Có ${t} yếu tố nguy cơ chính — cân nhắc ICD theo shared decision-making + tính HCM Risk-SCD chính thức`
 };
+
 
 function updateScore(calcId){
   const box = document.querySelector(`.score-box[data-calc="${calcId}"]`);
@@ -423,7 +429,10 @@ const diseases = [
         ["ABPM – ban đêm","≥120/70 mmHg"],
         ["HBPM tại nhà (trung bình)","≥135/85 mmHg"]
       ])}
-      <p>Đánh giá nguy cơ tim mạch tổng thể (thang SCORE2/SCORE2-OP), tầm soát tổn thương cơ quan đích (đáy mắt, ECG, creatinine/eGFR, albumin niệu) và <b>sàng lọc THA thứ phát</b> khi có dấu hiệu gợi ý (khởi phát &lt;30 tuổi, THA kháng trị, hạ kali máu). ESC 2024 khuyến cáo cân nhắc đo renin/aldosterone tầm soát cường aldosteron nguyên phát ở tất cả người lớn THA đã xác định (IIa).</p>`,
+      <p>Đánh giá nguy cơ tim mạch tổng thể (thang SCORE2/SCORE2-OP), tầm soát tổn thương cơ quan đích (đáy mắt, ECG, creatinine/eGFR, albumin niệu) và <b>sàng lọc THA thứ phát</b> khi có dấu hiệu gợi ý (khởi phát &lt;30 tuổi, THA kháng trị, hạ kali máu). ESC 2024 khuyến cáo cân nhắc đo renin/aldosterone tầm soát cường aldosteron nguyên phát ở tất cả người lớn THA đã xác định (IIa).</p>
+      <div class="subhead">🧮 Ước tính nhanh nguy cơ tim mạch 10 năm — SCORE2 / SCORE2-OP</div>
+      <div class="alert-box alert-info">Công cụ dưới đây cho ước tính <b>gần đúng, mang tính sàng lọc nhanh</b> — không thay thế công cụ tính chính thức khi ra quyết định điều trị. Với người THA đã có bệnh tim mạch/ĐTĐ có tổn thương cơ quan đích/bệnh thận mạn nặng, xếp thẳng vào nguy cơ rất cao, không cần tính SCORE2.</div>
+      ${sc2()}`,
     dieu_tri:`
       <div class="subhead">Mục tiêu điều trị</div>
       <p><b>ESC 2024:</b> mục tiêu HA tâm thu <b>120–129 mmHg</b> cho hầu hết người lớn đang điều trị (kể cả người cao tuổi không suy yếu, &lt;85 tuổi). Nếu không dung nạp, tuổi ≥85, suy yếu trung bình–nặng, hạ HA tư thế có triệu chứng, hoặc tiên lượng sống hạn chế → mục tiêu "thấp nhất có thể dung nạp hợp lý" (ALARA).</p>
@@ -469,19 +478,28 @@ const diseases = [
 },
 {
   spec:"tim_mach", id:"hf", emoji:"💔", short:"Suy tim", title:"Suy tim (Heart Failure)",
-  guidelines:["ESC 2021 + cập nhật 2023","AHA/ACC/HFSA 2022"],
+  guidelines:["ESC 2021 + cập nhật 2023","AHA/ACC/HFSA 2022","AHA/ACC/ESC/WHF 2026 (Định nghĩa)"],
   sections:{
     dinh_nghia:`
       <p>Suy tim là hội chứng lâm sàng do bất thường cấu trúc và/hoặc chức năng tim, gây tăng áp lực đổ đầy trong tim và/hoặc cung lượng tim không đủ khi nghỉ hoặc gắng sức.</p>
+      <div class="alert-box alert-info"><b>Cập nhật mới nhất (6/2026):</b> Đồng thuận chuyên gia AHA/ACC/ESC/WHF <i>"Second Universal Definition of Heart Failure"</i> — tài liệu định nghĩa suy tim mới nhất, thay thế bản đầu tiên (2021). Điểm mới cốt lõi: (1) phân loại theo EF chuyển từ các ngưỡng số cứng nhắc sang 3 nhóm mang tính lâm sàng-điều trị (EF giảm/bảo tồn/cải thiện); (2) thêm <b>Giai đoạn 0</b> vào hệ thống phân giai đoạn A-D; (3) nhấn mạnh Giai đoạn B ("Pre-Heart Failure") là cửa sổ chiến lược quan trọng nhất để phát hiện sớm và can thiệp chủ động, vì phần lớn dân số đang ở giai đoạn 0/A/B.</div>
       <div class="subhead">Phân loại theo phân suất tống máu (EF)</div>
+      <p>Đồng thuận 2026 nhóm EF thành 3 phạm trù mang tính điều trị thay vì ngưỡng số cứng nhắc — tuy nhiên các dải số cụ thể dưới đây vẫn là mốc tham chiếu thực hành phổ biến nhất hiện nay (dựa trên tiêu chí thu nhận của các thử nghiệm RCT nền tảng cho khuyến cáo điều trị):</p>
       ${rt(["EF"],[
         ["HFrEF – EF giảm","≤40%"],
-        ["HFmrEF – EF giảm nhẹ","41–49%"],
+        ["HFmrEF – EF giảm nhẹ (nay thường xếp lâm sàng cùng nhóm điều trị với giảm hoặc bảo tồn tùy bệnh cảnh)","41–49%"],
         ["HFpEF – EF bảo tồn","≥50%"],
         ["HFimpEF – EF cải thiện","nền ≤40%, tăng ≥10 điểm và hiện &gt;40%"]
       ])}
-      <div class="subhead">Giai đoạn suy tim (AHA/ACC 2022)</div>
-      <p><b>A</b> – nguy cơ cao chưa triệu chứng/bệnh cấu trúc · <b>B</b> – có bệnh cấu trúc, chưa triệu chứng · <b>C</b> – bệnh cấu trúc + triệu chứng hiện tại/trước đây · <b>D</b> – suy tim kháng trị giai đoạn cuối.</p>`,
+      <div class="subhead">Giai đoạn suy tim (AHA/ACC/HFSA 2022, tái khẳng định trong đồng thuận 2026)</div>
+      ${rt(["Đặc điểm"],[
+        ["Giai đoạn 0 — mới bổ sung 2026","Không có yếu tố nguy cơ, không bệnh cấu trúc, không triệu chứng"],
+        ["Giai đoạn A — Nguy cơ cao","Có yếu tố nguy cơ (THA, ĐTĐ, béo phì, bệnh mạch vành, tiếp xúc thuốc độc tim...) nhưng chưa có bệnh cấu trúc/triệu chứng"],
+        ["Giai đoạn B — Pre-Heart Failure","Có bệnh cấu trúc tim (phì đại thất trái, giảm EF không triệu chứng, bệnh van tim...) nhưng chưa từng có triệu chứng — <b>cửa sổ can thiệp chiến lược quan trọng nhất</b> theo đồng thuận 2026"],
+        ["Giai đoạn C — Suy tim có triệu chứng","Bệnh cấu trúc tim + triệu chứng hiện tại hoặc trước đây"],
+        ["Giai đoạn D — Suy tim kháng trị giai đoạn cuối","Triệu chứng nặng dai dẳng dù đã điều trị nội khoa tối ưu, cần can thiệp chuyên sâu (ghép tim, hỗ trợ thất...)"]
+      ])}
+      <p>Một khi đã chẩn đoán suy tim có triệu chứng (giai đoạn C), người bệnh được xem là mắc suy tim vĩnh viễn dù triệu chứng có cải thiện tốt với điều trị — không "hạ giai đoạn" trở lại B/A.</p>`,
     chan_doan:`
       <p>Chẩn đoán dựa trên: (1) triệu chứng cơ năng (khó thở, mệt, phù chân) và thực thể (ran ẩm, tĩnh mạch cổ nổi, phù), (2) bằng chứng khách quan bất thường cấu trúc/chức năng tim trên siêu âm tim, và (3) NT-proBNP/BNP tăng.</p>
       ${rt(["Ngưỡng gợi ý suy tim"],[
@@ -489,7 +507,27 @@ const diseases = [
         ["NT-proBNP (cấp cứu)","&gt;300 pg/mL"],
         ["BNP (cấp cứu)","&gt;100 pg/mL"]
       ])}
-      <p>Siêu âm tim là công cụ chính để xác định EF, bất thường cấu trúc, van tim, đổ đầy thất trái. Cân nhắc thêm ECG, X-quang ngực, và tìm nguyên nhân nền (thiếu máu cơ tim, bệnh van, bệnh cơ tim).</p>`,
+      <p>Siêu âm tim là công cụ chính để xác định EF, bất thường cấu trúc, van tim, đổ đầy thất trái. Cân nhắc thêm ECG, X-quang ngực, và tìm nguyên nhân nền (thiếu máu cơ tim, bệnh van, bệnh cơ tim).</p>
+      <div class="subhead">🧮 Tiêu chuẩn Framingham — hỗ trợ chẩn đoán lâm sàng</div>
+      <p>Tiêu chuẩn kinh điển dựa hoàn toàn vào lâm sàng, hữu ích khi chưa có ngay NT-proBNP/siêu âm tim. Chẩn đoán suy tim khi có <b>≥2 tiêu chí chính</b>, hoặc <b>1 tiêu chí chính + 2 tiêu chí phụ</b> (tiêu chí phụ chỉ tính khi không giải thích được bởi bệnh lý khác).</p>
+      ${sc("framingham","Tiêu chuẩn Framingham (chẩn đoán suy tim)",[
+        {label:"[Chính] Khó thở kịch phát về đêm hoặc phải ngồi thở",pts:2},
+        {label:"[Chính] Tĩnh mạch cổ nổi",pts:2},
+        {label:"[Chính] Ran ẩm ở phổi",pts:2},
+        {label:"[Chính] Bóng tim to trên X-quang",pts:2},
+        {label:"[Chính] Phù phổi cấp",pts:2},
+        {label:"[Chính] Tiếng T3 (ngựa phi)",pts:2},
+        {label:"[Chính] Áp lực tĩnh mạch trung tâm &gt;16cmH2O",pts:2},
+        {label:"[Chính] Phản hồi gan-tĩnh mạch cổ dương tính",pts:2},
+        {label:"[Chính/Phụ] Sụt cân ≥4.5kg trong 5 ngày sau điều trị lợi tiểu",pts:2},
+        {label:"[Phụ] Phù mắt cá chân hai bên",pts:1},
+        {label:"[Phụ] Ho về đêm",pts:1},
+        {label:"[Phụ] Khó thở khi gắng sức thông thường",pts:1},
+        {label:"[Phụ] Gan to",pts:1},
+        {label:"[Phụ] Tràn dịch màng phổi",pts:1},
+        {label:"[Phụ] Nhịp tim nhanh &gt;120 lần/phút",pts:1}
+      ])}
+      <p style="margin-top:-4px;font-size:11.5px;color:var(--text-secondary);">💡 Cách tính: mỗi tiêu chí <b>Chính</b> = 2đ, mỗi tiêu chí <b>Phụ</b> = 1đ. Tổng ≥4đ tương đương đủ tiêu chuẩn (≥2 chính, hoặc 1 chính+2 phụ).</p>`,
     dieu_tri:`
       <div class="subhead">HFrEF (EF ≤40%) – "4 trụ cột" điều trị</div>
       <p>Khởi động <b>đồng thời và nhanh</b> (không cần tuần tự) 4 nhóm thuốc nền tảng, mỗi nhóm giảm tử vong/nhập viện độc lập:</p>
@@ -534,7 +572,7 @@ const diseases = [
         ["Chẹn kênh canxi non-dihydropyridine trong HFrEF",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"ESC Heart Failure Guidelines 2021 + 2023 Focused Update; 2022 AHA/ACC/HFSA Guideline for the Management of Heart Failure"
+  source:"ESC Heart Failure Guidelines 2021 + 2023 Focused Update; 2022 AHA/ACC/HFSA Guideline for the Management of Heart Failure; AHA/ACC/ESC/WHF Expert Consensus Document: Second Universal Definition of Heart Failure, 2026"
 },
 {
   spec:"tim_mach", id:"af", emoji:"〰️", short:"RN", title:"Rung nhĩ (Atrial Fibrillation)",
@@ -615,10 +653,11 @@ const diseases = [
 },
 {
   spec:"tim_mach", id:"tachy", emoji:"⚡", short:"Nhịp nhanh", title:"Rối loạn nhịp nhanh",
-  guidelines:["ESC 2019 (SVT)","ESC 2022 (Loạn nhịp thất & đột tử)"],
+  guidelines:["AHA/ACC/HRS 2015 (SVT)","AHA/ACC/HRS 2017 (VA & SCD)","AHA 2025 (ACLS)"],
   sections:{
     dinh_nghia:`
       <p>Nhịp nhanh: tần số thất &gt;100 lần/phút phát sinh từ cơ chế bất thường (vòng vào lại, tăng tính tự động, hoạt động khởi kích).</p>
+      <div class="alert-box alert-info"><b>Cập nhật thuật ngữ — AHA 2025 (ACLS):</b> thuật ngữ "nhịp nhanh phức bộ hẹp" (<b>Narrow-Complex Tachycardia — NCT</b>) nay được dùng thay cho cách gọi trước đây "SVT" khi mô tả nhóm nhịp nhanh QRS hẹp trong xử trí cấp cứu — bao gồm nhịp nhanh xoang, cuồng nhĩ, AVNRT, AVRT, nhịp nhanh nhĩ khác — nhằm phản ánh chính xác hơn nguồn gốc và cách tiếp cận xử trí thống nhất.</div>
       <div class="subhead">Phân loại theo vị trí khởi phát</div>
       ${rt(["Đặc điểm"],[
         ["Nhịp nhanh xoang không thích hợp","QRS hẹp, tần số cao liên tục không tương xứng gắng sức"],
@@ -633,9 +672,16 @@ const diseases = [
       <p>Nghiệm pháp phế vị có thể cắt cơn hoặc bộc lộ hoạt động nhĩ để chẩn đoán. Holter ECG 24–48h hoặc máy ghi biến cố kéo dài khi cơn ngắt quãng, không bắt được lúc thăm khám. Thăm dò điện sinh lý (EPS) khi cần định vị ổ loạn nhịp trước đốt điện hoặc đánh giá nguy cơ đột tử.</p>
       <div class="alert-box alert-warn">Mọi nhịp nhanh QRS rộng chưa rõ nguyên nhân nên được xử trí như <b>VT</b> cho đến khi chứng minh được ngược lại — đặc biệt ở người có bệnh tim cấu trúc/tiền sử NMCT.</div>`,
     dieu_tri:`
-      <div class="subhead">SVT cấp (QRS hẹp, huyết động ổn)</div>
-      <p>Nghiệm pháp phế vị (Valsalva cải biên) → adenosine TM nếu không đáp ứng → sốc điện chuyển nhịp đồng bộ nếu huyết động không ổn hoặc kháng thuốc.</p>
-      <div class="subhead">Điều trị dài hạn SVT tái phát</div>
+      <div class="subhead">NCT/SVT cấp (QRS hẹp, huyết động ổn) — AHA 2025</div>
+      <p>Nghiệm pháp phế vị (Class I) → adenosine TM (Class I) nếu không đáp ứng → diltiazem/verapamil TM nếu tái phát/kháng adenosine (Class IIb hữu ích) → sốc điện chuyển nhịp đồng bộ nếu huyết động không ổn hoặc kháng thuốc.</p>
+      <div class="subhead">Nhịp nhanh phức bộ rộng (WCT) — nguyên tắc an toàn AHA 2025</div>
+      <div class="alert-box alert-danger">
+        <b>KHÔNG dùng verapamil/diltiazem cho WCT</b> (Class III: Có hại) — có thể gây sụp huyết động nặng nếu bản chất là VT.<br>
+        <b>KHÔNG dùng adenosine cho WCT huyết động không ổn, đều-không đều rõ (irregularly irregular), hoặc VT đa dạng</b> (Class III: Có hại).<br>
+        Adenosine chỉ cân nhắc (Class IIb) cho WCT <b>đều, đơn dạng, huyết động ổn định</b> khi chưa rõ chẩn đoán, vừa hỗ trợ chẩn đoán vừa có thể cắt cơn nếu bản chất là SVT dẫn truyền lệch hướng.
+      </div>
+      <p>Thuốc chống loạn nhịp cho WCT ổn định: amiodarone, procainamide, hoặc sotalol TM (Class IIb) — sốc điện đồng bộ khi thuốc thất bại hoặc có chống chỉ định.</p>
+      <div class="subhead">Điều trị dài hạn SVT/NCT tái phát</div>
       <p><b>Đốt điện qua catheter</b> là điều trị hàng đầu cho AVNRT, AVRT/WPW có triệu chứng và cuồng nhĩ (đốt eo van 3 lá–TM chủ dưới) — tỷ lệ thành công cao, ưu tiên hơn dùng thuốc dài hạn.</p>
       <div class="subhead">VT/VF huyết động không ổn</div>
       <p>Sốc điện/khử rung ngay theo phác đồ ACLS. VT đơn dạng bền bỉ có bệnh tim cấu trúc: amiodarone TM, cân nhắc đốt điện VT.</p>
@@ -646,44 +692,47 @@ const diseases = [
       </ul>
       <div class="subhead">⚡ Sốc điện chuyển nhịp — Đồng bộ (Synchronized Cardioversion)</div>
       <p>Dùng cho loạn nhịp <b>có phức bộ QRS xác định được</b> (tránh sốc trúng đỉnh sóng T gây rung thất) — máy đồng bộ với sóng R. Chỉ định: SVT/rung nhĩ/cuồng nhĩ huyết động không ổn hoặc kháng thuốc; VT đơn dạng có mạch huyết động không ổn.</p>
+      <div class="alert-box alert-info"><b>Cập nhật AHA 2025:</b> khuyến cáo tránh chiến lược sốc năng lượng thấp lặp lại nhiều lần rồi mới tăng dần (tránh nhiều lần sốc thất bại làm mất thời gian vàng) — với nhịp nhanh phức bộ rộng không ổn định, ưu tiên bắt đầu ở mức năng lượng đủ cao (thường 200J hai pha) để tăng khả năng cắt cơn thành công ngay từ lần sốc đầu.</div>
       ${rt(["Mức năng lượng khởi đầu (máy 2 pha/biphasic)","Ghi chú"],[
         ["Rung nhĩ","120–200 J đồng bộ","cuồng nhĩ thường đáp ứng năng lượng thấp hơn rung nhĩ"],
-        ["Cuồng nhĩ","50–100 J đồng bộ","tăng dần nếu không cắt được cơn"],
-        ["SVT (AVNRT/AVRT)","50–100 J đồng bộ","thường đáp ứng năng lượng thấp"],
-        ["VT đơn dạng có mạch (huyết động không ổn)","100 J đồng bộ (tăng dần nếu thất bại)","nếu chuyển thành VT vô mạch/VF giữa chừng → chuyển ngay sang phá rung không đồng bộ"]
+        ["Cuồng nhĩ / NCT đều QRS hẹp","50–100 J đồng bộ","tăng dần nếu không cắt được cơn"],
+        ["Nhịp nhanh phức bộ rộng (WCT) không ổn định","200 J đồng bộ (AHA 2025: ưu tiên bắt đầu mức đủ cao, tránh sốc lặp lại năng lượng thấp)","nếu chuyển thành VT vô mạch/VF giữa chừng → chuyển ngay sang phá rung không đồng bộ"]
       ])}
       <div class="subhead">⚡ Phá rung — Không đồng bộ (Unsynchronized Defibrillation)</div>
       <p>Dùng cho <b>VT vô mạch, rung thất (VF), hoặc VT đa dạng/xoắn đỉnh (Torsades)</b> — không chờ đồng bộ sóng R vì không xác định được QRS rõ ràng hoặc bệnh nhân không có mạch, cần khử rung ngay lập tức theo phác đồ ACLS/hồi sinh tim phổi.</p>
       ${rt(["Mức năng lượng","Ghi chú"],[
         ["Sốc lần 1","120–200 J không đồng bộ (máy 2 pha) hoặc 360J (máy 1 pha)","tiếp tục CPR ngay sau sốc, không dừng để bắt mạch/kiểm tra nhịp"],
-        ["Các lần sốc tiếp theo","200 J (hoặc mức tối đa máy) không đồng bộ","xen kẽ chu kỳ CPR 2 phút giữa các lần sốc, cho adrenaline mỗi 3–5 phút theo ACLS"],
+        ["Các lần sốc tiếp theo","200 J (hoặc mức tối đa máy) không đồng bộ","xen kẽ chu kỳ CPR 2 phút giữa các lần sốc; AHA 2025: ưu tiên epinephrine đơn độc hơn phối hợp vasopressin, cho ngay sau lần sốc đầu không đáp ứng"],
         ["VT đa dạng/xoắn đỉnh huyết động không ổn","xử trí như VF — phá rung không đồng bộ ngay","bổ sung magie sulfate TM nếu nghi xoắn đỉnh do QT dài"]
       ])}
       <div class="alert-box alert-danger">Ghi nhớ nguyên tắc an toàn: <b>QRS đều, xác định rõ, còn mạch → sốc ĐỒNG BỘ</b>; <b>vô mạch hoặc QRS không xác định được (VF/đa dạng) → phá rung KHÔNG ĐỒNG BỘ ngay, không trì hoãn</b>. An thần/giảm đau trước sốc điện đồng bộ có chuẩn bị (không cấp cứu tối khẩn) nếu bệnh nhân còn tỉnh.</div>
       <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người cao tuổi: giảm liều amiodarone nạp/duy trì, theo dõi tuyến giáp/gan/phổi khi dùng dài hạn; tránh phối hợp verapamil/diltiazem với chẹn beta do nguy cơ block nặng.</div>
       ${rt(["Liều dùng","Lưu ý"],[
-        ["Adenosine","6mg TM nhanh → 12mg → 12mg nếu chưa đáp ứng","giảm còn 3mg nếu qua catheter TM trung tâm/dùng dipyridamole"],
-        ["Amiodarone TM","150mg/10 phút → 1mg/phút×6h → 0.5mg/phút×18h","theo dõi HA, kéo dài QT"],
+        ["Adenosine (NCT/SVT đều, QRS hẹp hoặc WCT đơn dạng ổn định chưa rõ chẩn đoán)","6mg TM nhanh → 12mg → 12mg nếu chưa đáp ứng","giảm còn 3mg nếu qua catheter TM trung tâm/dùng dipyridamole; KHÔNG dùng nếu WCT không đều/đa dạng/không ổn định"],
+        ["Amiodarone TM","150mg/10 phút → 1mg/phút×6h → 0.5mg/phút×18h","theo dõi HA, kéo dài QT; lựa chọn hàng đầu cho WCT ổn định chưa rõ chẩn đoán"],
         ["Amiodarone uống","200mg×3 lần/ngày×1 tuần → 200mg×1–2 lần/ngày","xét nghiệm chức năng tuyến giáp/gan định kỳ"],
+        ["Procainamide TM (WCT ổn định, thay thế amiodarone)","10-17mg/kg truyền TM (tối đa 50mg/phút)","tránh nếu QT dài nền/suy tim nặng; theo dõi HA và QRS trong lúc truyền"],
         ["Flecainide (không bệnh tim cấu trúc)","50–150 mg × 2 lần/ngày","chống chỉ định nếu có bệnh mạch vành/suy tim"],
-        ["Verapamil (SVT, không suy tim)","5–10 mg TM chậm","chống chỉ định nếu QRS rộng chưa rõ chẩn đoán hoặc suy tim"],
+        ["Verapamil/Diltiazem TM (CHỈ dùng cho NCT/SVT QRS hẹp xác định rõ)","Verapamil 5–10mg TM chậm; Diltiazem 0.25mg/kg TM","TUYỆT ĐỐI KHÔNG dùng cho QRS rộng (WCT) — Class III: Có hại"],
         ["Chẹn beta uống dự phòng","liều chuẩn theo thuốc (vd. bisoprolol 2.5–10mg/ngày)","giảm liều khởi đầu ở người cao tuổi"]
       ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Đốt điện qua catheter cho AVNRT/AVRT có triệu chứng tái phát",'<span class="badge badge-I">I</span>'],
-        ["Adenosine là thuốc đầu tay cắt cơn SVT QRS hẹp cấp",'<span class="badge badge-I">I</span>'],
+        ["Adenosine là thuốc đầu tay cắt cơn NCT/SVT QRS hẹp cấp, huyết động ổn",'<span class="badge badge-I">I</span>'],
+        ["Sốc điện đồng bộ cho WCT không ổn định hoặc WCT ổn định kháng thuốc",'<span class="badge badge-I">I</span>'],
         ["ICD phòng ngừa thứ phát sau ngừng tim do VT/VF không hồi phục",'<span class="badge badge-I">I</span>'],
         ["ICD phòng ngừa tiên phát khi EF≤35% sau NMCT ≥40 ngày",'<span class="badge badge-I">I</span>'],
-        ["Verapamil/diltiazem TM trong nhịp nhanh QRS rộng chưa rõ chẩn đoán",'<span class="badge badge-III">III</span>']
+        ["Verapamil/diltiazem TM trong nhịp nhanh QRS rộng",'<span class="badge badge-III">III</span>'],
+        ["Adenosine cho WCT không ổn định/không đều/đa dạng",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"2019 ESC Guidelines for SVT management; 2022 ESC Guidelines for ventricular arrhythmias and sudden cardiac death prevention"
+  source:"2015 ACC/AHA/HRS Guideline for the Management of Adult Patients With SVT; 2017 AHA/ACC/HRS Guideline for Management of Patients With Ventricular Arrhythmias and the Prevention of Sudden Cardiac Death; 2025 American Heart Association Guidelines for CPR and Emergency Cardiovascular Care (Adult Tachycardia), Circulation 2025"
 },
 {
   spec:"tim_mach", id:"brady", emoji:"🐢", short:"Nhịp chậm", title:"Rối loạn nhịp chậm",
-  guidelines:["ESC 2021 (Tạo nhịp tim & CRT)"],
+  guidelines:["AHA/ACC/HRS 2018 (Nhịp chậm & rối loạn dẫn truyền)","AHA 2025 (ACLS)"],
   sections:{
     dinh_nghia:`
       <p>Nhịp chậm: tần số tim &lt;60 lần/phút, do rối loạn tạo nhịp tại nút xoang (hội chứng suy nút xoang) hoặc rối loạn dẫn truyền nhĩ–thất.</p>
@@ -699,8 +748,9 @@ const diseases = [
       <p>ECG, Holter 24–48h hoặc máy ghi biến cố kéo dài nếu triệu chứng ngắt quãng. <b>Tương quan triệu chứng với nhịp chậm</b> (chóng mặt, ngất, mệt khi gắng sức) là yếu tố quyết định chỉ định điều trị — không chỉ dựa vào nhịp tim đơn thuần.</p>
       <div class="alert-box alert-info">Block AV độ II Mobitz II và độ III cần được xử trí như tình trạng nguy cơ cao (nguy cơ vô tâm thu) dù bệnh nhân có triệu chứng hay chưa.</div>`,
     dieu_tri:`
-      <div class="subhead">Cấp cứu — nhịp chậm có triệu chứng/huyết động không ổn</div>
-      <p>Atropine TM trước tiên → nếu không đáp ứng: tạo nhịp qua da/tĩnh mạch tạm thời, hoặc truyền isoproterenol/adrenaline/dopamine trong lúc chờ đặt máy tạo nhịp.</p>
+      <div class="subhead">Cấp cứu — nhịp chậm có triệu chứng/huyết động không ổn (AHA 2025 ACLS)</div>
+      <p><b>Atropine TM trước tiên</b> → nếu không đáp ứng: <b>chuyển ngay</b> sang tạo nhịp qua da/tĩnh mạch tạm thời hoặc truyền thuốc vận mạch — AHA 2025 nhấn mạnh <b>không trì hoãn/lặp lại atropine nhiều lần khi liều bolus đầu không hiệu quả</b>, cần leo thang thuật toán nhanh chóng sang tạo nhịp hoặc truyền catecholamine trong lúc chờ đặt máy tạo nhịp.</p>
+      <div class="alert-box alert-warn">AHA 2025 làm rõ hơn ngưỡng phân biệt nhịp chậm "ổn định" và "không ổn định" (dựa hạ huyết áp, rối loạn tri giác cấp, dấu hiệu sốc, đau ngực do thiếu máu cơ tim, suy tim cấp) nhằm giảm do dự lâm sàng trong "vùng xám" — nếu có bất kỳ dấu hiệu nào trên, xử trí ngay như nhịp chậm không ổn định, không chờ theo dõi thêm.</div>
       <div class="subhead">Điều trị dài hạn — cấy máy tạo nhịp vĩnh viễn</div>
       <ul>
         <li>Chỉ định khi có <b>triệu chứng tương quan rõ</b> với nhịp chậm và không có nguyên nhân hồi phục (rối loạn điện giải, thuốc, thiếu máu cơ tim cấp)</li>
@@ -712,10 +762,10 @@ const diseases = [
       <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Đây chủ yếu là xử trí cấp cứu tạm thời trong lúc chờ tạo nhịp; không có thuốc điều trị nền lâu dài thay thế máy tạo nhịp khi có chỉ định.</div>
       ${rt(["Liều dùng","Lưu ý"],[
-        ["Atropine","0.5mg TM mỗi 3–5 phút, tối đa 3mg","kém hiệu quả với block vị trí dưới nút His (QRS rộng); liều &lt;0.5mg có thể gây chậm nhịp nghịch thường"],
+        ["Atropine","0.5mg TM mỗi 3–5 phút, tối đa 3mg","kém hiệu quả với block vị trí dưới nút His (QRS rộng); AHA 2025: chuyển nhanh sang tạo nhịp/vận mạch nếu liều đầu không đáp ứng, không chờ đủ liều tối đa"],
         ["Isoproterenol truyền TM","2–10 microgam/phút, chỉnh theo đáp ứng","dùng khi chờ đặt máy tạo nhịp tạm thời"],
         ["Dopamine truyền TM","5–20 microgam/kg/phút","chỉnh theo HA và tần số tim đáp ứng"],
-        ["Adrenaline truyền TM","2–10 microgam/phút","dành cho nhịp chậm nặng kháng trị với atropine"]
+        ["Adrenaline truyền TM","2–10 microgam/phút","dành cho nhịp chậm nặng kháng trị với atropine; AHA 2025 xếp ngang hàng dopamine làm lựa chọn vận mạch bắc cầu"]
       ])}
       <div class="age-tag">Người cao tuổi</div>
       <p>Chỉ định máy tạo nhịp không bị giới hạn bởi tuổi cao đơn thuần — quyết định dựa trên triệu chứng, tổng trạng và kỳ vọng sống còn lại, không phải theo một mốc tuổi cụ thể.</p>`,
@@ -724,11 +774,12 @@ const diseases = [
         ["Cấy máy tạo nhịp vĩnh viễn khi nhịp chậm có triệu chứng tương quan rõ",'<span class="badge badge-I">I</span>'],
         ["Cấy máy tạo nhịp ở block AV độ II Mobitz II hoặc độ III dù không triệu chứng",'<span class="badge badge-I">I</span>'],
         ["Tạo nhịp bó His/nhánh trái hoặc CRT thay vì tạo nhịp thất phải đơn thuần khi EF giảm",'<span class="badge badge-IIa">IIa</span>'],
+        ["Leo thang nhanh sang tạo nhịp/vận mạch khi atropine liều đầu không đáp ứng (AHA 2025)",'<span class="badge badge-I">I</span>'],
         ["Atropine trong block AV độ cao vị trí dưới nút His (QRS rộng)",'<span class="badge badge-IIb">IIb</span>'],
         ["Cấy máy tạo nhịp vĩnh viễn cho block AV độ I không triệu chứng",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"2021 ESC Guidelines on cardiac pacing and cardiac resynchronization therapy, Eur Heart J 2021"
+  source:"2018 ACC/AHA/HRS Guideline on the Evaluation and Management of Patients with Bradycardia and Cardiac Conduction Delay; 2025 American Heart Association Guidelines for CPR and Emergency Cardiovascular Care (Adult Bradycardia), Circulation 2025"
 },
 {
   spec:"tim_mach", id:"acs", emoji:"❤️‍🔥", short:"HCVC", title:"Hội chứng vành cấp",
@@ -745,7 +796,20 @@ const diseases = [
         ["Xác định NMCT","hs-cTn cao lúc 0h, hoặc tăng rõ rệt sau 1h"],
         ["Vùng quan sát","các trường hợp còn lại → theo dõi thêm, cân nhắc chẩn đoán hình ảnh"]
       ])}
-      <p>Thang điểm <b>GRACE</b> giúp phân tầng nguy cơ và quyết định thời điểm can thiệp trong NSTEMI (nguy cơ rất cao: can thiệp &lt;2h; nguy cơ cao: &lt;24h) — GRACE dùng nhiều biến liên tục (tuổi, nhịp tim, HA tâm thu, creatinine...) nên cần công cụ tính chuyên dụng (app/website GRACE chính thức) thay vì bảng tính điểm đơn giản.</p>
+      <p>Thang điểm <b>GRACE</b> giúp phân tầng nguy cơ và quyết định thời điểm can thiệp trong NSTEMI (nguy cơ rất cao: can thiệp &lt;2h; nguy cơ cao: &lt;24h).</p>
+      <div class="subhead">🧮 Thang điểm GRACE (ước tính nguy cơ tử vong nội viện)</div>
+      <div class="alert-box alert-info">Đây là bảng điểm GRACE cổ điển (dạng bảng điểm tổng hợp) — dùng để tham khảo nhanh tại giường. Với quyết định lâm sàng chính xác, nên dùng công cụ tính GRACE 2.0 chính thức (gracescore.org) vốn dùng mô hình hồi quy liên tục cho kết quả chính xác hơn.</div>
+      ${scr("grace","Thang điểm GRACE (nguy cơ tử vong nội viện)",[
+        {label:"Tuổi", options:[{text:"&lt;40 (0đ)",pts:0},{text:"40–49 (18đ)",pts:18},{text:"50–59 (41đ)",pts:41},{text:"60–69 (58đ)",pts:58},{text:"70–79 (75đ)",pts:75},{text:"80–89 (91đ)",pts:91},{text:"≥90 (100đ)",pts:100}]},
+        {label:"Nhịp tim (lần/phút)", options:[{text:"&lt;50 (0đ)",pts:0},{text:"50–69 (3đ)",pts:3},{text:"70–89 (9đ)",pts:9},{text:"90–109 (15đ)",pts:15},{text:"110–149 (24đ)",pts:24},{text:"150–199 (38đ)",pts:38},{text:"≥200 (46đ)",pts:46}]},
+        {label:"Huyết áp tâm thu (mmHg)", options:[{text:"≥200 (0đ)",pts:0},{text:"160–199 (10đ)",pts:10},{text:"140–159 (24đ)",pts:24},{text:"120–139 (34đ)",pts:34},{text:"100–119 (43đ)",pts:43},{text:"80–99 (53đ)",pts:53},{text:"&lt;80 (58đ)",pts:58}]},
+        {label:"Creatinine (mg/dL)", options:[{text:"0–0.39 (1đ)",pts:1},{text:"0.4–0.79 (4đ)",pts:4},{text:"0.8–1.19 (7đ)",pts:7},{text:"1.2–1.59 (10đ)",pts:10},{text:"1.6–1.99 (13đ)",pts:13},{text:"2.0–3.99 (21đ)",pts:21},{text:"≥4.0 (28đ)",pts:28}]},
+        {label:"Phân độ Killip", options:[{text:"I – không suy tim (0đ)",pts:0},{text:"II – ran ẩm/T3/tăng áp TM cổ (20đ)",pts:20},{text:"III – phù phổi cấp (39đ)",pts:39},{text:"IV – sốc tim (59đ)",pts:59}]},
+        {label:"Ngừng tim lúc nhập viện", options:[{text:"Không (0đ)",pts:0},{text:"Có (39đ)",pts:39}]},
+        {label:"Thay đổi đoạn ST trên ECG", options:[{text:"Không (0đ)",pts:0},{text:"Có (28đ)",pts:28}]},
+        {label:"Tăng men tim", options:[{text:"Không (0đ)",pts:0},{text:"Có (14đ)",pts:14}]}
+      ])}
+      <p><b>Diễn giải (nguy cơ tử vong nội viện):</b> ≤108 điểm = nguy cơ thấp (&lt;1%) → chiến lược xâm lấn có thể trong vòng 72h/chọn lọc. 109–140 điểm = nguy cơ trung bình (1–3%) → can thiệp sớm &lt;24h. &gt;140 điểm = nguy cơ cao (&gt;3%) → can thiệp xâm lấn ngay &lt;2h.</p>
       <div class="subhead">🧮 Thang điểm TIMI (UA/NSTEMI) — dễ tính nhanh tại giường</div>
       ${sc("timi","Thang điểm TIMI Risk Score (UA/NSTEMI)",[
         {label:"Tuổi ≥65",pts:1},
@@ -758,31 +822,44 @@ const diseases = [
       ])}
       <p>0–1 điểm: nguy cơ thấp (~5% biến cố trong 14 ngày). 2–3: nguy cơ trung bình. 4–5: nguy cơ cao. 6–7: nguy cơ rất cao — điểm càng cao càng ủng hộ chiến lược can thiệp xâm lấn sớm.</p>`,
     dieu_tri:`
-      <div class="subhead">STEMI</div>
+      <div class="subhead">🅰️ CHIẾN LƯỢC PCI (tái tưới máu can thiệp) — ưu tiên hàng đầu</div>
+      <p><b>STEMI:</b> PCI thì đầu là chiến lược ưu tiên, mục tiêu từ chẩn đoán đến bóng <b>&lt;120 phút</b> (lý tưởng &lt;60–90 phút nếu đến thẳng trung tâm có PCI).</p>
+      <p><b>NSTEMI/đau thắt ngực không ổn định nguy cơ cao-rất cao (GRACE&gt;140 hoặc TIMI≥4):</b> chiến lược xâm lấn sớm, chụp mạch vành trong &lt;24h (rất cao: &lt;2h).</p>
+      <p><b>Thuốc quanh thủ thuật PCI:</b> DAPT (aspirin + ticagrelor/prasugrel) + kháng đông (UFH thường dùng nhất trong phòng thông tim; bivalirudin là lựa chọn thay thế ở bệnh nhân nguy cơ chảy máu cao) ± ức chế GPIIb/IIIa cứu vãn nếu biến chứng huyết khối trong lúc can thiệp.</p>
+      <div class="subhead">🅱️ CHIẾN LƯỢC TIÊU SỢI HUYẾT — khi không thể PCI kịp thời</div>
+      <p>Chỉ áp dụng cho <b>STEMI</b> khi thời gian dự kiến đến PCI &gt;120 phút — dùng tiêu sợi huyết trong <b>10 phút đầu</b> tiếp xúc y tế, sau đó <b>luôn chuyển đến trung tâm có PCI</b> (PCI cứu vãn nếu tiêu sợi huyết thất bại sau 60–90 phút, hoặc chụp mạch thường quy trong 2–24h nếu tiêu sợi huyết thành công — chiến lược "pharmaco-invasive").</p>
+      <p><b>Thuốc phối hợp với tiêu sợi huyết:</b> aspirin + <b>clopidogrel</b> (không dùng ticagrelor/prasugrel cùng tiêu sợi huyết do thiếu dữ liệu an toàn) + kháng đông (enoxaparin hoặc UFH, liều điều chỉnh theo tuổi/thận — xem bảng liều).</p>
+      <div class="alert-box alert-warn">Người ≥75 tuổi dùng tiêu sợi huyết: <b>không dùng liều nạp clopidogrel</b> (dùng thẳng 75mg/ngày) và giảm liều enoxaparin — giảm nguy cơ xuất huyết nội sọ.</div>
+      <div class="subhead">🅲️ ĐIỀU TRỊ TỐI THIỂU/BẢO TỒN (không tái tưới máu)</div>
+      <p>Áp dụng cho: NSTEMI nguy cơ thấp (GRACE≤108) ổn định, bệnh nhân từ chối/không phù hợp can thiệp xâm lấn, hoặc STEMI đến quá muộn (&gt;12–48h không còn triệu chứng thiếu máu tiến triển/huyết động ổn định). Điều trị nội khoa tối ưu đơn thuần: DAPT + kháng đông + statin + chẹn beta + ACEi/ARB, đánh giá lại nguy cơ-lợi ích can thiệp trì hoãn theo diễn tiến lâm sàng.</p>
+      <div class="subhead">Điều trị nội khoa nền tảng — áp dụng mọi chiến lược</div>
       <ul>
-        <li><b>PCI thì đầu</b> là chiến lược tái tưới máu ưu tiên, mục tiêu từ chẩn đoán đến bóng &lt;<b>120 phút</b> (lý tưởng &lt;60–90 phút)</li>
-        <li>Nếu không thể PCI trong 120 phút → tiêu sợi huyết trong 10 phút đầu, sau đó chuyển trung tâm PCI</li>
-      </ul>
-      <div class="subhead">NSTEMI/đau thắt ngực không ổn định</div>
-      <p>Chiến lược xâm lấn sớm theo phân tầng GRACE; kháng kết tập tiểu cầu kép (DAPT) + kháng đông ngay khi chẩn đoán.</p>
-      <div class="subhead">Điều trị nội khoa nền tảng</div>
-      <ul>
-        <li>DAPT: aspirin + ticagrelor/prasugrel (ưu tiên hơn clopidogrel trừ khi nguy cơ chảy máu cao hoặc cần kháng đông kèm)</li>
         <li>Statin cường độ cao ngay khi nhập viện, không chờ xét nghiệm lipid</li>
         <li>Chẹn beta sớm nếu không chống chỉ định (đặc biệt khi EF giảm)</li>
         <li>ACEi/ARB nếu EF giảm, THA, ĐTĐ, bệnh thận mạn</li>
-        <li>Kháng đông giai đoạn cấp (heparin không phân đoạn, enoxaparin, hoặc fondaparinux trong NSTEMI)</li>
       </ul>
+      <div class="subhead">💉 Các nhóm kháng đông trong ACS — cơ chế & lựa chọn</div>
+      ${rt(["Cơ chế tác dụng","Chỉ định ưu tiên"],[
+        ["Heparin không phân đoạn (UFH)","Gắn antithrombin, tăng cường ức chế thrombin (IIa) và yếu tố Xa","Chuẩn trong phòng thông tim khi PCI; cần theo dõi aPTT/ACT nếu truyền kéo dài"],
+        ["Enoxaparin (LMWH)","Gắn antithrombin, ức chế chọn lọc yếu tố Xa nhiều hơn IIa","Ưu tiên trong chiến lược tiêu sợi huyết và điều trị bảo tồn; không cần theo dõi xét nghiệm đông máu thường quy"],
+        ["Fondaparinux","Pentasaccharide tổng hợp, ức chế chọn lọc yếu tố Xa qua antithrombin (không ức chế IIa)","Ưu tiên trong NSTEMI điều trị bảo tồn (nguy cơ chảy máu thấp nhất) — PHẢI thêm UFH liều đủ nếu chuyển sang PCI (nguy cơ huyết khối ống thông nếu dùng đơn độc)"],
+        ["Bivalirudin","Ức chế trực tiếp thrombin (không qua antithrombin), hồi phục nhanh","Thay thế UFH+GPIIb/IIIa trong PCI ở bệnh nhân nguy cơ chảy máu cao"]
+      ])}
       <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người ≥75 tuổi: tránh liều nạp prasugrel; nếu dùng tiêu sợi huyết không dùng liều nạp clopidogrel; theo dõi sát nguy cơ chảy máu.</div>
       ${rt(["Liều nạp","Liều duy trì"],[
         ["Aspirin","150–300mg nhai (hoặc 75–250mg TM)","75–100 mg/ngày, suốt đời"],
-        ["Ticagrelor","180mg","90mg × 2 lần/ngày (12 tháng)"],
-        ["Prasugrel","60mg (chỉ khi biết giải phẫu mạch vành)","10mg/ngày (5mg nếu &lt;60kg hoặc ≥75 tuổi)"],
-        ["Clopidogrel","300–600mg","75mg/ngày; ≥75 tuổi dùng tiêu sợi huyết: không nạp"],
+        ["Ticagrelor (chiến lược PCI)","180mg","90mg × 2 lần/ngày (12 tháng)"],
+        ["Prasugrel (chiến lược PCI, biết giải phẫu mạch vành)","60mg","10mg/ngày (5mg nếu &lt;60kg hoặc ≥75 tuổi)"],
+        ["Clopidogrel (bắt buộc nếu tiêu sợi huyết)","300–600mg (PCI); ≤300mg nếu &lt;75 tuổi dùng tiêu sợi huyết; KHÔNG nạp nếu ≥75 tuổi","75mg/ngày"],
         ["Atorvastatin (cường độ cao)","—","80 mg/ngày"],
         ["Rosuvastatin (cường độ cao)","—","20–40 mg/ngày"],
-        ["Enoxaparin","—","1mg/kg×2/ngày TDD; 1mg/kg×1/ngày nếu eGFR&lt;30"]
+        ["UFH (PCI)","60–70 UI/kg TM (tối đa 5000UI)","truyền 12-15 UI/kg/giờ, chỉnh theo ACT/aPTT"],
+        ["Enoxaparin (PCI/bảo tồn)","—","1mg/kg×2/ngày TDD; 1mg/kg×1/ngày nếu eGFR&lt;30"],
+        ["Enoxaparin (kèm tiêu sợi huyết, &lt;75 tuổi)","30mg TM bolus","1mg/kg×2/ngày TDD (tối đa 100mg/liều×2 đầu)"],
+        ["Enoxaparin (kèm tiêu sợi huyết, ≥75 tuổi)","không bolus TM","0.75mg/kg×2/ngày TDD (tối đa 75mg/liều×2 đầu)"],
+        ["Fondaparinux (bảo tồn)","—","2.5mg × 1 lần/ngày TDD; tránh nếu eGFR&lt;20"],
+        ["Bivalirudin (PCI, thay thế UFH)","0.75mg/kg TM bolus","truyền 1.75mg/kg/giờ trong lúc PCI"]
       ])}
       <p><b>Thời gian DAPT chuẩn:</b> 12 tháng sau ACS (rút ngắn 3–6 tháng nếu nguy cơ chảy máu cao, kéo dài nếu nguy cơ thiếu máu cục bộ tái phát cao).</p>`,
     khuyen_cao:`
@@ -971,17 +1048,20 @@ const diseases = [
 },
 {
   spec:"tim_mach", id:"pe", emoji:"🫁", short:"TTP", title:"Thuyên tắc phổi (PE)",
-  guidelines:["ESC 2019 (+ cập nhật 2020)","CHEST 2021"],
+  guidelines:["AHA/ACC/Multisociety 2026","CHEST 2021"],
   sections:{
     dinh_nghia:`
       <p>Thuyên tắc phổi (PE) là tắc nghẽn động mạch phổi do huyết khối, thường xuất phát từ huyết khối tĩnh mạch sâu (DVT) chi dưới di chuyển lên — PE và DVT được xem là hai biểu hiện của cùng một bệnh lý: thuyên tắc huyết khối tĩnh mạch (VTE).</p>
-      <div class="subhead">Phân tầng nguy cơ theo huyết động (ESC 2019) — quyết định chiến lược điều trị</div>
-      ${rt(["Đặc điểm"],[
-        ["Nguy cơ cao (massive/high-risk)","Sốc hoặc tụt huyết áp (HA tâm thu&lt;90mmHg hoặc giảm≥40mmHg kéo dài&gt;15 phút, không do nguyên nhân khác) — đe dọa tính mạng ngay lập tức"],
-        ["Nguy cơ trung bình-cao (submassive)","Huyết động ổn định NHƯNG có rối loạn chức năng thất phải (trên siêu âm tim/CT) VÀ tăng troponin/BNP"],
-        ["Nguy cơ trung bình-thấp","Huyết động ổn định, chỉ có 1 trong 2 dấu hiệu rối loạn thất phải hoặc tăng men tim (không cả hai)"],
-        ["Nguy cơ thấp","Huyết động ổn định, không rối loạn chức năng thất phải, không tăng men tim, PESI/sPESI thấp"]
-      ])}`,
+      <div class="alert-box alert-info"><b>Cập nhật lớn nhất trong nhiều thập kỷ:</b> Guideline <i>"2026 AHA/ACC/ACCP/ACEP/CHEST/SCAI/SHM/SIR/SVM/SVN"</i> (Circulation 2026) — guideline liên hiệp đa hiệp hội đầu tiên của Bắc Mỹ về PE cấp, thay thế hoàn toàn cách phân loại "massive/submassive/low-risk" kinh điển và cả hệ 4 nhóm ESC 2019 bằng hệ thống <b>5 nhóm lâm sàng A-E</b> mới, đồng thời đưa Đội đáp ứng thuyên tắc phổi (PERT) và DOAC/LMWH lên vị trí ưu tiên rõ ràng hơn.</div>
+      <div class="subhead">🆕 Phân loại AHA/ACC PE Clinical Categories (2026) — thay cho massive/submassive/ESC 4-nhóm</div>
+      ${rt(["Đặc điểm","Xử trí ban đầu"],[
+        ["Nhóm A","PE không triệu chứng (phát hiện tình cờ)","Có thể xuất viện an toàn ngay từ cấp cứu, không cần nhập viện"],
+        ["Nhóm B","Có triệu chứng, điểm độ nặng lâm sàng thấp (PESI≤85, hoặc sPESI=0, hoặc Bova≤4)","Thường xuất viện sớm sau đánh giá ban đầu"],
+        ["Nhóm C","Có triệu chứng, điểm độ nặng lâm sàng cao (PESI&gt;85, hoặc sPESI≥1, hoặc Bova&gt;4), kèm tăng men tim và/hoặc rối loạn chức năng thất phải","Nhập viện tối ưu điều trị"],
+        ["Nhóm D (D1–D2)","Suy tim phổi giai đoạn khởi phát (chưa tụt HA rõ nhưng có dấu hiệu giảm tưới máu cơ quan đích)","Nhập viện; liệu pháp tiến bộ CÓ THỂ được cân nhắc"],
+        ["Nhóm E (E1–E2)","Suy tim phổi thật sự — tụt huyết áp dai dẳng (SBP&lt;90mmHg, hoặc giảm&gt;40mmHg kéo dài&lt;15 phút, hoặc cần bù dịch/vận mạch)","Nhập viện; liệu pháp tiến bộ HỢP LÝ (E1), ngừng tim (E2)"]
+      ])}
+      <p>Phân nhóm dựa trên chỉ số lâm sàng/xét nghiệm/hình ảnh học nặng nhất tại thời điểm đánh giá — bệnh nhân có thể chuyển nhóm theo thời gian, cần đánh giá lại liên tục. Ký hiệu "R" thêm vào nhóm (vd. C3R) khi có suy hô hấp kèm theo (giảm oxy máu/tăng công thở).</p>`,
     chan_doan:`
       <div class="subhead">🧮 Thang điểm Wells (PE) — xác suất lâm sàng trước xét nghiệm</div>
       ${sc("wellspe","Thang điểm Wells cho Thuyên tắc phổi",[
@@ -1013,14 +1093,31 @@ const diseases = [
         {label:"Huyết áp tâm thu &lt;100mmHg",pts:1},
         {label:"SpO2 &lt;90%",pts:1}
       ])}
-      <p>sPESI = 0: nguy cơ tử vong 30 ngày rất thấp — có thể cân nhắc điều trị ngoại trú ở bệnh nhân PE nguy cơ thấp phù hợp. sPESI ≥1: nguy cơ tăng, cân nhắc nhập viện theo dõi.</p>`,
+      <p>sPESI = 0: nguy cơ tử vong 30 ngày rất thấp — có thể cân nhắc điều trị ngoại trú ở bệnh nhân PE nguy cơ thấp phù hợp. sPESI ≥1: nguy cơ tăng, cân nhắc nhập viện theo dõi.</p>
+      <div class="subhead">🧮 Thang điểm Bova — phân tầng bổ sung ở PE huyết động ổn định (dùng để xếp nhóm B/C theo AHA/ACC 2026)</div>
+      ${sc("bova","Thang điểm Bova",[
+        {label:"Huyết áp tâm thu 90–100mmHg",pts:2},
+        {label:"Tăng troponin tim",pts:2},
+        {label:"Rối loạn chức năng thất phải trên siêu âm tim/CT",pts:2},
+        {label:"Nhịp tim ≥110 lần/phút",pts:1}
+      ])}
+      <p>Giai đoạn I (0–2đ): nguy cơ thấp. Giai đoạn II (3–4đ): nguy cơ trung bình. Giai đoạn III (&gt;4đ): nguy cơ cao biến chứng liên quan PE trong 30 ngày — theo AHA/ACC 2026, Bova&gt;4 (cùng PESI&gt;85 hoặc sPESI≥1) là tiêu chí xếp vào nhóm C (điểm độ nặng lâm sàng cao).</p>`,
     dieu_tri:`
-      <div class="subhead">PE nguy cơ cao (sốc/tụt huyết áp) — cấp cứu tối khẩn</div>
-      <p><b>Tiêu sợi huyết toàn thân</b> ngay lập tức (trừ chống chỉ định tuyệt đối) — ưu tiên hàng đầu để cứu mạng. Nếu chống chỉ định tiêu sợi huyết hoặc thất bại: <b>lấy huyết khối qua catheter</b> hoặc <b>phẫu thuật lấy huyết khối</b> tùy nguồn lực sẵn có.</p>
-      <div class="subhead">PE nguy cơ trung bình-cao</div>
-      <p>Kháng đông ngay + theo dõi sát tại đơn vị theo dõi tích cực — <b>không tiêu sợi huyết thường quy</b> (chỉ cân nhắc "cứu vãn" nếu huyết động xấu đi trong quá trình theo dõi); can thiệp qua catheter có thể cân nhắc ở trung tâm có kinh nghiệm.</p>
-      <div class="subhead">PE nguy cơ trung bình-thấp và thấp</div>
-      <p>Kháng đông đơn thuần — <b>DOAC (thuốc kháng đông đường uống trực tiếp)</b> là lựa chọn hàng đầu ở đa số bệnh nhân, thay thế warfarin nhờ không cần theo dõi INR, ít tương tác thuốc-thức ăn hơn. Bệnh nhân sPESI=0 phù hợp có thể điều trị ngoại trú hoàn toàn bằng DOAC.</p>
+      <div class="subhead">🚑 Đội đáp ứng thuyên tắc phổi (PERT) — khuyến cáo mới, Class I</div>
+      <p>AHA/ACC 2026 khuyến cáo <b>kích hoạt PERT</b> (đội đa chuyên khoa: tim mạch, hô hấp, huyết học, can thiệp, ngoại lồng ngực, hồi sức) cho các trường hợp PE nhóm C trở lên — cải thiện tốc độ ra quyết định và phối hợp điều trị, đặc biệt khi cân nhắc liệu pháp tiến bộ.</p>
+      <div class="subhead">Xử trí theo nhóm lâm sàng A-E (AHA/ACC 2026)</div>
+      ${rt(["Xử trí"],[
+        ["Nhóm A (không triệu chứng)","Kháng đông ngoại trú, xuất viện an toàn ngay từ cấp cứu"],
+        ["Nhóm B (triệu chứng, độ nặng thấp)","Kháng đông, xuất viện sớm sau đánh giá ban đầu nếu điều kiện xã hội-y tế cho phép"],
+        ["Nhóm C (triệu chứng, độ nặng cao/tăng men tim/RL thất phải)","Nhập viện, kháng đông, kích hoạt PERT, theo dõi sát nguy cơ xấu đi"],
+        ["Nhóm D1–D2 (suy tim phổi khởi phát)","Nhập viện, kích hoạt PERT; liệu pháp tiến bộ (tiêu sợi huyết/can thiệp catheter/lấy huyết khối cơ học) CÓ THỂ được cân nhắc tùy đáp ứng và nguy cơ chảy máu"],
+        ["Nhóm E1 (suy tim phổi, tụt HA dai dẳng)","Nhập viện ICU, kích hoạt PERT khẩn; liệu pháp tiến bộ HỢP LÝ — tiêu sợi huyết toàn thân, tiêu sợi huyết qua catheter, lấy huyết khối cơ học, hoặc phẫu thuật đều ở vị trí ngang hàng, chọn theo nguồn lực/kinh nghiệm trung tâm và đặc điểm bệnh nhân"],
+        ["Nhóm E2 (ngừng tim do PE)","Hồi sức ACLS + cân nhắc tiêu sợi huyết cấp cứu/ECMO-VA bắc cầu đến can thiệp dứt điểm tùy nguồn lực"]
+      ])}
+      <div class="alert-box alert-info"><b>Thay đổi quan trọng nhất so với ESC 2019:</b> AHA/ACC 2026 đánh giá bằng chứng hiện có <b>không còn ủng hộ vị trí ưu tiên tuyệt đối của tiêu sợi huyết toàn thân</b> so với các liệu pháp qua catheter ở nhóm E1 — cả hai được xếp cùng mức khuyến cáo, lựa chọn dựa trên đặc điểm cụ thể từng bệnh nhân (nguy cơ chảy máu, bệnh đồng mắc) và năng lực/kinh nghiệm của trung tâm điều trị.</div>
+      <div class="subhead">💉 Kháng đông ban đầu — thay đổi quan trọng AHA/ACC 2026</div>
+      <p><b>LMWH (enoxaparin) được khuyến cáo ưu tiên hơn UFH</b> cho kháng đông đường tiêm ban đầu ở đa số bệnh nhân — khác với thực hành trước đây thường dùng UFH rộng rãi hơn do thời gian bán hủy ngắn/dễ đảo ngược. UFH vẫn là lựa chọn hợp lý khi: cần khả năng đảo ngược nhanh (chuẩn bị can thiệp/phẫu thuật), suy thận nặng, huyết động không ổn định cần chỉnh liều linh hoạt theo giờ.</p>
+      <p><b>DOAC tiếp tục được ưu tiên hơn warfarin</b> ở đa số bệnh nhân PE huyết động ổn định (nhóm A-C) — không cần theo dõi INR, ít tương tác thuốc-thức ăn hơn.</p>
       <div class="subhead">Thời gian kháng đông</div>
       ${rt(["Thời gian khuyến cáo"],[
         ["PE có yếu tố khởi phát thoáng qua rõ ràng (phẫu thuật, bất động, chấn thương)","3 tháng"],
@@ -1032,8 +1129,9 @@ const diseases = [
       <p>Chỉ định khi có <b>chống chỉ định tuyệt đối với kháng đông</b> hoặc PE tái phát dù đã kháng đông đầy đủ — không dùng thường quy như biện pháp bổ sung ở bệnh nhân dung nạp kháng đông bình thường.</p>
       <div class="subhead">💊 Liều dùng cụ thể</div>
       ${rt(["Liều dùng","Lưu ý"],[
-        ["Alteplase (tiêu sợi huyết, PE nguy cơ cao)","100mg truyền TM trong 2 giờ (hoặc phác đồ nhanh 0.6mg/kg tối đa 50mg trong 15 phút nếu ngừng tim)","chống chỉ định tuyệt đối: xuất huyết nội sọ, đột quỵ thiếu máu &lt;3 tháng, xuất huyết tiêu hóa gần đây, phẫu thuật lớn gần đây"],
-        ["Enoxaparin (bắc cầu trước DOAC/warfarin)","1mg/kg × 2 lần/ngày TDD","giảm liều nếu eGFR&lt;30 (1mg/kg×1 lần/ngày)"],
+        ["Enoxaparin (LMWH, ưu tiên khởi đầu)","1mg/kg × 2 lần/ngày TDD","giảm liều nếu eGFR&lt;30 (1mg/kg×1 lần/ngày); không cần theo dõi xét nghiệm đông máu thường quy"],
+        ["UFH (khi cần đảo ngược nhanh/huyết động không ổn)","80 UI/kg TM bolus → truyền 18 UI/kg/giờ, chỉnh theo aPTT","ưu tiên trước can thiệp/phẫu thuật hoặc suy thận nặng"],
+        ["Alteplase (tiêu sợi huyết, nhóm E1)","100mg truyền TM trong 2 giờ (hoặc phác đồ nhanh 0.6mg/kg tối đa 50mg trong 15 phút nếu ngừng tim)","chống chỉ định tuyệt đối: xuất huyết nội sọ, đột quỵ thiếu máu &lt;3 tháng, xuất huyết tiêu hóa gần đây, phẫu thuật lớn gần đây"],
         ["Rivaroxaban","15mg×2/ngày × 21 ngày → 20mg×1/ngày duy trì","không cần bắc cầu heparin, uống cùng thức ăn"],
         ["Apixaban","10mg×2/ngày × 7 ngày → 5mg×2/ngày duy trì","không cần bắc cầu heparin"],
         ["Dabigatran/Edoxaban","cần bắc cầu heparin/enoxaparin 5-10 ngày trước khi chuyển","khác với rivaroxaban/apixaban có thể dùng ngay từ đầu"],
@@ -1044,14 +1142,213 @@ const diseases = [
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Dùng Wells hoặc YEARS để đánh giá xác suất lâm sàng trước xét nghiệm",'<span class="badge badge-I">I</span>'],
-        ["Tiêu sợi huyết ngay cho PE nguy cơ cao (sốc/tụt HA) trừ chống chỉ định",'<span class="badge badge-I">I</span>'],
-        ["DOAC là kháng đông hàng đầu cho đa số bệnh nhân PE huyết động ổn định",'<span class="badge badge-I">I</span>'],
-        ["Điều trị ngoại trú cho PE nguy cơ thấp có sPESI=0 phù hợp",'<span class="badge badge-IIa">IIa</span>'],
-        ["Tiêu sợi huyết thường quy cho PE nguy cơ trung bình-cao (huyết động còn ổn định)",'<span class="badge badge-III">III</span>'],
+        ["Phân nhóm lâm sàng A-E để định hướng nơi điều trị và mức độ can thiệp",'<span class="badge badge-I">I</span>'],
+        ["Kích hoạt PERT cho PE nhóm C trở lên",'<span class="badge badge-I">I</span>'],
+        ["LMWH ưu tiên hơn UFH cho kháng đông tiêm ban đầu",'<span class="badge badge-I">I</span>'],
+        ["DOAC ưu tiên hơn warfarin ở PE huyết động ổn định",'<span class="badge badge-I">I</span>'],
+        ["Liệu pháp tiến bộ (tiêu sợi huyết/catheter/lấy huyết khối cơ học) hợp lý ở nhóm E1, chọn theo đặc điểm bệnh nhân/trung tâm",'<span class="badge badge-IIa">IIa</span>'],
+        ["Xuất viện sớm/ngoại trú cho nhóm A-B phù hợp",'<span class="badge badge-IIa">IIa</span>'],
         ["IVC filter thường quy ở bệnh nhân dung nạp kháng đông bình thường",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"2019 ESC Guidelines for the diagnosis and management of acute pulmonary embolism (+ 2020 focused update); CHEST 2021 Antithrombotic Therapy for VTE Disease"
+  source:"2026 AHA/ACC/ACCP/ACEP/CHEST/SCAI/SHM/SIR/SVM/SVN Guideline for the Evaluation and Management of Acute Pulmonary Embolism in Adults, Circulation 2026; CHEST 2021 Antithrombotic Therapy for VTE Disease"
+},
+{
+  spec:"tim_mach", id:"aortic", emoji:"🩸", short:"Phình ĐMC", title:"Phình động mạch chủ & Hội chứng động mạch chủ cấp",
+  guidelines:["ACC/AHA 2022 (Aortic Disease)","ESC 2024 (Peripheral Arterial & Aortic Diseases)","ESVS 2026"],
+  sections:{
+    dinh_nghia:`
+      <p>Phình động mạch chủ (Aortic Aneurysm) là sự giãn khu trú của động mạch chủ ≥1.5 lần đường kính bình thường (thường ≥30 mm với AAA; TAA phụ thuộc vị trí, tuổi, giới, BSA).</p>
+      <div class="subhead">Phân loại theo vị trí</div>
+      ${rt(["Đặc điểm"],[
+        ["Phình gốc/ĐMC lên (Root/Ascending TAA)","≈60% TAA, liên quan van ĐMC, hội chứng di truyền (Marfan, Loeys-Dietz…)"],
+        ["Phình cung ĐMC","≈10%"],
+        ["Phình ĐMC xuống (Descending TAA)","≈30%"],
+        ["Phình ĐMC bụng (AAA)","Phổ biến nhất, ≥30 mm, chủ yếu xơ vữa"],
+        ["Phình ĐMC ngực-bụng (TAAA)","Phức tạp, nguy cơ cao"]
+      ])}
+      <div class="subhead">Hội chứng động mạch chủ cấp (AAS)</div>
+      <p>Bao gồm: bóc tách ĐMC (AD), tụ máu trong thành (IMH), loét xuyên thành (PAU), vỡ phình. Phân loại Stanford: <b>Type A</b> (liên quan ĐMC lên) – cấp cứu phẫu thuật; <b>Type B</b> (chỉ ĐMC xuống) – nội khoa ± can thiệp.</p>`,
+    chan_doan:`
+      <p><b>Tầm soát AAA:</b> Siêu âm bụng cho nam ≥65 tuổi từng hút thuốc (Class I); nam/nữ ≥65 tuổi có người thân bậc 1 bị AAA (Class I).</p>
+      <p>CTA là tiêu chuẩn vàng cho AAS và đánh giá trước can thiệp; MRI/MRA ưu tiên theo dõi dài hạn ở người trẻ; siêu âm Doppler theo dõi AAA.</p>
+      <div class="subhead">🧮 Thang điểm ADD-RS (Aortic Dissection Detection Risk Score)</div>
+      <p>Công cụ sàng lọc nguy cơ bóc tách ĐMC cấp (ACC/AHA). Điểm 0–3 (mỗi nhóm tối đa 1 điểm nếu có bất kỳ yếu tố nào trong nhóm).</p>
+      ${sc("addrs","Thang điểm ADD-RS (nguy cơ bóc tách ĐMC)",[
+        {label:"[Nhóm 1] Hội chứng Marfan/Loeys-Dietz/Ehlers-Danlos mạch máu hoặc bệnh mô liên kết khác",pts:1},
+        {label:"[Nhóm 1] Tiền sử gia đình bệnh động mạch chủ",pts:1},
+        {label:"[Nhóm 1] Bệnh van động mạch chủ đã biết",pts:1},
+        {label:"[Nhóm 1] Thao tác trên động mạch chủ gần đây",pts:1},
+        {label:"[Nhóm 1] Phình động mạch chủ ngực đã biết",pts:1},
+        {label:"[Nhóm 2] Đau ngực/lưng/bụng khởi phát đột ngột",pts:1},
+        {label:"[Nhóm 2] Đau cường độ tối đa ngay từ đầu",pts:1},
+        {label:"[Nhóm 2] Đau kiểu xé/rách/cắt",pts:1},
+        {label:"[Nhóm 3] Thiếu hụt mạch hoặc chênh lệch HA tâm thu ≥20 mmHg giữa 2 tay",pts:1},
+        {label:"[Nhóm 3] Thiếu sót thần kinh khu trú kèm đau",pts:1},
+        {label:"[Nhóm 3] Tiếng thổi hở van ĐMC mới xuất hiện kèm đau",pts:1},
+        {label:"[Nhóm 3] Hạ huyết áp hoặc sốc",pts:1}
+      ])}
+      <p><b>Diễn giải:</b> 0 điểm = nguy cơ thấp → cân nhắc D-dimer; 1 điểm = trung bình → D-dimer, nếu ≥500 ng/mL → CTA; 2–3 điểm = nguy cơ cao → CTA khẩn cấp, không chờ D-dimer.</p>
+      <div class="alert-box alert-info">ADD-RS ≤1 + D-dimer âm tính có độ nhạy ≈98–99% để loại trừ AAS.</div>`,
+    dieu_tri:`
+      <div class="subhead">Điều trị nội khoa nền tảng</div>
+      <ul>
+        <li>Kiểm soát HA chặt (SBP &lt;130 mmHg, ưu tiên chẹn beta + ACEi/ARB).</li>
+        <li>Statin nếu có xơ vữa; ngừng hút thuốc hoàn toàn.</li>
+        <li>Theo dõi định kỳ siêu âm/CTA/MRI theo kích thước và tốc độ tăng trưởng.</li>
+      </ul>
+      <div class="subhead">Ngưỡng chỉ định can thiệp</div>
+      ${rt(["Ngưỡng","Ghi chú"],[
+        ["AAA nam","≥5.5 cm","Class I"],
+        ["AAA nữ","≥5.0 cm","Class I (nguy cơ vỡ cao hơn)"],
+        ["Ascending TAA (van 3 lá)","≥5.5 cm","Class I; ≥5.0 cm nếu trung tâm chuyên sâu hoặc yếu tố nguy cơ cao"],
+        ["Ascending TAA (Marfan/Loeys-Dietz)","≥5.0 cm hoặc thấp hơn tùy gene","Class I"],
+        ["Descending TAA / TAAA","≥6.0 cm","Ưu tiên TEVAR nếu giải phẫu phù hợp"]
+      ])}
+      <p>Tăng trưởng nhanh (≥5 mm/năm hoặc ≥3 mm/năm × 2 năm) cũng là chỉ định can thiệp. Type A: phẫu thuật cấp cứu (Class I). Type B không biến chứng: nội khoa tối ưu; Type B biến chứng: TEVAR.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Esmolol (cấp)","Bolus 0.5 mg/kg → truyền 50–200 µg/kg/phút","Ưu tiên chẹn beta trước giãn mạch"],
+        ["Labetalol","Bolus 20 mg → truyền 1–4 mg/phút","Vừa chẹn beta vừa alpha"],
+        ["Nicardipine / Nitroprusside","Theo HA đích","Chỉ dùng sau khi đã chẹn beta"],
+        ["Metoprolol / Bisoprolol (duy trì)","Liều chuẩn theo HA và nhịp","Đích nhịp 60–70 lần/phút"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Tầm soát AAA bằng siêu âm ở nam ≥65 tuổi từng hút thuốc",'<span class="badge badge-I">I</span>'],
+        ["CTA khẩn cấp khi ADD-RS ≥2",'<span class="badge badge-I">I</span>'],
+        ["Phẫu thuật cấp cứu bóc tách Type A",'<span class="badge badge-I">I</span>'],
+        ["Sửa chữa AAA ≥5.5 cm (nam) / ≥5.0 cm (nữ)",'<span class="badge badge-I">I</span>'],
+        ["TEVAR ưu tiên cho Descending TAA/TAAA phù hợp giải phẫu",'<span class="badge badge-I">I</span>'],
+        ["Dùng thuốc giãn mạch trước khi chẹn beta trong AAS",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2022 ACC/AHA Guideline for the Diagnosis and Management of Aortic Disease; 2024 ESC Guidelines for peripheral arterial and aortic diseases; ESVS 2026 Guidelines"
+},
+{
+  spec:"tim_mach", id:"cardiomyopathy", emoji:"🫀", short:"Bệnh cơ tim", title:"Bệnh cơ tim (Cardiomyopathies)",
+  guidelines:["ESC 2023 (Cardiomyopathies)","AHA/ACC 2024 (Hypertrophic Cardiomyopathy)"],
+  sections:{
+    dinh_nghia:`
+      <p>Bệnh cơ tim là nhóm bệnh lý cơ tim không giải thích được chỉ bởi bệnh mạch vành, THA, bệnh van tim hoặc bệnh tim bẩm sinh. ESC 2023 phân loại theo kiểu hình:</p>
+      ${rt(["Đặc điểm chính"],[
+        ["Hypertrophic cardiomyopathy (HCM)","Dày thất trái ≥15 mm (hoặc ≥13 mm nếu có đột biến/gene gia đình) không giải thích được bởi điều kiện tải"],
+        ["Dilated cardiomyopathy (DCM)","Giãn thất trái + giảm EF không giải thích được bởi tải hoặc thiếu máu"],
+        ["Non-dilated LV cardiomyopathy (NDLVC)","Giảm EF hoặc sẹo/xơ hóa mà không giãn thất trái"],
+        ["Arrhythmogenic cardiomyopathy (ACM/ARVC)","Thay thế mô mỡ-xơ thất phải/trái, rối loạn nhịp thất"],
+        ["Restrictive cardiomyopathy (RCM)","Hạn chế đổ đầy thất, thể tích thất bình thường/giảm"]
+      ])}
+      <p>HCM là bệnh cơ tim di truyền phổ biến nhất, nguyên nhân hàng đầu đột tử ở người trẻ và vận động viên.</p>`,
+    chan_doan:`
+      <p>Siêu âm tim là công cụ đầu tay. MRI tim (CMR) đánh giá chính xác độ dày thành, sẹo LGE, phình mỏm thất trái. Xét nghiệm gene khuyến cáo ở HCM/DCM có tính gia đình.</p>
+      <div class="subhead">🧮 Thang điểm HCM Risk-SCD (ESC) — ước tính nguy cơ đột tử 5 năm</div>
+      <p>Công cụ chính thức ESC để quyết định ICD phòng ngừa tiên phát ở HCM ≥16 tuổi. Các yếu tố nguy cơ chính (AHA/ACC 2024 + ESC):</p>
+      ${sc("hcmriskscd","Yếu tố nguy cơ HCM Risk-SCD / AHA-ACC 2024",[
+        {label:"Độ dày thành thất trái tối đa ≥30 mm",pts:1},
+        {label:"Tiền sử gia đình đột tử do HCM (người thân bậc 1)",pts:1},
+        {label:"Ngất không giải thích được (nghi do rối loạn nhịp)",pts:1},
+        {label:"NSVT trên Holter (≥3 nhịp liên tiếp, tần số >120–130/phút)",pts:1},
+        {label:"Phình mỏm thất trái (apical aneurysm)",pts:1},
+        {label:"EF <50% (giai đoạn cuối HCM)",pts:1},
+        {label:"Sẹo LGE lan rộng ≥15% khối lượng thất trái trên CMR",pts:1}
+      ])}
+      <p><b>Phân tầng ESC HCM Risk-SCD:</b> &lt;4%/5 năm = thấp; 4–6% = trung bình (cân nhắc ICD); &gt;6% = cao → khuyến cáo ICD. AHA/ACC 2024 dùng cách tiếp cận dựa trên số lượng yếu tố nguy cơ chính + CMR để hỗ trợ quyết định shared decision-making.</p>
+      <div class="alert-box alert-info">Nên dùng máy tính chính thức ESC HCM Risk-SCD (gồm cả tuổi, đường kính nhĩ trái, gradient LVOT) để ước tính % chính xác.</div>`,
+    dieu_tri:`
+      <div class="subhead">HCM có tắc nghẽn đường ra thất trái (obstructive HCM)</div>
+      <ul>
+        <li>Chẹn beta (không giãn mạch) là hàng đầu.</li>
+        <li>Verapamil/Diltiazem nếu không dung nạp chẹn beta.</li>
+        <li>Thêm Disopyramide hoặc <b>Mavacamten</b> (ức chế myosin) nếu còn triệu chứng.</li>
+        <li>Giảm vách (myectomy hoặc đốt cồn) tại trung tâm chuyên sâu khi kháng thuốc.</li>
+      </ul>
+      <div class="subhead">Phòng ngừa đột tử</div>
+      <p>ICD phòng ngừa thứ phát (sau ngừng tim/VT bền bỉ): Class I. ICD phòng ngừa tiên phát: theo HCM Risk-SCD &gt;6% hoặc ≥1–2 yếu tố nguy cơ chính (AHA/ACC) + shared decision-making.</p>
+      <div class="subhead">DCM / NDLVC</div>
+      <p>Điều trị suy tim theo 4 trụ cột (ARNI/ACEi, chẹn beta, MRA, SGLT2i). Cân nhắc ICD/CRT theo EF và QRS. Xét nghiệm gene và sàng lọc gia đình.</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Bisoprolol / Metoprolol succinate","Khởi liều thấp → tối đa dung nạp","Ưu tiên không giãn mạch"],
+        ["Verapamil","120–480 mg/ngày","Tránh nếu EF thấp hoặc block"],
+        ["Disopyramide","100–200 mg × 2–3 lần/ngày","Theo dõi QT, kháng cholinergic"],
+        ["Mavacamten","2.5–15 mg/ngày (chỉnh theo EF)","Theo dõi EF sát, tránh CYP2C19/3A4 mạnh"],
+        ["Sacubitril/Valsartan (DCM)","24/26 → 97/103 mg × 2 lần/ngày","Như suy tim HFrEF"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Đánh giá nguy cơ SCD toàn diện (lâm sàng + Holter + siêu âm ± CMR) mỗi 1–2 năm ở HCM",'<span class="badge badge-I">I</span>'],
+        ["Dùng HCM Risk-SCD để ước tính nguy cơ 5 năm ở người ≥16 tuổi",'<span class="badge badge-I">I</span>'],
+        ["ICD phòng ngừa tiên phát khi nguy cơ SCD 5 năm >6%",'<span class="badge badge-I">I</span>'],
+        ["Mavacamten cho HCM tắc nghẽn còn triệu chứng dù đã tối ưu thuốc nền",'<span class="badge badge-I">I</span>'],
+        ["Xét nghiệm gene và tư vấn di truyền ở HCM/DCM có tính gia đình",'<span class="badge badge-I">I</span>'],
+        ["Vận động cường độ cao cạnh tranh ở HCM có nguy cơ cao",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2023 ESC Guidelines for the management of cardiomyopathies; 2024 AHA/ACC/AMSSM/HRS/PACES/SCMR Guideline for the Management of Hypertrophic Cardiomyopathy"
+},
+{
+  spec:"tim_mach", id:"vhd", emoji:"🫀", short:"Bệnh van", title:"Bệnh van tim (Valvular Heart Disease)",
+  guidelines:["ESC/EACTS 2025","ACC/AHA 2020"],
+  sections:{
+    dinh_nghia:`
+      <p>Bệnh van tim bao gồm hẹp và/hoặc hở các van tim (ĐMC, 2 lá, 3 lá, phổi), nguyên nhân chính ở nước phát triển là thoái hóa (hẹp van ĐMC vôi hóa, hở van 2 lá thoái hóa), trong khi thấp khớp vẫn phổ biến ở nhiều khu vực. ESC/EACTS 2025 là bản cập nhật mới nhất, nhấn mạnh can thiệp sớm hơn và vai trò mở rộng của liệu pháp qua catheter.</p>
+      <div class="subhead">Phân loại chính</div>
+      ${rt(["Đặc điểm"],[
+        ["Hẹp van động mạch chủ (AS)","Hẹp van ĐMC nặng: Vmax ≥4 m/s, mean gradient ≥40 mmHg, AVA ≤1.0 cm²"],
+        ["Hở van động mạch chủ (AR)","Hở nặng: vena contracta ≥6 mm, regurgitant volume ≥60 mL, PHT ≤200 ms"],
+        ["Hở van 2 lá nguyên phát (Primary MR)","Do tổn thương van/dây chằng (thoái hóa, sa van, viêm nội tâm mạc)"],
+        ["Hở van 2 lá thứ phát (Secondary MR)","Do giãn thất trái hoặc nhĩ trái (suy tim, rung nhĩ)"],
+        ["Hẹp van 2 lá (MS)","Chủ yếu do thấp khớp; nặng khi diện tích ≤1.5 cm²"],
+        ["Hở van 3 lá (TR)","Nguyên phát hoặc thứ phát (thường gặp hơn)"]
+      ])}`,
+    chan_doan:`
+      <p>Siêu âm tim qua thành ngực (TTE) là công cụ chính. TEE khi cần đánh giá giải phẫu chi tiết trước can thiệp. CT/MRI hỗ trợ đo kích thước động mạch chủ, lượng hóa vôi hóa van, đánh giá chức năng thất phải. Nghiệm pháp gắng sức quan trọng ở bệnh nhân không triệu chứng.</p>
+      <div class="subhead">Giai đoạn bệnh van tim (ACC/AHA)</div>
+      ${rt(["Đặc điểm"],[
+        ["Giai đoạn A","Có nguy cơ (vd. van ĐMC 2 lá, sa van 2 lá nhẹ)"],
+        ["Giai đoạn B","Tiến triển (hẹp/hở nhẹ–trung bình)"],
+        ["Giai đoạn C","Nặng không triệu chứng (C1: thất còn bù; C2: thất bắt đầu mất bù)"],
+        ["Giai đoạn D","Nặng có triệu chứng"]
+      ])}
+      <div class="alert-box alert-info"><b>ESC 2025:</b> Khuyến cáo đánh giá tổn thương tim theo giai đoạn (cardiac damage staging) để hỗ trợ quyết định can thiệp sớm hơn ở AS và primary MR không triệu chứng.</div>`,
+    dieu_tri:`
+      <div class="subhead">Hẹp van động mạch chủ nặng</div>
+      <ul>
+        <li><b>Có triệu chứng</b> hoặc LVEF &lt;50%: can thiệp (Class I).</li>
+        <li><b>Không triệu chứng</b>: can thiệp nếu Vmax ≥5 m/s, tăng nhanh ≥0.3 m/s/năm, BNP tăng rõ, hoặc nghiệm pháp gắng sức dương tính (ESC 2025 mở rộng chỉ định sớm hơn).</li>
+        <li><b>Lựa chọn TAVI vs SAVR</b> (Heart Team): ≥75–80 tuổi hoặc nguy cơ cao → TAVI ưu tiên; &lt;75 tuổi nguy cơ thấp → SAVR ưu tiên; cân nhắc tuổi thọ, giải phẫu, và chiến lược suốt đời.</li>
+      </ul>
+      <div class="subhead">Hở van 2 lá</div>
+      <ul>
+        <li><b>Primary MR nặng</b>: sửa van phẫu thuật là vàng (Class I) khi có triệu chứng hoặc LVEF ≤60%/LVESD ≥40–45 mm. TEER (MitraClip) Class IIa ở bệnh nhân nguy cơ cao.</li>
+        <li><b>Secondary (ventricular) MR</b>: TEER Class I (ESC 2025) khi còn triệu chứng dù GDMT tối ưu, giải phẫu phù hợp (LVEF 20–50%, LVESD ≤70 mm).</li>
+      </ul>
+      <div class="subhead">Hở van 3 lá</div>
+      <p>Sửa/thay van khi TR nặng có triệu chứng hoặc khi phẫu thuật van trái kèm theo. Transcatheter tricuspid edge-to-edge repair (T-TEER) Class IIa ở bệnh nhân nguy cơ cao (ESC 2025).</p>
+      <div class="subhead">Kháng đông sau van nhân tạo</div>
+      ${rt(["Chỉ định","Thuốc"],[
+        ["Van cơ học","Warfarin suốt đời (INR đích theo vị trí van)"],
+        ["Van sinh học + AF","DOAC ưu tiên hơn warfarin sau 3 tháng"],
+        ["Van sinh học không AF","Aspirin 75–100 mg/ngày hoặc không kháng đông dài hạn"]
+      ])}
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Warfarin (van cơ học ĐMC)","Đích INR 2.0–3.0","Theo dõi INR sát"],
+        ["Warfarin (van cơ học 2 lá)","Đích INR 2.5–3.5","Nguy cơ huyết khối cao hơn"],
+        ["Aspirin (van sinh học)","75–100 mg/ngày","Sau giai đoạn sớm"],
+        ["GDMT suy tim (secondary MR)","ARNI/ACEi + BB + MRA + SGLT2i","Tối ưu trước khi cân nhắc TEER"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Can thiệp AS nặng có triệu chứng hoặc LVEF <50%",'<span class="badge badge-I">I</span>'],
+        ["TAVI ưu tiên ở bệnh nhân ≥75–80 tuổi hoặc nguy cơ cao khi giải phẫu phù hợp",'<span class="badge badge-I">I</span>'],
+        ["Sửa van phẫu thuật cho primary MR nặng có triệu chứng hoặc mất bù thất",'<span class="badge badge-I">I</span>'],
+        ["TEER cho secondary ventricular MR còn triệu chứng dù GDMT tối ưu (ESC 2025)",'<span class="badge badge-I">I</span>'],
+        ["T-TEER cho TR nặng triệu chứng nguy cơ cao phẫu thuật",'<span class="badge badge-IIa">IIa</span>'],
+        ["DOAC ở bệnh nhân AF + van cơ học",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2025 ESC/EACTS Guidelines for the management of valvular heart disease; 2020 ACC/AHA Guideline for the Management of Patients With Valvular Heart Disease"
 },
 {
   spec:"noi_tiet", id:"dm", emoji:"🍬", short:"ĐTĐ", title:"Đái tháo đường & Tim mạch",
