@@ -1351,6 +1351,148 @@ const diseases = [
   source:"2025 ESC/EACTS Guidelines for the management of valvular heart disease; 2020 ACC/AHA Guideline for the Management of Patients With Valvular Heart Disease"
 },
 {
+  spec:"tim_mach", id:"ie", emoji:"🦠", short:"VNTM", title:"Viêm nội tâm mạc nhiễm khuẩn",
+  guidelines:["ESC 2023 (Infective Endocarditis)"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm nội tâm mạc nhiễm khuẩn (Infective Endocarditis – IE) là nhiễm trùng nội mạc tim (van, dây chằng, nội mạc buồng tim hoặc vật liệu nhân tạo), thường do vi khuẩn, có thể gây phá hủy van, thuyên tắc, suy tim và tử vong cao nếu không điều trị kịp thời.</p>
+      <div class="subhead">Phân loại</div>
+      ${rt(["Đặc điểm"],[
+        ["Native Valve Endocarditis (NVE)","Van tự nhiên"],
+        ["Prosthetic Valve Endocarditis (PVE)","Van nhân tạo (sớm ≤12 tháng, muộn >12 tháng)"],
+        ["CIED-IE","Liên quan máy tạo nhịp/ICD"],
+        ["Right-sided IE","Thường gặp ở người tiêm chích ma túy"]
+      ])}`,
+    chan_doan:`
+      <p>Tiêu chuẩn ESC 2023 (cải tiến Duke): chẩn đoán <b>chắc chắn</b> khi 2 tiêu chí chính, hoặc 1 chính + ≥3 phụ, hoặc 5 phụ. Cấy máu trước kháng sinh là then chốt (ít nhất 3 mẫu).</p>
+      <div class="subhead">Tiêu chí chính</div>
+      <ul>
+        <li>Cấy máu dương tính với vi khuẩn điển hình (S. aureus, streptococci miệng, S. gallolyticus, HACEK, E. faecalis) từ ≥2 mẫu riêng biệt.</li>
+        <li>Bằng chứng hình ảnh tổn thương IE (sùi, áp xe, thủng van, hở mới) trên TTE/TOE, CTA, PET-CT hoặc MRI.</li>
+      </ul>
+      <div class="alert-box alert-info"><b>ESC 2023:</b> Nhấn mạnh đa phương thức hình ảnh (TOE bắt buộc khi nghi PVE/CIED hoặc TTE âm tính nhưng nghi cao). PET-CT hữu ích với PVE và CIED-IE. Mọi trường hợp nghi IE nên hội chẩn <b>Endocarditis Team</b>.</div>`,
+    dieu_tri:`
+      <div class="subhead">Nguyên tắc kháng sinh</div>
+      <ul>
+        <li>Kháng sinh diệt khuẩn liều cao, đường tĩnh mạch, kéo dài (NVE 2–6 tuần, PVE ≥6 tuần).</li>
+        <li>Có thể chuyển điều trị ngoại trú (OPAT hoặc uống) sau ≥10 ngày TM (hoặc ≥7 ngày sau mổ) nếu ổn định, không biến chứng (Class IIa).</li>
+        <li>Không khuyến cáo aminoglycoside thường quy trong NVE do tụ cầu.</li>
+      </ul>
+      <div class="subhead">Chỉ định phẫu thuật sớm</div>
+      <p>Suy tim cấp do hở/tắc van nặng, nhiễm trùng không kiểm soát (áp xe, fistule), nguy cơ thuyên tắc cao (sùi lớn, thuyên tắc tái phát) — phẫu thuật không trì hoãn kể cả sau đột quỵ thiếu máu.</p>
+      <div class="subhead">💊 Kháng sinh kinh nghiệm ban đầu</div>
+      ${rt(["Tình huống","Kháng sinh"],[
+        ["NVE cộng đồng, không sốc","Ampicillin + (Flu)cloxacillin + Gentamicin hoặc Vancomycin + Gentamicin"],
+        ["PVE / bệnh viện / sốc","Vancomycin + Gentamicin + Rifampin"],
+        ["Nghi MRSA cao","Vancomycin hoặc Daptomycin"]
+      ])}
+      <p><b>Dự phòng:</b> Chỉ cho nhóm nguy cơ cao (tiền sử IE, van nhân tạo, bệnh tim bẩm sinh chưa sửa) trước thủ thuật răng miệng nguy cơ cao (Class I).</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Hội chẩn Endocarditis Team cho mọi trường hợp nghi/chẩn đoán IE",'<span class="badge badge-I">I</span>'],
+        ["TOE khi nghi PVE, CIED-IE hoặc TTE không đủ",'<span class="badge badge-I">I</span>'],
+        ["Phẫu thuật sớm khi suy tim, nhiễm trùng không kiểm soát hoặc nguy cơ thuyên tắc cao",'<span class="badge badge-I">I</span>'],
+        ["Dự phòng kháng sinh cho nhóm nguy cơ cao trước thủ thuật răng miệng",'<span class="badge badge-I">I</span>'],
+        ["Aminoglycoside thường quy trong NVE do tụ cầu",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2023 ESC Guidelines for the management of endocarditis, Eur Heart J 2023"
+},
+{
+  spec:"tim_mach", id:"myocarditis", emoji:"❤️‍🔥", short:"Viêm cơ tim", title:"Viêm cơ tim & Viêm màng ngoài tim",
+  guidelines:["ESC 2025 (Myocarditis & Pericarditis)","ACC 2024 ECDP Myocarditis"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm cơ tim (Myocarditis) là viêm cơ tim, có thể do virus, miễn dịch, độc tố hoặc tự miễn. ESC 2025 lần đầu gộp chung với viêm màng ngoài tim dưới khái niệm <b>Inflammatory Myopericardial Syndrome (IMPS)</b>.</p>
+      <div class="subhead">Phân giai đoạn (ACC 2024)</div>
+      ${rt(["Đặc điểm"],[
+        ["Giai đoạn A","Có yếu tố nguy cơ, chưa có bằng chứng bệnh"],
+        ["Giai đoạn B","Có bằng chứng viêm (CMR/men tim) nhưng chưa triệu chứng"],
+        ["Giai đoạn C","Có triệu chứng (đau ngực, suy tim, rối loạn nhịp)"],
+        ["Giai đoạn D","Không ổn định huyết động hoặc điện học"]
+      ])}`,
+    chan_doan:`
+      <p><b>CMR</b> là công cụ chính để chẩn đoán không xâm lấn. Sinh thiết nội mạc cơ tim (EMB) chỉ định khi nghi type đặc hiệu cần điều trị (giant cell, eosinophilic, sarcoid, ICI-myocarditis) hoặc không đáp ứng.</p>
+      <div class="alert-box alert-info"><b>ESC 2025:</b> Có thể chẩn đoán chắc chắn bằng CMR mà không bắt buộc sinh thiết ở nhiều trường hợp. LGE trên CMR là yếu tố tiên lượng xấu độc lập.</div>
+      <p>Xét nghiệm: Troponin, NT-proBNP, CRP, ECG, siêu âm tim.</p>`,
+    dieu_tri:`
+      <div class="subhead">Điều trị hỗ trợ</div>
+      <ul>
+        <li>Nghỉ ngơi, tránh vận động gắng sức 3–6 tháng (hoặc đến khi CMR bình thường hóa).</li>
+        <li>Điều trị suy tim theo guideline nếu EF giảm.</li>
+        <li>Rối loạn nhịp: theo dõi, ICD nếu chỉ định (sau giai đoạn cấp).</li>
+      </ul>
+      <div class="subhead">Điều trị đặc hiệu</div>
+      <ul>
+        <li>Viêm màng ngoài tim cấp / myopericarditis: NSAID + <b>Colchicine</b>.</li>
+        <li>Ức chế miễn dịch chỉ khi type đặc hiệu (giant cell, eosinophilic, sarcoid, ICI).</li>
+        <li>Không dùng corticosteroid thường quy cho viêm cơ tim virus cấp không biến chứng.</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Colchicine","0.5 mg × 1–2 lần/ngày × 3 tháng","Giảm liều nếu suy thận/cao tuổi"],
+        ["Ibuprofen / Aspirin liều cao","Theo đáp ứng đau","Kết hợp PPI"],
+        ["GDMT suy tim","Theo HFrEF nếu EF giảm","Khởi liều thấp"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["CMR là công cụ chẩn đoán chính không xâm lấn",'<span class="badge badge-I">I</span>'],
+        ["Tránh vận động gắng sức 3–6 tháng sau viêm cơ tim cấp",'<span class="badge badge-I">I</span>'],
+        ["Colchicine + NSAID cho viêm màng ngoài tim cấp",'<span class="badge badge-I">I</span>'],
+        ["EMB khi nghi type đặc hiệu cần điều trị",'<span class="badge badge-IIa">IIa</span>'],
+        ["Corticosteroid thường quy cho viêm cơ tim virus không biến chứng",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2025 ESC Guidelines for the management of myocarditis and pericarditis; 2024 ACC Expert Consensus Decision Pathway on Myocarditis"
+},
+{
+  spec:"tim_mach", id:"syncope", emoji:"💫", short:"Ngất", title:"Ngất (Syncope)",
+  guidelines:["ESC 2018 Syncope","EUSEM 2024"],
+  sections:{
+    dinh_nghia:`
+      <p>Ngất là mất ý thức tạm thời do giảm tưới máu não, đặc trưng bởi khởi phát nhanh, thời gian ngắn và hồi phục hoàn toàn tự nhiên. Cần phân biệt với các nguyên nhân mất ý thức khác (động kinh, chấn thương, psychogenic…).</p>
+      <div class="subhead">Phân loại chính</div>
+      ${rt(["Đặc điểm"],[
+        ["Ngất phản xạ (Reflex)","Vasovagal, tình huống, quá cảm xoang cảnh"],
+        ["Ngất do hạ huyết áp tư thế","Suy giảm thần kinh tự chủ, giảm thể tích, thuốc"],
+        ["Ngất tim","Rối loạn nhịp, bệnh cấu trúc tim, tắc nghẽn đường ra"]
+      ])}`,
+    chan_doan:`
+      <p>Đánh giá ban đầu: bệnh sử chi tiết + khám (đo HA nằm/đứng) + ECG 12 chuyển đạo. Đây là 3 yếu tố then chốt.</p>
+      <div class="alert-box alert-warn"><b>Dấu hiệu nguy cơ cao</b> (cần nhập viện/theo dõi): bệnh tim cấu trúc đã biết, ECG bất thường, ngất khi gắng sức/nằm, tiền sử đột tử gia đình, tuổi cao + bệnh kèm, thiếu máu nặng…</div>
+      <ul>
+        <li>Siêu âm tim khi nghi bệnh cấu trúc.</li>
+        <li>Masage xoang cảnh ở người &gt;40 tuổi.</li>
+        <li>Holter / ILR khi nghi loạn nhịp và nguy cơ trung bình–cao.</li>
+      </ul>`,
+    dieu_tri:`
+      <div class="subhead">Ngất phản xạ / hạ HA tư thế</div>
+      <ul>
+        <li>Giáo dục, tránh yếu tố khởi phát, counter-pressure maneuvers.</li>
+        <li>Tăng muối/nước, tất áp lực nếu phù hợp.</li>
+        <li>Midodrine hoặc Fludrocortisone ở một số trường hợp chọn lọc.</li>
+      </ul>
+      <div class="subhead">Ngất tim</div>
+      <ul>
+        <li>Điều trị nguyên nhân (pacemaker nếu block, ICD nếu chỉ định, can thiệp cấu trúc…).</li>
+        <li>Nhập viện và theo dõi nếu nguy cơ cao.</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Midodrine","2.5–10 mg × 2–3 lần/ngày","Tránh dùng buổi tối (tăng HA nằm)"],
+        ["Fludrocortisone","0.1–0.2 mg/ngày","Theo dõi phù, hạ kali"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bệnh sử + khám + ECG là đánh giá ban đầu bắt buộc cho mọi ngất",'<span class="badge badge-I">I</span>'],
+        ["Nhập viện/theo dõi khi có dấu hiệu nguy cơ cao",'<span class="badge badge-I">I</span>'],
+        ["Masage xoang cảnh ở bệnh nhân &gt;40 tuổi nghi ngất phản xạ",'<span class="badge badge-IIa">IIa</span>'],
+        ["Xét nghiệm hàng loạt không định hướng (CT sọ, EEG thường quy) khi không nghi nguyên nhân thần kinh",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2018 ESC Guidelines for the diagnosis and management of syncope; EUSEM 2024 Consensus"
+},
+{
   spec:"noi_tiet", id:"dm", emoji:"🍬", short:"ĐTĐ", title:"Đái tháo đường & Tim mạch",
   guidelines:["ESC 2023 (Diabetes & CVD)","ADA Standards of Care 2025"],
   sections:{
@@ -1515,11 +1657,11 @@ const diseases = [
 },
 {
   spec:"ho_hap", id:"asthma", emoji:"🌬️", short:"Hen PQ", title:"Hen phế quản",
-  guidelines:["GINA 2024"],
+  guidelines:["GINA 2026"],
   sections:{
     dinh_nghia:`
       <p>Hen phế quản là bệnh lý viêm mạn tính đường thở, đặc trưng bởi triệu chứng hô hấp thay đổi theo thời gian/cường độ (khò khè, khó thở, nặng ngực, ho) kèm giới hạn luồng khí thở ra thay đổi.</p>
-      <div class="alert-box alert-info"><b>Điểm mấu chốt GINA 2024:</b> không còn khuyến cáo điều trị chỉ bằng SABA đơn thuần (kể cả bậc nhẹ) ở người ≥12 tuổi — mọi bệnh nhân hen nên dùng phác đồ chứa ICS để giảm nguy cơ đợt cấp nặng/tử vong.</p>`,
+      <div class="alert-box alert-info"><b>GINA 2026 cập nhật chính:</b> (1) Không còn khuyến cáo SABA đơn thuần ở mọi bậc; ưu tiên <b>ICS-formoterol</b> (Track 1 – AIR/MART) vì giảm đợt cấp nặng. (2) Thêm biologic mới: <b>depemokimab</b> (siêu dài, tiêm 2 lần/năm) cho hen eosinophil nặng ≥12 tuổi. (3) Ngưỡng oxy: chỉ bổ sung khi SpO₂ &lt;92%, đích 92–95% (người lớn/trẻ ≥6 tuổi). (4) Nếu nghi sốc phản vệ + hen → epinephrine trước, sau đó mới giãn phế quản.</div>`,
     chan_doan:`
       <p>Chẩn đoán dựa vào bệnh sử triệu chứng thay đổi điển hình <b>và</b> bằng chứng giới hạn luồng khí thở ra thay đổi trên hô hấp ký.</p>
       ${rt(["Tiêu chí"],[
@@ -1585,10 +1727,11 @@ const diseases = [
 },
 {
   spec:"ho_hap", id:"copd", emoji:"🫁", short:"COPD", title:"Bệnh phổi tắc nghẽn mạn tính",
-  guidelines:["GOLD 2025"],
+  guidelines:["GOLD 2026"],
   sections:{
     dinh_nghia:`
       <p>COPD là bệnh hô hấp mạn tính đặc trưng bởi triệu chứng hô hấp dai dẳng và giới hạn luồng khí thở ra không hồi phục hoàn toàn, do bất thường đường thở/phế nang, thường liên quan phơi nhiễm khói thuốc, khí độc, bụi nghề nghiệp.</p>
+      <div class="alert-box alert-info"><b>GOLD 2026 điểm mới quan trọng:</b> (1) Nhóm <b>E</b> nay bao gồm bệnh nhân có <b>≥1 đợt cấp trung bình hoặc nặng</b> trong năm trước (trước đây thường ≥2). (2) Mục tiêu điều trị là đạt “low disease activity” (không còn đợt cấp). (3) Thêm biologic: <b>dupilumab</b> và <b>mepolizumab</b> cho COPD có eosinophil cao + đợt cấp tái diễn dù triple therapy. (4) Cập nhật vaccine RSV + cúm.</div>
       <div class="subhead">Phân loại mức độ tắc nghẽn (GOLD, sau test giãn phế quản FEV1/FVC&lt;0.7)</div>
       ${rt(["FEV1 (%dự đoán)"],[
         ["GOLD 1 – Nhẹ","≥80%"],
@@ -1597,7 +1740,7 @@ const diseases = [
         ["GOLD 4 – Rất nặng","&lt;30%"]
       ])}`,
     chan_doan:`
-      <p>Chẩn đoán xác định cần <b>hô hấp ký sau test giãn phế quản</b>: FEV1/FVC &lt;0.7. Đánh giá triệu chứng bằng <b>mMRC</b> (khó thở) và <b>CAT</b> (ảnh hưởng chất lượng sống toàn diện), kèm tiền sử đợt cấp trong năm qua.</p>
+      <p>Chẩn đoán xác định cần <b>hô hấp ký sau test giãn phế quản</b>: FEV1/FVC &lt;0.7. Đánh giá triệu chứng bằng <b>mMRC</b> (khó thở) và <b>CAT/CAAT</b> (ảnh hưởng chất lượng sống), kèm tiền sử đợt cấp trong năm qua. GOLD 2026 nhấn mạnh khái niệm <b>Disease Activity</b>.</p>
       <div class="subhead">🧮 Bộ câu hỏi CAT (COPD Assessment Test) — mỗi mục chọn mức 0 (không ảnh hưởng) đến 5 (ảnh hưởng nặng nhất)</div>
       ${scr("cat","CAT — COPD Assessment Test (tổng 0-40)",[
         {label:"Ho", options:[{text:"0 – Không bao giờ ho",pts:0},{text:"1",pts:1},{text:"2",pts:2},{text:"3",pts:3},{text:"4",pts:4},{text:"5 – Ho liên tục",pts:5}]},
@@ -1824,6 +1967,127 @@ const diseases = [
   source:"IDSA/HIVMA 2024 Guidelines for the Prevention and Treatment of Opportunistic Infections in Adults and Adolescents with HIV"
 },
 {
+  spec:"ho_hap", id:"ild", emoji:"🌫️", short:"BPK / IPF", title:"Bệnh phổi kẽ & Xơ phổi tự phát (IPF)",
+  guidelines:["ATS/ERS/JRS/ALAT 2022 (IPF & PPF)"],
+  sections:{
+    dinh_nghia:`
+      <p>Bệnh phổi kẽ (Interstitial Lung Disease – ILD) là nhóm bệnh tổn thương khoảng kẽ phổi. <b>Xơ phổi tự phát (IPF)</b> là thể phổ biến nhất ở người cao tuổi, đặc trưng bởi kiểu hình UIP (Usual Interstitial Pneumonia), tiến triển không hồi phục.</p>
+      <div class="subhead">Progressive Pulmonary Fibrosis (PPF)</div>
+      <p>ATS/ERS 2022 định nghĩa PPF khi bệnh nhân ILD không phải IPF có ≥2/3 tiêu chí trong 1 năm: (1) triệu chứng nặng hơn, (2) suy giảm chức năng phổi, (3) tiến triển trên HRCT — không có nguyên nhân khác.</p>`,
+    chan_doan:`
+      <p><b>HRCT ngực</b> là công cụ then chốt. Phân loại kiểu hình: UIP, probable UIP, indeterminate, alternate diagnosis. Sinh thiết phổi (phẫu thuật hoặc cryobiopsy) khi HRCT không điển hình UIP và cần loại trừ nguyên nhân khác.</p>
+      <div class="alert-box alert-info">Chẩn đoán IPF là chẩn đoán loại trừ: không có nguyên nhân biết được (thuốc, mô liên kết, tiếp xúc nghề nghiệp, quá mẫn…), kết hợp HRCT ± mô bệnh học kiểu UIP.</div>
+      <p>Đánh giá chức năng: hô hấp ký (FVC, DLCO), test đi bộ 6 phút. Tầm soát bệnh mô liên kết (ANA, RF, anti-CCP, myositis panel) ở mọi bệnh nhân ILD mới.</p>`,
+    dieu_tri:`
+      <div class="subhead">IPF</div>
+      <ul>
+        <li><b>Nintedanib</b> hoặc <b>Pirfenidone</b> là 2 thuốc kháng xơ được phê duyệt, làm chậm suy giảm FVC.</li>
+        <li>Oxy liệu pháp nếu PaO₂ ≤55 mmHg hoặc SpO₂ ≤88%.</li>
+        <li>Phục hồi chức năng hô hấp.</li>
+        <li>Chuyển đánh giá ghép phổi sớm ở bệnh nhân phù hợp.</li>
+      </ul>
+      <div class="subhead">PPF (ILD khác ngoài IPF)</div>
+      <p>Nintedanib được khuyến cáo (conditional) khi đã thất bại điều trị chuẩn của bệnh nền. Cân nhắc pirfenidone theo từng trường hợp.</p>
+      <div class="alert-box alert-warn">Không khuyến cáo thuốc kháng acid thường quy hoặc phẫu thuật chống trào ngược chỉ để điều trị IPF (ATS 2022).</div>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Nintedanib","150 mg × 2 lần/ngày","Giảm còn 100 mg×2 nếu không dung nạp; theo dõi men gan"],
+        ["Pirfenidone","267 mg × 3 lần/ngày → tăng dần đến 801 mg × 3 lần/ngày","Uống cùng thức ăn; nhạy cảm ánh sáng, buồn nôn"],
+        ["Oxy liệu pháp dài hạn","Đích SpO₂ ≥90%","Khi PaO₂ ≤55 mmHg hoặc SpO₂ ≤88% nghỉ"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["HRCT là xét nghiệm hình ảnh đầu tay khi nghi ILD/IPF",'<span class="badge badge-I">I</span>'],
+        ["Nintedanib hoặc Pirfenidone cho IPF để làm chậm tiến triển",'<span class="badge badge-I">I</span>'],
+        ["Nintedanib cho Progressive Pulmonary Fibrosis",'<span class="badge badge-IIa">IIa</span>'],
+        ["Chuyển đánh giá ghép phổi sớm ở IPF phù hợp",'<span class="badge badge-I">I</span>'],
+        ["Thuốc kháng acid thường quy chỉ để điều trị IPF",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2022 ATS/ERS/JRS/ALAT Clinical Practice Guideline: Idiopathic Pulmonary Fibrosis and Progressive Pulmonary Fibrosis in Adults"
+},
+{
+  spec:"ho_hap", id:"pah", emoji:"🫀", short:"Tăng áp ĐMP", title:"Tăng áp động mạch phổi (PAH)",
+  guidelines:["ESC/ERS 2022 (Pulmonary Hypertension)"],
+  sections:{
+    dinh_nghia:`
+      <p>Tăng áp động mạch phổi (Pulmonary Hypertension – PH) được định nghĩa huyết động: <b>mPAP >20 mmHg</b> lúc nghỉ (ESC/ERS 2022). PAH (nhóm 1) thêm PVR >2 WU và PAWP ≤15 mmHg.</p>
+      <div class="subhead">Phân nhóm lâm sàng</div>
+      ${rt(["Nhóm"],[
+        ["Nhóm 1 – PAH","Vô căn, di truyền, liên quan bệnh mô liên kết, bẩm sinh, thuốc…"],
+        ["Nhóm 2","Do bệnh tim trái"],
+        ["Nhóm 3","Do bệnh phổi/thiếu oxy"],
+        ["Nhóm 4 – CTEPH","Thuyên tắc phổi mạn tính"],
+        ["Nhóm 5","Cơ chế chưa rõ/đa yếu tố"]
+      ])}`,
+    chan_doan:`
+      <p>Siêu âm tim là bước sàng lọc chính (ước tính PASP, đánh giá thất phải). Chẩn đoán xác định bằng <b>thông tim phải (RHC)</b> tại trung tâm chuyên sâu.</p>
+      <div class="alert-box alert-info">Thuật toán 3 bước: (1) Nghi ngờ lâm sàng → (2) Siêu âm tim phát hiện → (3) RHC xác nhận tại trung tâm PH. Dấu hiệu nguy cơ cao (suy thất phải, ngất, dấu hiệu nặng) cần chuyển ngay.</div>
+      <p>Phân tầng nguy cơ (thấp/trung bình/cao) dựa trên triệu chứng, 6MWT, NT-proBNP, hình ảnh, huyết động — hướng dẫn điều trị ban đầu và theo dõi.</p>`,
+    dieu_tri:`
+      <div class="subhead">PAH (nhóm 1) – chiến lược hiện đại</div>
+      <ul>
+        <li><b>Nguy cơ thấp–trung bình:</b> Khởi đầu phối hợp kép (ERA + PDE5i) ngay từ đầu.</li>
+        <li><b>Nguy cơ cao / huyết động nặng:</b> Phối hợp ba thuốc (thêm prostacyclin đường tiêm) hoặc chuyển trung tâm chuyên sâu.</li>
+        <li>Theo dõi lại 3–6 tháng, leo thang nếu chưa đạt nguy cơ thấp.</li>
+      </ul>
+      <div class="subhead">Nhóm thuốc chính</div>
+      ${rt(["Nhóm","Ví dụ"],[
+        ["ERA (đối kháng endothelin)","Bosentan, Ambrisentan, Macitentan"],
+        ["PDE5i / sGC stimulator","Sildenafil, Tadalafil, Riociguat"],
+        ["Prostacyclin pathway","Epoprostenol (TM), Treprostinil, Selexipag (uống)"],
+        ["Activin signaling inhibitor","Sotatercept (mới, leo thang)"]
+      ])}
+      <p>CTEPH (nhóm 4): ưu tiên phẫu thuật endarterectomy nếu giải phẫu phù hợp; balloon pulmonary angioplasty hoặc thuốc nếu không mổ được.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["RHC để xác nhận chẩn đoán PAH trước điều trị đặc hiệu",'<span class="badge badge-I">I</span>'],
+        ["Khởi đầu phối hợp ERA + PDE5i ở PAH nguy cơ thấp–trung bình",'<span class="badge badge-I">I</span>'],
+        ["Chuyển trung tâm PH chuyên sâu khi nghi PAH/CTEPH",'<span class="badge badge-I">I</span>'],
+        ["Đánh giá nguy cơ định kỳ để quyết định leo thang điều trị",'<span class="badge badge-I">I</span>'],
+        ["Điều trị PAH đặc hiệu ở PH nhóm 2 hoặc 3 không chọn lọc",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"2022 ESC/ERS Guidelines for the diagnosis and treatment of pulmonary hypertension, Eur Heart J 2022"
+},
+{
+  spec:"ho_hap", id:"pleural", emoji:"💧", short:"TDMP", title:"Tràn dịch màng phổi",
+  guidelines:["BTS 2023 Pleural Disease"],
+  sections:{
+    dinh_nghia:`
+      <p>Tràn dịch màng phổi là sự tích tụ dịch bất thường trong khoang màng phổi. Phân loại chính:</p>
+      ${rt(["Đặc điểm"],[
+        ["Dịch thấm (Transudate)","Suy tim, xơ gan, hội chứng thận hư…"],
+        ["Dịch tiết (Exudate)","Nhiễm trùng (parapneumonic, empyema), ác tính, lao, viêm…"],
+        ["Máu / dưỡng chấp","Chấn thương, ung thư, phẫu thuật"]
+      ])}`,
+    chan_doan:`
+      <p>Siêu âm ngực hướng dẫn chọc dò là tiêu chuẩn. Phân tích dịch: protein, LDH (Light’s criteria), pH, glucose, tế bào, nuôi cấy, cytology.</p>
+      <div class="alert-box alert-info"><b>BTS 2023:</b> Luôn dùng siêu âm hướng dẫn khi chọc hút để giảm biến chứng. pH ≤7.2 gợi ý parapneumonic phức tạp / empyema → đặt dẫn lưu.</div>
+      <ul>
+        <li>Light’s criteria: dịch tiết nếu protein dịch/huyết thanh &gt;0.5 hoặc LDH dịch/huyết thanh &gt;0.6 hoặc LDH dịch &gt;2/3 giới hạn trên bình thường huyết thanh.</li>
+        <li>CT ngực khi nghi ác tính hoặc biến chứng.</li>
+      </ul>`,
+    dieu_tri:`
+      <div class="subhead">Theo nguyên nhân</div>
+      <ul>
+        <li><b>Dịch thấm do suy tim:</b> điều trị suy tim, lợi tiểu; chọc hút nếu khó thở nhiều.</li>
+        <li><b>Parapneumonic / empyema:</b> kháng sinh + dẫn lưu (pH ≤7.2 hoặc mủ). Cân nhắc fibrinolytic hoặc VATS nếu không dẫn lưu được.</li>
+        <li><b>Tràn dịch ác tính:</b> chọc hút triệu chứng, catheter màng phổi kéo dài (IPC), hoặc pleurodesis.</li>
+      </ul>
+      <div class="subhead">Nguyên tắc chọc hút / dẫn lưu</div>
+      <p>Không rút quá 1.5 L một lần (nguy cơ phù phổi tái nở). Theo dõi lâm sàng và siêu âm.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Siêu âm hướng dẫn cho mọi thủ thuật màng phổi",'<span class="badge badge-I">I</span>'],
+        ["Đặt dẫn lưu khi pH dịch ≤7.2 hoặc mủ (parapneumonic phức tạp)",'<span class="badge badge-I">I</span>'],
+        ["IPC hoặc pleurodesis cho tràn dịch ác tính tái phát",'<span class="badge badge-I">I</span>'],
+        ["Chọc hút mù không siêu âm hướng dẫn",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"BTS Guideline for pleural disease 2023; BTS Clinical Statement on Pleural Procedures"
+},
+{
   spec:"noi_tiet", id:"hypoglycemia", emoji:"📉", short:"Hạ ĐH", title:"Hạ đường huyết",
   guidelines:["Endocrine Society 2009 (+ ADA 2024)"],
   sections:{
@@ -1979,6 +2243,53 @@ const diseases = [
       ])}`
   },
   source:"Endocrine Society 2016 Clinical Practice Guideline: Diagnosis and Treatment of Primary Adrenal Insufficiency"
+},
+{
+  spec:"noi_tiet", id:"hyperCa", emoji:"🦴", short:"Tăng Ca", title:"Tăng canxi máu",
+  guidelines:["Endocrine Society","UpToDate / thực hành"],
+  sections:{
+    dinh_nghia:`
+      <p>Tăng canxi máu khi Ca huyết thanh &gt;10.5 mg/dL (2.62 mmol/L) hoặc Ca ion hóa tăng. Phân độ:</p>
+      ${rt(["Mức độ"],[
+        ["Nhẹ","10.5 – 12 mg/dL"],
+        ["Trung bình","12 – 14 mg/dL"],
+        ["Nặng","&gt;14 mg/dL hoặc có triệu chứng nặng"]
+      ])}
+      <p>Nguyên nhân phổ biến: cường cận giáp nguyên phát, ác tính (tiêu xương hoặc PTHrP), vitamin D thừa, granulomatous disease, thuốc (thiazide, lithium).</p>`,
+    chan_doan:`
+      <p>Đo PTH ngay để phân biệt:</p>
+      <ul>
+        <li><b>PTH tăng hoặc không phù hợp bình thường</b> → cường cận giáp nguyên phát (hoặc FHH).</li>
+        <li><b>PTH bị ức chế</b> → tìm nguyên nhân PTH-independent (ung thư, vitamin D, u hạt…).</li>
+      </ul>
+      <p>Xét nghiệm thêm: phosphate, Mg, creatinine, 25-OH vitamin D, PTHrP nếu nghi ác tính, điện di protein nếu nghi myeloma.</p>`,
+    dieu_tri:`
+      <div class="subhead">Cấp cứu (Ca &gt;14 hoặc triệu chứng nặng)</div>
+      <ul>
+        <li>Bù dịch NaCl 0.9% mạnh (200–300 mL/h nếu không suy tim) để tăng thải Ca.</li>
+        <li>Calcitonin 4–8 IU/kg TM/SC mỗi 12h (tác dụng nhanh, ngắn).</li>
+        <li>Bisphosphonate (Zoledronic acid 4 mg TM trong 15 phút) – tác dụng bền.</li>
+        <li>Denosumab nếu suy thận nặng hoặc kháng bisphosphonate.</li>
+        <li>Lọc máu nếu kháng trị hoặc suy thận nặng kèm quá tải dịch.</li>
+      </ul>
+      <div class="subhead">Cường cận giáp nguyên phát</div>
+      <p>Phẫu thuật cắt tuyến cận giáp nếu đủ chỉ định (triệu chứng, Ca &gt;1 mg/dL trên bình thường, loãng xương, sỏi thận, GFR &lt;60…).</p>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["NaCl 0.9%","200–300 mL/h ban đầu","Theo dõi nước tiểu và tim mạch"],
+        ["Zoledronic acid","4 mg TM trong ≥15 phút","Không dùng nếu CrCl &lt;30; hạ Ca có thể kéo dài"],
+        ["Calcitonin","4–8 IU/kg mỗi 12h","Tác dụng nhanh nhưng tachyphylaxis sau 48h"],
+        ["Denosumab","60–120 mg SC","Ưu tiên khi suy thận nặng"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bù dịch NaCl 0.9% là bước đầu xử trí tăng Ca cấp nặng",'<span class="badge badge-I">I</span>'],
+        ["Đo PTH để phân biệt nguyên nhân PTH-dependent vs independent",'<span class="badge badge-I">I</span>'],
+        ["Bisphosphonate hoặc Denosumab khi tăng Ca do ác tính hoặc nặng",'<span class="badge badge-I">I</span>'],
+        ["Lợi tiểu quai thường quy trước khi bù đủ dịch",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Endocrine Society guidelines and clinical practice standards for hypercalcemia"
 },
 {
   spec:"noi_tiet", id:"aldo", emoji:"🧂", short:"Cường Aldo", title:"Cường Aldosterone nguyên phát",
@@ -2468,6 +2779,188 @@ const diseases = [
       ])}`
   },
   source:"AASLD 2021 Practice Guidance on Ascites, SBP and Hepatorenal Syndrome; Baveno VII 2022 Consensus on Portal Hypertension"
+},
+{
+  spec:"tieu_hoa", id:"masld", emoji:"🧈", short:"MASLD", title:"Gan nhiễm mỡ liên quan rối loạn chuyển hóa (MASLD)",
+  guidelines:["AASLD 2023","EASL-EASD-EASO 2024"],
+  sections:{
+    dinh_nghia:`
+      <p><b>MASLD</b> (Metabolic dysfunction-Associated Steatotic Liver Disease) là thuật ngữ mới thay thế NAFLD (2023). Định nghĩa: steatosis gan ≥5% kèm ≥1 yếu tố nguy cơ chuyển hóa (béo phì, ĐTĐ típ 2, tăng huyết áp, rối loạn lipid…) và không có nguyên nhân khác (rượu nặng, virus, thuốc…).</p>
+      <div class="subhead">Phổ bệnh</div>
+      ${rt(["Đặc điểm"],[
+        ["MASL","Steatosis đơn thuần (trước đây NAFL)"],
+        ["MASH","Steatohepatitis (trước đây NASH) – viêm + tổn thương tế bào gan"],
+        ["MASH xơ hóa / xơ gan","Tiến triển đến xơ hóa nặng hoặc xơ gan"],
+        ["MetALD","Steatosis + yếu tố chuyển hóa + uống rượu mức trung bình"]
+      ])}`,
+    chan_doan:`
+      <p>Phát hiện tình cờ trên siêu âm hoặc men gan tăng. <b>Không tầm soát đại trà</b> dân số chung. Tầm soát xơ hóa ở người có ĐTĐ típ 2, béo phì kèm yếu tố nguy cơ khác.</p>
+      <div class="subhead">Chiến lược đánh giá xơ hóa (AASLD / EASL 2024)</div>
+      <ul>
+        <li><b>Bước 1:</b> FIB-4. Nếu &lt;1.3 (hoặc &lt;2.0 nếu &gt;65 tuổi) → nguy cơ thấp, theo dõi tại tuyến cơ sở.</li>
+        <li><b>Bước 2:</b> Nếu FIB-4 ≥1.3 → đo độ đàn hồi gan (VCTE/FibroScan) hoặc ELF.</li>
+        <li>Sinh thiết gan khi kết quả không rõ hoặc nghi chẩn đoán khác.</li>
+      </ul>
+      <div class="alert-box alert-info">FIB-4 kém chính xác ở người &lt;35 tuổi. Mục tiêu chính là phát hiện xơ hóa ≥F2 để can thiệp sớm.</div>`,
+    dieu_tri:`
+      <div class="subhead">Nền tảng – thay đổi lối sống</div>
+      <ul>
+        <li>Giảm cân bền vững: ≥5% giảm mỡ gan, 7–10% cải thiện viêm, ≥10% cải thiện xơ hóa.</li>
+        <li>Chế độ ăn deficit calorie, tăng vận động.</li>
+        <li>Kiểm soát ĐTĐ, THA, lipid (statin an toàn ở xơ gan còn bù).</li>
+      </ul>
+      <div class="subhead">Thuốc</div>
+      <ul>
+        <li><b>Semaglutide / GLP-1 RA</b>: cải thiện MASH và lợi ích tim mạch – cân nhắc mạnh ở người béo phì/ĐTĐ.</li>
+        <li>Pioglitazone: cải thiện MASH ở người ĐTĐ.</li>
+        <li>Vitamin E: cân nhắc ở MASH không ĐTĐ (không xơ gan).</li>
+        <li>Resmetirom (mới): được phê duyệt cho MASH có xơ hóa vừa ở một số quốc gia.</li>
+      </ul>
+      <p>Phẫu thuật bariatric nên được cân nhắc ở người đủ tiêu chuẩn, không xơ gan mất bù.</p>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Tầm soát xơ hóa (FIB-4) ở người ĐTĐ típ 2 hoặc béo phì kèm yếu tố nguy cơ",'<span class="badge badge-I">I</span>'],
+        ["Giảm cân ≥7–10% là điều trị nền tảng cải thiện viêm và xơ hóa",'<span class="badge badge-I">I</span>'],
+        ["Cân nhắc GLP-1 RA (semaglutide) ở MASLD kèm béo phì/ĐTĐ",'<span class="badge badge-IIa">IIa</span>'],
+        ["Statin an toàn và khuyến cáo khi có chỉ định tim mạch ở xơ gan còn bù",'<span class="badge badge-I">I</span>'],
+        ["Tầm soát MASLD đại trà dân số chung",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"AASLD 2023 Practice Guidance on NAFLD; EASL–EASD–EASO 2024 Clinical Practice Guidelines on MASLD"
+},
+{
+  spec:"tieu_hoa", id:"constipation", emoji:"🚽", short:"Táo bón", title:"Táo bón chức năng",
+  guidelines:["AGA/ACG 2023","Rome IV"],
+  sections:{
+    dinh_nghia:`
+      <p>Táo bón chức năng (Functional Constipation) theo Rome IV: ≥2 tiêu chí trong ≥3 tháng (khởi phát ≥6 tháng): rặn nhiều, phân cứng/vón, cảm giác đại tiện không hết, tắc nghẽn, cần hỗ trợ thủ công, &lt;3 lần đại tiện/tuần — và không đủ tiêu chuẩn IBS.</p>
+      <div class="subhead">Phân loại thực hành</div>
+      ${rt(["Đặc điểm"],[
+        ["Táo bón chức năng thông thường","Phổ biến nhất, không nguyên nhân thực thể"],
+        ["Rối loạn đại tiện (Dyssynergic)","Phối hợp cơ sàn chậu kém"],
+        ["Táo bón do thuốc / bệnh thực thể","Opioid, kháng cholinergic, Parkinson, suy giáp…"]
+      ])}`,
+    chan_doan:`
+      <p>Chủ yếu lâm sàng. Cần loại trừ "red flags": máu phân, sụt cân, thiếu máu, khởi phát sau 50 tuổi, tiền sử gia đình ung thư đại trực tràng → nội soi.</p>
+      <ul>
+        <li>Xét nghiệm cơ bản: công thức máu, TSH, canxi, glucose nếu nghi.</li>
+        <li>Đánh giá sàn chậu / manometry khi nghi dyssynergic defecation và thất bại điều trị ban đầu.</li>
+      </ul>`,
+    dieu_tri:`
+      <div class="subhead">Bậc thang</div>
+      <ul>
+        <li><b>Bước 1:</b> Giáo dục, tăng chất xơ (25–30 g/ngày), uống đủ nước, vận động.</li>
+        <li><b>Bước 2:</b> Thuốc nhuận tràng thẩm thấu (PEG 3350 là lựa chọn hàng đầu), hoặc stimulant (bisacodyl, senna) ngắn ngày.</li>
+        <li><b>Bước 3:</b> Secretagogues (linaclotide, lubiprostone) hoặc prokinetic (prucalopride) khi thất bại.</li>
+        <li>Biofeedback nếu dyssynergic defecation.</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["PEG 3350 (Forlax…)","17 g/ngày, pha nước","An toàn dài hạn, lựa chọn đầu tay"],
+        ["Bisacodyl","5–10 mg uống hoặc đặt trực tràng","Dùng ngắn ngày"],
+        ["Linaclotide","145–290 mcg/ngày","Uống trước ăn 30 phút"],
+        ["Prucalopride","1–2 mg/ngày","Thận trọng ở người cao tuổi"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["PEG là nhuận tràng thẩm thấu đầu tay cho táo bón chức năng",'<span class="badge badge-I">I</span>'],
+        ["Tăng chất xơ và thay đổi lối sống là nền tảng",'<span class="badge badge-I">I</span>'],
+        ["Nội soi khi có red flags hoặc tuổi ≥50 chưa tầm soát",'<span class="badge badge-I">I</span>'],
+        ["Dùng stimulant nhuận tràng dài hạn thường quy",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACG/AGA Guideline on Chronic Constipation 2023; Rome IV Criteria"
+},
+{
+  spec:"co_xuong_khop", id:"axspa", emoji:"🦴", short:"AxSpA", title:"Viêm cột sống dính khớp / Axial Spondyloarthritis",
+  guidelines:["ASAS-EULAR 2022","ACR/SAA/SPARTAN"],
+  sections:{
+    dinh_nghia:`
+      <p>Axial Spondyloarthritis (axSpA) là nhóm bệnh viêm cột sống và khớp cùng chậu, bao gồm:</p>
+      <ul>
+        <li><b>Radiographic axSpA</b> (Ankylosing Spondylitis – AS): có tổn thương X-quang khớp cùng chậu rõ.</li>
+        <li><b>Non-radiographic axSpA</b> (nr-axSpA): viêm trên MRI nhưng chưa tổn thương X-quang.</li>
+      </ul>
+      <p>Thường khởi phát trước 45 tuổi, liên quan mạnh HLA-B27, có thể kèm viêm màng bồ đào, viêm ruột, vẩy nến.</p>`,
+    chan_doan:`
+      <p>Tiêu chuẩn phân loại ASAS: đau lưng viêm ≥3 tháng khởi phát &lt;45 tuổi + sacroiliitis trên hình ảnh (X-quang hoặc MRI) + ≥1 đặc điểm SpA, hoặc HLA-B27 + ≥2 đặc điểm SpA.</p>
+      <div class="alert-box alert-info"><b>Cập nhật gần đây:</b> MRI khớp cùng chậu (không cản quang) được ưu tiên hơn X-quang là hình ảnh đầu tay để chẩn đoán sớm axSpA.</div>
+      <p>Đánh giá hoạt động bệnh bằng <b>ASDAS</b> (ưu tiên hơn BASDAI). CRP tăng hỗ trợ quyết định điều trị sinh học.</p>`,
+    dieu_tri:`
+      <div class="subhead">Bậc thang điều trị (ASAS-EULAR 2022)</div>
+      <ul>
+        <li><b>Bước 1:</b> NSAID liều tối đa dung nạp (thử ≥2 loại khác nhau) + vật lý trị liệu, tập luyện.</li>
+        <li><b>Bước 2:</b> Nếu ASDAS ≥2.1 và thất bại ≥2 NSAID → bDMARD hoặc tsDMARD.</li>
+        <li>Điều kiện thêm: CRP tăng hoặc viêm trên MRI khớp cùng chậu hoặc sacroiliitis X-quang.</li>
+      </ul>
+      <div class="subhead">Lựa chọn sinh học</div>
+      <ul>
+        <li><b>TNFi</b> và <b>IL-17i</b> là lựa chọn hàng đầu ngang nhau.</li>
+        <li>JAKi (upadacitinib…) là lựa chọn tiếp theo hoặc thay thế.</li>
+        <li>Không khuyến cáo csDMARD (methotrexate, sulfasalazine) đơn thuần cho axSpA trục trừ khi có biểu hiện ngoại vi hoặc ngoài khớp.</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Naproxen / NSAID khác","Liều chống viêm tối đa","Thử ít nhất 2–4 tuần mỗi loại"],
+        ["Adalimumab / Etanercept (TNFi)","Theo chuẩn (40mg/2 tuần hoặc 50mg/tuần)","Sàng lọc lao/viêm gan B trước"],
+        ["Secukinumab / Ixekizumab (IL-17i)","Theo chuẩn","Hiệu quả tốt với viêm màng bồ đào/vẩy nến"],
+        ["Upadacitinib (JAKi)","15 mg/ngày","Thận trọng yếu tố nguy cơ tim mạch/huyết khối"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["NSAID là điều trị đầu tay cho axSpA",'<span class="badge badge-I">I</span>'],
+        ["TNFi hoặc IL-17i khi thất bại NSAID và ASDAS ≥2.1 kèm CRP/MRI dương tính",'<span class="badge badge-I">I</span>'],
+        ["Vật lý trị liệu và tập luyện là nền tảng không dùng thuốc",'<span class="badge badge-I">I</span>'],
+        ["csDMARD đơn thuần cho axSpA trục không biểu hiện ngoại vi",'<span class="badge badge-III">III</span>'],
+        ["Glucocorticoid đường toàn thân dài hạn",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ASAS-EULAR 2022 recommendations for the management of axial spondyloarthritis; ACR/SAA/SPARTAN recommendations"
+},
+{
+  spec:"co_xuong_khop", id:"pmr", emoji:"🧓", short:"PMR", title:"Viêm đa cơ thấp (Polymyalgia Rheumatica)",
+  guidelines:["EULAR/ACR 2015 + cập nhật thực hành"],
+  sections:{
+    dinh_nghia:`
+      <p>Polymyalgia Rheumatica (PMR) là bệnh viêm ở người ≥50 tuổi, đặc trưng bởi đau và cứng vùng vai, cổ, hông hai bên vào buổi sáng, kèm phản ứng viêm hệ thống (CRP/ESR tăng cao). Có liên quan chặt với viêm động mạch tế bào khổng lồ (GCA).</p>
+      <div class="subhead">Đặc điểm lâm sàng điển hình</div>
+      <ul>
+        <li>Tuổi ≥50, khởi phát cấp/bán cấp.</li>
+        <li>Đau + cứng buổi sáng ≥45 phút vùng vai và/hoặc hông hai bên.</li>
+        <li>CRP hoặc ESR tăng rõ.</li>
+        <li>Đáp ứng nhanh với corticosteroid liều thấp–trung bình.</li>
+      </ul>`,
+    chan_doan:`
+      <p>Chẩn đoán lâm sàng + loại trừ bệnh khác (VKDT, viêm cơ, suy giáp, ung thư, nhiễm trùng…). Không có xét nghiệm đặc hiệu.</p>
+      <div class="alert-box alert-info">Luôn tầm soát triệu chứng GCA (đau đầu mới, đau hàm khi nhai, rối loạn thị giác) vì 15–20% PMR kèm GCA và cần điều trị corticosteroid liều cao hơn.</div>
+      <p>Siêu âm vai/hông hỗ trợ chẩn đoán. PET-CT hoặc MRI khi nghi GCA hoặc không điển hình.</p>`,
+    dieu_tri:`
+      <div class="subhead">Corticosteroid – nền tảng</div>
+      <ul>
+        <li>Prednisone 12.5–25 mg/ngày khởi đầu (thường 15–20 mg).</li>
+        <li>Giảm liều dần khi triệu chứng kiểm soát và CRP/ESR bình thường hóa.</li>
+        <li>Thời gian điều trị thường 1–2 năm; tái phát phổ biến khi giảm liều.</li>
+      </ul>
+      <div class="subhead">Thuốc tiết kiệm steroid</div>
+      <ul>
+        <li>Methotrexate 7.5–15 mg/tuần khi tái phát nhiều hoặc cần giảm corticosteroid nhanh.</li>
+        <li>Tocilizumab trong một số trường hợp kháng trị hoặc GCA.</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Prednisone khởi đầu","15–20 mg/ngày (phạm vi 12.5–25 mg)","Đáp ứng lâm sàng thường trong 3–7 ngày"],
+        ["Giảm liều","1–2.5 mg mỗi 2–4 tuần","Theo triệu chứng + CRP/ESR"],
+        ["Methotrexate","7.5–15 mg/tuần","Bổ sung acid folic; theo dõi công thức máu, men gan"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Corticosteroid liều thấp–trung bình là điều trị đầu tay PMR",'<span class="badge badge-I">I</span>'],
+        ["Tầm soát triệu chứng GCA ở mọi bệnh nhân PMR",'<span class="badge badge-I">I</span>'],
+        ["Methotrexate khi tái phát nhiều hoặc khó giảm corticosteroid",'<span class="badge badge-IIa">IIa</span>'],
+        ["Corticosteroid liều cao thường quy cho PMR không nghi GCA",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"EULAR/ACR recommendations for the management of polymyalgia rheumatica; practical updates"
 },
 {
   spec:"co_xuong_khop", id:"gout", emoji:"🦶", short:"Gout", title:"Bệnh Gout (Gút)",
@@ -3145,6 +3638,96 @@ const diseases = [
       ])}`
   },
   source:"KDIGO 2021 Clinical Practice Guideline for the Management of Glomerular Diseases"
+},
+{
+  spec:"than", id:"hyperK", emoji:"⬆️", short:"Tăng K+", title:"Tăng kali máu",
+  guidelines:["UKKA 2023","KDIGO 2024 CKD"],
+  sections:{
+    dinh_nghia:`
+      <p>Tăng kali máu khi K+ huyết thanh &gt;5.0 mmol/L. Phân độ thường dùng:</p>
+      ${rt(["Mức độ"],[
+        ["Nhẹ","5.0 – 5.9 mmol/L"],
+        ["Trung bình","6.0 – 6.4 mmol/L"],
+        ["Nặng","≥6.5 mmol/L hoặc có biến đổi ECG"]
+      ])}
+      <p>Nguyên nhân thường gặp: CKD/AKI, thuốc (RAASi, MRA, NSAID, trimethoprim…), toan chuyển hóa, tan máu, giảm aldosterone.</p>`,
+    chan_doan:`
+      <p>Xác nhận bằng mẫu máu mới (tránh tan máu giả tạo). <b>ECG ngay</b> nếu K+ ≥6.0 hoặc nghi nặng (sóng T nhọn, QRS rộng, sóng sine, vô tâm thu).</p>
+      <div class="alert-box alert-warn">K+ ≥6.5 mmol/L hoặc có biến đổi ECG là cấp cứu. Không chờ kết quả lặp lại nếu lâm sàng nặng.</div>`,
+    dieu_tri:`
+      <div class="subhead">Cấp cứu (K+ nặng hoặc ECG bất thường)</div>
+      <ul>
+        <li><b>Bảo vệ tim:</b> Calcium gluconate 10% 30 mL (hoặc Calcium chloride 10% 10 mL) TM trong 5–10 phút, lặp lại nếu ECG chưa cải thiện.</li>
+        <li><b>Đưa K+ vào tế bào:</b> Insulin regular 10 UI + Glucose 25–50 g TM (theo dõi đường huyết); hoặc Salbutamol khí dung 10–20 mg.</li>
+        <li><b>Loại bỏ K+:</b> Sodium zirconium cyclosilicate (SZC) 10 g × 3 lần/ngày (đến 72h) hoặc Patiromer; lợi tiểu quai nếu còn nước tiểu; lọc máu nếu kháng trị hoặc suy thận nặng.</li>
+      </ul>
+      <div class="subhead">Mạn tính / duy trì RAASi</div>
+      <ul>
+        <li>Xem xét giảm/ngừng thuốc gây tăng K+ nếu không thiết yếu.</li>
+        <li>Ưu tiên dùng potassium binder (SZC hoặc Patiromer) để duy trì RAASi/MRA ở bệnh nhân CKD/HF.</li>
+        <li>Hạn chế K+ thực phẩm nguồn động vật hơn là thực vật; chỉnh toan chuyển hóa nếu có.</li>
+      </ul>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["Calcium gluconate 10%","30 mL TM trong 5–10 phút","Bảo vệ màng tế bào, tác dụng nhanh nhưng ngắn"],
+        ["Insulin + Glucose","10 UI insulin + 25–50 g glucose","Theo dõi hạ đường huyết 1–6 giờ sau"],
+        ["SZC (Lokelma)","10 g × 3 lần/ngày (cấp) → 5–10 g/ngày duy trì","Bắt đầu tác dụng trong 1 giờ"],
+        ["Patiromer","8.4 g/ngày, tăng dần","Tác dụng chậm hơn, dùng mạn"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Calcium TM ngay khi K+ nặng hoặc ECG bất thường",'<span class="badge badge-I">I</span>'],
+        ["Insulin + glucose và/hoặc β2-agonist để chuyển K+ vào tế bào",'<span class="badge badge-I">I</span>'],
+        ["Dùng potassium binder để duy trì RAASi ở CKD/HF có tăng K+",'<span class="badge badge-IIa">IIa</span>'],
+        ["Ngừng vĩnh viễn RAASi chỉ vì tăng K+ nhẹ–trung bình mà không thử binder",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"UKKA Clinical Practice Guideline – Management of Hyperkalaemia in Adults 2023; KDIGO 2024 CKD Guideline"
+},
+{
+  spec:"than", id:"hypoNa", emoji:"⬇️", short:"Hạ Na+", title:"Hạ natri máu",
+  guidelines:["European Guidelines","US Expert Panel","NDT 2024"],
+  sections:{
+    dinh_nghia:`
+      <p>Hạ natri máu khi Na+ huyết thanh &lt;135 mmol/L. Phân độ:</p>
+      ${rt(["Mức độ"],[
+        ["Nhẹ","130 – 134 mmol/L"],
+        ["Trung bình","125 – 129 mmol/L"],
+        ["Nặng / Profound","&lt;125 mmol/L"]
+      ])}
+      <p>Phân loại theo áp lực thẩm thấu và thể tích: hạ Na nhược trương (phổ biến nhất) → giảm thể tích / đẳng thể tích (SIADH) / tăng thể tích.</p>`,
+    chan_doan:`
+      <p>Bước 1: Đo osmolality huyết thanh. Nếu &lt;275 mOsm/kg → hạ Na nhược trương thật.</p>
+      <p>Bước 2: Osmolality nước tiểu + Na nước tiểu để phân biệt nguyên nhân (SIADH: Uosm &gt;100, UNa &gt;30; giảm thể tích: UNa thường &lt;30 nếu thận bình thường).</p>
+      <div class="alert-box alert-info">Không đo vasopressin thường quy để chẩn đoán SIADH. Đánh giá lâm sàng thể tích là then chốt.</div>`,
+    dieu_tri:`
+      <div class="subhead">Triệu chứng nặng (co giật, hôn mê, nôn ói nhiều)</div>
+      <ul>
+        <li>Bolus NaCl 3%: 100–150 mL trong 10–20 phút, lặp lại tối đa 2–3 lần cho đến khi triệu chứng cải thiện hoặc Na tăng 4–6 mmol/L.</li>
+        <li>Mục tiêu tăng Na: không quá 10 mmol/L/24h đầu (hoặc ≤8 mmol/L nếu nguy cơ cao ODS: Na ≤105, nghiện rượu, suy dinh dưỡng, bệnh gan).</li>
+      </ul>
+      <div class="subhead">Triệu chứng vừa / không triệu chứng</div>
+      <ul>
+        <li>SIADH: hạn chế dịch (thường 500–1000 mL/ngày), urea, lợi tiểu quai, vaptan nếu cần.</li>
+        <li>Giảm thể tích: bù dịch đẳng trương (NaCl 0.9%).</li>
+        <li>Tăng thể tích (suy tim, xơ gan): hạn chế dịch + lợi tiểu.</li>
+      </ul>
+      <div class="alert-box alert-warn">Nguy cơ hội chứng demyelin thẩm thấu (ODS) nếu sửa quá nhanh ở hạ Na mạn. Theo dõi Na sát (mỗi 2–4 giờ ban đầu).</div>
+      <div class="subhead">💊 Liều dùng cụ thể</div>
+      ${rt(["Liều dùng","Lưu ý"],[
+        ["NaCl 3% bolus","100–150 mL / 10–20 phút","Lặp lại nếu triệu chứng nặng còn"],
+        ["Hạn chế dịch (SIADH)","500–1000 mL/ngày","Điều chỉnh theo đáp ứng Na"],
+        ["Tolvaptan (vaptan)","15 mg/ngày, tăng dần","Chỉ dùng ngắn ngày, theo dõi sát"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bolus NaCl 3% ngay khi hạ Na có triệu chứng nặng",'<span class="badge badge-I">I</span>'],
+        ["Giới hạn tăng Na ≤10 mmol/L/24h (≤8 mmol/L nếu nguy cơ ODS cao)",'<span class="badge badge-I">I</span>'],
+        ["Hạn chế dịch là điều trị đầu tay SIADH nhẹ–trung bình",'<span class="badge badge-IIa">IIa</span>'],
+        ["Sửa Na quá nhanh ở hạ Na mạn tính",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"European Clinical Practice Guidelines on Hyponatraemia; US Expert Panel Recommendations; NDT Treatment Standard 2024"
 }
 ];
 
