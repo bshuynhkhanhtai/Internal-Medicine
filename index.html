@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Phác Đồ Bỏ Túi">
 <link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/180/00a896/heart-with-pulse.png">
-<title>Phác Đồ Bỏ Túi Đa Chuyên Khoa (ESC/AHA/ADA/ACR/GINA/GOLD)</title>
+<title>Công Cụ Y Khoa — Phác Đồ &amp; Thang Điểm (2025–2026)</title>
 <style>
   :root{
     --tiffany-main:#00a896; --tiffany-dark:#028090; --tiffany-light:#e6f7f5;
@@ -23,29 +23,30 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent;}
   html{height:-webkit-fill-available;scroll-behavior:smooth;}
-  body{background:var(--bg-primary);color:var(--text-primary);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;display:flex;flex-direction:column;transition:background-color .3s,color .3s;overscroll-behavior-y:none;overflow-x:hidden;}
-  header{background:linear-gradient(135deg,var(--tiffany-main),var(--tiffany-dark));color:#fff;padding:14px 18px 12px;position:sticky;top:0;z-index:45;box-shadow:0 4px 12px rgba(0,0,0,.12);}
-  .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
-  h1{font-size:16px;font-weight:800;letter-spacing:-.3px;}
-  .sub{font-size:10.5px;opacity:.85;font-weight:500;margin-top:1px;}
-  .theme-toggle-btn{background:rgba(255,255,255,.2);border:none;font-size:15px;padding:7px 12px;border-radius:18px;cursor:pointer;color:#fff;display:flex;align-items:center;gap:4px;backdrop-filter:blur(10px);flex-shrink:0;}
+  body{background:var(--bg-primary);color:var(--text-primary);padding-top:0;padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;display:flex;flex-direction:column;transition:background-color .3s,color .3s;overscroll-behavior-y:none;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+  /* Header gọn + safe-area iPhone (notch / Dynamic Island) */
+  header{background:linear-gradient(135deg,var(--tiffany-main),var(--tiffany-dark));color:#fff;padding-top:max(8px, env(safe-area-inset-top));padding-left:14px;padding-right:14px;padding-bottom:8px;position:sticky;top:0;z-index:45;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;}
+  h1{font-size:15px;font-weight:800;letter-spacing:-.3px;line-height:1.2;}
+  .sub{font-size:10px;opacity:.85;font-weight:500;margin-top:1px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+  .theme-toggle-btn{background:rgba(255,255,255,.2);border:none;font-size:13px;padding:6px 10px;border-radius:16px;cursor:pointer;color:#fff;display:flex;align-items:center;gap:3px;backdrop-filter:blur(10px);flex-shrink:0;min-height:32px;}
   .theme-toggle-btn:active{background:rgba(255,255,255,.32);}
 
-  .specialty-tabs-wrapper{background:var(--tiffany-dark);position:sticky;top:60px;z-index:44;}
+  .specialty-tabs-wrapper{background:var(--tiffany-dark);position:sticky;top:calc(env(safe-area-inset-top) + 78px);z-index:44;}
   .specialty-tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .specialty-tabs::-webkit-scrollbar{display:none;}
   .sp-tab{flex-shrink:0;display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:16px;background:rgba(255,255,255,.14);color:#fff;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;border:1px solid rgba(255,255,255,.2);}
   .sp-tab .emoji{font-size:14px;}
   .sp-tab.active{background:#fff;color:var(--tiffany-dark);border-color:#fff;}
 
-  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:sticky;top:104px;z-index:40;}
+  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:sticky;top:calc(env(safe-area-inset-top) + 118px);z-index:40;}
   .disease-tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .disease-tabs::-webkit-scrollbar{display:none;}
   .d-tab{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;border-radius:14px;background:var(--bg-primary);color:var(--text-secondary);font-size:11.5px;font-weight:700;white-space:nowrap;cursor:pointer;min-width:60px;border:1px solid var(--border-color);}
   .d-tab .emoji{font-size:17px;line-height:1;margin-bottom:2px;}
   .d-tab.active{background:var(--tiffany-main);color:#fff;border-color:var(--tiffany-main);}
 
-  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:var(--tiffany-light);scrollbar-width:none;position:sticky;top:156px;z-index:35;border-bottom:1px solid var(--border-color);}
+  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:6px 12px;background:var(--tiffany-light);scrollbar-width:none;position:sticky;top:calc(env(safe-area-inset-top) + 158px);z-index:35;border-bottom:1px solid var(--border-color);}
   .section-nav::-webkit-scrollbar{display:none;}
   .s-pill{flex-shrink:0;font-size:11.5px;font-weight:700;color:var(--tiffany-dark);background:var(--bg-card);padding:6px 11px;border-radius:12px;cursor:pointer;border:1px solid var(--border-color);}
   .s-pill.active{background:var(--tiffany-dark);color:#fff;border-color:var(--tiffany-dark);}
@@ -56,7 +57,7 @@
   .disease-header h2{font-size:18px;font-weight:800;color:var(--tiffany-dark);margin-bottom:4px;}
   .disease-header .guideline-tag{display:inline-block;font-size:10.5px;font-weight:700;background:var(--tiffany-main);color:#fff;padding:3px 9px;border-radius:8px;margin-top:6px;margin-right:6px;}
 
-  .card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:14px;box-shadow:var(--card-shadow);overflow:hidden;scroll-margin-top:205px;}
+  .card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:14px;box-shadow:var(--card-shadow);overflow:hidden;scroll-margin-top:calc(env(safe-area-inset-top) + 210px);}
   .card-head{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;cursor:pointer;}
   .card-head-title{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:800;color:var(--text-primary);}
   .card-head-title .ic{font-size:16px;}
@@ -120,6 +121,35 @@
   .score-select{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:12.5px;font-weight:600;-webkit-appearance:none;appearance:none;}
 
   footer{text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px 20px;}
+
+  .score-chip{padding:8px 14px;border-radius:16px;border:none;background:var(--bg-primary);color:var(--text-secondary);font-size:13px;font-weight:600;white-space:nowrap;cursor:pointer;}
+  .score-chip.active{background:var(--tiffany-main);color:#fff;}
+  .scale-card{background:var(--bg-card);border-radius:14px;padding:14px 16px;box-shadow:var(--card-shadow,0 2px 10px rgba(0,168,150,.08));border:1px solid var(--border-color);cursor:pointer;}
+  .scale-card:active{transform:scale(0.98);}
+  .scale-title{font-size:15px;font-weight:700;color:var(--tiffany-dark);margin-bottom:4px;}
+  [data-theme="dark"] .scale-title{color:var(--tiffany-main);}
+  .scale-desc{font-size:12.5px;color:var(--text-secondary);margin-bottom:8px;line-height:1.35;}
+  .scale-badge{display:inline-block;padding:3px 8px;border-radius:6px;background:var(--tiffany-light);font-size:11px;font-weight:600;color:var(--tiffany-dark);}
+  .criterion-group{background:var(--bg-card);border-radius:12px;padding:14px;margin-bottom:12px;border:1px solid var(--border-color);}
+  .criterion-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+  .criterion-detail{font-size:12px;color:var(--text-secondary);margin-bottom:8px;}
+  .option-select{width:100%;padding:12px;min-height:44px;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);font-size:14px;}
+  #mainTabBar button.active-main{background:#fff!important;color:var(--tiffany-dark)!important;}
+  #mainTabBar button:not(.active-main){background:rgba(255,255,255,.25)!important;color:#fff!important;}
+
+  #mainTabBar{display:flex;gap:6px;}
+  #mainTabBar button{flex:1;padding:8px 6px!important;border-radius:9px!important;border:none;font-weight:700;font-size:12.5px!important;cursor:pointer;min-height:36px;}
+  /* Sticky tabs dưới header không bị che */
+  /* sticky tops handled above with safe-area calc */
+  /* Modal full-screen iPhone */
+  #calcModal{padding-top:env(safe-area-inset-top);}
+  @media (max-width:428px){
+    h1{font-size:14px!important;}
+    .sub{font-size:9.5px!important;}
+    header{padding-left:12px;padding-right:12px;padding-bottom:6px;}
+  }
+
+
 </style>
 </head>
 <body>
@@ -127,28 +157,73 @@
 <header>
   <div class="top-bar">
     <div>
-      <h1>📖 Phác Đồ Bỏ Túi Đa Chuyên Khoa</h1>
-      <div class="sub">Tim mạch · Nội tiết · Hô hấp · Tiêu hóa · Cơ xương khớp — ESC/AHA/ADA/ACR/GINA/GOLD</div>
+      <h1>📖 Công Cụ Y Khoa Lâm Sàng</h1>
+      <div class="sub">Phác đồ điều trị · Thang điểm — ESC/AHA/ADA/GINA/GOLD 2025–2026</div>
     </div>
     <button class="theme-toggle-btn" onclick="toggleTheme()">
       <span id="themeIcon">☀️</span><span id="themeText">Sáng</span>
     </button>
   </div>
+  <div id="mainTabBar" style="display:flex;gap:6px;padding:0;margin:0;">
+    <button id="tabPhacDo" class="active-main" onclick="switchMainTab('phacdo')" style="flex:1;padding:10px;border-radius:10px;border:none;font-weight:700;font-size:13px;cursor:pointer;">📋 Phác đồ điều trị</button>
+    <button id="tabThangDiem" onclick="switchMainTab('thangdiem')" style="flex:1;padding:10px;border-radius:10px;border:none;font-weight:700;font-size:13px;cursor:pointer;">🧮 Tra cứu thang điểm</button>
+  </div>
 </header>
 
-<div class="specialty-tabs-wrapper">
-  <div class="specialty-tabs" id="specialtyTabs"></div>
+<!-- VIEW PHÁC ĐỒ -->
+<div id="viewPhacDo">
+  <div style="padding:8px 14px 6px;">
+    <input id="quickSearch" type="search" placeholder="Tìm bệnh, viết tắt (THA, COPD, CKD, PMR…) — / hoặc ⌘K"
+      style="width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:13px;outline:none;box-sizing:border-box;"
+      oninput="runQuickSearch(this.value)" onkeydown="if(event.key==='Escape'){this.value='';runQuickSearch('');}">
+  </div>
+  <div class="specialty-tabs-wrapper">
+    <div class="specialty-tabs" id="specialtyTabs"></div>
+  </div>
+  <div class="disease-tabs-wrapper">
+    <div class="disease-tabs" id="diseaseTabs"></div>
+  </div>
+  <div class="section-nav" id="sectionNav"></div>
+  <div class="container" id="mainContainer"></div>
+  <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px 24px;">
+    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.
+  </footer>
 </div>
 
-<div class="disease-tabs-wrapper">
-  <div class="disease-tabs" id="diseaseTabs"></div>
+<!-- VIEW THANG ĐIỂM -->
+<div id="viewThangDiem" style="display:none;">
+  <div style="padding:8px 14px 6px;">
+    <input id="scoreSearch" type="search" placeholder="Tìm thang điểm (GCS, NIHSS, CURB-65, SOFA, HAS-BLED, Wells…)"
+      style="width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:13px;outline:none;box-sizing:border-box;"
+      oninput="handleScoreSearch(this.value)">
+  </div>
+  <div style="display:flex;gap:6px;overflow-x:auto;padding:4px 14px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+    <button class="score-chip active" data-cat="all" onclick="filterScoreCat('all',this)">Tất cả</button>
+    <button class="score-chip" data-cat="tim_mach" onclick="filterScoreCat('tim_mach',this)">Tim mạch</button>
+    <button class="score-chip" data-cat="cap_cuu" onclick="filterScoreCat('cap_cuu',this)">Cấp cứu</button>
+    <button class="score-chip" data-cat="than_kinh" onclick="filterScoreCat('than_kinh',this)">Thần kinh</button>
+    <button class="score-chip" data-cat="ho_hap" onclick="filterScoreCat('ho_hap',this)">Hô hấp</button>
+    <button class="score-chip" data-cat="tieu_hoa" onclick="filterScoreCat('tieu_hoa',this)">Tiêu hóa</button>
+  </div>
+  <div id="scalesList" style="padding:8px 14px 40px;display:flex;flex-direction:column;gap:10px;"></div>
 </div>
 
-<div class="section-nav" id="sectionNav"></div>
-
-<div class="container" id="mainContainer"></div>
-
-<footer>⚠️ Tài liệu tổng hợp mang tính tham khảo lâm sàng nhanh, không thay thế tờ hướng dẫn sử dụng thuốc hoặc phán đoán của bác sĩ điều trị. Luôn đối chiếu chống chỉ định, tương tác thuốc, chức năng gan-thận và tình trạng cụ thể của người bệnh. Các liều/ngưỡng nên được xác nhận lại với guideline gốc/dược thư khi ra quyết định lâm sàng.</footer>
+<!-- Modal tính điểm -->
+<div id="calcModal" style="display:none;position:fixed;inset:0;z-index:200;background:var(--bg-primary);flex-direction:column;">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--bg-card);border-bottom:1px solid var(--border-color);gap:8px;">
+    <button onclick="closeScoreModal()" style="background:var(--tiffany-light);border:none;color:var(--tiffany-dark);font-weight:700;padding:8px 12px;border-radius:10px;cursor:pointer;flex-shrink:0;font-size:13px;">← Quay lại</button>
+    <div id="modalScaleTitle" style="font-weight:700;font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;"></div>
+    <button onclick="closeScoreModal()" style="background:transparent;border:1px solid var(--border-color);color:var(--text-secondary);font-weight:600;padding:8px 12px;border-radius:10px;cursor:pointer;flex-shrink:0;font-size:13px;">Đóng</button>
+  </div>
+  <div style="position:sticky;top:0;z-index:50;background:var(--bg-card);border-bottom:2px solid var(--tiffany-main);padding:10px 16px;display:flex;align-items:center;gap:14px;">
+    <div style="min-width:70px;text-align:center;padding:6px 10px;background:var(--tiffany-light);border-radius:10px;border:1px solid var(--tiffany-main);">
+      <div id="stickyScoreNum" style="font-size:22px;font-weight:800;color:var(--tiffany-dark);">0</div>
+      <div style="font-size:9px;font-weight:700;color:var(--tiffany-dark);">ĐIỂM</div>
+    </div>
+    <div id="stickyScoreEval" style="font-size:13px;font-weight:600;line-height:1.35;flex:1;"></div>
+  </div>
+  <div id="modalScaleBody" style="flex:1;overflow-y:auto;padding:14px 16px 40px;-webkit-overflow-scrolling:touch;"></div>
+</div>
 
 <script>
 /* =========================================================
@@ -402,7 +477,7 @@ const diseases = [
 
 {
   spec:"tim_mach", id:"htn", emoji:"🩸", short:"THA", title:"Tăng huyết áp",
-  guidelines:["ESC 2024","AHA/ACC 2017","ESH 2023"],
+  guidelines:["ESC 2024","AHA/ACC 2025","ESH 2023"],
   sections:{
     dinh_nghia:`
       <div class="subhead">Phân độ huyết áp — ESC 2024</div>
@@ -411,14 +486,14 @@ const diseases = [
         ["<b>HA tăng (Elevated)</b> – nhóm mới","120–139","70–89"],
         ["<b>Tăng huyết áp</b>","≥140","≥90"]
       ])}
-      <div class="subhead">Phân độ — AHA/ACC 2017</div>
+      <div class="subhead">Phân độ — AHA/ACC 2025 (thay 2017)</div>
       ${rt(["Tâm thu","Tâm trương"],[
         ["Bình thường","&lt;120","&lt;80"],
         ["Tăng (Elevated)","120–129","&lt;80"],
         ["Giai đoạn 1","130–139","80–89"],
         ["Giai đoạn 2","≥140","≥90"]
       ])}
-      <p><b>Điểm mới ESC 2024:</b> đưa vào nhóm "HA tăng" trung gian để nhận diện sớm người có nguy cơ, thay vì chờ đến ngưỡng 140/90 mới can thiệp.</p>`,
+      <p><b>Điểm mới:</b> ESC 2024 đưa nhóm "HA tăng" 120–139/70–89. AHA/ACC 2025 vẫn giữ ngưỡng ≥130/80 và nhấn mạnh CKM (Cardiovascular-Kidney-Metabolic) syndrome trong đánh giá nguy cơ.</p>`,
     chan_doan:`
       <p><b>Ưu tiên đo HA ngoài phòng khám</b> (Holter HA 24h – ABPM, hoặc tự đo tại nhà – HBPM) để xác định chẩn đoán, tránh "hiệu ứng áo choàng trắng" và "THA ẩn giấu".</p>
       <div class="subhead">Ngưỡng chẩn đoán theo phương pháp đo</div>
@@ -436,7 +511,7 @@ const diseases = [
     dieu_tri:`
       <div class="subhead">Mục tiêu điều trị</div>
       <p><b>ESC 2024:</b> mục tiêu HA tâm thu <b>120–129 mmHg</b> cho hầu hết người lớn đang điều trị (kể cả người cao tuổi không suy yếu, &lt;85 tuổi). Nếu không dung nạp, tuổi ≥85, suy yếu trung bình–nặng, hạ HA tư thế có triệu chứng, hoặc tiên lượng sống hạn chế → mục tiêu "thấp nhất có thể dung nạp hợp lý" (ALARA).</p>
-      <p><b>AHA/ACC 2017:</b> mục tiêu chung &lt;130/80 mmHg.</p>
+      <p><b>AHA/ACC 2025:</b> mục tiêu chung &lt;130/80 mmHg (đặc biệt ĐTĐ, CKD, HF). ESC 2024 ưu tiên SBP 120–129 nếu dung nạp.</p>
       <div class="subhead">Chiến lược khởi trị</div>
       <ul>
         <li>Nguy cơ tim mạch 10 năm thấp–trung bình (&lt;10%): thay đổi lối sống 3 tháng; dùng thuốc nếu HA vẫn ≥140/90.</li>
@@ -451,7 +526,45 @@ const diseases = [
       </ul>
       <div class="alert-box alert-info">Chẹn beta <b>không còn là lựa chọn hàng đầu</b> thường quy (trừ khi có chỉ định riêng: bệnh mạch vành, suy tim, rung nhĩ cần kiểm soát tần số, phụ nữ có thai/dự định có thai).</div>
       <div class="subhead">THA kháng trị (không đạt đích dù 3 thuốc tối ưu gồm lợi tiểu)</div>
-      <p>Thêm <b>spironolactone</b> liều thấp (eplerenone nếu không dung nạp) → chẹn beta → thuốc khác (chẹn alpha, chẹn giao cảm trung ương). Có thể cân nhắc <b>đốt thần kinh giao cảm thận</b> — khuyến cáo mới lần đầu trong ESC 2024.</p>
+      <p>Thêm <b>spironolactone</b> liều thấp (eplerenone nếu không dung nạp) → chẹn beta → thuốc khác (chẹn alpha, chẹn giao cảm trung ương). Có thể cân nhắc <b>đốt thần kinh giao cảm thận</b> — khuyến cáo mới lần đầu trong ESC 2024 (Class IIb).</p>
+
+      <div class="subhead">🔍 THA thứ phát — khi nào sàng lọc</div>
+      <p>Sàng lọc toàn diện nguyên nhân thứ phát <b>khuyến cáo</b> khi: khởi phát &lt;40 tuổi (trừ béo phì đơn thuần), THA kháng trị, hạ kali máu tự phát/do lợi tiểu, khối u thượng thận tình cờ, tiền sử gia đình đột quỵ/THA sớm, hoặc có dấu hiệu gợi ý (ngáy/ngưng thở khi ngủ, tiếng thổi bụng, chênh HA 2 tay lớn…).</p>
+      <ul>
+        <li><b>Cường aldosterone nguyên phát:</b> ESC 2024 cân nhắc đo renin + aldosterone ở <b>mọi</b> người lớn THA đã xác định (Class IIa). Tỷ lệ aldosterone/renin tăng → chuyển chuyên khoa nội tiết.</li>
+        <li><b>Hẹp động mạch thận:</b> Doppler/CTA/MRA khi nghi (tiếng thổi, suy thận cấp sau ACEi/ARB, THA kháng trị + xơ vữa).</li>
+        <li><b>Pheochromocytoma, Cushing, co hẹp eo động mạch chủ, bệnh tuyến giáp…:</b> theo dấu hiệu lâm sàng và xét nghiệm định hướng.</li>
+      </ul>
+
+      <div class="subhead">🤰 THA trong thai kỳ (ESC 2024)</div>
+      <ul>
+        <li>Khởi trị thuốc khi HA phòng khám xác nhận ≥140/90 mmHg (cả THA mạn và THA thai kỳ).</li>
+        <li>Mục tiêu: hạ xuống &lt;140/90 mmHg, <b>không</b> để DBP &lt;80 mmHg.</li>
+        <li>Thuốc hàng đầu: <b>Nifedipine giải phóng kéo dài</b>, <b>Labetalol</b>, <b>Methyldopa</b>.</li>
+        <li>Tránh: ACEi/ARB, ức chế renin trực tiếp, hầu hết lợi tiểu (trừ chỉ định đặc biệt).</li>
+        <li>HBPM/ABPM nên cân nhắc để loại trừ áo choàng trắng/THA ẩn (phổ biến hơn khi mang thai).</li>
+        <li>Vận động cường độ thấp–trung bình (nếu không chống chỉ định) giúp giảm nguy cơ THA thai kỳ và tiền sản giật.</li>
+        <li>Aspirin liều thấp dự phòng tiền sản giật theo chỉ định sản khoa (nguy cơ cao).</li>
+      </ul>
+
+      <div class="subhead">🧓 THA người cao tuổi &amp; suy yếu</div>
+      <ul>
+        <li>Tuổi &lt;85, không suy yếu trung bình–nặng: áp dụng cùng mục tiêu SBP 120–129 mmHg nếu dung nạp tốt.</li>
+        <li>Tuổi ≥85 hoặc suy yếu rõ / hạ HA tư thế có triệu chứng / tiên lượng sống hạn chế: khởi trị khi ≥140/90, mục tiêu “thấp nhất dung nạp được” (ALARA), ưu tiên đơn trị hoặc phối hợp liều rất thấp, theo dõi sát té ngã và hạ HA tư thế.</li>
+        <li>Duy trì thuốc hạ áp suốt đời nếu dung nạp tốt, kể cả sau 85 tuổi.</li>
+        <li>Sàng lọc suy yếu bằng thang Clinical Frailty Scale khi quyết định mục tiêu điều trị.</li>
+      </ul>
+
+      <div class="subhead">🍬 THA kèm đái tháo đường</div>
+      <ul>
+        <li>Xếp nguy cơ cao/rất cao → khởi trị thuốc sớm hơn (khi HA &gt;130/80).</li>
+        <li>Mục tiêu: SBP 120–129 mmHg nếu dung nạp (ESC 2024); AHA vẫn &lt;130/80.</li>
+        <li>Ưu tiên ACEi hoặc ARB (bảo vệ thận + tim mạch), đặc biệt khi có albumin niệu.</li>
+        <li>Phối hợp CCB hoặc lợi tiểu giống thiazide khi cần. Tránh phối hợp ACEi + ARB.</li>
+        <li>Cân nhắc SCORE2-Diabetes để ước lượng nguy cơ ở ĐTĐ típ 2 &lt;60 tuổi.</li>
+        <li>Kiểm soát đồng thời đường huyết, lipid, cân nặng; SGLT2i/GLP-1 RA mang lại lợi ích tim–thận độc lập với HA.</li>
+      </ul>
+
       <div class="subhead">💊 Liều dùng cụ thể</div>
       <div class="alert-box alert-warn">Người cao tuổi (≥65–75), suy thận, suy gan: khởi liều thấp nhất, tăng liều chậm, theo dõi HA tư thế đứng để tránh hạ HA/té ngã.</div>
       ${rt(["Người lớn tiêu chuẩn","Cao tuổi / thận yếu"],[
@@ -461,20 +574,29 @@ const diseases = [
         ["Indapamide SR","1.5 mg × 1 lần/ngày (sáng)","thận trọng eGFR &lt;30; theo dõi Na⁺/K⁺"],
         ["Chlorthalidone","12.5–25 mg × 1 lần/ngày","khởi đầu 12.5 mg, theo dõi điện giải sát"],
         ["Bisoprolol (khi có chỉ định)","2.5–10 mg × 1 lần/ngày","khởi đầu 1.25 mg/ngày"],
-        ["Spironolactone (kháng trị)","12.5–50 mg × 1 lần/ngày","tránh nếu eGFR &lt;30 hoặc K⁺&gt;5.0"]
+        ["Spironolactone (kháng trị)","12.5–50 mg × 1 lần/ngày","tránh nếu eGFR &lt;30 hoặc K⁺&gt;5.0"],
+        ["Nifedipine XR (thai kỳ)","30–60 mg × 1 lần/ngày","hàng đầu khi mang thai"],
+        ["Labetalol (thai kỳ)","100–400 mg × 2–3 lần/ngày","theo dõi nhịp tim mẹ/thai"]
       ])}
       <p><b>Viên phối hợp thường dùng:</b> Perindopril/Amlodipine, Perindopril/Indapamide, Losartan/HCTZ, Amlodipine/Valsartan — chỉnh liều theo đáp ứng, tái khám sau 2–4 tuần.</p>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Đo HA ngoài phòng khám (ABPM/HBPM) để chẩn đoán khi khả thi",'<span class="badge badge-I">I</span>'],
-        ["Đích SBP 120–129 mmHg ở người lớn đang dùng thuốc hạ áp",'<span class="badge badge-I">I</span>'],
+        ["Đích SBP 120–129 mmHg ở người lớn đang dùng thuốc hạ áp (dung nạp tốt)",'<span class="badge badge-I">I</span>'],
         ["Khởi đầu bằng viên phối hợp 2 thuốc liều thấp",'<span class="badge badge-I">I</span>'],
         ["Sàng lọc cường aldosteron nguyên phát ở mọi người lớn THA",'<span class="badge badge-IIa">IIa</span>'],
+        ["Sàng lọc toàn diện THA thứ phát khi khởi phát &lt;40 tuổi hoặc kháng trị",'<span class="badge badge-I">I</span>'],
+        ["Khởi trị thuốc khi HA ≥140/90 trong thai kỳ (mạn hoặc thai kỳ)",'<span class="badge badge-I">I</span>'],
+        ["Nifedipine XR / Labetalol / Methyldopa là thuốc hàng đầu trong thai kỳ",'<span class="badge badge-I">I</span>'],
+        ["Mục tiêu &lt;140/90 (không DBP &lt;80) trong thai kỳ",'<span class="badge badge-I">I</span>'],
+        ["Áp dụng mục tiêu 120–129 ở người &lt;85 tuổi không suy yếu nếu dung nạp",'<span class="badge badge-I">I</span>'],
+        ["Ưu tiên ACEi/ARB ở THA kèm ĐTĐ, đặc biệt có albumin niệu",'<span class="badge badge-I">I</span>'],
         ["Đốt thần kinh giao cảm thận cho THA kháng trị chọn lọc",'<span class="badge badge-IIb">IIb</span>'],
-        ["Chẹn beta là thuốc hàng đầu thường quy không kèm chỉ định khác",'<span class="badge badge-III">III</span>']
+        ["Chẹn beta là thuốc hàng đầu thường quy không kèm chỉ định khác",'<span class="badge badge-III">III</span>'],
+        ["ACEi/ARB trong thai kỳ",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"ESC Guidelines for Elevated Blood Pressure and Hypertension 2024 (Eur Heart J 2024); ACC/AHA/AAPA/ABC... 2017 Hypertension Guideline"
+  source:"ESC Guidelines for Elevated Blood Pressure and Hypertension 2024; 2025 AHA/ACC Guideline for High Blood Pressure in Adults; ESH 2023"
 },
 {
   spec:"tim_mach", id:"hf", emoji:"💔", short:"Suy tim", title:"Suy tim (Heart Failure)",
@@ -783,7 +905,7 @@ const diseases = [
 },
 {
   spec:"tim_mach", id:"acs", emoji:"❤️‍🔥", short:"HCVC", title:"Hội chứng vành cấp",
-  guidelines:["ESC 2023 (ACS)","AHA/ACC 2021 (đau ngực)"],
+  guidelines:["ESC 2023 (ACS)","AHA/ACC 2025 (ACS)"],
   sections:{
     dinh_nghia:`
       <p>Hội chứng vành cấp (ACS) bao gồm phổ bệnh do thiếu máu cơ tim cấp: <b>STEMI</b>, <b>NSTEMI</b> và <b>đau thắt ngực không ổn định</b>.</p>
@@ -931,7 +1053,7 @@ const diseases = [
 },
 {
   spec:"tim_mach", id:"lipid", emoji:"🧈", short:"Lipid", title:"Rối loạn lipid máu",
-  guidelines:["ESC/EAS 2019 (+ cập nhật phòng ngừa 2021)"],
+  guidelines:["ESC/EAS 2019 + Focused Update 2025","ACC/AHA 2026 Dyslipidemia"],
   sections:{
     dinh_nghia:`
       <p>Rối loạn lipid máu là bất thường nồng độ lipoprotein huyết tương (LDL-C, HDL-C, triglyceride, Lp(a)) làm tăng nguy cơ xơ vữa động mạch. <b>LDL-C</b> là mục tiêu điều trị chính.</p>
@@ -990,7 +1112,7 @@ const diseases = [
         ["Ngưng statin khi đạt đích LDL-C",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"2019 ESC/EAS Guidelines for the management of dyslipidaemias; 2021 ESC Guidelines on CVD prevention"
+  source:"2019 ESC/EAS Guidelines + 2025 ESC/EAS Focused Update on dyslipidaemias; 2026 ACC/AHA Dyslipidemia Guideline"
 },
 {
   spec:"tim_mach", id:"pad", emoji:"🦵", short:"BĐMNB", title:"Bệnh động mạch ngoại biên (PAD)",
@@ -1494,7 +1616,7 @@ const diseases = [
 },
 {
   spec:"noi_tiet", id:"dm", emoji:"🍬", short:"ĐTĐ", title:"Đái tháo đường & Tim mạch",
-  guidelines:["ESC 2023 (Diabetes & CVD)","ADA Standards of Care 2025"],
+  guidelines:["ESC 2023 (Diabetes & CVD)","ADA Standards of Care 2026","AHA/ACC/ADA/ASN 2026 CKM"],
   sections:{
     dinh_nghia:`
       <p>ĐTĐ típ 2 là bệnh chuyển hóa mạn tính do đề kháng insulin và/hoặc suy giảm tiết insulin, làm tăng mạnh nguy cơ bệnh tim mạch do xơ vữa và suy tim.</p>
@@ -1548,7 +1670,7 @@ const diseases = [
         ["Metformin bắt buộc dùng trước khi khởi động SGLT2i/GLP-1RA",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"2023 ESC Guidelines on diabetes and cardiovascular disease; ADA Standards of Care in Diabetes 2025"
+  source:"2023 ESC Guidelines on diabetes and cardiovascular disease; ADA Standards of Care in Diabetes 2026; 2026 AHA/ACC/ADA/ASN CKM Syndrome Guideline"
 },
 {
   spec:"noi_tiet", id:"obesity", emoji:"⚖️", short:"Béo phì", title:"Béo phì & Hội chứng chuyển hóa",
@@ -1723,7 +1845,7 @@ const diseases = [
         ["LABA đơn độc không phối hợp ICS",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"Global Initiative for Asthma (GINA) 2024 Global Strategy for Asthma Management and Prevention"
+  source:"Global Initiative for Asthma (GINA) 2025/2026 Global Strategy for Asthma Management and Prevention"
 },
 {
   spec:"ho_hap", id:"copd", emoji:"🫁", short:"COPD", title:"Bệnh phổi tắc nghẽn mạn tính",
@@ -1808,7 +1930,7 @@ const diseases = [
         ["ICS đơn trị không phối hợp giãn phế quản tác dụng dài",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"Global Initiative for Chronic Obstructive Lung Disease (GOLD) 2025 Report"
+  source:"Global Initiative for Chronic Obstructive Lung Disease (GOLD) 2026 Report"
 },
 {
   spec:"ho_hap", id:"cap", emoji:"🦠", short:"VPCĐ", title:"Viêm phổi cộng đồng",
@@ -3833,12 +3955,2322 @@ function toggleTheme(){
   document.getElementById('themeText').innerText = next === 'dark' ? 'Tối' : 'Sáng';
 }
 
+/* Tìm nhanh theo tên, short, id, guideline, hoặc từ khóa trong title */
+function runQuickSearch(q){
+  q = (q || '').trim().toLowerCase();
+  const wrap = document.getElementById('diseaseTabs');
+  if(!q){
+    renderDiseaseTabs();
+    return;
+  }
+  const matches = diseases.filter(d => {
+    const hay = [d.title, d.short, d.id, d.emoji, (d.guidelines||[]).join(' ')].join(' ').toLowerCase();
+    return hay.includes(q);
+  });
+  if(matches.length === 0){
+    wrap.innerHTML = `<div style="padding:12px;color:var(--text-secondary);font-size:13px;">Không tìm thấy bệnh phù hợp với “${q}”</div>`;
+    return;
+  }
+  // Nhóm theo chuyên khoa để dễ chọn
+  const bySpec = {};
+  matches.forEach(d => {
+    if(!bySpec[d.spec]) bySpec[d.spec] = [];
+    bySpec[d.spec].push(d);
+  });
+  let html = '';
+  Object.keys(bySpec).forEach(spec => {
+    const sp = specialties.find(s => s.id === spec);
+    html += `<div style="font-size:11px;font-weight:700;color:var(--text-secondary);padding:6px 4px 2px;">${sp ? sp.emoji+' '+sp.label : spec}</div>`;
+    html += bySpec[spec].map(d => `
+      <div class="d-tab ${d.id===activeDiseaseId?'active':''}" onclick="selectDisease('${d.id}');document.getElementById('quickSearch').value='';">
+        <span class="emoji">${d.emoji}</span>${d.short}
+      </div>`).join('');
+  });
+  wrap.innerHTML = html;
+}
+
+// Phím tắt: / hoặc Ctrl/Cmd+K mở ô tìm kiếm
+document.addEventListener('keydown', (e) => {
+  const tag = (e.target && e.target.tagName) || '';
+  if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+  if(e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')){
+    e.preventDefault();
+    const box = document.getElementById('quickSearch');
+    if(box){ box.focus(); box.select(); }
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   renderSpecialtyTabs();
   renderDiseaseTabs();
   renderSectionNav();
   renderDiseaseContent();
 });
+
+/* ========== THANG ĐIỂM MODULE ========== */
+const scalesData = [
+      {
+        id: "abcd2",
+        title: "ABCD2 Score (Cơn thiếu máu cục bộ não thoáng qua - TIA)",
+        subtitle: "Dự đoán nguy cơ đột quỵ trong 2, 7 và 90 ngày sau khi bị TIA.",
+        category: "than_kinh",
+        categoryName: "Thần kinh",
+        source: "Johnston SC et al. Lancet 2007 / MDCalc",
+        criteria: [
+          {
+            name: "A - Age (Tuổi)",
+            detail: "Tuổi bệnh nhân khi xuất hiện TIA",
+            options: [{ text: "< 60 tuổi (0 điểm)", score: 0 }, { text: "≥ 60 tuổi (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "B - Blood Pressure (Huyết áp)",
+            detail: "Huyết áp ban đầu đo được",
+            options: [{ text: "HATT < 140 hoặc HATTr < 90 mmHg (0 điểm)", score: 0 }, { text: "HATT ≥ 140 hoặc HATTr ≥ 90 mmHg (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "C - Clinical Features (Lâm sàng)",
+            detail: "Triệu chứng lâm sàng khi phát bệnh",
+            options: [
+              { text: "Triệu chứng khác (0 điểm)", score: 0 },
+              { text: "Rối loạn ngôn ngữ không kèm yếu tay chân (+1 điểm)", score: 1 },
+              { text: "Yếu nửa người (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "D1 - Duration (Thời gian kéo dài)",
+            detail: "Thời gian diễn ra triệu chứng TIA",
+            options: [
+              { text: "< 10 phút (0 điểm)", score: 0 },
+              { text: "10 - 59 phút (+1 điểm)", score: 1 },
+              { text: "≥ 60 phút (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "D2 - Diabetes (Đái tháo đường)",
+            detail: "Tiền sử Đái tháo đường",
+            options: [{ text: "Không (0 điểm)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          }
+        ],
+        evaluate: function(t) {
+          if (t <= 3) return { text: "Nguy cơ đột quỵ THẤP (1.0% trong 2 ngày). Có thể theo dõi ngoại trú.", color: "var(--success)" };
+          if (t <= 5) return { text: "Nguy cơ đột quỵ TRUNG BÌNH (4.1% trong 2 ngày). Cần nhập viện tầm soát nguyên nhân.", color: "var(--warning)" };
+          return { text: "Nguy cơ đột quỵ CAO (8.1% trong 2 ngày)! Bắt buộc nhập viện theo dõi sát và điều trị kháng đông/kháng tiểu cầu.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "alvarado",
+        title: "Alvarado Score (Viêm ruột thừa cấp - MANTRELS)",
+        subtitle: "Đánh giá khả năng bị viêm ruột thừa cấp ở bệnh nhân đau bụng cấp.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Ngoại khoa",
+        source: "Alvarado A. Ann Emerg Med 1986 / MDCalc",
+        criteria: [
+          {
+            name: "M - Migration (Đau di chuyển)",
+            detail: "Đau khu trú di chuyển xuống hố chậu phải",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "A - Anorexia (Chán ăn)",
+            detail: "Chán ăn hoặc có xeton trong nước tiểu",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "N - Nausea/Vomiting (Buồn nôn/Nôn)",
+            detail: "Cảm giác buồn nôn hoặc nôn ói",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "T - Tenderness (Ấn đau hố chậu phải)",
+            detail: "Dấu hiệu ấn đau khu trú HCP",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+2 điểm)", score: 2 }]
+          },
+          {
+            name: "R - Rebound pain (Phản ứng phản vệ/Đau dội)",
+            detail: "Dấu hiệu Blumberg dương tính",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "E - Elevated temp (Sốt ≥ 37.3°C)",
+            detail: "Nhiệt độ cơ thể tăng nhẹ",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "L - Leukocytosis (Tăng bạch cầu)",
+            detail: "Bạch cầu máu > 10.000 /mm³",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+2 điểm)", score: 2 }]
+          },
+          {
+            name: "S - Shift to left (Chuyển trái bạch cầu)",
+            detail: "Bạch cầu đa nhân trung tính Neutrophil > 75%",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          }
+        ],
+        evaluate: function(t) {
+          if (t <= 4) return { text: "Ít khả năng viêm ruột thừa (" + t + " điểm). Tìm nguyên nhân đau bụng khác.", color: "var(--success)" };
+          if (t <= 6) return { text: "Nghi ngờ viêm ruột thừa (" + t + " điểm). Theo dõi sát, chỉ định Siêu âm hoặc CT bụng.", color: "var(--warning)" };
+          return { text: "Khả năng rất cao viêm ruột thừa cấp (" + t + " điểm)! Mời hội chẩn Ngoại khoa phẫu thuật.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "apache2",
+        title: "APACHE II Score (Acute Physiology Assessment)",
+        subtitle: "Đánh giá 12 chỉ số sinh lý cấp tính + tuổi + bệnh mạn tính, tiên lượng tử vong ICU.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Hồi sức",
+        source: "Knaus WA et al. Crit Care Med 1985 / MDCalc",
+        criteria: [
+          {
+            name: "1. Nhiệt độ trực tràng (°C)",
+            detail: "Thân nhiệt đo tại trực tràng",
+            options: [
+              { text: "36 - 38.4°C (0 điểm)", score: 0 },
+              { text: "38.5 - 38.9°C (+1)", score: 1 },
+              { text: "34 - 35.9°C (+1)", score: 1 },
+              { text: "32 - 33.9°C (+2)", score: 2 },
+              { text: "39 - 40.9°C (+3)", score: 3 },
+              { text: "30 - 31.9°C (+3)", score: 3 },
+              { text: "≥ 41°C (+4)", score: 4 },
+              { text: "< 30°C (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "2. Huyết áp động mạch trung bình - MAP (mmHg)",
+            detail: "MAP = (HATT + 2×HATTr) / 3",
+            options: [
+              { text: "70 - 109 mmHg (0 điểm)", score: 0 },
+              { text: "110 - 129 mmHg (+2)", score: 2 },
+              { text: "50 - 69 mmHg (+2)", score: 2 },
+              { text: "130 - 159 mmHg (+3)", score: 3 },
+              { text: "≥ 160 mmHg (+4)", score: 4 },
+              { text: "< 50 mmHg (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "3. Nhịp tim (lần/phút)",
+            detail: "Tần số tim",
+            options: [
+              { text: "70 - 109 (0 điểm)", score: 0 },
+              { text: "110 - 139 (+2)", score: 2 },
+              { text: "55 - 69 (+2)", score: 2 },
+              { text: "140 - 179 (+3)", score: 3 },
+              { text: "40 - 54 (+3)", score: 3 },
+              { text: "≥ 180 (+4)", score: 4 },
+              { text: "< 40 (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "4. Nhịp thở (lần/phút)",
+            detail: "Tần số thở tự thở hoặc thở máy",
+            options: [
+              { text: "12 - 24 (0 điểm)", score: 0 },
+              { text: "25 - 34 (+1)", score: 1 },
+              { text: "10 - 11 (+1)", score: 1 },
+              { text: "6 - 9 (+2)", score: 2 },
+              { text: "35 - 49 (+3)", score: 3 },
+              { text: "≥ 50 (+4)", score: 4 },
+              { text: "< 6 (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "5. Oxy hóa máu (PaO2 hoặc A-aDO2)",
+            detail: "Chọn theo FiO2 đang thở",
+            options: [
+              { text: "FiO2 < 0.5, PaO2 > 70 mmHg (0)", score: 0 },
+              { text: "FiO2 < 0.5, PaO2 61-70 mmHg (+1)", score: 1 },
+              { text: "FiO2 < 0.5, PaO2 55-60 mmHg (+3)", score: 3 },
+              { text: "FiO2 < 0.5, PaO2 < 55 mmHg (+4)", score: 4 },
+              { text: "FiO2 ≥ 0.5, A-aDO2 < 200 (0)", score: 0 },
+              { text: "FiO2 ≥ 0.5, A-aDO2 200-349 (+2)", score: 2 },
+              { text: "FiO2 ≥ 0.5, A-aDO2 350-499 (+3)", score: 3 },
+              { text: "FiO2 ≥ 0.5, A-aDO2 ≥ 500 (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "6. pH động mạch",
+            detail: "Khí máu động mạch",
+            options: [
+              { text: "7.33 - 7.49 (0 điểm)", score: 0 },
+              { text: "7.5 - 7.59 (+1)", score: 1 },
+              { text: "7.25 - 7.32 (+2)", score: 2 },
+              { text: "7.6 - 7.69 (+3)", score: 3 },
+              { text: "7.15 - 7.24 (+3)", score: 3 },
+              { text: "≥ 7.7 (+4)", score: 4 },
+              { text: "< 7.15 (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "7. Natri máu (mmol/L)",
+            detail: "Xét nghiệm điện giải đồ",
+            options: [
+              { text: "130 - 149 (0 điểm)", score: 0 },
+              { text: "150 - 154 (+1)", score: 1 },
+              { text: "155 - 159 (+2)", score: 2 },
+              { text: "120 - 129 (+2)", score: 2 },
+              { text: "160 - 179 (+3)", score: 3 },
+              { text: "111 - 119 (+3)", score: 3 },
+              { text: "≥ 180 (+4)", score: 4 },
+              { text: "≤ 110 (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "8. Kali máu (mmol/L)",
+            detail: "Xét nghiệm điện giải đồ",
+            options: [
+              { text: "3.5 - 5.4 (0 điểm)", score: 0 },
+              { text: "5.5 - 5.9 (+1)", score: 1 },
+              { text: "3 - 3.4 (+1)", score: 1 },
+              { text: "2.5 - 2.9 (+2)", score: 2 },
+              { text: "6 - 6.9 (+3)", score: 3 },
+              { text: "≥ 7 (+4)", score: 4 },
+              { text: "< 2.5 (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "9. Creatinine máu (mg/dL)",
+            detail: "Điểm nhân đôi nếu có Suy thận cấp",
+            options: [
+              { text: "0.6 - 1.4 (0 điểm)", score: 0 },
+              { text: "1.5 - 1.9 (+2 điểm)", score: 2 },
+              { text: "2.0 - 3.4 (+3 điểm)", score: 3 },
+              { text: "≥ 3.5 (+4 điểm)", score: 4 },
+              { text: "< 0.6 (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "10. Hematocrit (%)",
+            detail: "Công thức máu",
+            options: [
+              { text: "30 - 45.9 (0 điểm)", score: 0 },
+              { text: "46 - 49.9 (+1)", score: 1 },
+              { text: "50 - 59.9 (+2)", score: 2 },
+              { text: "20 - 29.9 (+2)", score: 2 },
+              { text: "≥ 60 (+4)", score: 4 },
+              { text: "< 20 (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "11. Bạch cầu máu (x1000/mm³)",
+            detail: "Công thức máu",
+            options: [
+              { text: "3 - 14.9 (0 điểm)", score: 0 },
+              { text: "15 - 19.9 (+1)", score: 1 },
+              { text: "20 - 39.9 (+2)", score: 2 },
+              { text: "1 - 2.9 (+2)", score: 2 },
+              { text: "≥ 40 (+4)", score: 4 },
+              { text: "< 1 (+4)", score: 4 }
+            ]
+          },
+          {
+            name: "12. Điểm Glasgow (GCS)",
+            detail: "Điểm APACHE = 15 - GCS thực tế",
+            options: [
+              { text: "GCS = 15 (0 điểm)", score: 0 },
+              { text: "GCS = 13-14 (+2 điểm)", score: 2 },
+              { text: "GCS = 10-12 (+4 điểm)", score: 4 },
+              { text: "GCS = 7-9 (+7 điểm)", score: 7 },
+              { text: "GCS = 4-6 (+10 điểm)", score: 10 },
+              { text: "GCS = 3 (+12 điểm)", score: 12 }
+            ]
+          },
+          {
+            name: "13. Tuổi bệnh nhân",
+            detail: "Điểm cộng thêm theo nhóm tuổi",
+            options: [
+              { text: "≤ 44 tuổi (0 điểm)", score: 0 },
+              { text: "45 - 54 tuổi (+2 điểm)", score: 2 },
+              { text: "55 - 64 tuổi (+3 điểm)", score: 3 },
+              { text: "65 - 74 tuổi (+5 điểm)", score: 5 },
+              { text: "≥ 75 tuổi (+6 điểm)", score: 6 }
+            ]
+          },
+          {
+            name: "14. Bệnh mạn tính nặng / Suy giảm miễn dịch",
+            detail: "Suy tạng mạn tính (gan, tim, phổi, thận) hoặc suy giảm miễn dịch",
+            options: [
+              { text: "Không có (0 điểm)", score: 0 },
+              { text: "Có, sau phẫu thuật chương trình (+2 điểm)", score: 2 },
+              { text: "Có, không phẫu thuật hoặc sau mổ cấp cứu (+5 điểm)", score: 5 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 9) return { text: "APACHE II " + total + " điểm: Tỷ lệ tử vong tiên lượng thấp (~4%).", color: "var(--success)" };
+          if (total <= 14) return { text: "APACHE II " + total + " điểm: Tỷ lệ tử vong tiên lượng khoảng 8-15%.", color: "var(--warning)" };
+          if (total <= 19) return { text: "APACHE II " + total + " điểm: Tỷ lệ tử vong tiên lượng khoảng 15-25%.", color: "var(--warning)" };
+          if (total <= 24) return { text: "APACHE II " + total + " điểm: Tỷ lệ tử vong cao (~40%). Bệnh nhân nặng, cần hồi sức tích cực.", color: "var(--danger)" };
+          if (total <= 29) return { text: "APACHE II " + total + " điểm: Tỷ lệ tử vong rất cao (~55%)!", color: "var(--danger)" };
+          return { text: "APACHE II " + total + " điểm: Tiên lượng cực kỳ nguy kịch (tử vong > 75%)!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "apgar",
+        title: "APGAR Score (Đánh giá sức khỏe trẻ sơ sinh)",
+        subtitle: "Đánh giá tình trạng lâm sàng của trẻ sơ sinh ở phút thứ 1 và phút thứ 5 sau sinh.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Nhi khoa",
+        source: "Apgar V. Curr Res Anesth Analg 1953 / MDCalc",
+        criteria: [
+          {
+            name: "A - Appearance (Màu da)",
+            detail: "Sắc thái hồng hào hay tím tái",
+            options: [
+              { text: "Tím tái toàn thân / Xanh xao (0 điểm)", score: 0 },
+              { text: "Thân hồng, đầu chi tím (+1 điểm)", score: 1 },
+              { text: "Hồng hào toàn thân (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "P - Pulse (Nhịp tim)",
+            detail: "Tần số tim đập",
+            options: [
+              { text: "Không có nhịp tim (0 điểm)", score: 0 },
+              { text: "< 100 lần/phút (+1 điểm)", score: 1 },
+              { text: "≥ 100 lần/phút (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "G - Grimace (Phản xạ khi hút đờm/kích thích)",
+            detail: "Đáp ứng phản xạ đường thở",
+            options: [
+              { text: "Không có phản ứng (0 điểm)", score: 0 },
+              { text: "Nhăn mặt / Cử động nhẹ (+1 điểm)", score: 1 },
+              { text: "Khóc to, hắt hơi hoặc ho (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "A - Activity (Trương lực cơ)",
+            detail: "Mức độ co cử động cơ xương",
+            options: [
+              { text: "Mềm giơ, không cử động (0 điểm)", score: 0 },
+              { text: "Co nhẹ các chi (+1 điểm)", score: 1 },
+              { text: "Cử động chủ động, khỏe mạnh (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "R - Respiration (Nỗ lực hô hấp)",
+            detail: "Nhịp thở và tiếng khóc",
+            options: [
+              { text: "Không thở (0 điểm)", score: 0 },
+              { text: "Thở yếu, chậm, không đều (+1 điểm)", score: 1 },
+              { text: "Thở tốt, khóc to (+2 điểm)", score: 2 }
+            ]
+          }
+        ],
+        evaluate: function(t) {
+          if (t >= 7) return { text: "APGAR " + t + "/10 điểm: Trẻ bình thường, sức khỏe tốt.", color: "var(--success)" };
+          if (t >= 4) return { text: "APGAR " + t + "/10 điểm: Ngạt nhẹ - trung bình. Cần hỗ trợ hô hấp, kích thích, lau khô, thông đường thở.", color: "var(--warning)" };
+          return { text: "APGAR " + t + "/10 điểm: Ngạt nặng! Cần tiến hành hồi sức sơ sinh khẩn cấp (NRP) ngay lập tức!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "bisap",
+        title: "BISAP Score (Tiên lượng Viêm tụy cấp)",
+        subtitle: "Dự đoán mức độ nặng và nguy cơ tử vong trong Viêm tụy cấp trong 24h đầu nhập viện.",
+        category: "tieu_hoa",
+        categoryName: "Tiêu hóa / Gan",
+        source: "Wu BU et al. Gut 2008 / MDCalc",
+        criteria: [
+          {
+            name: "B - BUN > 25 mg/dL (Urea > 8.9 mmol/L)",
+            detail: "Nồng độ Urea máu tăng cao",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "I - Impaired mental status (Rối loạn tri giác)",
+            detail: "Thay đổi tri giác / GCS < 15",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "S - SIRS (Đáp ứng viêm hệ thống)",
+            detail: "Đủ ≥ 2 tiêu chuẩn SIRS",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "A - Age > 60 tuổi",
+            detail: "Tuổi bệnh nhân",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "P - Pleural effusion (Tràn dịch màng phổi)",
+            detail: "Phát hiện tràn dịch màng phổi trên X-quang/CT ngực",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 2) return { text: "BISAP " + total + " điểm: Nguy cơ tử vong thấp (< 2%). Điều trị nội khoa theo dõi thông thường.", color: "var(--success)" };
+          if (total === 3) return { text: "BISAP " + total + " điểm: Nguy cơ tử vong trung bình (~5-8%). Theo dõi sát biến chứng tạng.", color: "var(--warning)" };
+          return { text: "BISAP " + total + " điểm: Nguy cơ viêm tụy cấp nặng & tử vong cao (> 15-20%)! Cần nhập khoa Hồi sức tích cực (ICU).", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "bode",
+        title: "BODE Index (Chỉ số tiên lượng bệnh COPD)",
+        subtitle: "Tiên lượng tỷ lệ tử vong ở bệnh nhân Bệnh phổi tắc nghẽn mạn tính (COPD).",
+        category: "ho_hap",
+        categoryName: "Hô hấp",
+        source: "Celli BR et al. NEJM 2004 / MDCalc",
+        criteria: [
+          {
+            name: "B - BMI (Chỉ số khối cơ thể)",
+            detail: "Cân nặng (kg) / Chiều cao² (m²)",
+            options: [
+              { text: "> 21 kg/m² (0 điểm)", score: 0 },
+              { text: "≤ 21 kg/m² (+1 điểm)", score: 1 }
+            ]
+          },
+          {
+            name: "O - FEV1 (% dự đoán, tắc nghẽn đường thở)",
+            detail: "Đo bằng hô hấp ký sau test giãn phế quản",
+            options: [
+              { text: "≥ 65% (0 điểm)", score: 0 },
+              { text: "50 - 64% (+1 điểm)", score: 1 },
+              { text: "36 - 49% (+2 điểm)", score: 2 },
+              { text: "≤ 35% (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "D - mMRC (Mức độ khó thở)",
+            detail: "Thang điểm khó thở Modified Medical Research Council",
+            options: [
+              { text: "0-1: Khó thở khi gắng sức nặng (0 điểm)", score: 0 },
+              { text: "2: Đi chậm hơn người cùng tuổi vì khó thở (+1 điểm)", score: 1 },
+              { text: "3: Phải dừng lại để thở khi đi ~100m (+2 điểm)", score: 2 },
+              { text: "4: Khó thở khi thay đồ / không thể ra khỏi nhà (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "E - Khả năng gắng sức (Test đi bộ 6 phút)",
+            detail: "Quãng đường đi được trong 6 phút (6MWD)",
+            options: [
+              { text: "≥ 350 m (0 điểm)", score: 0 },
+              { text: "250 - 349 m (+1 điểm)", score: 1 },
+              { text: "150 - 249 m (+2 điểm)", score: 2 },
+              { text: "≤ 149 m (+3 điểm)", score: 3 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 2) return { text: "BODE Nhóm I (" + total + " điểm): Tỷ lệ sống 4 năm ~80%. Tiên lượng tốt.", color: "var(--success)" };
+          if (total <= 4) return { text: "BODE Nhóm II (" + total + " điểm): Tỷ lệ sống 4 năm ~67%.", color: "var(--warning)" };
+          if (total <= 6) return { text: "BODE Nhóm III (" + total + " điểm): Tỷ lệ sống 4 năm ~57%.", color: "var(--danger)" };
+          return { text: "BODE Nhóm IV (" + total + " điểm): Tỷ lệ sống 4 năm ~18%! Cân nhắc đánh giá ghép phổi.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "caprini",
+        title: "Caprini Risk Assessment (Dự phòng thuyên tắc VTE phẫu thuật)",
+        subtitle: "Phân tầng nguy cơ huyết khối tĩnh mạch sâu & thuyên tắc phổi ở bệnh nhân ngoại khoa.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Ngoại khoa",
+        source: "Caprini JA. Dis Mon 2005 / MDCalc",
+        criteria: [
+          {
+            name: "Yếu tố 1 điểm",
+            detail: "Tuổi 41-60, phẫu thuật nhỏ, BMI > 25, sưng chân, tĩnh mạch trĩ/giãn, đái tháo đường...",
+            options: [
+              { text: "Không có yếu tố nào (0 điểm)", score: 0 },
+              { text: "Có 1 yếu tố 1 điểm (+1 điểm)", score: 1 },
+              { text: "Có 2 yếu tố 1 điểm (+2 điểm)", score: 2 },
+              { text: "Có ≥ 3 yếu tố 1 điểm (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "Yếu tố 2 điểm",
+            detail: "Tuổi 61-74, phẫu thuật nội soi kéo dài, phẫu thuật lớn mở, ung thư, bó bột...",
+            options: [
+              { text: "Không có yếu tố nào (0 điểm)", score: 0 },
+              { text: "Có 1 yếu tố 2 điểm (+2 điểm)", score: 2 },
+              { text: "Có ≥ 2 yếu tố 2 điểm (+4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "Yếu tố 3 điểm",
+            detail: "Tuổi ≥ 75, tiền sử VTE, tiền sử gia đình VTE, đột biến Leiden factor V/Prothrombin...",
+            options: [
+              { text: "Không có yếu tố nào (0 điểm)", score: 0 },
+              { text: "Có 1 yếu tố 3 điểm (+3 điểm)", score: 3 },
+              { text: "Có ≥ 2 yếu tố 3 điểm (+6 điểm)", score: 6 }
+            ]
+          },
+          {
+            name: "Yếu tố 5 điểm",
+            detail: "Đột quỵ cấp (< 1 tháng), chấn thương đa cơ quan, thay khớp háng/gối, gãy xương chậu...",
+            options: [
+              { text: "Không có yếu tố nào (0 điểm)", score: 0 },
+              { text: "Có 1 yếu tố 5 điểm (+5 điểm)", score: 5 },
+              { text: "Có ≥ 2 yếu tố 5 điểm (+10 điểm)", score: 10 }
+            ]
+          }
+        ],
+        evaluate: function(t) {
+          if (t === 0) return { text: "Nguy cơ cực thấp (0 điểm). Vận động sớm sau mổ.", color: "var(--success)" };
+          if (t <= 2) return { text: "Nguy cơ thấp (1-2 điểm). Khuyên dùng tất áp lực cơ học (IPC/GCS).", color: "var(--success)" };
+          if (t <= 4) return { text: "Nguy cơ trung bình (3-4 điểm). Dùng LMWH/Heparin hoặc biện pháp cơ học.", color: "var(--warning)" };
+          return { text: "Nguy cơ rất cao (≥ 5 điểm)! Chỉ định bắt buộc kết hợp Thuốc kháng đông dự phòng (LMWH) + Biện pháp cơ học.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "centor",
+        title: "Centor / McIsaac Score (Viêm họng do Liên cầu)",
+        subtitle: "Đánh giá khả năng viêm họng do Liên cầu khuẩn nhóm A (Streptococcus).",
+        category: "ho_hap",
+        categoryName: "Hô hấp",
+        source: "McIsaac WJ et al. CMAJ 1998 / MDCalc",
+        criteria: [
+          {
+            name: "Sốt > 38°C",
+            detail: "Có tiền sử hoặc đo được sốt",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Không ho",
+            detail: "Vắng mặt triệu chứng ho",
+            options: [{ text: "Có ho (0)", score: 0 }, { text: "Không ho (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Hạch cổ trước sưng đau",
+            detail: "Sờ thấy hạch vùng cổ trước sưng, đau",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Amidan sưng, có mủ",
+            detail: "Sưng amidan kèm xuất tiết/mủ trắng",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Tuổi bệnh nhân (McIsaac hiệu chỉnh)",
+            detail: "Điều chỉnh điểm theo nhóm tuổi",
+            options: [
+              { text: "3 - 14 tuổi (+1 điểm)", score: 1 },
+              { text: "15 - 44 tuổi (0 điểm)", score: 0 },
+              { text: "≥ 45 tuổi (-1 điểm)", score: -1 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 0) return { text: "Centor " + total + " điểm: Nguy cơ liên cầu rất thấp (1-2.5%). Không dùng kháng sinh.", color: "var(--success)" };
+          if (total <= 2) return { text: "Centor " + total + " điểm: Nguy cơ thấp-trung bình (5-17%). Cân nhắc làm test nhanh Strep A.", color: "var(--warning)" };
+          if (total === 3) return { text: "Centor " + total + " điểm: Nguy cơ trung bình-cao (28-35%). Nên test nhanh / nuôi cấy swab họng.", color: "var(--warning)" };
+          return { text: "Centor " + total + " điểm: Nguy cơ cao (51-53%). Cân nhắc điều trị kháng sinh theo kinh nghiệm.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "chads2vasc",
+        title: "CHA₂DS₂-VASc Score (Đột quỵ trong Rung nhĩ)",
+        subtitle: "Đánh giá nguy cơ đột quỵ tắc mạch ở bệnh nhân Rung Nhĩ không do bệnh van tim.",
+        category: "tim_mach",
+        categoryName: "Tim mạch",
+        source: "European Society of Cardiology (ESC) / MDCalc",
+        criteria: [
+          {
+            name: "C - Congestive Heart Failure",
+            detail: "Tiền sử Suy tim hoặc LVEF ≤ 40%",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "H - Hypertension",
+            detail: "Tiền sử Tăng huyết áp",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "A₂ - Age ≥ 75",
+            detail: "Tuổi từ 75 trở lên",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+2 điểm)", score: 2 }]
+          },
+          {
+            name: "D - Diabetes",
+            detail: "Tiền sử Đái tháo đường",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "S₂ - Stroke / TIA",
+            detail: "Tiền sử Đột quỵ / TIA / Tắc mạch hệ thống",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+2 điểm)", score: 2 }]
+          },
+          {
+            name: "V - Vascular Disease",
+            detail: "Tiền sử Bệnh mạch vành, Bệnh ĐM ngoại biên, Xơ vữa ĐM chủ",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "A - Age 65–74",
+            detail: "Tuổi từ 65 đến 74",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Sc - Sex Category (Nữ)",
+            detail: "Giới tính Nữ",
+            options: [{ text: "Nam (0)", score: 0 }, { text: "Nữ (+1 điểm)", score: 1 }]
+          }
+        ],
+        evaluate: function(total) {
+          if (total === 0) return { text: "Nguy cơ rất thấp (0 điểm): Không bắt buộc dùng kháng đông.", color: "var(--success)" };
+          if (total === 1) return { text: "Nguy cơ trung bình (1 điểm ở Nam): Cân nhắc dùng thuốc kháng đông đường uống (NOAC/VKA).", color: "var(--warning)" };
+          return { text: "Nguy cơ cao (" + total + " điểm): Chỉ định bắt buộc dùng thuốc kháng đông đường uống (NOAC/VKA)!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "child_pugh",
+        title: "Child-Pugh Score (Đánh giá mức độ xơ gan)",
+        subtitle: "Phân loại mức độ suy chức năng gan và tiên lượng tỷ lệ sống còn.",
+        category: "tieu_hoa",
+        categoryName: "Tiêu hóa / Gan",
+        source: "Pugh RN et al. Br J Surg 1973 / MDCalc",
+        criteria: [
+          {
+            name: "Bilirubin toàn phần (µmol/L)",
+            detail: "Nồng độ Bilirubin trong máu",
+            options: [
+              { text: "< 35 µmol/L (< 2.0 mg/dL) (+1 điểm)", score: 1 },
+              { text: "35 - 50 µmol/L (2.0 - 3.0 mg/dL) (+2 điểm)", score: 2 },
+              { text: "> 50 µmol/L (> 3.0 mg/dL) (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "Albumin huyết thanh (g/L)",
+            detail: "Nồng độ Albumin trong máu",
+            options: [
+              { text: "> 35 g/L (> 3.5 g/dL) (+1 điểm)", score: 1 },
+              { text: "28 - 35 g/L (2.8 - 3.5 g/dL) (+2 điểm)", score: 2 },
+              { text: "< 28 g/L (< 2.8 g/dL) (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "INR / Thời gian Prothrombin",
+            detail: "Chỉ số đông máu INR",
+            options: [
+              { text: "INR < 1.7 (+1 điểm)", score: 1 },
+              { text: "INR 1.7 - 2.3 (+2 điểm)", score: 2 },
+              { text: "INR > 2.3 (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "Báng bụng (Ascites)",
+            detail: "Mức độ dịch cổ trướng",
+            options: [
+              { text: "Không có (+1 điểm)", score: 1 },
+              { text: "Mức độ nhẹ / Đã kiểm soát bằng thuốc (+2 điểm)", score: 2 },
+              { text: "Mức độ vừa đến nhiều / Kháng trị (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "Bệnh脑 gan (Encephalopathy)",
+            detail: "Mức độ hôn mê gan",
+            options: [
+              { text: "Không có (+1 điểm)", score: 1 },
+              { text: "Độ 1 - 2 (Lẫn lộn nhẹ, rối loạn giấc ngủ) (+2 điểm)", score: 2 },
+              { text: "Độ 3 - 4 (U ám, hôn mê) (+3 điểm)", score: 3 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 6) return { text: "Child-Pugh A (" + total + " điểm): Bệnh gan bù tốt. Tiên lượng sống 1 năm ~100%, 2 năm ~85%.", color: "var(--success)" };
+          if (total <= 9) return { text: "Child-Pugh B (" + total + " điểm): Tổn thương chức năng gan vừa. Tiên lượng sống 1 năm ~80%, 2 năm ~60%.", color: "var(--warning)" };
+          return { text: "Child-Pugh C (" + total + " điểm): Xơ gan mất bù nặng. Tiên lượng sống 1 năm ~45%, 2 năm ~35%. Cân nhắc ghép gan!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "ckd_epi",
+        title: "CKD-EPI & Phân độ Bệnh thận mạn (KDIGO)",
+        subtitle: "Phân tầng giai đoạn suy thận mạn theo eGFR và chỉ số Albumin niệu.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Hồi sức",
+        source: "KDIGO Guidelines / MDCalc",
+        criteria: [
+          {
+            name: "Mức lọc cầu thận eGFR (mL/min/1.73m²)",
+            detail: "Chọn khoảng eGFR tính theo công thức CKD-EPI",
+            options: [
+              { text: "eGFR ≥ 90 (Bình thường / Tăng) (G1)", score: 1 },
+              { text: "eGFR 60 - 89 (Giảm nhẹ) (G2)", score: 2 },
+              { text: "eGFR 45 - 59 (Giảm nhẹ đến trung bình) (G3a)", score: 3 },
+              { text: "eGFR 30 - 44 (Giảm trung bình đến nặng) (G3b)", score: 4 },
+              { text: "eGFR 15 - 29 (Giảm nặng) (G4)", score: 5 },
+              { text: "eGFR < 15 (Suy thận giai đoạn cuối) (G5)", score: 6 }
+            ]
+          },
+          {
+            name: "Mức độ Albumin niệu / Tỉ lệ ACR",
+            detail: "Tỷ lệ Albumin / Creatinine nước tiểu",
+            options: [
+              { text: "A1: < 30 mg/g (< 3 mg/mmol) - Bình thường", score: 0 },
+              { text: "A2: 30 - 300 mg/g (3 - 30 mg/mmol) - Tăng vừa", score: 10 },
+              { text: "A3: > 300 mg/g (> 30 mg/mmol) - Tăng nặng", score: 20 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          const egfrStage = total % 10;
+          if (egfrStage === 1) return { text: "KDIGO G1: eGFR bình thường (≥ 90). Kiểm soát huyết áp & biến chứng nếu có.", color: "var(--success)" };
+          if (egfrStage === 2) return { text: "KDIGO G2: Giảm nhẹ eGFR (60-89). Theo dõi tiến triển 6-12 tháng/lần.", color: "var(--success)" };
+          if (egfrStage === 3) return { text: "KDIGO G3a: Giảm nhẹ-trung bình (45-59). Cần điều chỉnh liều thuốc thải qua thận.", color: "var(--warning)" };
+          if (egfrStage === 4) return { text: "KDIGO G3b: Giảm trung bình-nặng (30-44). Khám chuyên khoa Thận, phòng ngừa biến chứng.", color: "var(--warning)" };
+          if (egfrStage === 5) return { text: "KDIGO G4: Giảm nặng (15-29). Chuẩn bị liệu pháp thay thế thận (tạo cầu nối AVF).", color: "var(--danger)" };
+          return { text: "KDIGO G5: Suy thận mạn giai đoạn cuối (eGFR < 15)! Bắt buộc chạy thận nhân tạo/lọc màng bụng/ghép thận.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "curb65",
+        title: "CURB-65 Score (Mức độ nặng Viêm phổi cộng đồng)",
+        subtitle: "Đánh giá mức độ nặng và định hướng nơi điều trị bệnh nhân Viêm phổi cộng đồng.",
+        category: "ho_hap",
+        categoryName: "Hô hấp / Cấp cứu",
+        source: "Lim WS et al. Thorax 2003 / MDCalc",
+        criteria: [
+          {
+            name: "C - Confusion (Lẫn lộn tri giác)",
+            detail: "Thay đổi tri giác cấp tính / GCS < 15",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "U - Urea máu > 7 mmol/L",
+            detail: "BUN > 19 mg/dL",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "R - Respiratory Rate (Nhịp thở)",
+            detail: "Nhịp thở ≥ 30 lần/phút",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "B - Blood Pressure (Huyết áp)",
+            detail: "HATT < 90 mmHg hoặc HATTr ≤ 60 mmHg",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "65 - Tuổi ≥ 65",
+            detail: "Bệnh nhân từ 65 tuổi trở lên",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 1) return { text: "Viêm phổi nhẹ (" + total + " điểm): Tỷ lệ tử vong < 1.5%. Điều trị ngoại trú.", color: "var(--success)" };
+          if (total === 2) return { text: "Viêm phổi trung bình (" + total + " điểm): Tỷ lệ tử vong ~9.2%. Nhập viện điều trị nội trú.", color: "var(--warning)" };
+          return { text: "Viêm phổi nặng (" + total + " điểm): Tỷ lệ tử vong cao (> 22%). Nhập viện điều trị, cân nhắc ICU nếu ≥ 3 điểm!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "gcs",
+        title: "Glasgow Coma Scale (GCS - Thang điểm Hôn mê)",
+        subtitle: "Đánh giá mức độ hôn mê và tri giác ở bệnh nhân cấp cứu / chấn thương sọ não.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Thần kinh",
+        source: "Teasdale G, Jennett B. Lancet 1974 / MDCalc",
+        criteria: [
+          {
+            name: "Mở mắt (Eye Opening - E)",
+            detail: "Đáp ứng mở mắt của bệnh nhân",
+            options: [
+              { text: "Tự nhiên (+4 điểm)", score: 4 },
+              { text: "Khi gọi / nghe tiếng nói (+3 điểm)", score: 3 },
+              { text: "Khi kích thích đau (+2 điểm)", score: 2 },
+              { text: "Không đáp ứng (+1 điểm)", score: 1 }
+            ]
+          },
+          {
+            name: "Đáp ứng lời nói (Verbal - V)",
+            detail: "Khả năng định hướng và giao tiếp",
+            options: [
+              { text: "Trả lời đúng, định hướng tốt (+5 điểm)", score: 5 },
+              { text: "Lẫn lộn, không định hướng (+4 điểm)", score: 4 },
+              { text: "Từ ngữ không phù hợp (+3 điểm)", score: 3 },
+              { text: "Âm thanh không rõ từ (+2 điểm)", score: 2 },
+              { text: "Không đáp ứng (+1 điểm)", score: 1 }
+            ]
+          },
+          {
+            name: "Đáp ứng vận động (Motor - M)",
+            detail: "Phản ứng vận động với lệnh hoặc kích thích đau",
+            options: [
+              { text: "Làm theo lệnh (+6 điểm)", score: 6 },
+              { text: "Đáp ứng đúng vị trí đau (+5 điểm)", score: 5 },
+              { text: "Rút lui khi đau (+4 điểm)", score: 4 },
+              { text: "Gấp cứng vỏ brain (+3 điểm)", score: 3 },
+              { text: "Duỗi cứng mất não (+2 điểm)", score: 2 },
+              { text: "Không đáp ứng (+1 điểm)", score: 1 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total >= 14) return { text: "Tri giác tỉnh / Chấn thương sọ não nhẹ (" + total + "/15 điểm)", color: "var(--success)" };
+          if (total >= 9) return { text: "Rối loạn tri giác / Tổn thương trung bình (" + total + "/15 điểm)", color: "var(--warning)" };
+          return { text: "Hôn mê nặng (GCS ≤ 8): Cần cân nhắc đặt nội khí quản bảo vệ đường thở khẩn cấp!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "gbs",
+        title: "Glasgow-Blatchford Score (GBS - Xuất huyết tiêu hóa)",
+        subtitle: "Phân tầng nguy cơ cần can thiệp nội soi/truyền máu ở bệnh nhân Xuất huyết tiêu hóa trên.",
+        category: "tieu_hoa",
+        categoryName: "Tiêu hóa / Cấp cứu",
+        source: "Blatchford O et al. Lancet 2000 / MDCalc",
+        criteria: [
+          {
+            name: "Urea máu (BUN)",
+            detail: "Nồng độ Urea trong xét nghiệm máu",
+            options: [
+              { text: "< 6.5 mmol/L (0 điểm)", score: 0 },
+              { text: "6.5 - 7.9 mmol/L (+2 điểm)", score: 2 },
+              { text: "8.0 - 9.9 mmol/L (+3 điểm)", score: 3 },
+              { text: "10.0 - 24.9 mmol/L (+4 điểm)", score: 4 },
+              { text: "≥ 25.0 mmol/L (+6 điểm)", score: 6 }
+            ]
+          },
+          {
+            name: "Hemoglobin (Nam)",
+            detail: "Chỉ số Hemoglobin cho Bệnh nhân Nam",
+            options: [
+              { text: "Nam: ≥ 13.0 g/dL (0 điểm)", score: 0 },
+              { text: "Nam: 12.0 - 12.9 g/dL (+1 điểm)", score: 1 },
+              { text: "Nam: 10.0 - 11.9 g/dL (+3 điểm)", score: 3 },
+              { text: "Nam: < 10.0 g/dL (+6 điểm)", score: 6 }
+            ]
+          },
+          {
+            name: "Hemoglobin (Nữ)",
+            detail: "Chỉ số Hemoglobin cho Bệnh nhân Nữ",
+            options: [
+              { text: "Nữ: ≥ 12.0 g/dL (0 điểm)", score: 0 },
+              { text: "Nữ: 10.0 - 11.9 g/dL (+3 điểm)", score: 3 },
+              { text: "Nữ: < 10.0 g/dL (+6 điểm)", score: 6 }
+            ]
+          },
+          {
+            name: "Huyết áp tâm thu (mmHg)",
+            detail: "Đo tư thế nằm lúc nhập viện",
+            options: [
+              { text: "≥ 110 mmHg (0 điểm)", score: 0 },
+              { text: "100 - 109 mmHg (+1 điểm)", score: 1 },
+              { text: "90 - 99 mmHg (+2 điểm)", score: 2 },
+              { text: "< 90 mmHg (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "Nhịp tim (Mạch)",
+            detail: "Tần số tim",
+            options: [
+              { text: "< 100 lần/phút (0 điểm)", score: 0 },
+              { text: "≥ 100 lần/phút (+1 điểm)", score: 1 }
+            ]
+          },
+          {
+            name: "Đi tiêu phân đen (Melena)",
+            detail: "Có triệu chứng đi tiêu phân đen",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+1 điểm)", score: 1 }
+            ]
+          },
+          {
+            name: "Tiền sử Ngất (Syncope)",
+            detail: "Ngất trước hoặc khi nhập viện",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "Tiền sử Bệnh gan mạn / Suy tim",
+            detail: "Tiền sử Xơ gan hoặc Suy tim",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+2 điểm)", score: 2 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total === 0) return { text: "Nguy cơ cực thấp (0 điểm): Có thể cho điều trị ngoại trú an toàn không cần nội soi cấp.", color: "var(--success)" };
+          if (total <= 1) return { text: "Nguy cơ thấp (" + total + " điểm): Cân nhắc theo dõi ngắn hạn hoặc nội soi chương trình.", color: "var(--warning)" };
+          return { text: "Nguy cơ cao (" + total + " điểm): Bắt buộc nhập viện hồi sức, truyền máu hoặc can thiệp nội soi khẩn!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "grace",
+        title: "GRACE Risk Score (Hội chứng mạch vành cấp - ACS)",
+        subtitle: "Đánh giá nguy cơ tử vong trong viện và 6 tháng ở bệnh nhân ACS.",
+        category: "tim_mach",
+        categoryName: "Tim mạch",
+        source: "Granger CB et al. Arch Intern Med 2003 / MDCalc",
+        criteria: [
+          {
+            name: "Tuổi (Age)",
+            detail: "Tuổi của bệnh nhân",
+            options: [
+              { text: "< 40 tuổi (0 điểm)", score: 0 },
+              { text: "40 - 49 tuổi (+18 điểm)", score: 18 },
+              { text: "50 - 59 tuổi (+36 điểm)", score: 36 },
+              { text: "60 - 69 tuổi (+55 điểm)", score: 55 },
+              { text: "70 - 79 tuổi (+73 điểm)", score: 73 },
+              { text: "≥ 80 tuổi (+91 điểm)", score: 91 }
+            ]
+          },
+          {
+            name: "Nhịp tim lúc nhập viện",
+            detail: "Mạch (lần/phút)",
+            options: [
+              { text: "< 70 lần/phút (0)", score: 0 },
+              { text: "70 - 89 lần/phút (+7)", score: 7 },
+              { text: "90 - 109 lần/phút (+13)", score: 13 },
+              { text: "110 - 149 lần/phút (+23)", score: 23 },
+              { text: "≥ 150 lần/phút (+36)", score: 36 }
+            ]
+          },
+          {
+            name: "Huyết áp tâm thu",
+            detail: "HATT (mmHg)",
+            options: [
+              { text: "≥ 200 mmHg (0)", score: 0 },
+              { text: "160 - 199 mmHg (+10)", score: 10 },
+              { text: "140 - 159 mmHg (+14)", score: 14 },
+              { text: "120 - 139 mmHg (+21)", score: 21 },
+              { text: "100 - 119 mmHg (+28)", score: 28 },
+              { text: "< 100 mmHg (+53)", score: 53 }
+            ]
+          },
+          {
+            name: "Creatinine máu",
+            detail: "Nồng độ Creatinine (mg/dL)",
+            options: [
+              { text: "0 - 0.39 mg/dL (1 điểm)", score: 1 },
+              { text: "0.4 - 0.79 mg/dL (4 điểm)", score: 4 },
+              { text: "0.8 - 1.19 mg/dL (7 điểm)", score: 7 },
+              { text: "1.2 - 1.59 mg/dL (10 điểm)", score: 10 },
+              { text: "1.6 - 1.99 mg/dL (13 điểm)", score: 13 },
+              { text: "2.0 - 3.99 mg/dL (21 điểm)", score: 21 },
+              { text: "≥ 4.0 mg/dL (28 điểm)", score: 28 }
+            ]
+          },
+          {
+            name: "Phân loại Suy tim Killip",
+            detail: "Mức độ suy tim lâm sàng",
+            options: [
+              { text: "Killip I: Không suy tim (0)", score: 0 },
+              { text: "Killip II: Răng ẩm đáy phổi, T3 (+20)", score: 20 },
+              { text: "Killip III: Phù phổi cấp (+39)", score: 39 },
+              { text: "Killip IV: Sốc tim (+59)", score: 59 }
+            ]
+          },
+          {
+            name: "Yếu tố bổ sung",
+            detail: "Dấu hiệu kèm theo",
+            options: [
+              { text: "Không có yếu tố dưới (0)", score: 0 },
+              { text: "Ngưng tim lúc nhập viện (+39)", score: 39 },
+              { text: "ST chênh xuống/chênh lên trên ECG (+28)", score: 28 },
+              { text: "Tăng Men tim Troponin/CK-MB (+14)", score: 14 }
+            ]
+          }
+        ],
+        evaluate: function(t) {
+          if (t <= 108) return { text: "Nguy cơ tử vong THẤP (< 1%, " + t + " điểm). Cân nhắc can thiệp mạch vành chương trình.", color: "var(--success)" };
+          if (t <= 140) return { text: "Nguy cơ TRUNG BÌNH (1-3%, " + t + " điểm). Chỉ định chụp & can thiệp mạch vành trong 24h.", color: "var(--warning)" };
+          return { text: "Nguy cơ CAO (> 3% tử vong trong viện, " + t + " điểm)! Bắt buộc chụp & can thiệp mạch vành khẩn cấp (< 2h).", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "hasbled",
+        title: "HAS-BLED Score (Nguy cơ chảy máu khi dùng kháng đông)",
+        subtitle: "Đánh giá nguy cơ chảy máu 1 năm ở bệnh nhân dùng thuốc chống đông.",
+        category: "tim_mach",
+        categoryName: "Tim mạch",
+        source: "Pisters R et al. Chest 2010 / MDCalc",
+        criteria: [
+          {
+            name: "H - Hypertension",
+            detail: "HATT không kiểm soát được > 160 mmHg",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "A - Abnormal Renal / Liver Function",
+            detail: "Bệnh gan mạn hoặc Suy thận mạn",
+            options: [
+              { text: "Bình thường (0)", score: 0 },
+              { text: "Suy thận HOẶC Suy gan (+1 điểm)", score: 1 },
+              { text: "Cả Suy thận VÀ Suy gan (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "S - Stroke History",
+            detail: "Tiền sử Đột quỵ",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "B - Bleeding History",
+            detail: "Tiền sử chảy máu nặng hoặc cơ địa xuất huyết",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "L - Labile INR",
+            detail: "INR không ổn định (nếu dùng Warfarin)",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "E - Elderly",
+            detail: "Tuổi > 65",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "D - Drugs / Alcohol",
+            detail: "Dùng thuốc tăng xuất huyết (NSAIDs, Antiplatelets) hoặc lạm dụng rượu",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Dùng thuốc HOẶC Rượu (+1 điểm)", score: 1 },
+              { text: "Cả Thuốc VÀ Rượu (+2 điểm)", score: 2 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 2) return { text: "Nguy cơ xuất huyết thấp-trung bình (" + total + " điểm). Tiếp tục dùng kháng đông.", color: "var(--success)" };
+          return { text: "Nguy cơ xuất huyết cao (" + total + " điểm): Cần điều chỉnh các yếu tố nguy cơ chảy máu và theo dõi sát!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "heart",
+        title: "HEART Score (Đau ngực cấp tại Cấp cứu)",
+        subtitle: "Phân tầng nguy cơ biến cố tim mạch cấp (MACE) trong 6 tuần ở bệnh nhân đau ngực.",
+        category: "tim_mach",
+        categoryName: "Tim mạch / Cấp cứu",
+        source: "Six AJ et al. Neth Heart J 2008 / MDCalc",
+        criteria: [
+          {
+            name: "H - History (Bệnh sử đau ngực)",
+            detail: "Đặc điểm cơn đau ngực",
+            options: [
+              { text: "Ít nghi ngờ đau ngực do mạch vành (0 điểm)", score: 0 },
+              { text: "Nghi ngờ trung bình (+1 điểm)", score: 1 },
+              { text: "Rất nghi ngờ đau ngực kiểu mạch vành (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "E - ECG (Điện tâm đồ)",
+            detail: "Biến đổi trên ECG 12 chuyển đạo",
+            options: [
+              { text: "Bình thường (0 điểm)", score: 0 },
+              { text: "Tái cực không đặc hiệu / LBBB cũ / Nhánh trễ (+1 điểm)", score: 1 },
+              { text: "ST chênh xuống rõ / T âm sâu (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "A - Age (Tuổi)",
+            detail: "Tuổi bệnh nhân",
+            options: [
+              { text: "< 45 tuổi (0 điểm)", score: 0 },
+              { text: "45 - 64 tuổi (+1 điểm)", score: 1 },
+              { text: "≥ 65 tuổi (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "R - Risk Factors (Yếu tố nguy cơ mạch vành)",
+            detail: "THA, ĐTĐ, RLNMM, Béo phì, Hút thuốc, Tiền sử gia đình",
+            options: [
+              { text: "Không có yếu tố nguy cơ (0 điểm)", score: 0 },
+              { text: "Có 1 hoặc 2 yếu tố nguy cơ (+1 điểm)", score: 1 },
+              { text: "≥ 3 yếu tố nguy cơ HOẶC có bệnh mạch vành (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "T - Troponin (Men tim)",
+            detail: "Nồng độ Troponin ban đầu",
+            options: [
+              { text: "Trong giới hạn bình thường (0 điểm)", score: 0 },
+              { text: "Tăng cao 1-3 lần giới hạn trên (+1 điểm)", score: 1 },
+              { text: "Tăng cao > 3 lần giới hạn trên (+2 điểm)", score: 2 }
+            ]
+          }
+        ],
+        evaluate: function(t) {
+          if (t <= 3) return { text: "Nguy cơ MACE thấp (0.9-1.7%, " + t + " điểm). Có thể cho xuất viện an toàn.", color: "var(--success)" };
+          if (t <= 6) return { text: "Nguy cơ MACE trung bình (12-16%, " + t + " điểm). Cần nhập viện theo dõi & thử lại Troponin.", color: "var(--warning)" };
+          return { text: "Nguy cơ MACE cao (50-65%, " + t + " điểm)! Bắt buộc nhập viện điều trị can thiệp mạch vành sớm.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "meld",
+        title: "MELD Score (Model for End-Stage Liver Disease)",
+        subtitle: "Đánh giá mức độ nặng bệnh gan giai đoạn cuối và ưu tiên ghép gan.",
+        category: "tieu_hoa",
+        categoryName: "Tiêu hóa / Gan",
+        source: "Malinchoc M et al. Hepatology 2000 / UNOS / MDCalc",
+        criteria: [
+          {
+            name: "Bilirubin máu",
+            detail: "Nồng độ Bilirubin toàn phần (mg/dL)",
+            options: [
+              { text: "< 1.0 mg/dL (1 điểm)", score: 1 },
+              { text: "1.0 - 2.0 mg/dL (5 điểm)", score: 5 },
+              { text: "2.1 - 5.0 mg/dL (10 điểm)", score: 10 },
+              { text: "> 5.0 mg/dL (18 điểm)", score: 18 }
+            ]
+          },
+          {
+            name: "Creatinine máu",
+            detail: "Đánh giá chức năng thận",
+            options: [
+              { text: "< 1.0 mg/dL (1 điểm)", score: 1 },
+              { text: "1.0 - 2.0 mg/dL (6 điểm)", score: 6 },
+              { text: "2.1 - 3.0 mg/dL (11 điểm)", score: 11 },
+              { text: "> 3.0 mg/dL (hoặc đang lọc máu) (15 điểm)", score: 15 }
+            ]
+          },
+          {
+            name: "Chỉ số đông máu (INR)",
+            detail: "Tỷ lệ thời gian Prothrombin",
+            options: [
+              { text: "INR < 1.5 (2 điểm)", score: 2 },
+              { text: "INR 1.5 - 2.5 (8 điểm)", score: 8 },
+              { text: "INR > 2.5 (14 điểm)", score: 14 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total < 10) return { text: "Điểm MELD thấp (" + total + " điểm): Tỷ lệ tử vong trong 3 tháng < 2%.", color: "var(--success)" };
+          if (total <= 19) return { text: "Điểm MELD trung bình (" + total + " điểm): Tỷ lệ tử vong 3 tháng ~6-20%. Theo dõi sát.", color: "var(--warning)" };
+          return { text: "Điểm MELD cao (" + total + " điểm): Nguy cơ tử vong 3 tháng rất cao (> 50%)! Đưa vào danh sách ghép gan ưu tiên.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "news2",
+        title: "NEWS2 (National Early Warning Score 2)",
+        subtitle: "Cảnh báo sớm tình trạng nặng lên và nguy cơ tử vong ở bệnh nhân nội trú.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Hồi sức",
+        source: "Royal College of Physicians (RCP UK) / MDCalc",
+        criteria: [
+          {
+            name: "Nhịp thở (lần/phút)",
+            detail: "Tần số thở",
+            options: [
+              { text: "12 - 20 (0 điểm)", score: 0 },
+              { text: "9 - 11 (+1 điểm)", score: 1 },
+              { text: "21 - 24 (+2 điểm)", score: 2 },
+              { text: "≤ 8 (+3 điểm)", score: 3 },
+              { text: "≥ 25 (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "SpO2 (%) - Thang chuẩn",
+            detail: "Độ bão hòa oxy máu mao mạch",
+            options: [
+              { text: "≥ 96% (0 điểm)", score: 0 },
+              { text: "94 - 95% (+1 điểm)", score: 1 },
+              { text: "92 - 93% (+2 điểm)", score: 2 },
+              { text: "≤ 91% (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "Thở oxy hỗ trợ",
+            detail: "Đang thở khí trời hay hỗ trợ oxy",
+            options: [
+              { text: "Khí trời (0 điểm)", score: 0 },
+              { text: "Có thở oxy hỗ trợ (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "Huyết áp tâm thu (mmHg)",
+            detail: "HATT đo được",
+            options: [
+              { text: "111 - 219 (0 điểm)", score: 0 },
+              { text: "101 - 110 (+1 điểm)", score: 1 },
+              { text: "91 - 100 (+2 điểm)", score: 2 },
+              { text: "≤ 90 (+3 điểm)", score: 3 },
+              { text: "≥ 220 (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "Nhịp tim (lần/phút)",
+            detail: "Tần số tim",
+            options: [
+              { text: "51 - 90 (0 điểm)", score: 0 },
+              { text: "41 - 50 (+1 điểm)", score: 1 },
+              { text: "91 - 110 (+1 điểm)", score: 1 },
+              { text: "111 - 130 (+2 điểm)", score: 2 },
+              { text: "≤ 40 (+3 điểm)", score: 3 },
+              { text: "≥ 131 (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "Mức độ tri giác (AVPU)",
+            detail: "Alert - Voice - Pain - Unresponsive",
+            options: [
+              { text: "Tỉnh táo - Alert (0 điểm)", score: 0 },
+              { text: "Lú lẫn mới / Đáp ứng lời nói - đau - không đáp ứng (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "Thân nhiệt (°C)",
+            detail: "Nhiệt độ cơ thể",
+            options: [
+              { text: "36.1 - 38.0 (0 điểm)", score: 0 },
+              { text: "35.1 - 36.0 (+1 điểm)", score: 1 },
+              { text: "38.1 - 39.0 (+1 điểm)", score: 1 },
+              { text: "≥ 39.1 (+2 điểm)", score: 2 },
+              { text: "≤ 35.0 (+3 điểm)", score: 3 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total === 0) return { text: "NEWS2 = 0 điểm: Nguy cơ thấp. Theo dõi thường quy 12h/lần.", color: "var(--success)" };
+          if (total <= 4) return { text: "NEWS2 = " + total + " điểm: Nguy cơ thấp. Đánh giá lại theo quy trình khoa (4-6h/lần).", color: "var(--success)" };
+          if (total <= 6) return { text: "NEWS2 = " + total + " điểm: Nguy cơ trung bình! Cần Bác sĩ đánh giá khẩn trong 1h.", color: "var(--warning)" };
+          return { text: "NEWS2 = " + total + " điểm: Nguy cơ cao! Khẩn cấp báo Bác sĩ hồi sức/ICU đánh giá can thiệp ngay lập tức.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "nihss",
+        title: "NIHSS (National Institutes of Health Stroke Scale)",
+        subtitle: "Đánh giá đầy đủ 11 mục khuyết tật thần kinh trong đột quỵ não cấp.",
+        category: "than_kinh",
+        categoryName: "Thần kinh / Cấp cứu",
+        source: "Brott T et al. Stroke 1989 / AHA/ASA / MDCalc",
+        criteria: [
+          {
+            name: "1a. Mức độ ý thức (LOC)",
+            detail: "Đánh giá mức độ tỉnh táo toàn diện",
+            options: [
+              { text: "Tỉnh táo hoàn toàn (0 điểm)", score: 0 },
+              { text: "Lơ mơ, kích thích nhẹ (1 điểm)", score: 1 },
+              { text: "Lơ mơ nặng, cần kích thích đau lặp lại (2 điểm)", score: 2 },
+              { text: "Hôn mê, chỉ phản xạ tự động hoặc không đáp ứng (3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "1b. Hỏi đáp ý thức",
+            detail: "Hỏi tháng hiện tại và tuổi bệnh nhân",
+            options: [
+              { text: "Trả lời đúng cả 2 câu (0 điểm)", score: 0 },
+              { text: "Trả lời đúng 1 câu (1 điểm)", score: 1 },
+              { text: "Không trả lời đúng câu nào (2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "1c. Thực hiện mệnh lệnh",
+            detail: "Yêu cầu nhắm/mở mắt và nắm/mở bàn tay bên không liệt",
+            options: [
+              { text: "Thực hiện đúng cả 2 lệnh (0 điểm)", score: 0 },
+              { text: "Thực hiện đúng 1 lệnh (1 điểm)", score: 1 },
+              { text: "Không thực hiện đúng lệnh nào (2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "2. Vận nhãn ngang (Gaze)",
+            detail: "Di chuyển mắt ngang nhìn theo ngón tay",
+            options: [
+              { text: "Bình thường (0 điểm)", score: 0 },
+              { text: "Liệt vận nhãn ngang một phần (1 điểm)", score: 1 },
+              { text: "Liệt vận nhãn ngang hoàn toàn / Mắt lệch hẳn (2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "3. Thị trường (Visual Fields)",
+            detail: "Kiểm tra phế trường thị giác qua so sánh 4 góc",
+            options: [
+              { text: "Bình thường (0 điểm)", score: 0 },
+              { text: "Bán manh một phần (1 điểm)", score: 1 },
+              { text: "Bán manh đồng danh hoàn toàn (2 điểm)", score: 2 },
+              { text: "Mù hoàn toàn / Bán manh hai bên (3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "4. Liệt mặt (Facial Palsy)",
+            detail: "Yêu cầu nhe răng, nhướng mày, nhắm chặt mắt",
+            options: [
+              { text: "Cử động mặt bình thường (0 điểm)", score: 0 },
+              { text: "Liệt nhẹ (mờ rãnh mũi má, nụ cười lệch nhẹ) (1 điểm)", score: 1 },
+              { text: "Liệt một phần cơ mặt dưới (2 điểm)", score: 2 },
+              { text: "Liệt hoàn toàn cơ mặt trên và dưới (3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "5a. Vận động Tay Trái",
+            detail: "Giơ tay 90° (ngồi) hoặc 45° (nằm) trong 10 giây",
+            options: [
+              { text: "Giữ vững 10 giây (0 điểm)", score: 0 },
+              { text: "Tay rơi từ từ nhưng không chạm giường (1 điểm)", score: 1 },
+              { text: "Tay rơi chạm giường trước 10 giây (2 điểm)", score: 2 },
+              { text: "Tay rơi ngay chạm giường, không chống trọng lực (3 điểm)", score: 3 },
+              { text: "Liệt hoàn toàn, không cử động (4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "5b. Vận động Tay Phải",
+            detail: "Giơ tay 90° (ngồi) hoặc 45° (nằm) trong 10 giây",
+            options: [
+              { text: "Giữ vững 10 giây (0 điểm)", score: 0 },
+              { text: "Tay rơi từ từ nhưng không chạm giường (1 điểm)", score: 1 },
+              { text: "Tay rơi chạm giường trước 10 giây (2 điểm)", score: 2 },
+              { text: "Tay rơi ngay chạm giường, không chống trọng lực (3 điểm)", score: 3 },
+              { text: "Liệt hoàn toàn, không cử động (4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "6a. Vận động Chân Trái",
+            detail: "Nằm ngửa giơ chân 30° trong 5 giây",
+            options: [
+              { text: "Giữ vững 5 giây (0 điểm)", score: 0 },
+              { text: "Chân rơi từ từ nhưng không chạm giường (1 điểm)", score: 1 },
+              { text: "Chân rơi chạm giường trước 5 giây (2 điểm)", score: 2 },
+              { text: "Chân rơi ngay chạm giường, không chống trọng lực (3 điểm)", score: 3 },
+              { text: "Liệt hoàn toàn, không cử động (4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "6b. Vận động Chân Phải",
+            detail: "Nằm ngửa giơ chân 30° trong 5 giây",
+            options: [
+              { text: "Giữ vững 5 giây (0 điểm)", score: 0 },
+              { text: "Chân rơi từ từ nhưng không chạm giường (1 điểm)", score: 1 },
+              { text: "Chân rơi chạm giường trước 5 giây (2 điểm)", score: 2 },
+              { text: "Chân rơi ngay chạm giường, không chống trọng lực (3 điểm)", score: 3 },
+              { text: "Liệt hoàn toàn, không cử động (4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "7. Thất điều chi (Limb Ataxia)",
+            detail: "Nghiệm pháp Ngón tay - Mũi và Gót chân - Cẳng chân",
+            options: [
+              { text: "Không có thất điều chi (0 điểm)", score: 0 },
+              { text: "Thất điều ở 1 chi (1 điểm)", score: 1 },
+              { text: "Thất điều ở 2 chi trở lên (2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "8. Cảm giác (Sensory)",
+            detail: "Thử cảm giác đau do kim châm so sánh 2 bên",
+            options: [
+              { text: "Cảm giác bình thường (0 điểm)", score: 0 },
+              { text: "Giảm cảm giác từ nhẹ đến vừa (1 điểm)", score: 1 },
+              { text: "Mất cảm giác hoàn toàn 1 bên (2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "9. Ngôn ngữ (Best Language)",
+            detail: "Mô tả bức tranh, đọc tên vật, đọc câu chuẩn",
+            options: [
+              { text: "Không rối loạn ngôn ngữ (0 điểm)", score: 0 },
+              { text: "Thất ngôn nhẹ - trung bình (1 điểm)", score: 1 },
+              { text: "Thất ngôn nặng (2 điểm)", score: 2 },
+              { text: "Mất ngôn ngữ hoàn toàn / Câm (3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "10. Phát âm (Dysarthria)",
+            detail: "Đọc danh sách từ chuẩn",
+            options: [
+              { text: "Phát âm bình thường (0 điểm)", score: 0 },
+              { text: "Nói ngọng nhẹ - trung bình (1 điểm)", score: 1 },
+              { text: "Nói ngọng nặng không hiểu được / Câm (2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "11. Thờ ơ / Dập tắt cảm giác (Inattention)",
+            detail: "Bỏ qua nửa không gian, dập tắt thị giác/thính giác/xúc giác",
+            options: [
+              { text: "Bình thường (0 điểm)", score: 0 },
+              { text: "Bị dập tắt ở 1 giác quan khi kích thích đồng thời (1 điểm)", score: 1 },
+              { text: "Bỏ qua nghiêm trọng ở nhiều hơn 1 giác quan (2 điểm)", score: 2 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total === 0) return { text: "Thần kinh bình thường (0 điểm)", color: "var(--success)" };
+          if (total <= 4) return { text: "Đột quỵ nhẹ (" + total + "/42 điểm). Tiên lượng phục hồi tốt.", color: "var(--success)" };
+          if (total <= 15) return { text: "Đột quỵ trung bình (" + total + "/42 điểm). Xem xét chỉ định tiêu sợi huyết (rTPA) / lấy huyết khối.", color: "var(--warning)" };
+          if (total <= 20) return { text: "Đột quỵ nặng (" + total + "/42 điểm). Nguy cơ cao xuất huyết chuyển dạng.", color: "var(--danger)" };
+          return { text: "Đột quỵ rất nặng (" + total + "/42 điểm). Tiên lượng tử vong và di chứng cao!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "padua",
+        title: "Padua Prediction Score (VTE ở bệnh nhân nội khoa)",
+        subtitle: "Đánh giá nguy cơ thuyên tắc huyết khối tĩnh mạch (VTE) ở bệnh nhân nội khoa nằm viện.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Hồi sức",
+        source: "Barbar S et al. J Thromb Haemost 2010 / MDCalc",
+        criteria: [
+          {
+            name: "Ung thư đang hoạt động",
+            detail: "Di căn tại chỗ hoặc xa, đã hóa/xạ trị trong 6 tháng",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+3 điểm)", score: 3 }]
+          },
+          {
+            name: "Tiền sử thuyên tắc huyết khối tĩnh mạch (VTE)",
+            detail: "Trừ huyết khối tĩnh mạch nông",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+3 điểm)", score: 3 }]
+          },
+          {
+            name: "Giảm vận động / Bất động (≥ 3 ngày)",
+            detail: "Nằm giường liên tục do hạn chế chức năng",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+3 điểm)", score: 3 }]
+          },
+          {
+            name: "Bệnh lý tăng đông đã biết",
+            detail: "Thiếu Protein C/S, kháng thể antiphospholipid, factor V Leiden...",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+3 điểm)", score: 3 }]
+          },
+          {
+            name: "Chấn thương hoặc phẫu thuật gần đây (≤ 1 tháng)",
+            detail: "Phẫu thuật lớn hoặc chấn thương",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+2 điểm)", score: 2 }]
+          },
+          {
+            name: "Tuổi ≥ 70",
+            detail: "Tuổi bệnh nhân",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Suy tim / Suy hô hấp",
+            detail: "Suy tim sung huyết hoặc suy hô hấp mạn",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Nhồi máu cơ tim / Đột quỵ cấp",
+            detail: "Trong đợt bệnh cấp tính",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Béo phì (BMI ≥ 30) hoặc Liệu pháp Hormone",
+            detail: "BMI ≥ 30 kg/m² hoặc đang dùng hormone",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 3) return { text: "Nguy cơ thấp (" + total + " điểm): Không cần dự phòng thuốc kháng đông thường quy.", color: "var(--success)" };
+          return { text: "Nguy cơ cao (" + total + " điểm, ≥4): Chỉ định dự phòng thuyên tắc huyết khối tĩnh mạch bằng LMWH/Heparin!", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "perc",
+        title: "PERC Rule (Pulmonary Embolism Rule-out Criteria)",
+        subtitle: "Tiêu chuẩn loại trừ thuyên tắc phổi ở bệnh nhân nguy cơ thấp.",
+        category: "ho_hap",
+        categoryName: "Hô hấp / Cấp cứu",
+        source: "Kline JA et al. J Thromb Haemost 2004 / MDCalc",
+        criteria: [
+          {
+            name: "1. Tuổi ≥ 50",
+            detail: "Bệnh nhân từ 50 tuổi trở lên",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "2. Nhịp tim ≥ 100 lần/phút",
+            detail: "Mạch nhanh",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "3. SpO2 < 95% ở khí trời",
+            detail: "Độ bão hòa oxy máu mao mạch",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "4. Sưng một bên chân",
+            detail: "Dấu hiệu nghi ngờ DVT",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "5. Ho ra máu",
+            detail: "Khạc máu từ đường hô hấp",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "6. Phẫu thuật lớn hoặc chấn thương gần đây",
+            detail: "Trong vòng 4 tuần qua có gây mê",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "7. Tiền sử DVT hoặc PE",
+            detail: "Đã bị thuyên tắc huyết khối trước đó",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "8. Sử dụng Hormone sinh dục",
+            detail: "Thuốc tránh thai uống, liệu pháp thay thế estrogen...",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          }
+        ],
+        evaluate: function(t) {
+          if (t === 0) return { text: "PERC (-) (0 điểm): Loại trừ thuyên tắc phổi (PE < 1.5%). Không cần thử D-Dimer hay chụp CT Scan!", color: "var(--success)" };
+          return { text: "PERC (+) (" + t + " điểm): Không thể loại trừ PE bằng lâm sàng. Cần làm D-Dimer hoặc CT Angio ngực.", color: "var(--warning)" };
+        }
+      },
+      {
+        id: "psi_port",
+        title: "PSI / PORT Score (Pneumonia Severity Index)",
+        subtitle: "Tiên lượng nguy cơ tử vong và phân tầng điều trị Viêm phổi cộng đồng.",
+        category: "ho_hap",
+        categoryName: "Hô hấp",
+        source: "Fine MJ et al. NEJM 1997 / MDCalc",
+        criteria: [
+          {
+            name: "Tuổi & Giới tính",
+            detail: "Tính điểm cơ bản theo tuổi và giới",
+            options: [
+              { text: "Nam < 50 tuổi (30 điểm)", score: 30 },
+              { text: "Nam 50 - 65 tuổi (60 điểm)", score: 60 },
+              { text: "Nam > 65 tuổi (80 điểm)", score: 80 },
+              { text: "Nữ < 50 tuổi (20 điểm)", score: 20 },
+              { text: "Nữ 50 - 65 tuổi (50 điểm)", score: 50 },
+              { text: "Nữ > 65 tuổi (70 điểm)", score: 70 }
+            ]
+          },
+          {
+            name: "Bệnh đồng mắc",
+            detail: "Bệnh Ung thư, Gan, Suy tim, Mạch máu não, Thận",
+            options: [
+              { text: "Không có bệnh kèm (0)", score: 0 },
+              { text: "Bệnh Ung thư (+30 điểm)", score: 30 },
+              { text: "Bệnh Gan mạn (+20 điểm)", score: 20 },
+              { text: "Suy tim sung huyết (+10 điểm)", score: 10 },
+              { text: "Bệnh mạch máu não (+10 điểm)", score: 10 },
+              { text: "Bệnh Thận mạn (+10 điểm)", score: 10 }
+            ]
+          },
+          {
+            name: "Dấu hiệu khám lâm sàng",
+            detail: "Tri giác, Nhịp thở, Huyết áp, Nhiệt độ, Mạch",
+            options: [
+              { text: "Lâm sàng ổn định (0)", score: 0 },
+              { text: "Lẫn lộn tri giác (+20)", score: 20 },
+              { text: "Nhịp thở ≥ 30 lần/phút (+20)", score: 20 },
+              { text: "HATT < 90 mmHg (+20)", score: 20 },
+              { text: "Nhiệt độ < 35°C hoặc ≥ 40°C (+15)", score: 15 },
+              { text: "Mạch ≥ 125 lần/phút (+10)", score: 10 }
+            ]
+          },
+          {
+            name: "Cận lâm sàng & X-quang",
+            detail: "Xét nghiệm máu, Khí máu, X-quang ngực",
+            options: [
+              { text: "Xét nghiệm bình thường (0)", score: 0 },
+              { text: "pH máu < 7.35 (+30 điểm)", score: 30 },
+              { text: "Urea máu ≥ 11 mmol/L (BUN ≥ 30) (+20 điểm)", score: 20 },
+              { text: "Natri máu < 130 mEq/L (+20 điểm)", score: 20 },
+              { text: "Glucose ≥ 14 mmol/L (≥ 250 mg/dL) (+10 điểm)", score: 10 },
+              { text: "Hematocrit < 30% (+10 điểm)", score: 10 },
+              { text: "Tràn dịch màng phổi trên X-quang (+10 điểm)", score: 10 }
+            ]
+          }
+        ],
+        evaluate: function(t) {
+          if (t <= 70) return { text: "PSI Nhóm I-II (" + t + " điểm): Nguy cơ tử vong rất thấp (< 0.6%). Điều trị Ngoại trú.", color: "var(--success)" };
+          if (t <= 90) return { text: "PSI Nhóm III (" + t + " điểm): Nguy cơ thấp (0.9-2.8%). Điều trị Ngoại trú hoặc nằm viện ngắn hạn.", color: "var(--warning)" };
+          if (t <= 130) return { text: "PSI Nhóm IV (" + t + " điểm): Nguy cơ trung bình (8.2-9.3%). Bắt buộc nhập viện điều trị.", color: "var(--danger)" };
+          return { text: "PSI Nhóm V (" + t + " điểm): Nguy cơ tử vong cao (27-31%)! Cần nằm khoa Hồi sức tích cực (ICU).", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "qsofa",
+        title: "qSOFA (Quick SOFA - Sàng lọc Nhiễm trùng huyết)",
+        subtitle: "Sàng lọc nhanh nguy cơ Sepsis (Nhiễm trùng huyết) ở bệnh nhân ngoài ICU.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Hồi sức",
+        source: "Singer M et al. JAMA 2016 (Sepsis-3) / MDCalc",
+        criteria: [
+          {
+            name: "1. Tần số thở (Respiratory Rate)",
+            detail: "Nhịp thở ≥ 22 lần/phút",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "2. Thay đổi tri giác (Altered Mentation)",
+            detail: "Thang điểm Glasgow < 15",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "3. Huyết áp tâm thu (Systolic BP)",
+            detail: "HATT ≤ 100 mmHg",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          }
+        ],
+        evaluate: function(total) {
+          if (total < 2) return { text: "Nguy cơ thấp (" + total + "/3 điểm): Ít nghĩ đến nhiễm trùng huyết nặng.", color: "var(--success)" };
+          return { text: "Nghi ngờ Nhiễm trùng huyết nặng (" + total + "/3 điểm): Tăng nguy cơ tử vong! Cần tính SOFA đầy đủ & làm cấy máu, Lactate khẩn.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "ranson",
+        title: "Ranson Criteria (Mức độ nặng Viêm tụy cấp)",
+        subtitle: "Đánh giá tiên lượng tử vong trong Viêm tụy cấp lúc nhập viện và sau 48h.",
+        category: "tieu_hoa",
+        categoryName: "Tiêu hóa / Cấp cứu",
+        source: "Ranson JH et al. Surg Gynecol Obstet 1974 / MDCalc",
+        criteria: [
+          {
+            name: "1. Tuổi > 55",
+            detail: "Lúc nhập viện",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "2. Bạch cầu > 16.000 /mm³",
+            detail: "Lúc nhập viện",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "3. Đường huyết > 11 mmol/L (> 200 mg/dL)",
+            detail: "Lúc nhập viện (không tiền sử ĐTĐ)",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "4. LDH máu > 350 U/L",
+            detail: "Lúc nhập viện",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "5. AST (SGOT) > 250 U/L",
+            detail: "Lúc nhập viện",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "6. Yếu tố biến đổi trong 48h đầu",
+            detail: "Giảm Hct > 10%, BUN tăng > 1.8 mmol/L, Ca++ < 2 mmol/L, PaO2 < 60 mmHg...",
+            options: [
+              { text: "Không có yếu tố nào (0)", score: 0 },
+              { text: "Có 1 yếu tố trong 48h (+1 điểm)", score: 1 },
+              { text: "Có 2 yếu tố trong 48h (+2 điểm)", score: 2 },
+              { text: "Có ≥ 3 yếu tố trong 48h (+3 điểm)", score: 3 }
+            ]
+          }
+        ],
+        evaluate: function(t) {
+          if (t <= 2) return { text: "Ranson " + t + " điểm: Viêm tụy cấp nhẹ. Tỷ lệ tử vong < 1-3%.", color: "var(--success)" };
+          if (t <= 4) return { text: "Ranson " + t + " điểm: Viêm tụy cấp trung bình-nặng. Tỷ lệ tử vong ~15%. Cần nằm viện hồi sức sát.", color: "var(--warning)" };
+          return { text: "Ranson " + t + " điểm: Viêm tụy cấp rất nặng. Tỷ lệ tử vong > 50%! Cần can thiệp ICU hồi sức tích cực.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "rass",
+        title: "RASS (Richmond Agitation-Sedation Scale)",
+        subtitle: "Đánh giá mức độ kích động và an thần ở bệnh nhân hồi sức tích cực (ICU).",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Hồi sức",
+        source: "Sessler CN et al. Am J Respir Crit Care Med 2002 / MDCalc",
+        criteria: [
+          {
+            name: "Mức độ An thần / Kích động",
+            detail: "Quan sát hành vi và đáp ứng với tiếng nói/kích thích",
+            options: [
+              { text: "+4: Hung hãn, kích động nguy hiểm cho nhân viên", score: 4 },
+              { text: "+3: Kích động mạnh, rút ống thở/catheter", score: 3 },
+              { text: "+2: Kích động, cử động không mục đích", score: 2 },
+              { text: "+1: Bồn chồn, lo âu nhưng không kích động mạnh", score: 1 },
+              { text: " 0: Tỉnh táo và bình tĩnh", score: 0 },
+              { text: "-1: Mơ hồ, mở mắt theo tiếng gọi > 10 giây", score: -1 },
+              { text: "-2: An thần nhẹ, mở mắt theo tiếng gọi < 10 giây", score: -2 },
+              { text: "-3: An thần vừa, cử động/mở mắt khi gọi nhưng không nhìn", score: -3 },
+              { text: "-4: An thần sâu, cử động khi kích thích đau", score: -4 },
+              { text: "-5: Không đáp ứng với kích thích đau", score: -5 }
+            ]
+          }
+        ],
+        evaluate: function(t) {
+          if (t === 0) return { text: "RASS = 0: Tỉnh táo, bình tĩnh. Mục tiêu tối ưu cho đa số bệnh nhân ICU.", color: "var(--success)" };
+          if (t > 0) return { text: "RASS = +" + t + ": Bệnh nhân kích động. Cần tìm nguyên nhân (đau, thiếu oxy, sảng) hoặc tăng an thần.", color: "var(--danger)" };
+          if (t >= -2) return { text: "RASS = " + t + ": An thần nhẹ. Phù hợp cho bệnh nhân chuẩn bị cai máy thở.", color: "var(--warning)" };
+          return { text: "RASS = " + t + ": An thần sâu đến không đáp ứng. Cần đánh giá lại liều thuốc an thần/giảm đau.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "rockall",
+        title: "Rockall Score (Xuất huyết tiêu hóa trên)",
+        subtitle: "Đánh giá nguy cơ tái xuất huyết và tử vong ở bệnh nhân Xuất huyết tiêu hóa trên (sau nội soi).",
+        category: "tieu_hoa",
+        categoryName: "Tiêu hóa / Cấp cứu",
+        source: "Rockall TA et al. BMJ 1996 / MDCalc",
+        criteria: [
+          {
+            name: "1. Tuổi bệnh nhân",
+            detail: "Nhóm tuổi lúc nhập viện",
+            options: [
+              { text: "< 60 tuổi (0 điểm)", score: 0 },
+              { text: "60 - 79 tuổi (+1 điểm)", score: 1 },
+              { text: "≥ 80 tuổi (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "2. Dấu hiệu Sốc (Tụt huyết áp/Mạch nhanh)",
+            detail: "Mạch và Huyết áp tâm thu",
+            options: [
+              { text: "Mạch < 100, HATT ≥ 100 mmHg (0 điểm)", score: 0 },
+              { text: "Mạch ≥ 100, HATT ≥ 100 mmHg (+1 điểm)", score: 1 },
+              { text: "HATT < 100 mmHg (+2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "3. Bệnh đồng mắc",
+            detail: "Bệnh lý nền nặng kèm theo",
+            options: [
+              { text: "Không có bệnh mạn nặng (0 điểm)", score: 0 },
+              { text: "Bệnh tim ischemic, suy tim, bệnh mạn khác (+2 điểm)", score: 2 },
+              { text: "Suy thận, suy gan, ung thư di căn (+3 điểm)", score: 3 }
+            ]
+          },
+          {
+            name: "4. Chẩn đoán qua Nội soi",
+            detail: "Kết quả soi dạ dày - tá tràng",
+            options: [
+              { text: "Hội chứng Mallory-Weiss / Không có tổn thương rõ (0 điểm)", score: 0 },
+              { text: "Tất cả các chẩn đoán khác (1 điểm)", score: 1 },
+              { text: "Ung thư đường tiêu hóa trên (2 điểm)", score: 2 }
+            ]
+          },
+          {
+            name: "5. Dấu hiệu xuất huyết gần đây qua Nội soi",
+            detail: "Dấu hiệu Forrest trên ổ loét",
+            options: [
+              { text: "Đáy sạch / Không có dấu hiệu xuất huyết gần đây (0 điểm)", score: 0 },
+              { text: "Vệt máu tụ, cục máu đông, mạch máu nổi (+2 điểm)", score: 2 },
+              { text: "Máu đang chảy phun thành tia hoặc rỉ rả (+2 điểm)", score: 2 }
+            ]
+          }
+        ],
+        evaluate: function(t) {
+          if (t <= 2) return { text: "Rockall " + t + " điểm: Nguy cơ thấp. Tỷ lệ tái xuất huyết < 5%, tử vong < 0.1%. Có thể xuất viện sớm.", color: "var(--success)" };
+          if (t <= 5) return { text: "Rockall " + t + " điểm: Nguy cơ trung bình. Tỷ lệ tái xuất huyết ~15%, tử vong ~5%. Nhập viện điều trị.", color: "var(--warning)" };
+          return { text: "Rockall " + t + " điểm: Nguy cơ cao! Tỷ lệ tái xuất huyết > 40%, tử vong > 25%. Cần nằm theo dõi sát tại ICU.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "sf_ratio",
+        title: "SpO2 / FiO2 Ratio (S/F Ratio - Kigali ARDS)",
+        subtitle: "Đánh giá tổn thương phổi cấp và mức độ ARDS không xâm lấn (Tiêu chuẩn Kigali).",
+        category: "ho_hap",
+        categoryName: "Hô hấp / Cấp cứu",
+        source: "Rice TW et al. Chest 2007 / Kigali Modification ARDS",
+        criteria: [
+          {
+            name: "Chỉ số SpO2 (%)",
+            detail: "Độ bão hòa oxy máu mao mạch đo qua da",
+            options: [
+              { text: "SpO2 96 - 100%", score: 98 },
+              { text: "SpO2 92 - 95%", score: 93 },
+              { text: "SpO2 88 - 91%", score: 89 },
+              { text: "SpO2 80 - 87%", score: 84 },
+              { text: "SpO2 < 80%", score: 75 }
+            ]
+          },
+          {
+            name: "Phân suất Oxy thở vào (FiO2)",
+            detail: "Mức độ hỗ trợ oxy đang dùng",
+            options: [
+              { text: "Khí trời (FiO2 21% = 0.21)", score: 21 },
+              { text: "Gọng kính 2-3 L/p (FiO2 ~28% = 0.28)", score: 28 },
+              { text: "Gọng kính 4-6 L/p (FiO2 ~40% = 0.40)", score: 40 },
+              { text: "Mask có túi 10-15 L/p (FiO2 ~80% = 0.80)", score: 80 },
+              { text: "Thở máy / Mask 100% (FiO2 100% = 1.00)", score: 100 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          const selects = document.querySelectorAll('.criterion-val');
+          if (selects.length >= 2) {
+            const spo2 = parseFloat(selects[0].value);
+            const fio2 = parseFloat(selects[1].value) / 100;
+            const ratio = Math.round(spo2 / fio2);
+
+            if (ratio >= 315) return { text: "Chỉ số S/F = " + ratio + ": Hô hấp bình thường (Tương đương P/F > 300).", color: "var(--success)" };
+            if (ratio >= 235) return { text: "Chỉ số S/F = " + ratio + ": ARDS Mức độ Nhẹ (Tương đương P/F 200 - 300).", color: "var(--warning)" };
+            if (ratio >= 150) return { text: "Chỉ số S/F = " + ratio + ": ARDS Mức độ Trung bình (Tương đương P/F 100 - 200). Hỗ trợ thở HFNC/NIV/Nội khí quản!", color: "var(--danger)" };
+            return { text: "Chỉ số S/F = " + ratio + ": ARDS Mức độ Nặng (Tương đương P/F < 100)! Tiên lượng tử vong rất cao.", color: "var(--danger)" };
+          }
+          return { text: "Vui lòng chọn thông số SpO2 và FiO2.", color: "var(--text-secondary)" };
+        }
+      },
+      {
+        id: "sirs",
+        title: "SIRS Criteria (Hội chứng đáp ứng viêm hệ thống)",
+        subtitle: "Tiêu chuẩn đáp ứng viêm hệ thống - sàng lọc ban đầu nhiễm trùng / nhiễm trùng huyết.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Hồi sức",
+        source: "Bone RC et al. Chest 1992 / ACCP-SCCM / MDCalc",
+        criteria: [
+          {
+            name: "Thân nhiệt",
+            detail: "Sốt cao hoặc hạ thân nhiệt",
+            options: [
+              { text: "36 - 38°C (0 điểm)", score: 0 },
+              { text: "> 38°C hoặc < 36°C (+1 điểm)", score: 1 }
+            ]
+          },
+          {
+            name: "Nhịp tim",
+            detail: "Tần số tim đập",
+            options: [
+              { text: "≤ 90 lần/phút (0 điểm)", score: 0 },
+              { text: "> 90 lần/phút (+1 điểm)", score: 1 }
+            ]
+          },
+          {
+            name: "Nhịp thở / PaCO2",
+            detail: "Tần số thở hoặc PaCO2 giảm",
+            options: [
+              { text: "≤ 20 lần/phút và PaCO2 ≥ 32 mmHg (0 điểm)", score: 0 },
+              { text: "> 20 lần/phút hoặc PaCO2 < 32 mmHg (+1 điểm)", score: 1 }
+            ]
+          },
+          {
+            name: "Bạch cầu máu",
+            detail: "Số lượng bạch cầu hoặc tỉ lệ dải nhân non (band)",
+            options: [
+              { text: "4.000 - 12.000 /mm³ (0 điểm)", score: 0 },
+              { text: "< 4.000 hoặc > 12.000 /mm³ hoặc > 10% bạch cầu non (+1 điểm)", score: 1 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 1) return { text: "SIRS " + total + "/4 tiêu chuẩn: Chưa đủ tiêu chuẩn chẩn đoán SIRS.", color: "var(--success)" };
+          return { text: "SIRS " + total + "/4 tiêu chuẩn (≥ 2): Đủ tiêu chuẩn hội chứng SIRS! Tìm ổ nhiễm trùng & làm thêm qSOFA.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "sofa",
+        title: "SOFA Score (Sequential Organ Failure Assessment)",
+        subtitle: "Đánh giá suy chức năng 6 cơ quan và tiên lượng tử vong trong Nhiễm trùng huyết tại ICU.",
+        category: "cap_cuu",
+        categoryName: "Cấp cứu / Hồi sức",
+        source: "Vincent JL et al. Intensive Care Med 1996 / MDCalc",
+        criteria: [
+          {
+            name: "1. Hô hấp (PaO₂ / FiO₂)",
+            detail: "Tỷ lệ áp lực oxy động mạch / phân suất oxy khí thở vào",
+            options: [
+              { text: "≥ 400 (0 điểm)", score: 0 },
+              { text: "< 400 (+1 điểm)", score: 1 },
+              { text: "< 300 (+2 điểm)", score: 2 },
+              { text: "< 200 kèm thở máy (+3 điểm)", score: 3 },
+              { text: "< 100 kèm thở máy (+4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "2. Đông máu (Tiểu cầu - Platelets)",
+            detail: "Số lượng tiểu cầu (×10³/µL)",
+            options: [
+              { text: "≥ 150 (0 điểm)", score: 0 },
+              { text: "< 150 (+1 điểm)", score: 1 },
+              { text: "< 100 (+2 điểm)", score: 2 },
+              { text: "< 50 (+3 điểm)", score: 3 },
+              { text: "< 20 (+4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "3. Gan (Bilirubin)",
+            detail: "Nồng độ Bilirubin toàn phần (mg/dL)",
+            options: [
+              { text: "< 1.2 mg/dL (0 điểm)", score: 0 },
+              { text: "1.2 - 1.9 mg/dL (+1 điểm)", score: 1 },
+              { text: "2.0 - 5.9 mg/dL (+2 điểm)", score: 2 },
+              { text: "6.0 - 11.9 mg/dL (+3 điểm)", score: 3 },
+              { text: "≥ 12.0 mg/dL (+4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "4. Tim mạch (Huyết áp & Vận mạch)",
+            detail: "Mức độ tụt huyết áp và nhu cầu thuốc vận mạch",
+            options: [
+              { text: "MAP ≥ 70 mmHg (0 điểm)", score: 0 },
+              { text: "MAP < 70 mmHg (+1 điểm)", score: 1 },
+              { text: "Dopamine ≤ 5 hoặc Dobutamine liều bất kỳ (+2 điểm)", score: 2 },
+              { text: "Dopamine > 5 hoặc NorEpi/Epi ≤ 0.1 mcg/kg/phút (+3 điểm)", score: 3 },
+              { text: "Dopamine > 15 hoặc NorEpi/Epi > 0.1 mcg/kg/phút (+4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "5. Thần kinh (Điểm GCS)",
+            detail: "Thang điểm hôn mê Glasgow",
+            options: [
+              { text: "GCS = 15 (0 điểm)", score: 0 },
+              { text: "GCS = 13 - 14 (+1 điểm)", score: 1 },
+              { text: "GCS = 10 - 12 (+2 điểm)", score: 2 },
+              { text: "GCS = 6 - 9 (+3 điểm)", score: 3 },
+              { text: "GCS < 6 (+4 điểm)", score: 4 }
+            ]
+          },
+          {
+            name: "6. Thận (Creatinine hoặc Nước tiểu)",
+            detail: "Creatinine máu (mg/dL) hoặc lượng nước tiểu",
+            options: [
+              { text: "< 1.2 mg/dL (0 điểm)", score: 0 },
+              { text: "1.2 - 1.9 mg/dL (+1 điểm)", score: 1 },
+              { text: "2.0 - 3.4 mg/dL (+2 điểm)", score: 2 },
+              { text: "3.5 - 4.9 mg/dL hoặc nước tiểu < 500 mL/ngày (+3 điểm)", score: 3 },
+              { text: "≥ 5.0 mg/dL hoặc nước tiểu < 200 mL/ngày (+4 điểm)", score: 4 }
+            ]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 6) return { text: "SOFA " + total + " điểm: Nguy cơ tử vong tại ICU thấp (< 10%).", color: "var(--success)" };
+          if (total <= 11) return { text: "SOFA " + total + " điểm: Nguy cơ tử vong tại ICU trung bình (~15-20%).", color: "var(--warning)" };
+          return { text: "SOFA " + total + " điểm: Nguy cơ tử vong rất cao (> 50-90%)! Suy đa cơ quan nặng.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "timi",
+        title: "TIMI Risk Score (Đau ngực không ổn định / NSTEMI)",
+        subtitle: "Đánh giá nguy cơ tử vong, MI tái phát hoặc can thiệp mạch vành cấp trong 14 ngày.",
+        category: "tim_mach",
+        categoryName: "Tim mạch",
+        source: "Antman EM et al. JAMA 2000 / MDCalc",
+        criteria: [
+          {
+            name: "1. Tuổi ≥ 65",
+            detail: "Bệnh nhân từ 65 tuổi trở lên",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "2. Có ≥ 3 yếu tố nguy cơ bệnh mạch vành",
+            detail: "Tiền sử gia đình, THA, RLNMM, ĐTĐ, Hút thuốc",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "3. Hẹp ĐM vành đã biết ≥ 50%",
+            detail: "Tiền sử chụp mạch vành có hẹp",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "4. Dùng Aspirin trong 7 ngày qua",
+            detail: "Sử dụng Aspirin trước nhập viện",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "5. ≥ 2 cơn đau ngực trong 24 giờ qua",
+            detail: "Cơn đau ngực diễn ra dồn dập",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "6. Biến đổi đoạn ST ≥ 0.5 mm trên ECG",
+            detail: "Biến đổi ST lúc nhập viện",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "7. Tăng men tim (Troponin / CK-MB)",
+            detail: "Men tim dương tính",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          }
+        ],
+        evaluate: function(t) {
+          if (t <= 2) return { text: "TIMI nguy cơ thấp (4.7-8.3% biến cố, " + t + "/7 điểm). Chiến lược điều trị bảo tồn.", color: "var(--success)" };
+          if (t <= 4) return { text: "TIMI nguy cơ trung bình (13-20% biến cố, " + t + "/7 điểm). Cân nhắc chụp mạch vành sớm.", color: "var(--warning)" };
+          return { text: "TIMI nguy cơ cao (26-41% biến cố, " + t + "/7 điểm)! Chỉ định bắt buộc chụp & can thiệp mạch vành sớm.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "wells_dvt",
+        title: "Wells DVT (Huyết khối tĩnh mạch sâu chi dưới)",
+        subtitle: "Đánh giá xác suất lâm sàng bị Huyết khối tĩnh mạch sâu (DVT) chi dưới.",
+        category: "tim_mach",
+        categoryName: "Tim mạch / Cấp cứu",
+        source: "Wells PS et al. NEJM 2003 / MDCalc",
+        criteria: [
+          {
+            name: "Ung thư đang tiến triển",
+            detail: "Đang điều trị hoặc phát hiện trong 6 tháng qua",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Liệt hoặc bó bột chi dưới",
+            detail: "Bất động cơ học chân",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Nằm giường > 3 ngày hoặc phẫu thuật lớn",
+            detail: "Trong vòng 12 tuần qua có gây mê",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Ấn đau dọc hệ tĩnh mạch sâu",
+            detail: "Đau dọc đường đi tĩnh mạch",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Sưng toàn bộ một bên chân",
+            detail: "Sưng đùi và bắp chân",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Sưng bắp chân một bên > 3cm",
+            detail: "So với bên chân lành (đo dưới xương bánh chè 10cm)",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Phù ấn lõm bên chân bệnh",
+            detail: "Phù lõm nặng hơn bên lành",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Bàng hệ tĩnh mạch nông phụ",
+            detail: "Nổi tĩnh mạch nông (không phải giãn tĩnh mạch chân)",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1 điểm)", score: 1 }]
+          },
+          {
+            name: "Chẩn đoán khác có khả năng hơn DVT",
+            detail: "Ví dụ: Viêm mô tế bào, rách cơ... (-2 điểm)",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (-2 điểm)", score: -2 }]
+          }
+        ],
+        evaluate: function(t) {
+          if (t <= 0) return { text: "Xác suất DVT thấp (" + t + " điểm, ~5%). Làm D-Dimer để loại trừ.", color: "var(--success)" };
+          if (t <= 2) return { text: "Xác suất DVT trung bình (" + t + " điểm, ~17%). Làm D-Dimer hoặc Siêu âm Doppler TM.", color: "var(--warning)" };
+          return { text: "Xác suất DVT cao (" + t + " điểm, ~53%)! Bắt buộc làm Siêu âm Doppler tĩnh mạch chi dưới ngay.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "wells_pe",
+        title: "Wells PE (Thuyên tắc động mạch phổi)",
+        subtitle: "Đánh giá xác suất lâm sàng bị thuyên tắc động mạch phổi (PE).",
+        category: "ho_hap",
+        categoryName: "Hô hấp / Cấp cứu",
+        source: "Wells PS et al. Thromb Haemost 2000 / ESC / MDCalc",
+        criteria: [
+          {
+            name: "1. Triệu chứng DVT chân",
+            detail: "Sưng chân, ấn đau dọc đường đi TM sâu",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+3.0 điểm)", score: 3.0 }]
+          },
+          {
+            name: "2. Chẩn đoán khác ít khả thi hơn PE",
+            detail: "Thuyên tắc phổi là chẩn đoán nghi ngờ nhất",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+3.0 điểm)", score: 3.0 }]
+          },
+          {
+            name: "3. Nhịp tim > 100 lần/phút",
+            detail: "Mạch nhanh",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1.5 điểm)", score: 1.5 }]
+          },
+          {
+            name: "4. Bất động hoặc Phẫu thuật trong 4 tuần qua",
+            detail: "Nằm giường > 3 ngày hoặc phẫu thuật lớn",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1.5 điểm)", score: 1.5 }]
+          },
+          {
+            name: "5. Tiền sử DVT hoặc PE",
+            detail: "Đã từng bị huyết khối TM sâu hoặc thuyên tắc phổi",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1.5 điểm)", score: 1.5 }]
+          },
+          {
+            name: "6. Ho ra máu",
+            detail: "Có triệu chứng ho khạc ra máu",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1.0 điểm)", score: 1.0 }]
+          },
+          {
+            name: "7. Ung thư đang tiến triển",
+            detail: "Đang điều trị ung thư hoặc phát hiện trong 6 tháng",
+            options: [{ text: "Không (0)", score: 0 }, { text: "Có (+1.0 điểm)", score: 1.0 }]
+          }
+        ],
+        evaluate: function(total) {
+          if (total <= 1.5) return { text: "Xác suất PE thấp (" + total + " điểm): Cân nhắc làm D-Dimer để loại trừ.", color: "var(--success)" };
+          if (total <= 6.0) return { text: "Xác suất PE trung bình (" + total + " điểm): Làm D-Dimer hoặc CT Angio ngực.", color: "var(--warning)" };
+          return { text: "Xác suất PE cao (" + total + " điểm): Bắt buộc chụp CT Angio ĐM phổi ngay!", color: "var(--danger)" };
+        }
+      }
+      ,
+      {
+        id: "cha2ds2va",
+        title: "CHA₂DS₂-VA (Nguy cơ đột quỵ trong rung nhĩ — ESC 2024)",
+        subtitle: "Thang điểm mới ESC 2024, bỏ tiêu chí giới tính so với CHA₂DS₂-VASc.",
+        category: "tim_mach",
+        categoryName: "Tim mạch",
+        source: "ESC 2024 AF Guidelines",
+        criteria: [
+          { name: "C — Suy tim sung huyết / giảm EF", detail: "Lâm sàng suy tim hoặc EF giảm", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "H — Tăng huyết áp", detail: "Tiền sử hoặc đang điều trị THA", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "A₂ — Tuổi ≥ 75", detail: "Từ 75 tuổi trở lên", options: [{text:"Không (0)",score:0},{text:"Có (+2)",score:2}] },
+          { name: "D — Đái tháo đường", detail: "Tiền sử ĐTĐ", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "S₂ — Đột quỵ / TIA / thuyên tắc trước đó", detail: "Tiền sử biến cố mạch máu não hoặc thuyên tắc", options: [{text:"Không (0)",score:0},{text:"Có (+2)",score:2}] },
+          { name: "V — Bệnh mạch máu", detail: "Nhồi máu cơ tim trước, bệnh ĐM ngoại biên, hoặc mảng xơ vữa ĐM chủ", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "A — Tuổi 65–74", detail: "Từ 65 đến 74 tuổi", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] }
+        ],
+        evaluate: function(t) {
+          if (t === 0) return { text: "CHA₂DS₂-VA = 0: Nguy cơ thấp. Có thể không cần kháng đông (cân nhắc theo từng BN).", color: "var(--success)" };
+          if (t === 1) return { text: "CHA₂DS₂-VA = 1: Nguy cơ trung bình. Cân nhắc kháng đông uống (Class IIa).", color: "var(--warning)" };
+          return { text: "CHA₂DS₂-VA ≥ 2: Nguy cơ cao. Khuyến cáo kháng đông uống (Class I) trừ chống chỉ định.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "addrs",
+        title: "ADD-RS (Aortic Dissection Detection Risk Score)",
+        subtitle: "Sàng lọc nguy cơ hội chứng động mạch chủ cấp (dissection) tại cấp cứu.",
+        category: "tim_mach",
+        categoryName: "Tim mạch / Cấp cứu",
+        source: "AHA/ACC 2022 Aortic Disease; IRAD",
+        criteria: [
+          { name: "1. Yếu tố nguy cơ cao (tiền sử)", detail: "Hội chứng Marfan / CTD, tiền sử bệnh ĐM chủ, van ĐM chủ 2 mảnh, phẫu thuật ĐM chủ, tiền sử gia đình", options: [{text:"Không (0)",score:0},{text:"≥1 yếu tố (+1)",score:1}] },
+          { name: "2. Đau đặc trưng nguy cơ cao", detail: "Đau ngực/lưng/bụng khởi phát đột ngột, dữ dội, xé/rách", options: [{text:"Không (0)",score:0},{text:"Có đặc điểm đau nguy cơ cao (+1)",score:1}] },
+          { name: "3. Khám thực thể nguy cơ cao", detail: "Thiếu máu chi / mạch không đối xứng / chênh HA 2 tay, thiếu máu não cục bộ mới, tiếng thổi mới của van ĐM chủ", options: [{text:"Không (0)",score:0},{text:"≥1 dấu hiệu (+1)",score:1}] }
+        ],
+        evaluate: function(t) {
+          if (t === 0) return { text: "ADD-RS = 0: Nguy cơ thấp. Cân nhắc D-dimer; nếu âm tính có thể loại trừ tương đối.", color: "var(--success)" };
+          if (t === 1) return { text: "ADD-RS = 1: Nguy cơ trung bình. Cần đánh giá thêm (D-dimer ± CTA).", color: "var(--warning)" };
+          return { text: "ADD-RS = 2–3: Nguy cơ cao! Ưu tiên CTA động mạch chủ (hoặc TEE/MRI) ngay — không trì hoãn vì chờ D-dimer.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "findrisc",
+        title: "FINDRISC (Nguy cơ đái tháo đường típ 2 trong 10 năm)",
+        subtitle: "Sàng lọc không xâm lấn nguy cơ ĐTĐ típ 2 dựa trên đặc điểm lâm sàng.",
+        category: "tim_mach",
+        categoryName: "Nội tiết / Tim mạch",
+        source: "Finnish Diabetes Risk Score / ADA thực hành",
+        criteria: [
+          { name: "Tuổi", detail: "", options: [{text:"<45 (0)",score:0},{text:"45–54 (+2)",score:2},{text:"55–64 (+3)",score:3},{text:">64 (+4)",score:4}] },
+          { name: "BMI (kg/m²)", detail: "", options: [{text:"<25 (0)",score:0},{text:"25–30 (+1)",score:1},{text:">30 (+3)",score:3}] },
+          { name: "Vòng eo", detail: "Nam / Nữ", options: [{text:"Nam <94 hoặc Nữ <80 (0)",score:0},{text:"Nam 94–102 hoặc Nữ 80–88 (+3)",score:3},{text:"Nam >102 hoặc Nữ >88 (+4)",score:4}] },
+          { name: "Vận động mỗi ngày ≥30 phút", detail: "", options: [{text:"Có (0)",score:0},{text:"Không (+2)",score:2}] },
+          { name: "Ăn rau/trái cây hàng ngày", detail: "", options: [{text:"Có (0)",score:0},{text:"Không (+1)",score:1}] },
+          { name: "Thuốc hạ áp", detail: "Đã từng dùng thuốc điều trị THA", options: [{text:"Không (0)",score:0},{text:"Có (+2)",score:2}] },
+          { name: "Đường huyết cao trước đây", detail: "Từng phát hiện đường huyết cao", options: [{text:"Không (0)",score:0},{text:"Có (+5)",score:5}] },
+          { name: "Tiền sử gia đình ĐTĐ", detail: "", options: [{text:"Không (0)",score:0},{text:"Họ hàng xa: ông bà, cô dì chú bác, anh chị em họ (+3)",score:3},{text:"Họ hàng gần: bố mẹ, anh chị em ruột, con (+5)",score:5}] }
+        ],
+        evaluate: function(t) {
+          if (t < 7) return { text: "FINDRISC " + t + ": Nguy cơ thấp (~1% ĐTĐ trong 10 năm).", color: "var(--success)" };
+          if (t <= 11) return { text: "FINDRISC " + t + ": Nguy cơ nhẹ tăng (~4%). Tư vấn lối sống.", color: "var(--success)" };
+          if (t <= 14) return { text: "FINDRISC " + t + ": Nguy cơ trung bình (~17%). Nên xét nghiệm glucose/HbA1c.", color: "var(--warning)" };
+          if (t <= 20) return { text: "FINDRISC " + t + ": Nguy cơ cao (~33%). Xét nghiệm và can thiệp lối sống tích cực.", color: "var(--danger)" };
+          return { text: "FINDRISC " + t + ": Nguy cơ rất cao (~50%). Đánh giá ĐTĐ ngay.", color: "var(--danger)" };
+        }
+      },
+      {
+        id: "years_pe",
+        title: "YEARS Algorithm (Thuyên tắc phổi)",
+        subtitle: "Thuật toán loại trừ PE kết hợp 3 tiêu chí lâm sàng + D-dimer ngưỡng thay đổi.",
+        category: "ho_hap",
+        categoryName: "Hô hấp / Cấp cứu",
+        source: "YEARS Study / ESC PE Guidelines",
+        criteria: [
+          { name: "Dấu hiệu lâm sàng của DVT", detail: "Sưng chân / ấn đau dọc tĩnh mạch sâu", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "Ho ra máu", detail: "", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "PE là chẩn đoán khả dĩ nhất", detail: "Thuyên tắc phổi là chẩn đoán nghi ngờ hàng đầu", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] }
+        ],
+        evaluate: function(t) {
+          if (t === 0) return { text: "0 tiêu chí YEARS: Dùng ngưỡng D-dimer < 1000 ng/mL để loại trừ PE (không cần CTPA nếu D-dimer <1000).", color: "var(--success)" };
+          return { text: t + " tiêu chí YEARS dương: Cần ngưỡng D-dimer < 500 ng/mL để loại trừ. Nếu D-dimer ≥500 → chỉ định CTPA.", color: "var(--warning)" };
+        }
+      },
+      {
+        id: "hcm_risk_scd",
+        title: "HCM Risk-SCD (Yếu tố nguy cơ đột tử — HCM)",
+        subtitle: "Đếm yếu tố nguy cơ chính để cân nhắc ICD phòng ngừa ở bệnh cơ tim phì đại (tham khảo ESC/AHA).",
+        category: "tim_mach",
+        categoryName: "Tim mạch",
+        source: "ESC 2023 Cardiomyopathies / AHA/ACC 2024 HCM",
+        criteria: [
+          { name: "Tiền sử ngừng tim / VT bền bỉ được cấp cứu", detail: "Yếu tố nguy cơ rất mạnh (chỉ định ICD thứ phát)", options: [{text:"Không (0)",score:0},{text:"Có (+3)",score:3}] },
+          { name: "Đột tử gia đình do HCM (họ hàng gần)", detail: "Bố mẹ, anh chị em, con", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "Độ dày thành thất trái tối đa ≥30 mm", detail: "Trên siêu âm / CMR", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "Ngất gần đây không giải thích được", detail: "Ngất nghi do loạn nhịp", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "Nhịp nhanh thất không bền bỉ (NSVT) trên Holter", detail: "", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "Đáp ứng HA bất thường khi gắng sức", detail: "Không tăng hoặc tụt HA khi exercise test", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] },
+          { name: "LGE rộng trên CMR / phân số EF giảm / phình mỏm", detail: "Yếu tố bổ sung trên hình ảnh", options: [{text:"Không (0)",score:0},{text:"Có (+1)",score:1}] }
+        ],
+        evaluate: function(t) {
+          if (t >= 3 && t < 10) return { text: "Có tiền sử ngừng tim/VT bền bỉ hoặc ≥2–3 yếu tố nguy cơ chính → cân nhắc mạnh ICD phòng ngừa (hội chẩn chuyên khoa).", color: "var(--danger)" };
+          if (t >= 2) return { text: "≥2 yếu tố nguy cơ: Nguy cơ trung bình–cao. Hội chẩn chuyên khoa HCM / cân nhắc ICD.", color: "var(--warning)" };
+          if (t === 1) return { text: "1 yếu tố nguy cơ: Đánh giá thêm (CMR, Holter, test gắng sức) và theo dõi sát.", color: "var(--warning)" };
+          return { text: "Chưa có yếu tố nguy cơ chính được chọn. Tiếp tục theo dõi định kỳ theo guideline HCM.", color: "var(--success)" };
+        }
+      }
+
+    ];
+
+let currentFilteredScales = [];
+let currentScale = null;
+
+function switchMainTab(tab) {
+  const v1 = document.getElementById('viewPhacDo');
+  const v2 = document.getElementById('viewThangDiem');
+  const b1 = document.getElementById('tabPhacDo');
+  const b2 = document.getElementById('tabThangDiem');
+  if (tab === 'phacdo') {
+    v1.style.display = '';
+    v2.style.display = 'none';
+    b1.classList.add('active-main');
+    b2.classList.remove('active-main');
+  } else {
+    v1.style.display = 'none';
+    v2.style.display = '';
+    b2.classList.add('active-main');
+    b1.classList.remove('active-main');
+    if (document.getElementById('scalesList').children.length === 0) {
+      currentFilteredScales = [...scalesData].sort((a,b)=>a.title.localeCompare(b.title));
+      renderScoreList(currentFilteredScales);
+    }
+  }
+}
+
+function renderScoreList(data) {
+  const box = document.getElementById('scalesList');
+  if (!data.length) {
+    box.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary);">Không tìm thấy thang điểm phù hợp.</div>';
+    return;
+  }
+  box.innerHTML = data.map(s => `
+    <div class="scale-card" onclick="openScoreModal('${s.id}')">
+      <div class="scale-title">${s.title}</div>
+      <div class="scale-desc">${s.subtitle}</div>
+      <span class="scale-badge">${s.categoryName || s.category}</span>
+    </div>`).join('');
+}
+
+function filterScoreCat(cat, el) {
+  document.querySelectorAll('.score-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentFilteredScales = cat === 'all' ? [...scalesData] : scalesData.filter(s => s.category === cat || (s.category||'').includes(cat));
+  currentFilteredScales.sort((a,b)=>a.title.localeCompare(b.title));
+  renderScoreList(currentFilteredScales);
+}
+
+function handleScoreSearch(q) {
+  q = (q||'').trim().toLowerCase();
+  if (!q) {
+    currentFilteredScales = [...scalesData].sort((a,b)=>a.title.localeCompare(b.title));
+  } else {
+    currentFilteredScales = scalesData.filter(s =>
+      s.title.toLowerCase().includes(q) || s.subtitle.toLowerCase().includes(q) || s.id.toLowerCase().includes(q)
+    );
+  }
+  renderScoreList(currentFilteredScales);
+}
+
+function openScoreModal(id) {
+  currentScale = scalesData.find(s => s.id === id);
+  if (!currentScale) return;
+  document.getElementById('modalScaleTitle').innerText = currentScale.title;
+  const body = document.getElementById('modalScaleBody');
+  body.innerHTML = currentScale.criteria.map((c,i) => `
+    <div class="criterion-group">
+      <div class="criterion-title">${c.name}</div>
+      <div class="criterion-detail">${c.detail||''}</div>
+      <select class="option-select criterion-val" onchange="calcScoreNow()">
+        ${c.options.map(o => `<option value="${o.score}">${o.text}</option>`).join('')}
+      </select>
+    </div>`).join('') + `
+    <div style="font-size:11px;color:var(--text-secondary);text-align:center;margin-top:12px;font-style:italic;">Nguồn: ${currentScale.source||''}</div>
+    <div style="height:72px;"></div>
+    <div style="position:fixed;bottom:0;left:0;right:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg-card);border-top:1px solid var(--border-color);z-index:60;">
+      <button onclick="closeScoreModal()" style="width:100%;padding:14px;border:none;border-radius:12px;background:var(--tiffany-main);color:#fff;font-weight:800;font-size:15px;cursor:pointer;">← Quay lại danh sách thang điểm</button>
+    </div>`;
+  const modal = document.getElementById('calcModal');
+  modal.style.display = 'flex';
+  calcScoreNow();
+}
+
+function closeScoreModal() {
+  document.getElementById('calcModal').style.display = 'none';
+}
+
+function calcScoreNow() {
+  if (!currentScale) return;
+  let total = 0;
+  document.querySelectorAll('#modalScaleBody .criterion-val').forEach(sel => {
+    total += parseFloat(sel.value) || 0;
+  });
+  const display = Number.isInteger(total) ? total : total.toFixed(1);
+  document.getElementById('stickyScoreNum').innerText = display;
+  const ev = currentScale.evaluate(total);
+  const el = document.getElementById('stickyScoreEval');
+  el.innerText = ev.text;
+  el.style.color = ev.color;
+}
+
 </script>
 </body>
 </html>
