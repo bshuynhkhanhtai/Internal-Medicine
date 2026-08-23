@@ -137,6 +137,30 @@
   #mainTabBar button.active-main{background:#fff!important;color:var(--tiffany-dark)!important;}
   #mainTabBar button:not(.active-main){background:rgba(255,255,255,.25)!important;color:#fff!important;}
 
+  .smart-search-drop{position:absolute;left:14px;right:14px;top:100%;max-height:55vh;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:80;display:none;}
+  .smart-search-drop.open{display:block;}
+  .ss-item{padding:11px 14px;border-bottom:1px solid var(--border-color);cursor:pointer;display:flex;gap:10px;align-items:flex-start;}
+  .ss-item:last-child{border-bottom:none;}
+  .ss-item:active{background:var(--tiffany-light);}
+  .ss-emoji{font-size:18px;flex-shrink:0;line-height:1.2;}
+  .ss-body{flex:1;min-width:0;}
+  .ss-title{font-size:13.5px;font-weight:700;color:var(--text-primary);line-height:1.3;}
+  .ss-meta{font-size:11.5px;color:var(--text-secondary);margin-top:2px;}
+  .ss-tag{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px;background:var(--tiffany-light);color:var(--tiffany-dark);margin-left:6px;}
+  .ss-group{font-size:11px;font-weight:800;color:var(--tiffany-dark);padding:8px 14px 4px;background:var(--bg-primary);position:sticky;top:0;}
+  .search-wrap{position:relative;padding:8px 14px 6px;}
+
+
+  /* Sticky toolbar trong tab Thang điểm */
+  #scoreStickyBar{position:sticky;top:calc(env(safe-area-inset-top) + 78px);z-index:42;background:var(--bg-primary);padding-bottom:2px;border-bottom:1px solid var(--border-color);}
+  #scoreAbcBar{display:flex;gap:2px;overflow-x:auto;padding:4px 10px 6px;background:var(--tiffany-light);scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  #scoreAbcBar::-webkit-scrollbar{display:none;}
+  .abc-letter{flex-shrink:0;min-width:26px;padding:5px 6px;text-align:center;font-size:12px;font-weight:800;color:var(--tiffany-dark);border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .abc-letter:active,.abc-letter.active{background:var(--tiffany-main);color:#fff;}
+  .abc-group-header{font-size:15px;font-weight:800;color:var(--tiffany-dark);margin:12px 0 6px;padding-bottom:3px;border-bottom:2px solid var(--tiffany-main);scroll-margin-top:calc(env(safe-area-inset-top) + 170px);}
+  [data-theme="dark"] .abc-group-header{color:var(--tiffany-main);}
+
+
   #mainTabBar{display:flex;gap:6px;}
   #mainTabBar button{flex:1;padding:8px 6px!important;border-radius:9px!important;border:none;font-weight:700;font-size:12.5px!important;cursor:pointer;min-height:36px;}
   /* Sticky tabs dưới header không bị che */
@@ -172,10 +196,12 @@
 
 <!-- VIEW PHÁC ĐỒ -->
 <div id="viewPhacDo">
-  <div style="padding:8px 14px 6px;">
-    <input id="quickSearch" type="search" placeholder="Tìm bệnh, viết tắt (THA, COPD, CKD, PMR…) — / hoặc ⌘K"
+  <div class="search-wrap">
+    <input id="quickSearch" type="search" placeholder="Tìm thông minh: THA, COPD, GCS, HAS-BLED, suy tim…"
       style="width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:13px;outline:none;box-sizing:border-box;"
-      oninput="runQuickSearch(this.value)" onkeydown="if(event.key==='Escape'){this.value='';runQuickSearch('');}">
+      oninput="smartSearch(this.value)" onfocus="smartSearch(this.value)"
+      onkeydown="handleSmartSearchKey(event)">
+    <div id="smartSearchDrop" class="smart-search-drop"></div>
   </div>
   <div class="specialty-tabs-wrapper">
     <div class="specialty-tabs" id="specialtyTabs"></div>
@@ -192,20 +218,24 @@
 
 <!-- VIEW THANG ĐIỂM -->
 <div id="viewThangDiem" style="display:none;">
-  <div style="padding:8px 14px 6px;">
-    <input id="scoreSearch" type="search" placeholder="Tìm thang điểm (GCS, NIHSS, CURB-65, SOFA, HAS-BLED, Wells…)"
-      style="width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:13px;outline:none;box-sizing:border-box;"
-      oninput="handleScoreSearch(this.value)">
+  <div id="scoreStickyBar">
+    <div class="search-wrap" style="padding:8px 14px 6px;">
+      <input id="scoreSearch" type="search" placeholder="Tìm thông minh: GCS, CURB, Wells, CHA2, SOFA…"
+        style="width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:13px;outline:none;box-sizing:border-box;"
+        oninput="smartSearchScores(this.value)" onfocus="smartSearchScores(this.value)"
+        onkeydown="if(event.key==='Escape'){this.value='';smartSearchScores('');}">
+    </div>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding:2px 14px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+      <button class="score-chip active" data-cat="all" onclick="filterScoreCat('all',this)">Tất cả</button>
+      <button class="score-chip" data-cat="tim_mach" onclick="filterScoreCat('tim_mach',this)">Tim mạch</button>
+      <button class="score-chip" data-cat="cap_cuu" onclick="filterScoreCat('cap_cuu',this)">Cấp cứu</button>
+      <button class="score-chip" data-cat="than_kinh" onclick="filterScoreCat('than_kinh',this)">Thần kinh</button>
+      <button class="score-chip" data-cat="ho_hap" onclick="filterScoreCat('ho_hap',this)">Hô hấp</button>
+      <button class="score-chip" data-cat="tieu_hoa" onclick="filterScoreCat('tieu_hoa',this)">Tiêu hóa</button>
+    </div>
+    <div id="scoreAbcBar"></div>
   </div>
-  <div style="display:flex;gap:6px;overflow-x:auto;padding:4px 14px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
-    <button class="score-chip active" data-cat="all" onclick="filterScoreCat('all',this)">Tất cả</button>
-    <button class="score-chip" data-cat="tim_mach" onclick="filterScoreCat('tim_mach',this)">Tim mạch</button>
-    <button class="score-chip" data-cat="cap_cuu" onclick="filterScoreCat('cap_cuu',this)">Cấp cứu</button>
-    <button class="score-chip" data-cat="than_kinh" onclick="filterScoreCat('than_kinh',this)">Thần kinh</button>
-    <button class="score-chip" data-cat="ho_hap" onclick="filterScoreCat('ho_hap',this)">Hô hấp</button>
-    <button class="score-chip" data-cat="tieu_hoa" onclick="filterScoreCat('tieu_hoa',this)">Tiêu hóa</button>
-  </div>
-  <div id="scalesList" style="padding:8px 14px 40px;display:flex;flex-direction:column;gap:10px;"></div>
+  <div id="scalesList" style="padding:8px 14px 40px;display:flex;flex-direction:column;gap:8px;"></div>
 </div>
 
 <!-- Modal tính điểm -->
@@ -3956,46 +3986,255 @@ function toggleTheme(){
 }
 
 /* Tìm nhanh theo tên, short, id, guideline, hoặc từ khóa trong title */
-function runQuickSearch(q){
-  q = (q || '').trim().toLowerCase();
-  const wrap = document.getElementById('diseaseTabs');
+
+/* ========== TÌM KIẾM THÔNG MINH ========== */
+function stripVN(str){
+  return (str||'').toString().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/đ/g,'d').replace(/[^a-z0-9\s_+-]/g,' ')
+    .replace(/\s+/g,' ').trim();
+}
+
+// Từ điển viết tắt / đồng nghĩa thường dùng
+const SEARCH_ALIASES = {
+  tha:'tang huyet ap hypertension htn',
+  htn:'tang huyet ap',
+  copd:'benh phoi tac nghe n man tinh copd gold',
+  hen:'hen phe quan asthma gina',
+  asthma:'hen phe quan',
+  ckd:'benh than man',
+  aki:'ton thuong than cap',
+  dm:'dai thao duong diabetes',
+  dtd:'dai thao duong',
+  hf:'suy tim heart failure',
+  suy_tim:'suy tim heart failure',
+  af:'rung nhi atrial fibrillation',
+  rn:'rung nhi',
+  acs:'hoi chung vanh cap nstemi stemi',
+  nstemi:'hoi chung vanh cap',
+  pe:'thuyen tac phoi wells years',
+  dvt:'huyet khoi tinh mach sau wells',
+  gcs:'glasgow coma scale hon me',
+  sofa:'sequential organ failure',
+  qsofa:'quick sofa nhiem khuan',
+  curb:'curb-65 viem phoi',
+  'curb65':'curb-65 viem phoi',
+  hasbled:'has-bled xuat huyet',
+  'has-bled':'has-bled',
+  cha2:'cha2ds2 va cha2ds2vasc rung nhi',
+  chads:'cha2ds2',
+  grace:'grace acs',
+  timi:'timi acs',
+  wells:'wells pe dvt',
+  nihss:'nihss dot quy',
+  pmr:'polymyalgia rheumatica viem da co thap',
+  masld:'gan nhiem mo nafld nash',
+  ipf:'xo phoi tu phat ild',
+  pah:'tang ap dong mach phoi',
+  ie:'viem noi tam mac',
+  vhd:'benh van tim',
+  hcm:'benh co tim phi dai',
+  addrs:'add-rs boc tach dong mach chu',
+  'add-rs':'boc tach dong mach chu',
+  findrisc:'nguy co dai thao duong',
+  child:'child-pugh xo gan',
+  meld:'meld xo gan',
+  news:'news2 early warning',
+  apache:'apache2 icu',
+  rass:'an than rass',
+  centor:'viem hong',
+  alvarado:'viem ruot thua',
+  heart:'heart score dau nguc',
+  perc:'perc pe rule out'
+};
+
+function expandQuery(q){
+  const n = stripVN(q);
+  if(!n) return '';
+  const parts = n.split(/\s+/);
+  const extra = [];
+  parts.forEach(p => {
+    if(SEARCH_ALIASES[p]) extra.push(SEARCH_ALIASES[p]);
+    // partial alias keys
+    Object.keys(SEARCH_ALIASES).forEach(k => {
+      if(k.startsWith(p) && p.length>=2) extra.push(SEARCH_ALIASES[k]);
+    });
+  });
+  return (n + ' ' + extra.join(' ')).trim();
+}
+
+function scoreMatch(hayRaw, qRaw){
+  const hay = stripVN(hayRaw);
+  const q = stripVN(qRaw);
+  if(!q) return 0;
+  const expanded = expandQuery(q);
+  let score = 0;
+  // exact id / short boost
+  if(hay === q) score += 100;
+  if(hay.startsWith(q)) score += 50;
+  if(hay.includes(' '+q) || hay.includes(q+' ')) score += 30;
+  if(hay.includes(q)) score += 20;
+  // token overlap
+  const qTokens = expanded.split(/\s+/).filter(t=>t.length>1);
+  const hayTokens = new Set(hay.split(/\s+/));
+  qTokens.forEach(t => {
+    if(hayTokens.has(t)) score += 8;
+    else if([...hayTokens].some(h => h.includes(t) || t.includes(h))) score += 3;
+  });
+  return score;
+}
+
+function smartSearch(q){
+  const drop = document.getElementById('smartSearchDrop');
+  q = (q||'').trim();
   if(!q){
+    drop.classList.remove('open');
+    drop.innerHTML = '';
     renderDiseaseTabs();
     return;
   }
-  const matches = diseases.filter(d => {
-    const hay = [d.title, d.short, d.id, d.emoji, (d.guidelines||[]).join(' ')].join(' ').toLowerCase();
-    return hay.includes(q);
-  });
-  if(matches.length === 0){
-    wrap.innerHTML = `<div style="padding:12px;color:var(--text-secondary);font-size:13px;">Không tìm thấy bệnh phù hợp với “${q}”</div>`;
+  // Search diseases
+  const dMatches = diseases.map(d => {
+    const hay = [d.title, d.short, d.id, (d.guidelines||[]).join(' '), d.spec].join(' ');
+    return {type:'disease', item:d, score:scoreMatch(hay, q)};
+  }).filter(x => x.score > 0).sort((a,b)=>b.score-a.score);
+
+  // Search scales too
+  const sMatches = (typeof scalesData!=='undefined'?scalesData:[]).map(s => {
+    const hay = [s.title, s.subtitle, s.id, s.categoryName||'', s.category||''].join(' ');
+    return {type:'scale', item:s, score:scoreMatch(hay, q)};
+  }).filter(x => x.score > 0).sort((a,b)=>b.score-a.score);
+
+  if(!dMatches.length && !sMatches.length){
+    drop.innerHTML = `<div style="padding:16px;text-align:center;color:var(--text-secondary);font-size:13px;">Không thấy kết quả cho “${q}”</div>`;
+    drop.classList.add('open');
     return;
   }
-  // Nhóm theo chuyên khoa để dễ chọn
+
+  let html = '';
+  if(dMatches.length){
+    html += `<div class="ss-group">📋 Phác đồ (${Math.min(dMatches.length,8)})</div>`;
+    dMatches.slice(0,8).forEach(m => {
+      const d = m.item;
+      const sp = specialties.find(s=>s.id===d.spec);
+      html += `<div class="ss-item" onclick="goSmartDisease('${d.id}')">
+        <div class="ss-emoji">${d.emoji||'📄'}</div>
+        <div class="ss-body">
+          <div class="ss-title">${d.title} <span class="ss-tag">${d.short||''}</span></div>
+          <div class="ss-meta">${sp?sp.label:d.spec} · ${(d.guidelines||[]).slice(0,2).join(', ')}</div>
+        </div>
+      </div>`;
+    });
+  }
+  if(sMatches.length){
+    html += `<div class="ss-group">🧮 Thang điểm (${Math.min(sMatches.length,6)})</div>`;
+    sMatches.slice(0,6).forEach(m => {
+      const s = m.item;
+      html += `<div class="ss-item" onclick="goSmartScale('${s.id}')">
+        <div class="ss-emoji">🧮</div>
+        <div class="ss-body">
+          <div class="ss-title">${s.title}</div>
+          <div class="ss-meta">${s.categoryName||s.category||''}</div>
+        </div>
+      </div>`;
+    });
+  }
+  drop.innerHTML = html;
+  drop.classList.add('open');
+
+  // Also filter disease tabs for quick pick
+  runQuickSearchLegacy(q);
+}
+
+function runQuickSearchLegacy(q){
+  q = (q||'').trim().toLowerCase();
+  const wrap = document.getElementById('diseaseTabs');
+  if(!q){ renderDiseaseTabs(); return; }
+  const matches = diseases.filter(d => scoreMatch([d.title,d.short,d.id,(d.guidelines||[]).join(' ')].join(' '), q) > 0)
+    .sort((a,b)=>scoreMatch([b.title,b.short,b.id].join(' '),q)-scoreMatch([a.title,a.short,a.id].join(' '),q));
+  if(!matches.length){
+    wrap.innerHTML = `<div style="padding:12px;color:var(--text-secondary);font-size:13px;">Không có bệnh khớp “${q}”</div>`;
+    return;
+  }
   const bySpec = {};
-  matches.forEach(d => {
-    if(!bySpec[d.spec]) bySpec[d.spec] = [];
-    bySpec[d.spec].push(d);
-  });
+  matches.forEach(d => { (bySpec[d.spec]=bySpec[d.spec]||[]).push(d); });
   let html = '';
   Object.keys(bySpec).forEach(spec => {
-    const sp = specialties.find(s => s.id === spec);
-    html += `<div style="font-size:11px;font-weight:700;color:var(--text-secondary);padding:6px 4px 2px;">${sp ? sp.emoji+' '+sp.label : spec}</div>`;
-    html += bySpec[spec].map(d => `
-      <div class="d-tab ${d.id===activeDiseaseId?'active':''}" onclick="selectDisease('${d.id}');document.getElementById('quickSearch').value='';">
-        <span class="emoji">${d.emoji}</span>${d.short}
-      </div>`).join('');
+    const sp = specialties.find(s=>s.id===spec);
+    html += `<div style="font-size:11px;font-weight:700;color:var(--text-secondary);padding:6px 4px 2px;">${sp?sp.emoji+' '+sp.label:spec}</div>`;
+    html += bySpec[spec].map(d=>`<div class="d-tab ${d.id===activeDiseaseId?'active':''}" onclick="goSmartDisease('${d.id}')"><span class="emoji">${d.emoji}</span>${d.short}</div>`).join('');
   });
   wrap.innerHTML = html;
 }
 
-// Phím tắt: / hoặc Ctrl/Cmd+K mở ô tìm kiếm
+function goSmartDisease(id){
+  const d = diseases.find(x=>x.id===id);
+  if(!d) return;
+  document.getElementById('smartSearchDrop')?.classList.remove('open');
+  const qs = document.getElementById('quickSearch');
+  if(qs) qs.value = '';
+  switchMainTab('phacdo');
+  selectSpecialty(d.spec);
+  selectDisease(id);
+}
+
+function goSmartScale(id){
+  document.getElementById('smartSearchDrop')?.classList.remove('open');
+  const qs = document.getElementById('quickSearch');
+  if(qs) qs.value = '';
+  switchMainTab('thangdiem');
+  setTimeout(()=>openScoreModal(id), 60);
+}
+
+function smartSearchScores(q){
+  q = (q||'').trim();
+  if(!q){
+    currentFilteredScales = [...scalesData];
+    renderScoreList(currentFilteredScales);
+    return;
+  }
+  currentFilteredScales = scalesData
+    .map(s => ({s, score: scoreMatch([s.title,s.subtitle,s.id,s.categoryName||'',s.category||''].join(' '), q)}))
+    .filter(x => x.score > 0)
+    .sort((a,b)=>b.score-a.score)
+    .map(x => x.s);
+  renderScoreList(currentFilteredScales);
+}
+
+function handleSmartSearchKey(e){
+  if(e.key === 'Escape'){
+    e.target.value = '';
+    smartSearch('');
+    document.getElementById('smartSearchDrop')?.classList.remove('open');
+  }
+  if(e.key === 'Enter'){
+    const first = document.querySelector('#smartSearchDrop .ss-item');
+    if(first) first.click();
+  }
+}
+
+// Đóng dropdown khi tap ngoài
+document.addEventListener('click', (e) => {
+  const drop = document.getElementById('smartSearchDrop');
+  const wrap = e.target.closest('.search-wrap');
+  if(drop && !wrap) drop.classList.remove('open');
+});
+
+// Alias: giữ tên cũ
+function runQuickSearch(q){ smartSearch(q); }
+function handleScoreSearch(q){ smartSearchScores(q); }
+
+
+
 document.addEventListener('keydown', (e) => {
   const tag = (e.target && e.target.tagName) || '';
   if(tag === 'INPUT' || tag === 'TEXTAREA') return;
   if(e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')){
     e.preventDefault();
-    const box = document.getElementById('quickSearch');
+    const td = document.getElementById('viewThangDiem');
+    const box = (td && td.style.display !== 'none')
+      ? document.getElementById('scoreSearch')
+      : document.getElementById('quickSearch');
     if(box){ box.focus(); box.select(); }
   }
 });
@@ -6198,16 +6437,50 @@ function switchMainTab(tab) {
 
 function renderScoreList(data) {
   const box = document.getElementById('scalesList');
+  const abcBar = document.getElementById('scoreAbcBar');
   if (!data.length) {
     box.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary);">Không tìm thấy thang điểm phù hợp.</div>';
+    if (abcBar) abcBar.innerHTML = '';
     return;
   }
-  box.innerHTML = data.map(s => `
-    <div class="scale-card" onclick="openScoreModal('${s.id}')">
-      <div class="scale-title">${s.title}</div>
-      <div class="scale-desc">${s.subtitle}</div>
-      <span class="scale-badge">${s.categoryName || s.category}</span>
-    </div>`).join('');
+  // Gom nhóm A-Z theo chữ cái đầu tiêu đề
+  const sorted = [...data].sort((a,b) => a.title.localeCompare(b.title, 'vi'));
+  const grouped = {};
+  sorted.forEach(s => {
+    let letter = s.title.trim().charAt(0).toUpperCase();
+    if (letter >= '0' && letter <= '9') letter = '#';
+    if (!grouped[letter]) grouped[letter] = [];
+    grouped[letter].push(s);
+  });
+  const letters = Object.keys(grouped).sort((a,b) => {
+    if (a === '#') return -1;
+    if (b === '#') return 1;
+    return a.localeCompare(b);
+  });
+  // Thanh ABC
+  if (abcBar) {
+    abcBar.innerHTML = letters.map(L =>
+      `<span class="abc-letter" onclick="scrollToScoreLetter('${L}')">${L}</span>`
+    ).join('');
+  }
+  // Danh sách theo nhóm
+  box.innerHTML = letters.map(L => {
+    const cards = grouped[L].map(s => `
+      <div class="scale-card" onclick="openScoreModal('${s.id}')">
+        <div class="scale-title">${s.title}</div>
+        <div class="scale-desc">${s.subtitle}</div>
+        <span class="scale-badge">${s.categoryName || s.category}</span>
+      </div>`).join('');
+    return `<div class="abc-group-header" id="scoreSec_${L}">${L}</div>${cards}`;
+  }).join('');
+}
+
+function scrollToScoreLetter(letter) {
+  const el = document.getElementById('scoreSec_' + letter);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('#scoreAbcBar .abc-letter').forEach(n => {
+    n.classList.toggle('active', n.textContent === letter);
+  });
 }
 
 function filterScoreCat(cat, el) {
@@ -6218,17 +6491,8 @@ function filterScoreCat(cat, el) {
   renderScoreList(currentFilteredScales);
 }
 
-function handleScoreSearch(q) {
-  q = (q||'').trim().toLowerCase();
-  if (!q) {
-    currentFilteredScales = [...scalesData].sort((a,b)=>a.title.localeCompare(b.title));
-  } else {
-    currentFilteredScales = scalesData.filter(s =>
-      s.title.toLowerCase().includes(q) || s.subtitle.toLowerCase().includes(q) || s.id.toLowerCase().includes(q)
-    );
-  }
-  renderScoreList(currentFilteredScales);
-}
+function handleScoreSearch(q){ smartSearchScores(q); }
+
 
 function openScoreModal(id) {
   currentScale = scalesData.find(s => s.id === id);
