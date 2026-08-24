@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Phác Đồ Bỏ Túi">
+<meta name="apple-mobile-web-app-title" content="Y Khoa">
+<meta name="theme-color" content="#028090">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" id="appManifestLink">
 <link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/180/00a896/heart-with-pulse.png">
 <title>Công Cụ Y Khoa — Phác Đồ &amp; Thang Điểm (2025–2026)</title>
 <style>
@@ -32,21 +35,21 @@
   .theme-toggle-btn{background:rgba(255,255,255,.2);border:none;font-size:13px;padding:6px 10px;border-radius:16px;cursor:pointer;color:#fff;display:flex;align-items:center;gap:3px;backdrop-filter:blur(10px);flex-shrink:0;min-height:32px;}
   .theme-toggle-btn:active{background:rgba(255,255,255,.32);}
 
-  .specialty-tabs-wrapper{background:var(--tiffany-dark);position:sticky;top:calc(env(safe-area-inset-top) + 78px);z-index:44;}
+  .specialty-tabs-wrapper{background:var(--tiffany-dark);position:sticky;top:calc(env(safe-area-inset-top) + 72px);z-index:44;}
   .specialty-tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .specialty-tabs::-webkit-scrollbar{display:none;}
   .sp-tab{flex-shrink:0;display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:16px;background:rgba(255,255,255,.14);color:#fff;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;border:1px solid rgba(255,255,255,.2);}
   .sp-tab .emoji{font-size:14px;}
   .sp-tab.active{background:#fff;color:var(--tiffany-dark);border-color:#fff;}
 
-  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:sticky;top:calc(env(safe-area-inset-top) + 118px);z-index:40;}
+  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:sticky;top:calc(env(safe-area-inset-top) + 110px);z-index:40;}
   .disease-tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .disease-tabs::-webkit-scrollbar{display:none;}
   .d-tab{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;border-radius:14px;background:var(--bg-primary);color:var(--text-secondary);font-size:11.5px;font-weight:700;white-space:nowrap;cursor:pointer;min-width:60px;border:1px solid var(--border-color);}
   .d-tab .emoji{font-size:17px;line-height:1;margin-bottom:2px;}
   .d-tab.active{background:var(--tiffany-main);color:#fff;border-color:var(--tiffany-main);}
 
-  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:6px 12px;background:var(--tiffany-light);scrollbar-width:none;position:sticky;top:calc(env(safe-area-inset-top) + 158px);z-index:35;border-bottom:1px solid var(--border-color);}
+  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:6px 12px;background:var(--tiffany-light);scrollbar-width:none;position:sticky;top:calc(env(safe-area-inset-top) + 148px);z-index:35;border-bottom:1px solid var(--border-color);}
   .section-nav::-webkit-scrollbar{display:none;}
   .s-pill{flex-shrink:0;font-size:11.5px;font-weight:700;color:var(--tiffany-dark);background:var(--bg-card);padding:6px 11px;border-radius:12px;cursor:pointer;border:1px solid var(--border-color);}
   .s-pill.active{background:var(--tiffany-dark);color:#fff;border-color:var(--tiffany-dark);}
@@ -137,6 +140,53 @@
   #mainTabBar button.active-main{background:#fff!important;color:var(--tiffany-dark)!important;}
   #mainTabBar button:not(.active-main){background:rgba(255,255,255,.25)!important;color:#fff!important;}
 
+  .ver-badge{font-size:10px;font-weight:700;opacity:.9;margin-top:2px;}
+  #changelogModal{display:none;position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.45);align-items:flex-end;justify-content:center;}
+  #changelogModal.open{display:flex;}
+  .cl-sheet{background:var(--bg-card);width:100%;max-width:520px;max-height:85vh;overflow-y:auto;border-radius:16px 16px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));}
+  .cl-sheet h2{font-size:17px;font-weight:800;color:var(--tiffany-dark);margin-bottom:10px;}
+  .cl-item{border-left:3px solid var(--tiffany-main);padding:8px 12px;margin-bottom:10px;background:var(--bg-primary);border-radius:0 10px 10px 0;}
+  .cl-date{font-size:11px;font-weight:800;color:var(--tiffany-dark);}
+  .cl-item ul{margin:4px 0 0 16px;font-size:12.5px;line-height:1.45;}
+
+
+  .pwa-help-btn{background:rgba(255,255,255,.2);border:none;color:#fff;font-size:12px;font-weight:700;padding:6px 10px;border-radius:14px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+  .pwa-help-btn:active{background:rgba(255,255,255,.35);}
+  #pwaGuide{display:none;position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.45);align-items:flex-end;justify-content:center;padding:0;}
+  #pwaGuide.open{display:flex;}
+  .pwa-sheet{background:var(--bg-card);color:var(--text-primary);width:100%;max-width:520px;max-height:88vh;overflow-y:auto;border-radius:16px 16px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -8px 28px rgba(0,0,0,.25);}
+  .pwa-sheet h2{font-size:17px;font-weight:800;margin-bottom:6px;color:var(--tiffany-dark);}
+  [data-theme="dark"] .pwa-sheet h2{color:var(--tiffany-main);}
+  .pwa-sheet .lead{font-size:13px;color:var(--text-secondary);margin-bottom:14px;line-height:1.4;}
+  .pwa-step-block{background:var(--bg-primary);border:1px solid var(--border-color);border-radius:12px;padding:12px 14px;margin-bottom:10px;}
+  .pwa-step-block h3{font-size:14px;font-weight:800;margin-bottom:8px;}
+  .pwa-step-block ol{margin:0;padding-left:18px;}
+  .pwa-step-block li{font-size:13px;line-height:1.45;margin-bottom:6px;}
+  .pwa-note{font-size:12px;color:var(--text-secondary);line-height:1.4;margin-top:8px;}
+  .pwa-actions{display:flex;gap:8px;margin-top:14px;}
+  .pwa-actions button{flex:1;padding:12px;border-radius:12px;border:none;font-weight:800;font-size:14px;cursor:pointer;}
+  .pwa-primary{background:var(--tiffany-main);color:#fff;}
+  .pwa-secondary{background:var(--tiffany-light);color:var(--tiffany-dark);}
+
+
+  /* Favorite & recent */
+  .fav-btn{border:none;background:transparent;font-size:18px;cursor:pointer;padding:4px 6px;line-height:1;flex-shrink:0;}
+  .fav-btn.on{filter:none;}
+  .ss-recent{padding:8px 14px;border-bottom:1px solid var(--border-color);}
+  .ss-recent-title{font-size:11px;font-weight:800;color:var(--tiffany-dark);margin-bottom:6px;}
+  .ss-chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .ss-chip{font-size:12px;font-weight:600;padding:6px 10px;border-radius:16px;background:var(--tiffany-light);color:var(--tiffany-dark);border:none;cursor:pointer;}
+  .ss-chip:active{opacity:.8;}
+  .scale-card{display:flex;gap:8px;align-items:flex-start;}
+  .scale-card .scale-main{flex:1;min-width:0;}
+  /* Back to top */
+  #backToTop{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:90;width:44px;height:44px;border-radius:22px;border:none;background:var(--tiffany-main);color:#fff;font-size:20px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.2);cursor:pointer;display:none;align-items:center;justify-content:center;opacity:.92;}
+  #backToTop.show{display:flex;}
+  #backToTop:active{transform:scale(.94);}
+  /* Disease header fav row */
+  .disease-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+
+
   .smart-search-drop{position:absolute;left:14px;right:14px;top:100%;max-height:55vh;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:80;display:none;}
   .smart-search-drop.open{display:block;}
   .ss-item{padding:11px 14px;border-bottom:1px solid var(--border-color);cursor:pointer;display:flex;gap:10px;align-items:flex-start;}
@@ -152,7 +202,7 @@
 
 
   /* Sticky toolbar trong tab Thang điểm */
-  #scoreStickyBar{position:sticky;top:calc(env(safe-area-inset-top) + 78px);z-index:42;background:var(--bg-primary);padding-bottom:2px;border-bottom:1px solid var(--border-color);}
+  #scoreStickyBar{position:sticky;top:calc(env(safe-area-inset-top) + 72px);z-index:42;background:var(--bg-primary);padding-bottom:2px;border-bottom:1px solid var(--border-color);}
   #scoreAbcBar{display:flex;gap:2px;overflow-x:auto;padding:4px 10px 6px;background:var(--tiffany-light);scrollbar-width:none;-webkit-overflow-scrolling:touch;}
   #scoreAbcBar::-webkit-scrollbar{display:none;}
   .abc-letter{flex-shrink:0;min-width:26px;padding:5px 6px;text-align:center;font-size:12px;font-weight:800;color:var(--tiffany-dark);border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
@@ -174,6 +224,21 @@
   }
 
 
+
+  @media print {
+    header, .specialty-tabs-wrapper, .disease-tabs-wrapper, .section-nav,
+    #mainTabBar, #viewThangDiem, #backToTop, #pwaGuide, #calcModal,
+    .theme-toggle-btn, .pwa-help-btn, .fav-btn, .search-wrap, footer,
+    #scoreStickyBar { display: none !important; }
+    #viewPhacDo { display: block !important; }
+    body { background: #fff; color: #000; padding: 0; }
+    .container { padding: 0; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; margin-bottom: 10px; }
+    .card-body { display: block !important; }
+    .disease-header { color: #000; }
+    a { color: #000; text-decoration: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -183,10 +248,14 @@
     <div>
       <h1>📖 Công Cụ Y Khoa Lâm Sàng</h1>
       <div class="sub">Phác đồ điều trị · Thang điểm — ESC/AHA/ADA/GINA/GOLD 2025–2026</div>
+      <div class="ver-badge">Bản 2026.08 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
     </div>
-    <button class="theme-toggle-btn" onclick="toggleTheme()">
-      <span id="themeIcon">☀️</span><span id="themeText">Sáng</span>
-    </button>
+    <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+      <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇️ Cài app</button>
+      <button class="theme-toggle-btn" onclick="toggleTheme()">
+        <span id="themeIcon">☀️</span><span id="themeText">Sáng</span>
+      </button>
+    </div>
   </div>
   <div id="mainTabBar" style="display:flex;gap:6px;padding:0;margin:0;">
     <button id="tabPhacDo" class="active-main" onclick="switchMainTab('phacdo')" style="flex:1;padding:10px;border-radius:10px;border:none;font-weight:700;font-size:13px;cursor:pointer;">📋 Phác đồ điều trị</button>
@@ -212,7 +281,7 @@
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
   <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px 24px;">
-    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.
+    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.08
   </footer>
 </div>
 
@@ -3997,47 +4066,96 @@ function stripVN(str){
 
 // Từ điển viết tắt / đồng nghĩa thường dùng
 const SEARCH_ALIASES = {
+  // Tim mạch
   tha:'tang huyet ap hypertension htn',
   htn:'tang huyet ap',
+  ha:'tang huyet ap',
+  hf:'suy tim heart failure',
+  suy_tim:'suy tim heart failure',
+  hfrEF:'suy tim ef giam',
+  hfpEF:'suy tim ef bao ton',
+  af:'rung nhi atrial fibrillation',
+  rn:'rung nhi',
+  acs:'hoi chung vanh cap nstemi stemi nmct',
+  nstemi:'hoi chung vanh cap',
+  stemi:'nmct st chenh len',
+  nmct:'nhoi mau co tim acs',
+  pe:'thuyen tac phoi wells years',
+  dvt:'huyet khoi tinh mach sau wells',
+  ie:'viem noi tam mac endocarditis',
+  vhd:'benh van tim',
+  hcm:'benh co tim phi dai',
+  cmp:'benh co tim cardiomyopathy',
+  myocarditis:'viem co tim',
+  aortic:'phinh boc tach dong mach chu add-rs',
+  addrs:'add-rs boc tach dong mach chu',
+  'add-rs':'boc tach dong mach chu',
+  lipid:'roi loan lipid dyslipidemia statin',
+  statin:'roi loan lipid',
+  pad:'benh dong mach ngoai bien',
+  // Hô hấp
   copd:'benh phoi tac nghe n man tinh copd gold',
   hen:'hen phe quan asthma gina',
   asthma:'hen phe quan',
-  ckd:'benh than man',
-  aki:'ton thuong than cap',
+  ipf:'xo phoi tu phat ild',
+  ild:'benh phoi ke',
+  pah:'tang ap dong mach phoi',
+  pleural:'tran dich mang phoi',
+  // Nội tiết
   dm:'dai thao duong diabetes',
   dtd:'dai thao duong',
-  hf:'suy tim heart failure',
-  suy_tim:'suy tim heart failure',
-  af:'rung nhi atrial fibrillation',
-  rn:'rung nhi',
-  acs:'hoi chung vanh cap nstemi stemi',
-  nstemi:'hoi chung vanh cap',
-  pe:'thuyen tac phoi wells years',
-  dvt:'huyet khoi tinh mach sau wells',
+  t2dm:'dai thao duong tip 2',
+  t1dm:'dai thao duong tip 1',
+  dka:'nhiem toan cetone',
+  hhs:'tang ap luc tham thau',
+  thyroid:'tuyen giap',
+  hyperthyroid:'cuong giap',
+  hypothyroid:'suy giap',
+  addison:'suy thuong than',
+  cushing:'hoi chung cushing',
+  // Thận
+  ckd:'benh than man',
+  aki:'ton thuong than cap',
+  gfr:'do loc cau than ckd-epi',
+  hyperk:'tang kali',
+  hypok:'ha kali',
+  hyponatremia:'ha natri',
+  // Tiêu hóa
+  gerd:'trao nguoc da day thuc quan',
+  pud:'loet da day ta trang',
+  ibd:'viem ruot man crohn colitis',
+  cirrhosis:'xo gan child-pugh meld',
+  masld:'gan nhiem mo nafld nash',
+  nafld:'gan nhiem mo',
+  pancreatitis:'viem tuy',
+  constipation:'tao bon',
+  // Cơ xương khớp
+  ra:'viem khop dang thap',
+  oa:'thoai hoa khop',
+  gout:'gout gút acid uric',
+  pmr:'polymyalgia rheumatica viem da co thap',
+  spa:'viem cot song dinh khop',
+  sle:'lupus',
+  // Thang điểm
   gcs:'glasgow coma scale hon me',
   sofa:'sequential organ failure',
-  qsofa:'quick sofa nhiem khuan',
+  qsofa:'quick sofa nhiem khuan sepsis',
   curb:'curb-65 viem phoi',
-  'curb65':'curb-65 viem phoi',
-  hasbled:'has-bled xuat huyet',
-  'has-bled':'has-bled',
-  cha2:'cha2ds2 va cha2ds2vasc rung nhi',
-  chads:'cha2ds2',
-  grace:'grace acs',
+  curb65:'curb-65 viem phoi',
+  'curb-65':'viem phoi',
+  hasbled:'has-bled xuat huyet chay mau',
+  'has-bled':'xuat huyet',
+  cha2:'cha2ds2-va cha2ds2vasc rung nhi dot quy',
+  chads:'cha2ds2-va',
+  'cha2ds2':'rung nhi',
+  grace:'grace acs nguy co',
   timi:'timi acs',
   wells:'wells pe dvt',
+  years:'years pe thuyen tac',
   nihss:'nihss dot quy',
-  pmr:'polymyalgia rheumatica viem da co thap',
-  masld:'gan nhiem mo nafld nash',
-  ipf:'xo phoi tu phat ild',
-  pah:'tang ap dong mach phoi',
-  ie:'viem noi tam mac',
-  vhd:'benh van tim',
-  hcm:'benh co tim phi dai',
-  addrs:'add-rs boc tach dong mach chu',
-  'add-rs':'boc tach dong mach chu',
-  findrisc:'nguy co dai thao duong',
+  abcd2:'tia abcd2',
   child:'child-pugh xo gan',
+  'child-pugh':'xo gan',
   meld:'meld xo gan',
   news:'news2 early warning',
   apache:'apache2 icu',
@@ -4045,7 +4163,42 @@ const SEARCH_ALIASES = {
   centor:'viem hong',
   alvarado:'viem ruot thua',
   heart:'heart score dau nguc',
-  perc:'perc pe rule out'
+  perc:'perc pe rule out',
+  findrisc:'nguy co dai thao duong',
+  score2:'score2 nguy co tim mach',
+  // Thuốc thường dùng (đi tới bệnh liên quan)
+  metformin:'dai thao duong',
+  empagliflozin:'sglt2 suy tim dai thao duong',
+  dapagliflozin:'sglt2 suy tim',
+  semaglutide:'glp1 beo phi dai thao duong',
+  amlodipine:'tang huyet ap',
+  perindopril:'tang huyet ap acei',
+  losartan:'tang huyet ap arb',
+  bisoprolol:'suy tim beta blocker',
+  spironolactone:'suy tim loi tieu kali',
+  furosemide:'loi tieu suy tim',
+  lasix:'furosemide loi tieu',
+  warfarin:'khang dong rung nhi',
+  rivaroxaban:'doac xarelto',
+  apixaban:'doac eliquis',
+  dabigatran:'doac',
+  atorvastatin:'statin lipid',
+  rosuvastatin:'statin lipid',
+  aspirin:'acs khang tieu cau',
+  clopidogrel:'dapt acs',
+  ticagrelor:'dapt acs',
+  salbutamol:'hen copd saba',
+  ventolin:'hen salbutamol',
+  budesonide:'hen ics',
+  formoterol:'hen mart',
+  insulin:'dai thao duong',
+  levothyroxine:'suy giap',
+  allopurinol:'gout',
+  colchicine:'gout',
+  methotrexate:'viem khop dang thap',
+  prednisolone:'corticoid',
+  omeprazole:'ppi loet da day',
+  pantoprazole:'ppi'
 };
 
 function expandQuery(q){
@@ -4239,6 +4392,354 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+
+/* ========== TỐI ƯU: debounce, favorite, recent, PWA, back-to-top ========== */
+function debounce(fn, ms){
+  let t;
+  return function(...args){
+    clearTimeout(t);
+    t = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
+const LS_FAV_D = 'yk_fav_diseases';
+const LS_FAV_S = 'yk_fav_scales';
+const LS_RECENT = 'yk_recent_search';
+
+function loadJSON(key, fallback){
+  try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch(e){ return fallback; }
+}
+function saveJSON(key, val){
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){}
+}
+
+function getFavDiseases(){ return loadJSON(LS_FAV_D, []); }
+function getFavScales(){ return loadJSON(LS_FAV_S, []); }
+function isFavDisease(id){ return getFavDiseases().includes(id); }
+function isFavScale(id){ return getFavScales().includes(id); }
+
+function toggleFavDisease(id, btn){
+  let arr = getFavDiseases();
+  if(arr.includes(id)) arr = arr.filter(x => x !== id);
+  else arr = [id, ...arr].slice(0, 30);
+  saveJSON(LS_FAV_D, arr);
+  if(btn) btn.textContent = arr.includes(id) ? '★' : '☆';
+  if(btn) btn.classList.toggle('on', arr.includes(id));
+}
+function toggleFavScale(id, btn){
+  let arr = getFavScales();
+  if(arr.includes(id)) arr = arr.filter(x => x !== id);
+  else arr = [id, ...arr].slice(0, 30);
+  saveJSON(LS_FAV_S, arr);
+  if(btn) btn.textContent = arr.includes(id) ? '★' : '☆';
+  if(btn) btn.classList.toggle('on', arr.includes(id));
+}
+
+function pushRecent(label, kind, id){
+  let arr = loadJSON(LS_RECENT, []);
+  arr = arr.filter(x => !(x.kind === kind && x.id === id));
+  arr.unshift({ label, kind, id, ts: Date.now() });
+  saveJSON(LS_RECENT, arr.slice(0, 12));
+}
+function getRecent(){ return loadJSON(LS_RECENT, []); }
+
+function renderRecentBlock(){
+  const rec = getRecent();
+  const favD = getFavDiseases().map(id => {
+    const d = diseases.find(x => x.id === id);
+    return d ? { label: d.short || d.title, kind: 'disease', id: d.id } : null;
+  }).filter(Boolean).slice(0, 6);
+  const favS = getFavScales().map(id => {
+    const s = (typeof scalesData !== 'undefined' ? scalesData : []).find(x => x.id === id);
+    return s ? { label: s.title.split('(')[0].trim().slice(0, 28), kind: 'scale', id: s.id } : null;
+  }).filter(Boolean).slice(0, 6);
+
+  let html = '';
+  if(favD.length || favS.length){
+    html += `<div class="ss-recent"><div class="ss-recent-title">★ Đã ghim</div><div class="ss-chips">`;
+    favD.forEach(x => { html += `<button class="ss-chip" onclick="goSmartDisease('${x.id}')">📋 ${x.label}</button>`; });
+    favS.forEach(x => { html += `<button class="ss-chip" onclick="goSmartScale('${x.id}')">🧮 ${x.label}</button>`; });
+    html += `</div></div>`;
+  }
+  if(rec.length){
+    html += `<div class="ss-recent"><div class="ss-recent-title">🕒 Gần đây</div><div class="ss-chips">`;
+    rec.slice(0, 8).forEach(x => {
+      const fn = x.kind === 'scale' ? 'goSmartScale' : 'goSmartDisease';
+      const ic = x.kind === 'scale' ? '🧮' : '📋';
+      html += `<button class="ss-chip" onclick="${fn}('${x.id}')">${ic} ${x.label}</button>`;
+    });
+    html += `</div></div>`;
+  }
+  return html;
+}
+
+// Debounced smart search wrappers
+const smartSearchDebounced = debounce(function(q){ smartSearchCore(q); }, 180);
+const smartSearchScoresDebounced = debounce(function(q){ smartSearchScoresCore(q); }, 180);
+
+// Rename cores: patch existing smartSearch to core if needed
+function smartSearch(q){
+  const drop = document.getElementById('smartSearchDrop');
+  if(!(q||'').trim()){
+    // show favorites + recent when empty + focused
+    if(drop){
+      const block = renderRecentBlock();
+      if(block){ drop.innerHTML = block; drop.classList.add('open'); }
+      else { drop.classList.remove('open'); drop.innerHTML = ''; }
+    }
+    renderDiseaseTabs();
+    return;
+  }
+  smartSearchDebounced(q);
+}
+
+function smartSearchScores(q){
+  if(!(q||'').trim()){
+    // show fav scales first
+    const fav = getFavScales();
+    if(fav.length){
+      const favItems = fav.map(id => scalesData.find(s => s.id === id)).filter(Boolean);
+      const rest = scalesData.filter(s => !fav.includes(s.id));
+      currentFilteredScales = [...favItems, ...rest];
+    } else {
+      currentFilteredScales = [...scalesData];
+    }
+    renderScoreList(currentFilteredScales);
+    return;
+  }
+  smartSearchScoresDebounced(q);
+}
+
+// Keep original implementations under Core names
+function smartSearchCore(q){
+  const drop = document.getElementById('smartSearchDrop');
+  q = (q||'').trim();
+  if(!q){
+    drop.classList.remove('open');
+    drop.innerHTML = '';
+    renderDiseaseTabs();
+    return;
+  }
+  const dMatches = diseases.map(d => {
+    const hay = [d.title, d.short, d.id, (d.guidelines||[]).join(' '), d.spec].join(' ');
+    return {type:'disease', item:d, score:scoreMatch(hay, q)};
+  }).filter(x => x.score > 0).sort((a,b)=>b.score-a.score);
+
+  const sMatches = (typeof scalesData!=='undefined'?scalesData:[]).map(s => {
+    const hay = [s.title, s.subtitle, s.id, s.categoryName||'', s.category||''].join(' ');
+    return {type:'scale', item:s, score:scoreMatch(hay, q)};
+  }).filter(x => x.score > 0).sort((a,b)=>b.score-a.score);
+
+  if(!dMatches.length && !sMatches.length){
+    drop.innerHTML = `<div style="padding:16px;text-align:center;color:var(--text-secondary);font-size:13px;">Không thấy kết quả cho “${q}”</div>`;
+    drop.classList.add('open');
+    return;
+  }
+
+  let html = '';
+  if(dMatches.length){
+    html += `<div class="ss-group">📋 Phác đồ (${Math.min(dMatches.length,8)})</div>`;
+    dMatches.slice(0,8).forEach(m => {
+      const d = m.item;
+      const sp = specialties.find(s=>s.id===d.spec);
+      const star = isFavDisease(d.id) ? '★' : '☆';
+      html += `<div class="ss-item">
+        <div class="ss-emoji" onclick="goSmartDisease('${d.id}')">${d.emoji||'📄'}</div>
+        <div class="ss-body" onclick="goSmartDisease('${d.id}')">
+          <div class="ss-title">${d.title} <span class="ss-tag">${d.short||''}</span></div>
+          <div class="ss-meta">${sp?sp.label:d.spec}</div>
+        </div>
+        <button class="fav-btn ${isFavDisease(d.id)?'on':''}" onclick="event.stopPropagation();toggleFavDisease('${d.id}',this)">${star}</button>
+      </div>`;
+    });
+  }
+  if(sMatches.length){
+    html += `<div class="ss-group">🧮 Thang điểm (${Math.min(sMatches.length,6)})</div>`;
+    sMatches.slice(0,6).forEach(m => {
+      const s = m.item;
+      const star = isFavScale(s.id) ? '★' : '☆';
+      html += `<div class="ss-item">
+        <div class="ss-emoji" onclick="goSmartScale('${s.id}')">🧮</div>
+        <div class="ss-body" onclick="goSmartScale('${s.id}')">
+          <div class="ss-title">${s.title}</div>
+          <div class="ss-meta">${s.categoryName||s.category||''}</div>
+        </div>
+        <button class="fav-btn ${isFavScale(s.id)?'on':''}" onclick="event.stopPropagation();toggleFavScale('${s.id}',this)">${star}</button>
+      </div>`;
+    });
+  }
+  drop.innerHTML = html;
+  drop.classList.add('open');
+  runQuickSearchLegacy(q);
+}
+
+function smartSearchScoresCore(q){
+  q = (q||'').trim();
+  if(!q){
+    currentFilteredScales = [...scalesData];
+    renderScoreList(currentFilteredScales);
+    return;
+  }
+  currentFilteredScales = scalesData
+    .map(s => ({s, score: scoreMatch([s.title,s.subtitle,s.id,s.categoryName||'',s.category||''].join(' '), q)}))
+    .filter(x => x.score > 0)
+    .sort((a,b)=>b.score-a.score)
+    .map(x => x.s);
+  renderScoreList(currentFilteredScales);
+}
+
+// Enhance navigation to save recent
+const _goSmartDisease = typeof goSmartDisease === 'function' ? goSmartDisease : null;
+function goSmartDisease(id){
+  const d = diseases.find(x=>x.id===id);
+  if(!d) return;
+  pushRecent(d.short || d.title, 'disease', id);
+  document.getElementById('smartSearchDrop')?.classList.remove('open');
+  const qs = document.getElementById('quickSearch');
+  if(qs) qs.value = '';
+  switchMainTab('phacdo');
+  selectSpecialty(d.spec);
+  selectDisease(id);
+}
+function goSmartScale(id){
+  const s = (typeof scalesData!=='undefined'?scalesData:[]).find(x=>x.id===id);
+  if(s) pushRecent((s.title||'').split('(')[0].trim().slice(0,32), 'scale', id);
+  document.getElementById('smartSearchDrop')?.classList.remove('open');
+  const qs = document.getElementById('quickSearch');
+  if(qs) qs.value = '';
+  switchMainTab('thangdiem');
+  setTimeout(()=>openScoreModal(id), 60);
+}
+
+// Patch renderScoreList cards with fav star - enhance after definition via wrapper
+function enhanceScaleCardsWithFav(){
+  /* applied inside patched render below if needed */
+}
+
+// Back to top visibility
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('backToTop');
+  if(!btn) return;
+  if(window.scrollY > 420) btn.classList.add('show');
+  else btn.classList.remove('show');
+}, { passive: true });
+
+// PWA manifest blob
+(function setupManifest(){
+  const manifest = {
+    name: "Công Cụ Y Khoa Lâm Sàng",
+    short_name: "Y Khoa",
+    start_url: ".",
+    display: "standalone",
+    background_color: "#00a896",
+    theme_color: "#028090",
+    icons: [{ src: "https://img.icons8.com/ios-filled/180/00a896/heart-with-pulse.png", sizes: "180x180", type: "image/png", purpose: "any maskable" }]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.getElementById('appManifestLink');
+  if(link) link.href = url;
+})();
+
+// Lightweight service worker for offline shell (same page)
+if('serviceWorker' in navigator){
+  try {
+    const swCode = `
+      const CACHE = 'ykhoa-v1';
+      self.addEventListener('install', e => { self.skipWaiting(); });
+      self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
+      self.addEventListener('fetch', e => {
+        e.respondWith(
+          caches.open(CACHE).then(cache =>
+            fetch(e.request).then(res => {
+              if(e.request.method === 'GET' && res.ok) cache.put(e.request, res.clone());
+              return res;
+            }).catch(() => cache.match(e.request).then(r => r || caches.match('./')))
+          )
+        );
+      });
+    `;
+    const blob = new Blob([swCode], { type: 'application/javascript' });
+    const swUrl = URL.createObjectURL(blob);
+    // blob SW often blocked — skip register if fails
+    navigator.serviceWorker.register(swUrl).catch(()=>{});
+  } catch(e){}
+}
+
+// Hook selectDisease to allow fav in content - observe render
+const _origSelectDisease = typeof selectDisease === 'function' ? selectDisease : null;
+
+
+function enhanceDiseaseHeaderFav(){
+  const header = document.querySelector('.disease-header');
+  if(!header || header.dataset.favReady) return;
+  header.dataset.favReady = '1';
+  const id = typeof activeDiseaseId !== 'undefined' ? activeDiseaseId : null;
+  if(!id) return;
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;gap:4px;align-items:center;flex-shrink:0;';
+  const btn = document.createElement('button');
+  btn.className = 'fav-btn' + (isFavDisease(id)?' on':'');
+  btn.textContent = isFavDisease(id) ? '★' : '☆';
+  btn.title = 'Ghim phác đồ';
+  btn.onclick = (e) => { e.stopPropagation(); toggleFavDisease(id, btn); };
+  const pr = document.createElement('button');
+  pr.className = 'fav-btn';
+  pr.textContent = '🖨️';
+  pr.title = 'In phác đồ này';
+  pr.onclick = (e) => { e.stopPropagation(); window.print(); };
+  wrap.appendChild(pr);
+  wrap.appendChild(btn);
+  header.style.display = 'flex';
+  header.style.justifyContent = 'space-between';
+  header.style.alignItems = 'flex-start';
+  header.appendChild(wrap);
+}
+const _renderDiseaseContentOrig = renderDiseaseContent;
+renderDiseaseContent = function(){
+  _renderDiseaseContentOrig.apply(this, arguments);
+  setTimeout(enhanceDiseaseHeaderFav, 0);
+};
+
+
+/* PWA install guide */
+let deferredPwaPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPwaPrompt = e;
+});
+
+function openPwaGuide(){
+  const el = document.getElementById('pwaGuide');
+  if(el) el.classList.add('open');
+}
+function closePwaGuide(){
+  const el = document.getElementById('pwaGuide');
+  if(el) el.classList.remove('open');
+}
+async function tryNativeInstall(){
+  if(deferredPwaPrompt){
+    deferredPwaPrompt.prompt();
+    try {
+      const choice = await deferredPwaPrompt.userChoice;
+      deferredPwaPrompt = null;
+      if(choice && choice.outcome === 'accepted') closePwaGuide();
+    } catch(err){}
+    return;
+  }
+  // iOS or unsupported — keep guide open, highlight Safari steps
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(isIOS){
+    alert('Trên iPhone/iPad: dùng nút Chia sẻ trong Safari → “Thêm vào Màn hình chính” (xem hướng dẫn trên màn hình).');
+  } else {
+    alert('Trình duyệt chưa hiện hộp cài nhanh. Hãy dùng menu ⋮ → “Cài đặt ứng dụng” / “Add to Home screen”, hoặc làm theo hướng dẫn trên màn hình.');
+  }
+}
+
+
+function openChangelog(){ document.getElementById('changelogModal')?.classList.add('open'); }
+function closeChangelog(){ document.getElementById('changelogModal')?.classList.remove('open'); }
+
 document.addEventListener('DOMContentLoaded', () => {
   renderSpecialtyTabs();
   renderDiseaseTabs();
@@ -4254,7 +4755,7 @@ const scalesData = [
         subtitle: "Dự đoán nguy cơ đột quỵ trong 2, 7 và 90 ngày sau khi bị TIA.",
         category: "than_kinh",
         categoryName: "Thần kinh",
-        source: "Johnston SC et al. Lancet 2007 / MDCalc",
+        source: "Johnston SC et al. Lancet 2007; AHA/ASA stroke practice",
         criteria: [
           {
             name: "A - Age (Tuổi)",
@@ -5213,7 +5714,7 @@ const scalesData = [
         subtitle: "Đánh giá nguy cơ chảy máu 1 năm ở bệnh nhân dùng thuốc chống đông.",
         category: "tim_mach",
         categoryName: "Tim mạch",
-        source: "Pisters R et al. Chest 2010 / MDCalc",
+        source: "Pisters 2010 / ESC AF Guidelines 2024 (HAS-BLED)",
         criteria: [
           {
             name: "H - Hypertension",
@@ -6147,7 +6648,7 @@ const scalesData = [
         subtitle: "Đánh giá nguy cơ tử vong, MI tái phát hoặc can thiệp mạch vành cấp trong 14 ngày.",
         category: "tim_mach",
         categoryName: "Tim mạch",
-        source: "Antman EM et al. JAMA 2000 / MDCalc",
+        source: "Antman EM et al. JAMA 2000; ACC/AHA ACS risk tools",
         criteria: [
           {
             name: "1. Tuổi ≥ 65",
@@ -6197,7 +6698,7 @@ const scalesData = [
         subtitle: "Đánh giá xác suất lâm sàng bị Huyết khối tĩnh mạch sâu (DVT) chi dưới.",
         category: "tim_mach",
         categoryName: "Tim mạch / Cấp cứu",
-        source: "Wells PS et al. NEJM 2003 / MDCalc",
+        source: "Wells PS et al. NEJM 2003; ESC / ASH VTE",
         criteria: [
           {
             name: "Ung thư đang tiến triển",
@@ -6257,7 +6758,7 @@ const scalesData = [
         subtitle: "Đánh giá xác suất lâm sàng bị thuyên tắc động mạch phổi (PE).",
         category: "ho_hap",
         categoryName: "Hô hấp / Cấp cứu",
-        source: "Wells PS et al. Thromb Haemost 2000 / ESC / MDCalc",
+        source: "Wells PS et al.; ESC PE Guidelines",
         criteria: [
           {
             name: "1. Triệu chứng DVT chân",
@@ -6465,12 +6966,18 @@ function renderScoreList(data) {
   }
   // Danh sách theo nhóm
   box.innerHTML = letters.map(L => {
-    const cards = grouped[L].map(s => `
-      <div class="scale-card" onclick="openScoreModal('${s.id}')">
-        <div class="scale-title">${s.title}</div>
-        <div class="scale-desc">${s.subtitle}</div>
-        <span class="scale-badge">${s.categoryName || s.category}</span>
-      </div>`).join('');
+    const cards = grouped[L].map(s => {
+      const star = (typeof isFavScale==='function' && isFavScale(s.id)) ? '★' : '☆';
+      return `
+      <div class="scale-card">
+        <div class="scale-main" onclick="openScoreModal('${s.id}')">
+          <div class="scale-title">${s.title}</div>
+          <div class="scale-desc">${s.subtitle}</div>
+          <span class="scale-badge">${s.categoryName || s.category}</span>
+        </div>
+        <button class="fav-btn" onclick="event.stopPropagation();toggleFavScale('${s.id}',this)">${star}</button>
+      </div>`;
+    }).join('');
     return `<div class="abc-group-header" id="scoreSec_${L}">${L}</div>${cards}`;
   }).join('');
 }
@@ -6497,6 +7004,7 @@ function handleScoreSearch(q){ smartSearchScores(q); }
 function openScoreModal(id) {
   currentScale = scalesData.find(s => s.id === id);
   if (!currentScale) return;
+  if(typeof pushRecent==='function') pushRecent((currentScale.title||'').split('(')[0].trim().slice(0,32), 'scale', id);
   document.getElementById('modalScaleTitle').innerText = currentScale.title;
   const body = document.getElementById('modalScaleBody');
   body.innerHTML = currentScale.criteria.map((c,i) => `
@@ -6536,5 +7044,92 @@ function calcScoreNow() {
 }
 
 </script>
+
+<div id="pwaGuide" onclick="if(event.target.id==='pwaGuide')closePwaGuide()">
+  <div class="pwa-sheet" onclick="event.stopPropagation()">
+    <h2>⬇️ Cài đặt như ứng dụng (PWA)</h2>
+    <p class="lead">Cài lên màn hình chính để mở nhanh, toàn màn hình, dùng tiện như app — không cần App Store / CH Play.</p>
+
+    <div class="pwa-step-block">
+      <h3>📱 iPhone / iPad (Safari)</h3>
+      <ol>
+        <li>Mở trang này bằng <b>Safari</b> (bắt buộc — Chrome trên iOS không hỗ trợ đầy đủ).</li>
+        <li>Chạm nút <b>Chia sẻ</b> (ô vuông có mũi tên lên) ở thanh dưới hoặc trên.</li>
+        <li>Cuộn danh sách → chọn <b>Thêm vào Màn hình chính</b>.</li>
+        <li>Đặt tên (ví dụ <b>Y Khoa</b>) → chạm <b>Thêm</b>.</li>
+        <li>Mở icon trên màn hình chính để dùng chế độ toàn màn hình.</li>
+      </ol>
+      <p class="pwa-note">Nếu không thấy “Thêm vào Màn hình chính”: cuộn xuống hết khay Share, hoặc bấm <b>Sửa hành động…</b> để bật mục này.</p>
+    </div>
+
+    <div class="pwa-step-block">
+      <h3>🤖 Android (Chrome / Edge)</h3>
+      <ol>
+        <li>Mở trang bằng <b>Chrome</b> (hoặc Edge).</li>
+        <li>Chạm menu <b>⋮</b> (góc trên bên phải).</li>
+        <li>Chọn <b>Cài đặt ứng dụng</b> / <b>Add to Home screen</b> / <b>Install app</b>.</li>
+        <li>Xác nhận <b>Cài đặt</b>. Icon sẽ xuất hiện trên màn hình chính.</li>
+      </ol>
+      <p class="pwa-note">Một số máy hiện banner <b>Thêm vào màn hình chính</b> ở dưới trình duyệt — có thể bấm trực tiếp.</p>
+    </div>
+
+    <div class="pwa-step-block">
+      <h3>💻 Máy tính (Chrome / Edge)</h3>
+      <ol>
+        <li>Vào biểu tượng <b>Cài đặt</b> (⊕ / máy tính) trên thanh địa chỉ, hoặc menu ⋮ → <b>Cài đặt ứng dụng…</b>.</li>
+        <li>Xác nhận cài. App mở cửa sổ riêng, không cần thanh địa chỉ.</li>
+      </ol>
+    </div>
+
+    <div class="pwa-step-block">
+      <h3>💡 Mẹo dùng</h3>
+      <ol>
+        <li>Sau khi cài, mở từ <b>icon màn hình chính</b> (không mở lại bằng tab Safari/Chrome thường) để hết thanh trình duyệt.</li>
+        <li>Trên iPhone: dùng Safari lần đầu để cài; lần sau mở từ icon.</li>
+        <li>Dữ liệu ghim ★ và lịch sử tìm kiếm lưu trên máy bạn (localStorage).</li>
+        <li>Cập nhật nội dung: mở lại app (kéo để làm mới nếu cần).</li>
+      </ol>
+    </div>
+
+    <div class="pwa-actions">
+      <button class="pwa-secondary" onclick="closePwaGuide()">Đóng</button>
+      <button class="pwa-primary" onclick="tryNativeInstall()">Thử cài nhanh</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
+  <div class="cl-sheet" onclick="event.stopPropagation()">
+    <h2>📝 Nhật ký cập nhật &amp; bảo trì</h2>
+    <div class="cl-item"><div class="cl-date">2026-08 — Bản hiện tại</div>
+      <ul>
+        <li>Guideline: AHA/ACC 2025 HTN &amp; ACS, ADA 2026, GOLD 2026, GINA 2025/2026, ESC/EAS lipid focused update 2025, CKM 2026</li>
+        <li>Tab Thang điểm: 38 thang; đồng bộ CHA₂DS₂-VA, ADD-RS, FINDRISC, YEARS, HCM Risk-SCD với phác đồ</li>
+        <li>Tìm kiếm thông minh (không dấu, viết tắt, thuốc); ghim ★; lịch sử; PWA; in phác đồ</li>
+      </ul>
+    </div>
+    <div class="cl-item"><div class="cl-date">Checklist bảo trì định kỳ</div>
+      <ul>
+        <li>Tim mạch: ESC/AHA HTN, AF, ACS, HF, VHD, lipid — đối chiếu class I/IIa</li>
+        <li>Hô hấp: GOLD &amp; GINA bản mới nhất trong năm</li>
+        <li>Nội tiết: ADA Standards of Care (tháng 1 hằng năm)</li>
+        <li>Thận: KDIGO CKD/AKI; điện giải</li>
+        <li>Thang điểm: ESC AF (CHA₂DS₂-VA / HAS-BLED), CURB-65, Child-Pugh, Wells/YEARS</li>
+        <li>Sau mỗi lần sửa: cập nhật dòng “Bản YYYY.MM” và mục nhật ký này</li>
+      </ul>
+    </div>
+    <div class="cl-item"><div class="cl-date">Nguồn ưu tiên (thứ tự)</div>
+      <ul>
+        <li>ESC / AHA / ACC / ADA / KDIGO / GINA / GOLD / ACR — guideline chính thức</li>
+        <li>NEJM, Lancet, Circulation, EHJ — khi có thay đổi lớn trước khi guideline cập nhật</li>
+        <li>UpToDate — tham khảo thực hành, không thay class khuyến cáo gốc</li>
+      </ul>
+    </div>
+    <button onclick="closeChangelog()" style="width:100%;margin-top:8px;padding:12px;border:none;border-radius:12px;background:var(--tiffany-main);color:#fff;font-weight:800;">Đóng</button>
+  </div>
+</div>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Về đầu trang">↑</button>
 </body>
 </html>
