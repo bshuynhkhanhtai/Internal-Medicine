@@ -16,40 +16,40 @@
     --tiffany-main:#00a896; --tiffany-dark:#028090; --tiffany-light:#e6f7f5;
     --bg-primary:#f2f9f9; --bg-card:#ffffff; --text-primary:#0f172a; --text-secondary:#4a6fa5;
     --border-color:#b8e0d2; --card-shadow:0 2px 10px rgba(0,168,150,.08);
-    --danger:#ef4444; --warning:#f59e0b; --success:#10b981; --info:#3b82f6;
+    --danger:#dc2626; --warning:#eab308; --success:#16a34a; --info:#3b82f6;
   }
   [data-theme="dark"]{
     --tiffany-main:#2dd4bf; --tiffany-dark:#14b8a6; --tiffany-light:#112d2b;
     --bg-primary:#081313; --bg-card:#102222; --text-primary:#f0fdfa; --text-secondary:#94a3b8;
     --border-color:#1e3e3c; --card-shadow:0 4px 14px rgba(0,0,0,.4);
-    --danger:#f87171; --warning:#fbbf24; --success:#34d399; --info:#60a5fa;
+    --danger:#f87171; --warning:#fbbf24; --success:#22c55e; --info:#60a5fa;
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent;}
   html{height:-webkit-fill-available;scroll-behavior:smooth;}
-  body{background:var(--bg-primary);color:var(--text-primary);padding-top:0;padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;display:flex;flex-direction:column;transition:background-color .3s,color .3s;overscroll-behavior-y:none;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+  body{background:var(--bg-primary);color:var(--text-primary);padding-top:0;padding-bottom:env(safe-area-inset-bottom);min-height:100dvh;display:flex;flex-direction:column;transition:background-color .3s,color .3s;overscroll-behavior-y:none;overflow-x:clip;-webkit-text-size-adjust:100%;}
   /* Header gọn + safe-area iPhone (notch / Dynamic Island) */
-  header{background:linear-gradient(135deg,var(--tiffany-main),var(--tiffany-dark));color:#fff;padding-top:max(8px, env(safe-area-inset-top));padding-left:14px;padding-right:14px;padding-bottom:8px;position:sticky;top:0;z-index:45;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  header{background:linear-gradient(135deg,var(--tiffany-main),var(--tiffany-dark));color:#fff;padding-top:max(4px, env(safe-area-inset-top));padding-left:12px;padding-right:12px;padding-bottom:6px;position:fixed;top:0;left:0;right:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.12);}
   .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;}
   h1{font-size:15px;font-weight:800;letter-spacing:-.3px;line-height:1.2;}
   .sub{font-size:10px;opacity:.85;font-weight:500;margin-top:1px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
   .theme-toggle-btn{background:rgba(255,255,255,.2);border:none;font-size:13px;padding:6px 10px;border-radius:16px;cursor:pointer;color:#fff;display:flex;align-items:center;gap:3px;backdrop-filter:blur(10px);flex-shrink:0;min-height:32px;}
   .theme-toggle-btn:active{background:rgba(255,255,255,.32);}
 
-  .specialty-tabs-wrapper{background:var(--tiffany-dark);position:sticky;top:calc(env(safe-area-inset-top) + 72px);z-index:44;}
+  .specialty-tabs-wrapper{background:var(--tiffany-dark);position:fixed;top:var(--app-header-h, 72px);left:0;right:0;z-index:49;}
   .specialty-tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .specialty-tabs::-webkit-scrollbar{display:none;}
   .sp-tab{flex-shrink:0;display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:16px;background:rgba(255,255,255,.14);color:#fff;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;border:1px solid rgba(255,255,255,.2);}
   .sp-tab .emoji{font-size:14px;}
   .sp-tab.active{background:#fff;color:var(--tiffany-dark);border-color:#fff;}
 
-  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:sticky;top:calc(env(safe-area-inset-top) + 110px);z-index:40;}
+  .disease-tabs-wrapper{background:var(--bg-card);border-bottom:1px solid var(--border-color);position:fixed;top:var(--app-disease-top, 110px);left:0;right:0;z-index:48;}
   .disease-tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .disease-tabs::-webkit-scrollbar{display:none;}
   .d-tab{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 12px;border-radius:14px;background:var(--bg-primary);color:var(--text-secondary);font-size:11.5px;font-weight:700;white-space:nowrap;cursor:pointer;min-width:60px;border:1px solid var(--border-color);}
   .d-tab .emoji{font-size:17px;line-height:1;margin-bottom:2px;}
   .d-tab.active{background:var(--tiffany-main);color:#fff;border-color:var(--tiffany-main);}
 
-  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:6px 12px;background:var(--tiffany-light);scrollbar-width:none;position:sticky;top:calc(env(safe-area-inset-top) + 148px);z-index:35;border-bottom:1px solid var(--border-color);}
+  .section-nav{display:flex;gap:6px;overflow-x:auto;padding:6px 12px;background:var(--tiffany-light);scrollbar-width:none;position:fixed;top:var(--app-section-top, 148px);left:0;right:0;z-index:47;border-bottom:1px solid var(--border-color);}
   .section-nav::-webkit-scrollbar{display:none;}
   .s-pill{flex-shrink:0;font-size:11.5px;font-weight:700;color:var(--tiffany-dark);background:var(--bg-card);padding:6px 11px;border-radius:12px;cursor:pointer;border:1px solid var(--border-color);}
   .s-pill.active{background:var(--tiffany-dark);color:#fff;border-color:var(--tiffany-dark);}
@@ -86,11 +86,18 @@
   .rtable-label{color:var(--text-secondary);font-weight:700;flex-shrink:0;white-space:nowrap;}
   .rtable-value{color:var(--text-primary);text-align:right;font-weight:600;}
 
-  .badge{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:6px;color:#fff;white-space:nowrap;}
-  .badge-I{background:var(--success);}
-  .badge-IIa{background:var(--info);}
-  .badge-IIb{background:var(--warning);}
-  .badge-III{background:var(--danger);}
+  /* Class khuyến cáo: Xanh = Nên | Vàng = Cân nhắc | Đỏ = Không */
+  .badge{display:inline-block;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:6px;color:#fff;white-space:nowrap;letter-spacing:.02em;}
+  .badge-I{background:#16a34a;box-shadow:0 0 0 1px rgba(22,163,74,.25);}          /* Nên làm — xanh */
+  .badge-IIa{background:#ca8a04;color:#fff;box-shadow:0 0 0 1px rgba(202,138,4,.3);} /* Cân nhắc — vàng đậm */
+  .badge-IIb{background:#eab308;color:#1c1917;box-shadow:0 0 0 1px rgba(234,179,8,.35);} /* Cân nhắc yếu — vàng */
+  .badge-III{background:#dc2626;box-shadow:0 0 0 1px rgba(220,38,38,.25);}         /* Không / có hại — đỏ */
+  [data-theme="dark"] .badge-I{background:#22c55e;}
+  [data-theme="dark"] .badge-IIa{background:#eab308;color:#1c1917;}
+  [data-theme="dark"] .badge-IIb{background:#fbbf24;color:#1c1917;}
+  [data-theme="dark"] .badge-III{background:#f87171;color:#1c1917;}
+  .class-legend{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:11px;padding:8px 12px;margin:0 0 10px;background:var(--bg-primary);border:1px solid var(--border-color);border-radius:10px;color:var(--text-secondary);}
+  .class-legend span{display:inline-flex;align-items:center;gap:4px;}
 
   .alert-box{border-radius:10px;padding:10px 12px;font-size:12.3px;line-height:1.5;margin-bottom:10px;border-left:4px solid;}
   .alert-warn{background:rgba(245,158,11,.1);border-color:var(--warning);}
@@ -187,7 +194,13 @@
   .disease-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
 
 
-  .smart-search-drop{position:absolute;left:14px;right:14px;top:100%;max-height:55vh;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:80;display:none;}
+  
+  header .search-wrap{position:relative;z-index:60;}
+  header .smart-search-drop{top:calc(100% + 4px);left:0;right:0;max-height:min(60vh, 420px);z-index:70;}
+  .smart-search-drop{position:absolute;left:0;right:0;top:100%;max-height:55vh;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:80;display:none;}
+  .smart-search-drop.open{display:block;}
+
+  .smart-search-drop{position:absolute;left:0;right:0;top:100%;max-height:55vh;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:80;display:none;}
   .smart-search-drop.open{display:block;}
   .ss-item{padding:11px 14px;border-bottom:1px solid var(--border-color);cursor:pointer;display:flex;gap:10px;align-items:flex-start;}
   .ss-item:last-child{border-bottom:none;}
@@ -202,7 +215,7 @@
 
 
   /* Sticky toolbar trong tab Thang điểm */
-  #scoreStickyBar{position:sticky;top:calc(env(safe-area-inset-top) + 72px);z-index:42;background:var(--bg-primary);padding-bottom:2px;border-bottom:1px solid var(--border-color);}
+  #scoreStickyBar{position:fixed;top:var(--app-header-h, 72px);left:0;right:0;z-index:49;background:var(--bg-primary);padding-bottom:2px;border-bottom:1px solid var(--border-color);}
   #scoreAbcBar{display:flex;gap:2px;overflow-x:auto;padding:4px 10px 6px;background:var(--tiffany-light);scrollbar-width:none;-webkit-overflow-scrolling:touch;}
   #scoreAbcBar::-webkit-scrollbar{display:none;}
   .abc-letter{flex-shrink:0;min-width:26px;padding:5px 6px;text-align:center;font-size:12px;font-weight:800;color:var(--tiffany-dark);border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
@@ -239,6 +252,144 @@
     a { color: #000; text-decoration: none; }
   }
 
+
+  /* ===== iPhone / performance ===== */
+  html, body { height: 100%; height: -webkit-fill-available; }
+  body {
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+  header {
+    /* đo chiều cao thật bằng JS --app-header-h */
+    padding-top: max(6px, env(safe-area-inset-top, 0px));
+    padding-bottom: 6px;
+  }
+  #mainTabBar button { min-height: 30px !important; padding: 5px 4px !important; font-size: 11px !important; }
+  .specialty-tabs-wrapper { top: var(--app-header-h, 72px) !important; }
+  .disease-tabs-wrapper { top: var(--app-disease-top, 110px) !important; }
+  .section-nav { top: var(--app-section-top, 148px) !important; padding: 5px 10px !important; }
+  #scoreStickyBar { top: var(--app-header-h, 72px) !important; }
+  #viewPhacDo { padding-top: var(--app-chrome-h, 200px); }
+  #viewThangDiem { padding-top: var(--app-score-chrome-h, 130px); }
+
+  .abc-group-header { scroll-margin-top: calc(var(--app-header-h, 72px) + 100px); }
+  .card { scroll-margin-top: calc(var(--app-header-h, 72px) + 120px); }
+  #calcModal {
+    height: 100dvh;
+    height: -webkit-fill-available;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  /* giảm repaint */
+  .scale-card, .card, .d-tab, .s-tab { content-visibility: auto; contain: content; }
+  .specialty-tabs, .disease-tabs, #scoreAbcBar { -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+  /* vùng chạm tối thiểu ~44px cho chip quan trọng */
+  .score-chip { min-height: 34px; padding: 7px 12px; }
+  .abc-letter { min-width: 28px; min-height: 28px; display: inline-flex; align-items: center; justify-content: center; }
+  @supports (padding: max(0px)) {
+    header { padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); }
+  }
+  /* iOS standalone: ẩn UI trình duyệt */
+  @media all and (display-mode: standalone) {
+    body { -webkit-user-select: none; user-select: none; }
+    input, textarea, select { -webkit-user-select: text; user-select: text; }
+  }
+
+
+  /* AI Y khoa */
+  #viewAI{display:none;flex-direction:column;padding-top:calc(var(--app-header-h, 120px) + 4px);min-height:100dvh;box-sizing:border-box;background:var(--bg-primary);}
+  #viewAI.active-view{display:flex;}
+  .ai-chat-wrap{flex:1;overflow-y:auto;padding:12px 14px 100px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
+  .ai-bubble{max-width:92%;padding:10px 12px;border-radius:14px;margin-bottom:10px;font-size:13px;line-height:1.45;white-space:pre-wrap;}
+  .ai-bubble.bot{background:var(--bg-card);border:1px solid var(--border-color);color:var(--text-primary);border-bottom-left-radius:4px;}
+  .ai-bubble.user{background:var(--tiffany-main);color:#fff;margin-left:auto;border-bottom-right-radius:4px;}
+  .ai-bubble .ai-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .ai-bubble .ai-actions button{font-size:11.5px;font-weight:700;padding:6px 10px;border-radius:12px;border:1px solid var(--tiffany-main);background:var(--tiffany-light);color:var(--tiffany-dark);cursor:pointer;}
+  .ai-input-bar{position:fixed;left:0;right:0;bottom:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--bg-card);border-top:1px solid var(--border-color);z-index:55;display:flex;gap:8px;align-items:flex-end;}
+  .ai-input-bar textarea{flex:1;min-height:40px;max-height:100px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);font-size:14px;resize:none;font-family:inherit;}
+  .ai-input-bar button.send{padding:10px 14px;border:none;border-radius:12px;background:var(--tiffany-main);color:#fff;font-weight:800;font-size:13px;cursor:pointer;flex-shrink:0;}
+  .ai-suggest{display:flex;gap:6px;overflow-x:auto;padding:8px 14px;scrollbar-width:none;}
+  .ai-suggest button{flex-shrink:0;font-size:11.5px;font-weight:600;padding:7px 11px;border-radius:14px;border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-secondary);cursor:pointer;white-space:nowrap;}
+  .ai-disclaimer{font-size:11px;color:var(--text-secondary);padding:8px 14px;line-height:1.35;}
+
+
+  .crit-check{display:flex;align-items:flex-start;gap:8px;padding:8px 6px;border-bottom:1px dashed var(--border-color);font-size:13px;cursor:pointer;}
+  .crit-check:last-child{border-bottom:none;}
+  .crit-check input{width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--tiffany-main);}
+  .crit-check span{line-height:1.35;color:var(--text-primary);}
+  .criterion-detail .multi-hint{color:var(--tiffany-dark);font-weight:700;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{scroll-behavior:auto !important;transition:none !important;animation:none !important;}
+  }
+
+  /* Header auto-hide on scroll */
+  :root{ --chrome-shift: 0px; }
+  header{
+    transform: translateY(var(--chrome-shift, 0px));
+    transition: transform .22s ease, box-shadow .22s ease;
+    will-change: transform;
+  }
+  body.chrome-hidden header{
+    box-shadow: none;
+  }
+  .specialty-tabs-wrapper,
+  .disease-tabs-wrapper,
+  .section-nav,
+  #scoreStickyBar{
+    transition: transform .22s ease, opacity .18s ease;
+    will-change: transform;
+  }
+  body.chrome-hidden .specialty-tabs-wrapper,
+  body.chrome-hidden .disease-tabs-wrapper,
+  body.chrome-hidden .section-nav,
+  body.chrome-hidden #scoreStickyBar{
+    transform: translateY(calc(var(--chrome-shift, 0px)));
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* Khi ẩn chrome: nội dung sát mép trên hơn */
+  body.chrome-hidden #viewPhacDo{
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
+  }
+  body.chrome-hidden #viewThangDiem{
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
+  }
+  body.chrome-hidden #viewAI{
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
+  }
+
+
+  /* Scroll performance */
+  html{ scroll-behavior: auto; }
+  @media (prefers-reduced-motion: no-preference){
+    html{ scroll-behavior: smooth; }
+  }
+  body{ -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain; }
+  #mainContainer, #scalesList, .ai-chat-wrap, #modalScaleBody{
+    content-visibility: auto;
+    contain: content;
+  }
+  .card, .scale-card{
+    content-visibility: auto;
+    contain: layout style paint;
+  }
+  header, .specialty-tabs-wrapper, .disease-tabs-wrapper, .section-nav, #scoreStickyBar{
+    transition: transform .18s ease-out;
+    backface-visibility: hidden;
+  }
+  body.chrome-hidden .specialty-tabs-wrapper,
+  body.chrome-hidden .disease-tabs-wrapper,
+  body.chrome-hidden .section-nav,
+  body.chrome-hidden #scoreStickyBar{
+    transition: transform .18s ease-out, opacity .15s ease-out;
+  }
+  /* Giảm shadow đắt khi cuộn */
+  body.is-scrolling header{ box-shadow: none; }
+  .theme-toggle-btn{ backdrop-filter: none; -webkit-backdrop-filter: none; }
+
 </style>
 </head>
 <body>
@@ -248,7 +399,7 @@
     <div>
       <h1>📖 Công Cụ Y Khoa Lâm Sàng</h1>
       <div class="sub">Phác đồ điều trị · Thang điểm — ESC/AHA/ADA/GINA/GOLD 2025–2026</div>
-      <div class="ver-badge">Bản 2026.08 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
+      <div class="ver-badge">Bản 2026.08.29 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
       <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇️ Cài app</button>
@@ -257,21 +408,22 @@
       </button>
     </div>
   </div>
-  <div id="mainTabBar" style="display:flex;gap:6px;padding:0;margin:0;">
-    <button id="tabPhacDo" class="active-main" onclick="switchMainTab('phacdo')" style="flex:1;padding:10px;border-radius:10px;border:none;font-weight:700;font-size:13px;cursor:pointer;">📋 Phác đồ điều trị</button>
-    <button id="tabThangDiem" onclick="switchMainTab('thangdiem')" style="flex:1;padding:10px;border-radius:10px;border:none;font-weight:700;font-size:13px;cursor:pointer;">🧮 Tra cứu thang điểm</button>
+  <div id="mainTabBar" style="display:flex;gap:5px;padding:0;margin:0;">
+    <button id="tabPhacDo" class="active-main" onclick="switchMainTab('phacdo')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">📋 Phác đồ</button>
+    <button id="tabThangDiem" onclick="switchMainTab('thangdiem')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">🧮 Thang điểm</button>
+    <button id="tabAI" onclick="switchMainTab('ai')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">🤖 AI Y khoa</button>
   </div>
-</header>
-
-<!-- VIEW PHÁC ĐỒ -->
-<div id="viewPhacDo">
-  <div class="search-wrap">
+  <div class="search-wrap" id="globalSearchWrap" style="padding:8px 0 4px;position:relative;">
     <input id="quickSearch" type="search" placeholder="Tìm thông minh: THA, COPD, GCS, HAS-BLED, suy tim…"
-      style="width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:13px;outline:none;box-sizing:border-box;"
-      oninput="smartSearch(this.value)" onfocus="smartSearch(this.value)"
+      style="width:100%;padding:8px 10px;border-radius:9px;border:none;background:rgba(255,255,255,.96);color:#0f172a;font-size:13px;outline:none;box-sizing:border-box;"
+      oninput="onGlobalSearch(this.value)" onfocus="onGlobalSearch(this.value)"
       onkeydown="handleSmartSearchKey(event)">
     <div id="smartSearchDrop" class="smart-search-drop"></div>
   </div>
+</header>
+
+
+<div id="viewPhacDo">
   <div class="specialty-tabs-wrapper">
     <div class="specialty-tabs" id="specialtyTabs"></div>
   </div>
@@ -281,19 +433,14 @@
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
   <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px 24px;">
-    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.08
+    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.08.29
   </footer>
 </div>
 
-<!-- VIEW THANG ĐIỂM -->
+
 <div id="viewThangDiem" style="display:none;">
   <div id="scoreStickyBar">
-    <div class="search-wrap" style="padding:8px 14px 6px;">
-      <input id="scoreSearch" type="search" placeholder="Tìm thông minh: GCS, CURB, Wells, CHA2, SOFA…"
-        style="width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:13px;outline:none;box-sizing:border-box;"
-        oninput="smartSearchScores(this.value)" onfocus="smartSearchScores(this.value)"
-        onkeydown="if(event.key==='Escape'){this.value='';smartSearchScores('');}">
-    </div>
+    <div style="padding:6px 14px 2px;font-size:11px;color:var(--text-secondary);font-weight:600;">Dùng ô tìm trên header · hoặc chọn danh mục / A–Z</div>
     <div style="display:flex;gap:6px;overflow-x:auto;padding:2px 14px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
       <button class="score-chip active" data-cat="all" onclick="filterScoreCat('all',this)">Tất cả</button>
       <button class="score-chip" data-cat="tim_mach" onclick="filterScoreCat('tim_mach',this)">Tim mạch</button>
@@ -307,7 +454,7 @@
   <div id="scalesList" style="padding:8px 14px 40px;display:flex;flex-direction:column;gap:8px;"></div>
 </div>
 
-<!-- Modal tính điểm -->
+
 <div id="calcModal" style="display:none;position:fixed;inset:0;z-index:200;background:var(--bg-primary);flex-direction:column;">
   <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--bg-card);border-bottom:1px solid var(--border-color);gap:8px;">
     <button onclick="closeScoreModal()" style="background:var(--tiffany-light);border:none;color:var(--tiffany-dark);font-weight:700;padding:8px 12px;border-radius:10px;cursor:pointer;flex-shrink:0;font-size:13px;">← Quay lại</button>
@@ -608,76 +755,75 @@ const diseases = [
       <div class="alert-box alert-info">Công cụ dưới đây cho ước tính <b>gần đúng, mang tính sàng lọc nhanh</b> — không thay thế công cụ tính chính thức khi ra quyết định điều trị. Với người THA đã có bệnh tim mạch/ĐTĐ có tổn thương cơ quan đích/bệnh thận mạn nặng, xếp thẳng vào nguy cơ rất cao, không cần tính SCORE2.</div>
       ${sc2()}`,
     dieu_tri:`
-      <div class="subhead">Mục tiêu điều trị</div>
-      <p><b>ESC 2024:</b> mục tiêu HA tâm thu <b>120–129 mmHg</b> cho hầu hết người lớn đang điều trị (kể cả người cao tuổi không suy yếu, &lt;85 tuổi). Nếu không dung nạp, tuổi ≥85, suy yếu trung bình–nặng, hạ HA tư thế có triệu chứng, hoặc tiên lượng sống hạn chế → mục tiêu "thấp nhất có thể dung nạp hợp lý" (ALARA).</p>
-      <p><b>AHA/ACC 2025:</b> mục tiêu chung &lt;130/80 mmHg (đặc biệt ĐTĐ, CKD, HF). ESC 2024 ưu tiên SBP 120–129 nếu dung nạp.</p>
-      <div class="subhead">Chiến lược khởi trị</div>
-      <ul>
-        <li>Nguy cơ tim mạch 10 năm thấp–trung bình (&lt;10%): thay đổi lối sống 3 tháng; dùng thuốc nếu HA vẫn ≥140/90.</li>
-        <li>Nguy cơ cao/rất cao, đã có bệnh tim mạch, ĐTĐ, bệnh thận mạn: khởi trị thuốc khi HA &gt;130/80 mmHg.</li>
-        <li><b>Ưu tiên khởi đầu bằng viên phối hợp liều thấp 2 thuốc</b> thay vì đơn trị, giúp đạt mục tiêu nhanh và tăng tuân thủ.</li>
-      </ul>
-      <div class="subhead">Nhóm thuốc nền tảng (ưu tiên phối hợp)</div>
-      <ul>
-        <li>Ức chế men chuyển (ACEi) hoặc chẹn thụ thể angiotensin (ARB)</li>
-        <li>Chẹn kênh canxi (CCB) nhóm dihydropyridine</li>
-        <li>Lợi tiểu giống thiazide (indapamide, chlorthalidone) — ưu tiên hơn thiazide kinh điển (HCTZ)</li>
-      </ul>
-      <div class="alert-box alert-info">Chẹn beta <b>không còn là lựa chọn hàng đầu</b> thường quy (trừ khi có chỉ định riêng: bệnh mạch vành, suy tim, rung nhĩ cần kiểm soát tần số, phụ nữ có thai/dự định có thai).</div>
-      <div class="subhead">THA kháng trị (không đạt đích dù 3 thuốc tối ưu gồm lợi tiểu)</div>
-      <p>Thêm <b>spironolactone</b> liều thấp (eplerenone nếu không dung nạp) → chẹn beta → thuốc khác (chẹn alpha, chẹn giao cảm trung ương). Có thể cân nhắc <b>đốt thần kinh giao cảm thận</b> — khuyến cáo mới lần đầu trong ESC 2024 (Class IIb).</p>
+      <div class="subhead">1. Mục tiêu huyết áp</div>
+      <p><b>ESC 2024:</b> SBP <b>120–129 mmHg</b> cho hầu hết người lớn đang điều trị (kể cả cao tuổi không suy yếu, &lt;85 tuổi). Không dung nạp / ≥85 tuổi / suy yếu / hạ HA tư thế → <b>ALARA</b> (thấp nhất dung nạp hợp lý).</p>
+      <p><b>AHA/ACC 2025:</b> đích chung <b>&lt;130/80 mmHg</b> (ĐTĐ, CKD, HF ưu tiên đạt sớm nếu dung nạp).</p>
 
-      <div class="subhead">🔍 THA thứ phát — khi nào sàng lọc</div>
-      <p>Sàng lọc toàn diện nguyên nhân thứ phát <b>khuyến cáo</b> khi: khởi phát &lt;40 tuổi (trừ béo phì đơn thuần), THA kháng trị, hạ kali máu tự phát/do lợi tiểu, khối u thượng thận tình cờ, tiền sử gia đình đột quỵ/THA sớm, hoặc có dấu hiệu gợi ý (ngáy/ngưng thở khi ngủ, tiếng thổi bụng, chênh HA 2 tay lớn…).</p>
+      <div class="subhead">2. Chiến lược khởi trị</div>
       <ul>
-        <li><b>Cường aldosterone nguyên phát:</b> ESC 2024 cân nhắc đo renin + aldosterone ở <b>mọi</b> người lớn THA đã xác định (Class IIa). Tỷ lệ aldosterone/renin tăng → chuyển chuyên khoa nội tiết.</li>
-        <li><b>Hẹp động mạch thận:</b> Doppler/CTA/MRA khi nghi (tiếng thổi, suy thận cấp sau ACEi/ARB, THA kháng trị + xơ vữa).</li>
-        <li><b>Pheochromocytoma, Cushing, co hẹp eo động mạch chủ, bệnh tuyến giáp…:</b> theo dấu hiệu lâm sàng và xét nghiệm định hướng.</li>
+        <li>Nguy cơ thấp–TB (&lt;10%/10 năm): lối sống 3 tháng; thuốc nếu HA vẫn ≥140/90.</li>
+        <li>Nguy cơ cao / CVD / ĐTĐ / CKD: cân nhắc thuốc sớm khi HA ≥130/80 (theo AHA) hoặc theo staging ESC.</li>
+        <li><b>Ưu tiên viên phối hợp 2 thuốc liều thấp</b> ngay từ đầu (ACEi/ARB + CCB hoặc + lợi tiểu giống thiazide) để đạt đích nhanh và tăng tuân thủ.</li>
+        <li>Chẹn beta <b>không</b> hàng đầu thường quy — chỉ khi có chỉ định: vành, HFrEF, kiểm soát tần số AF, thai kỳ (labetalol)…</li>
       </ul>
 
-      <div class="subhead">🤰 THA trong thai kỳ (ESC 2024)</div>
-      <ul>
-        <li>Khởi trị thuốc khi HA phòng khám xác nhận ≥140/90 mmHg (cả THA mạn và THA thai kỳ).</li>
-        <li>Mục tiêu: hạ xuống &lt;140/90 mmHg, <b>không</b> để DBP &lt;80 mmHg.</li>
-        <li>Thuốc hàng đầu: <b>Nifedipine giải phóng kéo dài</b>, <b>Labetalol</b>, <b>Methyldopa</b>.</li>
-        <li>Tránh: ACEi/ARB, ức chế renin trực tiếp, hầu hết lợi tiểu (trừ chỉ định đặc biệt).</li>
-        <li>HBPM/ABPM nên cân nhắc để loại trừ áo choàng trắng/THA ẩn (phổ biến hơn khi mang thai).</li>
-        <li>Vận động cường độ thấp–trung bình (nếu không chống chỉ định) giúp giảm nguy cơ THA thai kỳ và tiền sản giật.</li>
-        <li>Aspirin liều thấp dự phòng tiền sản giật theo chỉ định sản khoa (nguy cơ cao).</li>
-      </ul>
-
-      <div class="subhead">🧓 THA người cao tuổi &amp; suy yếu</div>
-      <ul>
-        <li>Tuổi &lt;85, không suy yếu trung bình–nặng: áp dụng cùng mục tiêu SBP 120–129 mmHg nếu dung nạp tốt.</li>
-        <li>Tuổi ≥85 hoặc suy yếu rõ / hạ HA tư thế có triệu chứng / tiên lượng sống hạn chế: khởi trị khi ≥140/90, mục tiêu “thấp nhất dung nạp được” (ALARA), ưu tiên đơn trị hoặc phối hợp liều rất thấp, theo dõi sát té ngã và hạ HA tư thế.</li>
-        <li>Duy trì thuốc hạ áp suốt đời nếu dung nạp tốt, kể cả sau 85 tuổi.</li>
-        <li>Sàng lọc suy yếu bằng thang Clinical Frailty Scale khi quyết định mục tiêu điều trị.</li>
-      </ul>
-
-      <div class="subhead">🍬 THA kèm đái tháo đường</div>
-      <ul>
-        <li>Xếp nguy cơ cao/rất cao → khởi trị thuốc sớm hơn (khi HA &gt;130/80).</li>
-        <li>Mục tiêu: SBP 120–129 mmHg nếu dung nạp (ESC 2024); AHA vẫn &lt;130/80.</li>
-        <li>Ưu tiên ACEi hoặc ARB (bảo vệ thận + tim mạch), đặc biệt khi có albumin niệu.</li>
-        <li>Phối hợp CCB hoặc lợi tiểu giống thiazide khi cần. Tránh phối hợp ACEi + ARB.</li>
-        <li>Cân nhắc SCORE2-Diabetes để ước lượng nguy cơ ở ĐTĐ típ 2 &lt;60 tuổi.</li>
-        <li>Kiểm soát đồng thời đường huyết, lipid, cân nặng; SGLT2i/GLP-1 RA mang lại lợi ích tim–thận độc lập với HA.</li>
-      </ul>
-
-      <div class="subhead">💊 Liều dùng cụ thể</div>
-      <div class="alert-box alert-warn">Người cao tuổi (≥65–75), suy thận, suy gan: khởi liều thấp nhất, tăng liều chậm, theo dõi HA tư thế đứng để tránh hạ HA/té ngã.</div>
-      ${rt(["Người lớn tiêu chuẩn","Cao tuổi / thận yếu"],[
-        ["Amlodipine","5–10 mg × 1 lần/ngày","khởi đầu 2.5 mg/ngày"],
-        ["Perindopril","5–10 mg × 1 lần/ngày","khởi đầu 2.5 mg/ngày; giảm nếu eGFR &lt;60"],
-        ["Losartan","50–100 mg × 1 lần/ngày","khởi đầu 25 mg/ngày"],
-        ["Indapamide SR","1.5 mg × 1 lần/ngày (sáng)","thận trọng eGFR &lt;30; theo dõi Na⁺/K⁺"],
-        ["Chlorthalidone","12.5–25 mg × 1 lần/ngày","khởi đầu 12.5 mg, theo dõi điện giải sát"],
-        ["Bisoprolol (khi có chỉ định)","2.5–10 mg × 1 lần/ngày","khởi đầu 1.25 mg/ngày"],
-        ["Spironolactone (kháng trị)","12.5–50 mg × 1 lần/ngày","tránh nếu eGFR &lt;30 hoặc K⁺&gt;5.0"],
-        ["Nifedipine XR (thai kỳ)","30–60 mg × 1 lần/ngày","hàng đầu khi mang thai"],
-        ["Labetalol (thai kỳ)","100–400 mg × 2–3 lần/ngày","theo dõi nhịp tim mẹ/thai"]
+      <div class="subhead">3. Liều khởi → tăng liều → liều đích</div>
+      <p style="font-size:12px;color:var(--text-secondary)">Người lớn, eGFR ≥60 — khung tham khảo. <b>Liều đích</b> = liều tối ưu khi dung nạp (theo khuyến cáo). Cá thể hóa theo HA, K+, creatinine.</p>
+      ${rt(["Liều khởi","Tăng liều","Liều đích (tối ưu)"],[
+        ["Amlodipine","5 mg ×1 (cao tuổi 2.5 mg)","1–2 tuần/lần","10 mg ×1/ngày"],
+        ["Perindopril arginine","5 mg ×1 (yếu 2.5 mg)","2–4 tuần; theo K+","10 mg ×1/ngày"],
+        ["Perindopril tert-butylamine","4 mg ×1 (yếu 2 mg)","2–4 tuần","8 mg ×1/ngày"],
+        ["Enalapril","5 mg ×1–2/ngày","1–2 tuần","20 mg/ngày (1–2 lần)"],
+        ["Ramipril","2.5–5 mg ×1","2–4 tuần","10 mg ×1/ngày"],
+        ["Losartan","50 mg ×1 (yếu 25 mg)","2–4 tuần","100 mg ×1/ngày"],
+        ["Valsartan","80 mg ×1","2–4 tuần","160–320 mg ×1/ngày"],
+        ["Telmisartan","40 mg ×1","2–4 tuần","80 mg ×1/ngày"],
+        ["Indapamide SR","1.5 mg sáng","Thường giữ liều","1.5 mg SR sáng"],
+        ["Indapamide IR","1.25–2.5 mg sáng","Theo HA & Na/K","2.5 mg sáng"],
+        ["Chlorthalidone","12.5 mg sáng","2–4 tuần","12.5–25 mg sáng"],
+        ["HCTZ (nếu dùng)","12.5 mg sáng","2–4 tuần","12.5–25 mg sáng"],
+        ["Bisoprolol*","2.5–5 mg ×1 (HF 1.25)","1–2 tuần; theo mạch","10 mg ×1/ngày"],
+        ["Spironolactone†","12.5–25 mg ×1","1–2 tuần; theo K+","25–50 mg ×1"]
       ])}
-      <p><b>Viên phối hợp thường dùng:</b> Perindopril/Amlodipine, Perindopril/Indapamide, Losartan/HCTZ, Amlodipine/Valsartan — chỉnh liều theo đáp ứng, tái khám sau 2–4 tuần.</p>`,
+      <p style="font-size:12px"><b>Liều đích thực hành:</b> ưu tiên đạt liều tối ưu của 1–2 thuốc nền trước khi thêm thuốc thứ 3; nếu HA đã về đích và dung nạp tốt có thể giữ liều hiện tại.<br>
+      *Chẹn beta khi có chỉ định (vành, HFrEF, AF…). †THA kháng trị (đã ≥3 thuốc gồm lợi tiểu) hoặc HF — theo dõi K+ sát.</p>
+      <div class="alert-box alert-info"><b>Viên phối hợp (ví dụ):</b> Perindopril/Amlodipine 5/5 → 10/5 → 10/10 mg; Perindopril/Indapamide 5/1.25 → 10/2.5 mg; Amlodipine/Valsartan 5/80 → 10/160 mg — tăng theo thành phần, tái khám 2–4 tuần.</div>
+
+      <div class="subhead">4. Cách chỉnh liều (thực hành)</div>
+      <ul>
+        <li><b>Nhịp tăng liều:</b> đánh giá lại sau <b>2–4 tuần</b> (sớm hơn nếu HA rất cao / triệu chứng).</li>
+        <li><b>Chưa đạt đích:</b> tăng tới liều đích dung nạp → thêm nhóm thứ 2/3 → viên 3 thuốc → spironolactone nếu kháng trị.</li>
+        <li><b>Hạ HA quá / chóng mặt / tư thế:</b> giảm liều hoặc giãn khoảng tăng; đo HA ngồi và đứng.</li>
+        <li><b>eGFR &lt;60:</b> khởi thấp hơn (ACEi/ARB/lợi tiểu); theo dõi creatinine & K+ sau 7–14 ngày khởi/tăng liều RASi.</li>
+        <li><b>eGFR &lt;30:</b> thận trọng thiazide-like; ưu tiên lợi tiểu quai nếu phù; spironolactone thường tránh nếu K+ cao.</li>
+        <li><b>K+ &gt;5.0–5.5:</b> không tăng ACEi/ARB/MRA; xử trí tăng K+; xem lại thuốc kết hợp.</li>
+        <li><b>Không</b> phối hợp ACEi + ARB (Class III).</li>
+      </ul>
+
+      <div class="subhead">5. Lưu ý khi dùng thuốc theo nhóm</div>
+      ${rt(["Lưu ý chính"],[
+        ["ACEi (perindopril, enalapril…)","Ho khan, tăng K+, tăng creatinine thoáng qua; chống chỉ định hẹp động mạch thận 2 bên, phù mạch, thai kỳ"],
+        ["ARB (losartan, valsartan…)","Ít ho hơn ACEi; cùng lưu ý K+/thận/thai kỳ"],
+        ["CCB DHP (amlodipine)","Phù chân, đỏ mặt; ít ảnh hưởng K+; hầu như không chỉnh thận"],
+        ["Lợi tiểu giống thiazide","Hạ Na+/K+, tăng uric, ảnh hưởng đường huyết nhẹ; uống sáng; indapamide/chlorthalidone ưu tiên hơn HCTZ"],
+        ["Chẹn beta","Mệt, mạch chậm, co thắt phế quản (hen); không ngừng đột ngột"],
+        ["Spironolactone","Tăng K+, vú to (nam); kiểm tra K+ và creatinine định kỳ"],
+        ["Viên phối hợp","Perindopril/Amlodipine, Perindopril/Indapamide, Amlodipine/Valsartan… — tăng tuân thủ; chỉnh theo thành phần"]
+      ])}
+
+      <div class="subhead">6. THA kháng trị</div>
+      <p>Chưa đạt đích dù <b>3 thuốc tối ưu</b> (gồm lợi tiểu) + tuân thủ tốt → thêm <b>spironolactone</b> liều thấp (hoặc eplerenone nếu tác dụng phụ nội tiết). Loại trừ HA giả kháng trị, ngưng thuốc, thứ phát (aldo, hẹp ĐM thận…).</p>
+
+      <div class="subhead">7. Tình huống đặc biệt (tóm tắt)</div>
+      ${rt(["Hướng xử trí"],[
+        ["Thai kỳ","Labetalol, nifedipine XR, methyldopa; <b>không</b> ACEi/ARB/MRA"],
+        ["ĐTĐ / CKD","Ưu tiên ACEi hoặc ARB; đích HA theo guideline; phối hợp SGLT2i khi có chỉ định thận–tim"],
+        ["Sau NMCT / HFrEF","ACEi/ARB/ARNI + chẹn beta + … theo phác đồ suy tim"],
+        ["Cấp cứu THA","Hạ HA có kiểm soát tại viện — không hạ quá nhanh trừ chỉ định đặc hiệu"]
+      ])}
+
+      <div class="alert-box alert-info"><b>Nhắc:</b> Liều trên là khung lâm sàng nhanh. Cá thể hóa theo tuổi, eGFR, K+, bệnh đồng mắc và thuốc đang dùng.</div>
+    `,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Đo HA ngoài phòng khám (ABPM/HBPM) để chẩn đoán khi khả thi",'<span class="badge badge-I">I</span>'],
@@ -699,101 +845,120 @@ const diseases = [
 },
 {
   spec:"tim_mach", id:"hf", emoji:"💔", short:"Suy tim", title:"Suy tim (Heart Failure)",
-  guidelines:["ESC 2021 + cập nhật 2023","AHA/ACC/HFSA 2022","AHA/ACC/ESC/WHF 2026 (Định nghĩa)"],
+  guidelines:["ESC HF 2026","AHA/ACC/HFSA 2022","Universal Definition HF"],
   sections:{
     dinh_nghia:`
-      <p>Suy tim là hội chứng lâm sàng do bất thường cấu trúc và/hoặc chức năng tim, gây tăng áp lực đổ đầy trong tim và/hoặc cung lượng tim không đủ khi nghỉ hoặc gắng sức.</p>
-      <div class="alert-box alert-info"><b>Cập nhật mới nhất (6/2026):</b> Đồng thuận chuyên gia AHA/ACC/ESC/WHF <i>"Second Universal Definition of Heart Failure"</i> — tài liệu định nghĩa suy tim mới nhất, thay thế bản đầu tiên (2021). Điểm mới cốt lõi: (1) phân loại theo EF chuyển từ các ngưỡng số cứng nhắc sang 3 nhóm mang tính lâm sàng-điều trị (EF giảm/bảo tồn/cải thiện); (2) thêm <b>Giai đoạn 0</b> vào hệ thống phân giai đoạn A-D; (3) nhấn mạnh Giai đoạn B ("Pre-Heart Failure") là cửa sổ chiến lược quan trọng nhất để phát hiện sớm và can thiệp chủ động, vì phần lớn dân số đang ở giai đoạn 0/A/B.</div>
-      <div class="subhead">Phân loại theo phân suất tống máu (EF)</div>
-      <p>Đồng thuận 2026 nhóm EF thành 3 phạm trù mang tính điều trị thay vì ngưỡng số cứng nhắc — tuy nhiên các dải số cụ thể dưới đây vẫn là mốc tham chiếu thực hành phổ biến nhất hiện nay (dựa trên tiêu chí thu nhận của các thử nghiệm RCT nền tảng cho khuyến cáo điều trị):</p>
-      ${rt(["EF"],[
-        ["HFrEF – EF giảm","≤40%"],
-        ["HFmrEF – EF giảm nhẹ (nay thường xếp lâm sàng cùng nhóm điều trị với giảm hoặc bảo tồn tùy bệnh cảnh)","41–49%"],
-        ["HFpEF – EF bảo tồn","≥50%"],
-        ["HFimpEF – EF cải thiện","nền ≤40%, tăng ≥10 điểm và hiện &gt;40%"]
+      <p>Suy tim (HF) là hội chứng lâm sàng do bất thường cấu trúc và/hoặc chức năng tim, biểu hiện bằng triệu chứng và dấu hiệu ứ huyết hoặc cung lượng thấp, thường kèm tăng peptide natriuretic.</p>
+      <div class="alert-box alert-info"><b>ESC HF 2026 — thay đổi phân loại quan trọng:</b>
+        <ul style="margin:6px 0 0 16px;padding:0">
+          <li><b>HFrEF</b> mở rộng: LVEF <b>≤50%</b> (không còn cắt 40% như 2021).</li>
+          <li><b>HFmrEF bị bỏ</b> — không còn nhóm “mid-range” riêng.</li>
+          <li><b>HFpEF</b>: LVEF <b>≥50%</b>.</li>
+          <li>Thuật ngữ <b>decompensated HF</b> được nhấn thay cho “acute HF” thuần túy.</li>
+          <li>Áp dụng <b>giai đoạn A–D</b> (nguy cơ → tiền lâm sàng → triệu chứng → tiến triển).</li>
+        </ul>
+      </div>
+      <div class="subhead">Phân loại theo LVEF (ESC 2026)</div>
+      ${rt(["Nhóm"],[
+        ["HFrEF — EF giảm","LVEF ≤50%"],
+        ["HFpEF — EF bảo tồn","LVEF ≥50%"]
       ])}
-      <div class="subhead">Giai đoạn suy tim (AHA/ACC/HFSA 2022, tái khẳng định trong đồng thuận 2026)</div>
-      ${rt(["Đặc điểm"],[
-        ["Giai đoạn 0 — mới bổ sung 2026","Không có yếu tố nguy cơ, không bệnh cấu trúc, không triệu chứng"],
-        ["Giai đoạn A — Nguy cơ cao","Có yếu tố nguy cơ (THA, ĐTĐ, béo phì, bệnh mạch vành, tiếp xúc thuốc độc tim...) nhưng chưa có bệnh cấu trúc/triệu chứng"],
-        ["Giai đoạn B — Pre-Heart Failure","Có bệnh cấu trúc tim (phì đại thất trái, giảm EF không triệu chứng, bệnh van tim...) nhưng chưa từng có triệu chứng — <b>cửa sổ can thiệp chiến lược quan trọng nhất</b> theo đồng thuận 2026"],
-        ["Giai đoạn C — Suy tim có triệu chứng","Bệnh cấu trúc tim + triệu chứng hiện tại hoặc trước đây"],
-        ["Giai đoạn D — Suy tim kháng trị giai đoạn cuối","Triệu chứng nặng dai dẳng dù đã điều trị nội khoa tối ưu, cần can thiệp chuyên sâu (ghép tim, hỗ trợ thất...)"]
+      <div class="subhead">Giai đoạn (A–D)</div>
+      ${rt(["Giai đoạn"],[
+        ["A","Nguy cơ cao (THA, ĐTĐ, béo phì, độc tim…) — chưa bệnh cấu trúc/triệu chứng HF"],
+        ["B","Bệnh tim cấu trúc / tăng peptide — chưa triệu chứng HF"],
+        ["C","HF có triệu chứng (hiện tại hoặc trước đây)"],
+        ["D","HF tiến triển / advanced — triệu chứng nặng dai dẳng, cần can thiệp đặc biệt"]
       ])}
-      <p>Một khi đã chẩn đoán suy tim có triệu chứng (giai đoạn C), người bệnh được xem là mắc suy tim vĩnh viễn dù triệu chứng có cải thiện tốt với điều trị — không "hạ giai đoạn" trở lại B/A.</p>`,
+    `,
     chan_doan:`
-      <p>Chẩn đoán dựa trên: (1) triệu chứng cơ năng (khó thở, mệt, phù chân) và thực thể (ran ẩm, tĩnh mạch cổ nổi, phù), (2) bằng chứng khách quan bất thường cấu trúc/chức năng tim trên siêu âm tim, và (3) NT-proBNP/BNP tăng.</p>
-      ${rt(["Ngưỡng gợi ý suy tim"],[
-        ["NT-proBNP (ngoại trú, không cấp)","&gt;125 pg/mL"],
-        ["NT-proBNP (cấp cứu)","&gt;300 pg/mL"],
-        ["BNP (cấp cứu)","&gt;100 pg/mL"]
+      <p>Chẩn đoán giai đoạn C/D dựa trên: (1) triệu chứng/dấu hiệu, (2) bằng chứng khách quan bất thường cấu trúc/chức năng tim (siêu âm), (3) thường có NT-proBNP/BNP tăng — lưu ý nhiều tình trạng làm tăng peptide (AF, CKD, tuổi, cấp cứu…).</p>
+      ${rt(["Ngưỡng tham khảo thường dùng"],[
+        ["NT-proBNP ngoại trú","&gt;125 pg/mL gợi ý (không loại trừ nếu thấp hơn trong một số HFpEF)"],
+        ["NT-proBNP cấp / khó thở","Thường &gt;300 pg/mL — giải thích theo tuổi, AF, eGFR"],
+        ["Siêu âm tim","LVEF, kích thước buồng, van, áp lực ĐMP ước lượng, chức năng tâm trương"]
       ])}
-      <p>Siêu âm tim là công cụ chính để xác định EF, bất thường cấu trúc, van tim, đổ đầy thất trái. Cân nhắc thêm ECG, X-quang ngực, và tìm nguyên nhân nền (thiếu máu cơ tim, bệnh van, bệnh cơ tim).</p>
-      <div class="subhead">🧮 Tiêu chuẩn Framingham — hỗ trợ chẩn đoán lâm sàng</div>
-      <p>Tiêu chuẩn kinh điển dựa hoàn toàn vào lâm sàng, hữu ích khi chưa có ngay NT-proBNP/siêu âm tim. Chẩn đoán suy tim khi có <b>≥2 tiêu chí chính</b>, hoặc <b>1 tiêu chí chính + 2 tiêu chí phụ</b> (tiêu chí phụ chỉ tính khi không giải thích được bởi bệnh lý khác).</p>
-      ${sc("framingham","Tiêu chuẩn Framingham (chẩn đoán suy tim)",[
-        {label:"[Chính] Khó thở kịch phát về đêm hoặc phải ngồi thở",pts:2},
-        {label:"[Chính] Tĩnh mạch cổ nổi",pts:2},
-        {label:"[Chính] Ran ẩm ở phổi",pts:2},
-        {label:"[Chính] Bóng tim to trên X-quang",pts:2},
-        {label:"[Chính] Phù phổi cấp",pts:2},
-        {label:"[Chính] Tiếng T3 (ngựa phi)",pts:2},
-        {label:"[Chính] Áp lực tĩnh mạch trung tâm &gt;16cmH2O",pts:2},
-        {label:"[Chính] Phản hồi gan-tĩnh mạch cổ dương tính",pts:2},
-        {label:"[Chính/Phụ] Sụt cân ≥4.5kg trong 5 ngày sau điều trị lợi tiểu",pts:2},
-        {label:"[Phụ] Phù mắt cá chân hai bên",pts:1},
-        {label:"[Phụ] Ho về đêm",pts:1},
-        {label:"[Phụ] Khó thở khi gắng sức thông thường",pts:1},
-        {label:"[Phụ] Gan to",pts:1},
-        {label:"[Phụ] Tràn dịch màng phổi",pts:1},
-        {label:"[Phụ] Nhịp tim nhanh &gt;120 lần/phút",pts:1}
-      ])}
-      <p style="margin-top:-4px;font-size:11.5px;color:var(--text-secondary);">💡 Cách tính: mỗi tiêu chí <b>Chính</b> = 2đ, mỗi tiêu chí <b>Phụ</b> = 1đ. Tổng ≥4đ tương đương đủ tiêu chuẩn (≥2 chính, hoặc 1 chính+2 phụ).</p>`,
+      <p><b>Decompensated HF:</b> đợt xấu đi ứ huyết/tưới máu — đánh giá ứ huyết (phù, ran, TM cổ, sung huyết X-quang) và tưới máu (mạch, HA, lạnh đầu chi, lactate, chức năng thận gan).</p>
+    `,
     dieu_tri:`
-      <div class="subhead">HFrEF (EF ≤40%) – "4 trụ cột" điều trị</div>
-      <p>Khởi động <b>đồng thời và nhanh</b> (không cần tuần tự) 4 nhóm thuốc nền tảng, mỗi nhóm giảm tử vong/nhập viện độc lập:</p>
+      <div class="subhead">Khái niệm điều trị ESC 2026</div>
       <ul>
-        <li><b>ARNI</b> (sacubitril/valsartan) — ưu tiên hơn ACEi/ARB đơn thuần</li>
-        <li><b>Chẹn beta</b> đã chứng minh lợi ích (bisoprolol, carvedilol, metoprolol succinate, nebivolol)</li>
-        <li><b>Kháng thụ thể mineralocorticoid (MRA)</b>: spironolactone hoặc eplerenone</li>
-        <li><b>Ức chế SGLT2</b>: dapagliflozin hoặc empagliflozin — dùng cho mọi HFrEF bất kể có ĐTĐ hay không</li>
+        <li><b>FMT (Foundational Medical Therapy):</b> thuốc nền tảng theo phenotype LVEF.</li>
+        <li><b>AMT (Additional Medical Therapy):</b> thuốc bổ sung theo triệu chứng, phenotype, bệnh đồng mắc.</li>
+        <li>Khởi trị nền tảng <b>sớm, song song</b> khi dung nạp — không trì hoãn tuần tự kéo dài không cần thiết.</li>
       </ul>
-      <div class="alert-box alert-info">Chiến lược 2021–2023: khởi trị và chuẩn liều cả 4 nhóm trong vài tuần đầu, rút ngắn thời gian đạt lợi ích sống còn.</div>
-      <div class="subhead">HFmrEF và HFpEF</div>
+
+      <div class="subhead">HFrEF (LVEF ≤50%) — FMT “4 trụ cột”</div>
+      <p>Bốn nhóm nền tảng (mỗi nhóm có lợi ích tiên lượng độc lập khi có chỉ định):</p>
       <ul>
-        <li><b>SGLT2i</b> là nền tảng, khuyến cáo mạnh nhất hiện có cho cả hai thể này</li>
-        <li>Lợi tiểu kiểm soát sung huyết; cân nhắc MRA, ARNI ở một số bệnh nhân HFmrEF</li>
-        <li>Điều trị bệnh đồng mắc: THA, rung nhĩ, béo phì</li>
+        <li><b>ARNI</b> (sacubitril/valsartan) ưu tiên; nếu không phù hợp: ACEi hoặc ARB</li>
+        <li><b>Chẹn beta</b> đã chứng minh giảm tử vong/nhập viện HFrEF (chỉ dùng dạng đã có bằng chứng — không thay bằng atenolol thường quy):
+          <ul>
+            <li><b>Bisoprolol</b> — khởi 1.25 mg ×1 → đích 10 mg ×1</li>
+            <li><b>Carvedilol</b> — khởi 3.125 mg ×2 → đích 25 mg ×2 (≤85 kg) hoặc 50 mg ×2 (&gt;85 kg)</li>
+            <li><b>Metoprolol succinate</b> (giải phóng kéo dài) — khởi 12.5–25 mg ×1 → đích 200 mg ×1</li>
+            <li><b>Nebivolol</b> — có bằng chứng ở người cao tuổi (SENIORS); khởi 1.25 mg → đích 10 mg ×1</li>
+          </ul>
+          Chuẩn liều chậm theo mạch/HA; không ngừng đột ngột.
+        </li>
+        <li><b>MRA</b>: spironolactone hoặc eplerenone</li>
+        <li><b>SGLT2i</b>: dapagliflozin hoặc empagliflozin — <b>mọi HFrEF</b>, không phụ thuộc ĐTĐ</li>
       </ul>
-      <div class="subhead">Suy tim cấp mất bù</div>
-      <p>Lợi tiểu quai TM (furosemide) chỉnh liều theo đáp ứng; oxy nếu SpO2&lt;90%; xử trí nguyên nhân khởi phát; tránh ngưng đột ngột 4 trụ cột nếu huyết động ổn.</p>
-      <div class="subhead">💊 Liều dùng cụ thể</div>
-      <div class="alert-box alert-warn">Người cao tuổi/suy thận: khởi liều thấp, tăng liều mỗi 2–4 tuần, theo dõi HA, K⁺, creatinine sau mỗi lần tăng liều.</div>
-      ${rt(["Khởi đầu","Liều đích"],[
-        ["Sacubitril/Valsartan","24/26 mg × 2 lần/ngày","97/103 mg × 2 lần/ngày"],
-        ["Bisoprolol","1.25 mg × 1 lần/ngày","10 mg × 1 lần/ngày"],
-        ["Carvedilol","3.125 mg × 2 lần/ngày","25–50 mg × 2 lần/ngày"],
-        ["Metoprolol succinate","12.5–25 mg × 1 lần/ngày","200 mg × 1 lần/ngày"],
-        ["Spironolactone","12.5–25 mg × 1 lần/ngày","25–50 mg × 1 lần/ngày"],
-        ["Eplerenone","25 mg × 1 lần/ngày","50 mg × 1 lần/ngày"],
-        ["Dapagliflozin","10 mg × 1 lần/ngày","liều cố định"],
-        ["Empagliflozin","10 mg × 1 lần/ngày","liều cố định"],
-        ["Furosemide (sung huyết)","20–40 mg, chỉnh theo đáp ứng","theo lâm sàng, TM khi cấp"]
+      <p>Lợi tiểu quai khi ứ huyết (giảm triệu chứng; điều chỉnh theo sung huyết). Theo dõi K⁺, creatinine, HA, mạch khi chuẩn liều.</p>
+
+      <div class="subhead">HFpEF (LVEF ≥50%) — FMT</div>
+      <ul>
+        <li><b>SGLT2i</b> (dapagliflozin / empagliflozin): nền tảng — giảm nhập viện HF</li>
+        <li><b>MRA</b>: nền tảng theo ESC 2026 (khi dung nạp, theo dõi K⁺/chức năng thận)</li>
+        <li>Điều trị nguyên nhân & đồng mắc: THA, ĐTĐ, béo phì, thiếu máu, sleep apnea, vành, van</li>
+        <li>Lợi tiểu khi ứ huyết; không dùng chẹn beta / ACEi chỉ vì HFpEF nếu không có chỉ định khác</li>
+      </ul>
+
+      <div class="subhead">Decompensated HF (đợt mất bù)</div>
+      ${rt(["Hướng"],[
+        ["Ứ huyết","Lợi tiểu quai IV/uống tăng cường; theo dõi nước tiểu, cân, điện giải, thận"],
+        ["Tưới máu kém / sốc","Oxy, vận mạch/inotrope theo protocol ICU; tìm nguyên nhân đảo ngược"],
+        ["Thuốc nền","Giữ FMT nếu HA và tưới máu cho phép; có thể giảm tạm β-blocker khi giảm tưới máu cơ quan"],
+        ["Sau ổn định","Tối ưu lại FMT/AMT trước xuất viện và hẹn tái khám sớm"]
       ])}
+
+      <div class="subhead">AMT & can thiệp (chọn lọc)</div>
+      <ul>
+        <li>Ivabradine, vericiguat, digoxin, hydralazine/nitrate… theo chỉ định hẹp / residual risk</li>
+        <li>Thiết bị: CRT/ICD khi đủ tiêu chuẩn điện học & LVEF</li>
+        <li>Advanced HF (giai đoạn D): đánh giá ghép / hỗ trợ cơ học tại trung tâm chuyên sâu</li>
+      </ul>
+
+      <div class="subhead">Liều khởi tham khảo (người lớn — chỉnh theo HA, K⁺, eGFR)</div>
+      ${rt(["Liều khởi thường dùng","Hướng chuẩn liều"],[
+        ["Sacubitril/valsartan","24/26 hoặc 49/51 mg ×2/ngày","Tăng dần đến 97/103 mg ×2 nếu dung nạp"],
+        ["Bisoprolol","1.25 mg ×1","Đích 10 mg ×1 (chuẩn liều chậm)"],
+        ["Carvedilol","3.125 mg ×2/ngày","Đích 25 mg ×2 (hoặc 50 mg ×2 nếu &gt;85 kg)"],
+        ["Metoprolol succinate XR","12.5–25 mg ×1","Đích 200 mg ×1"],
+        ["Nebivolol","1.25 mg ×1","Đích 10 mg ×1 (người cao tuổi — SENIORS)"],
+        ["Spironolactone","12.5–25 mg ×1","Đến 25–50 mg; theo K⁺"],
+        ["Dapagliflozin / Empagliflozin","10 mg ×1","Giữ 10 mg; dùng khi eGFR cho phép theo nhãn"]
+      ])}
+
       <div class="age-tag">Người cao tuổi</div>
-      <p style="margin-bottom:10px;">Bắt đầu ARNI/ACEi và MRA ở liều thấp nhất; chuẩn liều chẹn beta chậm hơn theo dung nạp; SGLT2i không chỉnh theo tuổi nhưng thận trọng mất nước, nhiễm nấm sinh dục.</p>
-      <div class="age-tag">Suy thận (eGFR 30–60)</div>
-      <p>Không chống chỉ định 4 trụ cột nhưng theo dõi sát K⁺/creatinine; SGLT2i dùng đến eGFR ≥20; MRA thận trọng nếu eGFR &lt;30.</p>`,
+      <p>Khởi liều thấp, chuẩn liều chậm; phòng hạ HA tư thế và mất nước với SGLT2i + lợi tiểu.</p>
+      <div class="age-tag">eGFR 20–60</div>
+      <p>Vẫn dùng SGLT2i theo chỉ định; MRA/ARNI thận trọng, theo dõi sinh hóa sát. Tránh phối hợp ACEi+ARB.</p>
+
+      <div class="alert-box alert-info"><b>AF kèm HF (ESC 2026):</b> kháng đông theo <b>CHA₂DS₂-VA</b>; tối ưu FMT; chẹn beta là lựa chọn hàng đầu kiểm soát tần số ở HFrEF ổn định; ablation cân nhắc chọn lọc khi AF triệu chứng / liên quan xấu HF.</div>
+    `,
     khuyen_cao:`
-      ${rt(["Mức"],[
-        ["Khởi trị đồng thời 4 nhóm thuốc nền tảng trong HFrEF",'<span class="badge badge-I">I</span>'],
-        ["SGLT2i cho HFmrEF và HFpEF",'<span class="badge badge-I">I</span>'],
-        ["Sacubitril/valsartan ưu tiên hơn ACEi ở bệnh nhân phù hợp",'<span class="badge badge-I">I</span>'],
-        ["Theo dõi NT-proBNP để hướng dẫn điều trị",'<span class="badge badge-IIb">IIb</span>'],
-        ["Chẹn kênh canxi non-dihydropyridine trong HFrEF",'<span class="badge badge-III">III</span>']
-      ])}`
+      ${rt(["Khuyến cáo (tóm tắt ESC 2026)"],[
+        ["FMT 4 trụ cột cho HFrEF (LVEF ≤50%) khi có chỉ định",'<span class="badge badge-I">I</span>'],
+        ["SGLT2i (± MRA) nền tảng trong HFpEF",'<span class="badge badge-I">I</span>'],
+        ["ARNI ưu tiên hơn ACEi ở HFrEF phù hợp",'<span class="badge badge-I">I</span>'],
+        ["Không dùng CCB non-DHP trong HFrEF",'<span class="badge badge-III">III</span>'],
+        ["Không phối hợp ACEi + ARB",'<span class="badge badge-III">III</span>']
+      ])}
+    `
+,
   },
-  source:"ESC Heart Failure Guidelines 2021 + 2023 Focused Update; 2022 AHA/ACC/HFSA Guideline for the Management of Heart Failure; AHA/ACC/ESC/WHF Expert Consensus Document: Second Universal Definition of Heart Failure, 2026"
+  source:"2026 ESC Guidelines for the management of heart failure (Eur Heart J 2026); 2022 AHA/ACC/HFSA HF Guideline; Universal Definition of HF"
 },
 {
   spec:"tim_mach", id:"af", emoji:"〰️", short:"RN", title:"Rung nhĩ (Atrial Fibrillation)",
@@ -860,7 +1025,9 @@ const diseases = [
         ["Bisoprolol","2.5–10 mg/ngày"],
         ["Diltiazem phóng thích chậm","120–360 mg/ngày"],
         ["Digoxin (thêm khi cần, có suy tim)","0.125–0.25 mg/ngày, giảm liều/theo dõi nồng độ ở cao tuổi/suy thận"]
-      ])}`,
+      ])}
+      <div class="alert-box alert-info"><b>AF + suy tim (ESC HF 2026 / AF 2024):</b> Kháng đông theo <b>CHA₂DS₂-VA</b> (không VASc). Tối ưu FMT suy tim. Chẹn beta hàng đầu kiểm soát tần số khi HFrEF ổn định. Cân nhắc ablation khi AF triệu chứng hoặc liên quan xấu HF. Tránh CCB non-DHP nếu HFrEF.</div>
+`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["NOAC ưu tiên hơn warfarin khi không có chống chỉ định",'<span class="badge badge-I">I</span>'],
@@ -1047,6 +1214,8 @@ const diseases = [
       <p><b>STEMI:</b> PCI thì đầu là chiến lược ưu tiên, mục tiêu từ chẩn đoán đến bóng <b>&lt;120 phút</b> (lý tưởng &lt;60–90 phút nếu đến thẳng trung tâm có PCI).</p>
       <p><b>NSTEMI/đau thắt ngực không ổn định nguy cơ cao-rất cao (GRACE&gt;140 hoặc TIMI≥4):</b> chiến lược xâm lấn sớm, chụp mạch vành trong &lt;24h (rất cao: &lt;2h).</p>
       <p><b>Thuốc quanh thủ thuật PCI:</b> DAPT (aspirin + ticagrelor/prasugrel) + kháng đông (UFH thường dùng nhất trong phòng thông tim; bivalirudin là lựa chọn thay thế ở bệnh nhân nguy cơ chảy máu cao) ± ức chế GPIIb/IIIa cứu vãn nếu biến chứng huyết khối trong lúc can thiệp.</p>
+      <div class="alert-box alert-info"><b>Audit DAPT (ESC 2023 / AHA 2025):</b> Sau ACS + stent: DAPT thường <b>12 tháng</b> nếu nguy cơ xuất huyết không cao; có thể rút ngắn (1–3–6 tháng) khi nguy cơ chảy máu cao (PRECISE-DAPT/ARC-HBR) rồi monotherapy P2Y₁₂ hoặc aspirin theo chiến lược đã chọn. Ưu tiên ticagrelor/prasugrel hơn clopidogrel khi PCI và nguy cơ huyết khối cao, trừ chống chỉ định. Luôn cân bằng ischemic vs bleeding.</div>
+
       <div class="subhead">🅱️ CHIẾN LƯỢC TIÊU SỢI HUYẾT — khi không thể PCI kịp thời</div>
       <p>Chỉ áp dụng cho <b>STEMI</b> khi thời gian dự kiến đến PCI &gt;120 phút — dùng tiêu sợi huyết trong <b>10 phút đầu</b> tiếp xúc y tế, sau đó <b>luôn chuyển đến trung tâm có PCI</b> (PCI cứu vãn nếu tiêu sợi huyết thất bại sau 60–90 phút, hoặc chụp mạch thường quy trong 2–24h nếu tiêu sợi huyết thành công — chiến lược "pharmaco-invasive").</p>
       <p><b>Thuốc phối hợp với tiêu sợi huyết:</b> aspirin + <b>clopidogrel</b> (không dùng ticagrelor/prasugrel cùng tiêu sợi huyết do thiếu dữ liệu an toàn) + kháng đông (enoxaparin hoặc UFH, liều điều chỉnh theo tuổi/thận — xem bảng liều).</p>
@@ -1359,8 +1528,9 @@ const diseases = [
         ["Warfarin (khi DOAC không phù hợp, vd. hội chứng kháng phospholipid)","bắc cầu heparin/enoxaparin đến khi INR 2-3 trong ≥24h","đích INR 2.0-3.0"]
       ])}
       <div class="age-tag">Người cao tuổi/suy thận</div>
-      <p>Ưu tiên apixaban ở người cao tuổi/suy thận nhẹ-trung bình (dữ liệu an toàn chảy máu tốt hơn trong nhóm này); tránh DOAC nếu eGFR rất thấp (&lt;15-30 tùy thuốc) — chuyển sang warfarin có bắc cầu heparin.</p>`,
-    khuyen_cao:`
+      <p>Ưu tiên apixaban ở người cao tuổi/suy thận nhẹ-trung bình (dữ liệu an toàn chảy máu tốt hơn trong nhóm này); tránh DOAC nếu eGFR rất thấp (&lt;15-30 tùy thuốc) — chuyển sang warfarin có bắc cầu heparin.</p>
+      <div class="alert-box alert-info"><b>Audit PE — kháng đông (tham khảo, chỉnh thận/cân nặng):</b> Giai đoạn cấp thường dùng DOAC (apixaban, rivaroxaban có phác đồ nạp; dabigatran/edoxaban sau heparin 5–10 ngày) hoặc LMWH. <b>Tiêu sợi huyết</b> dự trữ cho PE <b>sốc / tụt HA</b> (nặng huyết động) khi lợi ích &gt; xuất huyết — quyết định theo PERT. Thời gian OAC: tối thiểu 3 tháng; kéo dài nếu vô căn/nguy cơ tái phát cao.</div>`,
+khuyen_cao:`
       ${rt(["Mức"],[
         ["Dùng Wells hoặc YEARS để đánh giá xác suất lâm sàng trước xét nghiệm",'<span class="badge badge-I">I</span>'],
         ["Phân nhóm lâm sàng A-E để định hướng nơi điều trị và mức độ can thiệp",'<span class="badge badge-I">I</span>'],
@@ -1547,7 +1717,7 @@ const diseases = [
       <div class="subhead">Hở van 3 lá</div>
       <p>Sửa/thay van khi TR nặng có triệu chứng hoặc khi phẫu thuật van trái kèm theo. Transcatheter tricuspid edge-to-edge repair (T-TEER) Class IIa ở bệnh nhân nguy cơ cao (ESC 2025).</p>
       <div class="subhead">Kháng đông sau van nhân tạo</div>
-      ${rt(["Chỉ định","Thuốc"],[
+      ${rt(["Thuốc"],[
         ["Van cơ học","Warfarin suốt đời (INR đích theo vị trí van)"],
         ["Van sinh học + AF","DOAC ưu tiên hơn warfarin sau 3 tháng"],
         ["Van sinh học không AF","Aspirin 75–100 mg/ngày hoặc không kháng đông dài hạn"]
@@ -1602,7 +1772,7 @@ const diseases = [
       <div class="subhead">Chỉ định phẫu thuật sớm</div>
       <p>Suy tim cấp do hở/tắc van nặng, nhiễm trùng không kiểm soát (áp xe, fistule), nguy cơ thuyên tắc cao (sùi lớn, thuyên tắc tái phát) — phẫu thuật không trì hoãn kể cả sau đột quỵ thiếu máu.</p>
       <div class="subhead">💊 Kháng sinh kinh nghiệm ban đầu</div>
-      ${rt(["Tình huống","Kháng sinh"],[
+      ${rt(["Kháng sinh"],[
         ["NVE cộng đồng, không sốc","Ampicillin + (Flu)cloxacillin + Gentamicin hoặc Vancomycin + Gentamicin"],
         ["PVE / bệnh viện / sốc","Vancomycin + Gentamicin + Rifampin"],
         ["Nghi MRSA cao","Vancomycin hoặc Daptomycin"]
@@ -1668,7 +1838,7 @@ const diseases = [
 },
 {
   spec:"tim_mach", id:"syncope", emoji:"💫", short:"Ngất", title:"Ngất (Syncope)",
-  guidelines:["ESC 2018 Syncope","EUSEM 2024"],
+  guidelines:["ESC 2018 Syncope","EUSEM 2024","Tóm tắt pocket"],
   sections:{
     dinh_nghia:`
       <p>Ngất là mất ý thức tạm thời do giảm tưới máu não, đặc trưng bởi khởi phát nhanh, thời gian ngắn và hồi phục hoàn toàn tự nhiên. Cần phân biệt với các nguyên nhân mất ý thức khác (động kinh, chấn thương, psychogenic…).</p>
@@ -1702,7 +1872,9 @@ const diseases = [
       ${rt(["Liều dùng","Lưu ý"],[
         ["Midodrine","2.5–10 mg × 2–3 lần/ngày","Tránh dùng buổi tối (tăng HA nằm)"],
         ["Fludrocortisone","0.1–0.2 mg/ngày","Theo dõi phù, hạ kali"]
-      ])}`,
+      ])}
+      <div class="alert-box alert-info"><b>P2 — Phân tầng nguy cơ:</b> ESC 2018 vẫn là khung chính (ngất phản xạ / tư thế / tim). Nhập viện khi nghi ngất tim (bệnh tim cấu trúc, ECG bất thường, đau ngực, khó thở, huyết động không ổn). App chỉ tóm tắt — ECG, monitor, siêu âm theo protocol cấp cứu tại chỗ.</div>
+`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Bệnh sử + khám + ECG là đánh giá ban đầu bắt buộc cho mọi ngất",'<span class="badge badge-I">I</span>'],
@@ -1715,7 +1887,7 @@ const diseases = [
 },
 {
   spec:"noi_tiet", id:"dm", emoji:"🍬", short:"ĐTĐ", title:"Đái tháo đường & Tim mạch",
-  guidelines:["ESC 2023 (Diabetes & CVD)","ADA Standards of Care 2026","AHA/ACC/ADA/ASN 2026 CKM"],
+  guidelines:["ADA 2026","ESC 2023 DM-CVD","AHA CKM"],
   sections:{
     dinh_nghia:`
       <p>ĐTĐ típ 2 là bệnh chuyển hóa mạn tính do đề kháng insulin và/hoặc suy giảm tiết insulin, làm tăng mạnh nguy cơ bệnh tim mạch do xơ vữa và suy tim.</p>
@@ -1760,7 +1932,15 @@ const diseases = [
         ["Semaglutide uống","3mg/ngày×30 ngày → 7mg → tối đa 14mg/ngày","uống lúc đói, chờ 30 phút mới ăn"],
         ["Liraglutide","0.6mg/ngày×1 tuần → 1.2 → tối đa 1.8mg/ngày","tăng liều chậm hơn ở cao tuổi nếu không dung nạp"],
         ["Dulaglutide","0.75mg/tuần → tối đa 1.5–4.5mg/tuần","không cần chỉnh theo tuổi"]
-      ])}`,
+      ])}
+<div class="subhead">Đích điều trị tham khảo (ADA 2026 — cá thể hóa)</div>
+      ${rt(["Đích thường gặp","Ghi chú"],[
+        ["HbA1c","&lt;7% (53 mmol/mol)","Chặt hơn nếu không hạ đường huyết; lỏng hơn người già/suy yếu"],
+        ["HA","&lt;130/80 mmHg","Đồng bộ AHA/ADA khi dung nạp"],
+        ["LDL-C","Theo nguy cơ ASCVD","Thường &lt;70 mg/dL nếu ASCVD; statin nền"]
+      ])}
+      <div class="alert-box alert-info"><b>Audit ĐTĐ đích:</b> Metformin vẫn dùng rộng nếu eGFR cho phép; khi có ASCVD/HF/CKD ưu tiên SGLT2i/GLP-1 có bằng chứng, có thể song song metformin — không hiểu là “bỏ metformin hàng loạt”.</div>
+    `,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["SGLT2i/GLP-1RA có lợi ích tim mạch, độc lập HbA1c, ở người ĐTĐ nguy cơ cao/rất cao",'<span class="badge badge-I">I</span>'],
@@ -1773,7 +1953,7 @@ const diseases = [
 },
 {
   spec:"noi_tiet", id:"obesity", emoji:"⚖️", short:"Béo phì", title:"Béo phì & Hội chứng chuyển hóa",
-  guidelines:["AHA/ACC/TOS 2013 + cập nhật lâm sàng 2023–2024","IDF/AHA-NHLBI"],
+  guidelines:["ADA 2026","SELECT/STEP evidence","EASO"],
   sections:{
     dinh_nghia:`
       <div class="subhead">Phân loại BMI</div>
@@ -1795,7 +1975,15 @@ const diseases = [
       <div class="subhead">Nền tảng: can thiệp lối sống toàn diện</div>
       <p>Giảm 500–750 kcal/ngày so nhu cầu, hoạt động thể lực ≥150 phút/tuần cường độ trung bình, liệu pháp hành vi. Mục tiêu giảm ≥5–10% cân nặng để cải thiện rõ rệt bệnh đồng mắc chuyển hóa.</p>
       <div class="subhead">Điều trị thuốc (BMI≥30, hoặc ≥27 kèm bệnh đồng mắc)</div>
-      <p><b>Nhóm đồng vận GLP-1/GIP</b> hiện là lựa chọn dược lý hiệu quả nhất, giảm 15–20% cân nặng, cải thiện đồng thời các yếu tố nguy cơ tim mạch-chuyển hóa (semaglutide có bằng chứng giảm biến cố tim mạch ở người béo phì có bệnh tim mạch — nghiên cứu SELECT).</p>
+      <p><b>Nhóm đồng vận GLP-1/GIP</b> là lựa chọn dược lý hiệu quả nhất hiện nay (giảm ~12–20%+ cân), kèm lợi ích tim–chuyển hóa.</p>
+      ${rt(["Hiệu quả / ghi chú"],[
+        ["Semaglutide (GLP-1, tiêm tuần)","~12–15% cân; SELECT: giảm biến cố CV ở béo phì có CVD"],
+        ["Tirzepatide (GIP/GLP-1, tiêm tuần)","~15–20%+ cân; theo dõi tiêu hóa, túi mật"],
+        ["Liraglutide 3 mg (tiêm ngày)","~5–8% cân — khi không có sema/tirzepatide"],
+        ["Chỉ định","BMI ≥30 hoặc ≥27 + bệnh đồng mắc; + lối sống"],
+        ["Dừng thuốc","Nếu &lt;5% cân sau 3–6 tháng ở liều tối ưu / không dung nạp"]
+      ])}
+      <div class="alert-box alert-info"><b>P1:</b> Ưu tiên GLP-1/GIP-GLP khi béo phì kèm ĐTĐ hoặc nguy cơ CV cao (ADA/AHA). Chống chỉ định: MEN2, medullary thyroid carcinoma (theo nhãn GLP-1).</div>
       <div class="subhead">Phẫu thuật giảm cân (bariatric)</div>
       <p>Cân nhắc khi BMI ≥40, hoặc ≥35 kèm bệnh đồng mắc, sau khi đã thử lối sống ± thuốc không đạt hiệu quả đủ.</p>
       <div class="subhead">💊 Liều dùng cụ thể</div>
@@ -1878,7 +2066,7 @@ const diseases = [
 },
 {
   spec:"ho_hap", id:"asthma", emoji:"🌬️", short:"Hen PQ", title:"Hen phế quản",
-  guidelines:["GINA 2026"],
+  guidelines:["GINA 2025/2026"],
   sections:{
     dinh_nghia:`
       <p>Hen phế quản là bệnh lý viêm mạn tính đường thở, đặc trưng bởi triệu chứng hô hấp thay đổi theo thời gian/cường độ (khò khè, khó thở, nặng ngực, ho) kèm giới hạn luồng khí thở ra thay đổi.</p>
@@ -1935,8 +2123,9 @@ const diseases = [
         ["Tiotropium (LAMA bổ sung, bậc 4–5)","2.5mcg × 2 nhát/ngày (Respimat)","thận trọng glaucoma góc đóng, phì đại tiền liệt tuyến"]
       ])}
       <div class="age-tag">Người cao tuổi</div>
-      <p>Kiểm tra kỹ thuật hít và lực hít vào (ưu tiên bình định liều có buồng đệm nếu phối hợp kém với DPI); tầm soát bệnh đồng mắc tim mạch trước dùng LABA/LAMA liều cao.</p>`,
-    khuyen_cao:`
+      <p>Kiểm tra kỹ thuật hít và lực hít vào (ưu tiên bình định liều có buồng đệm nếu phối hợp kém với DPI); tầm soát bệnh đồng mắc tim mạch trước dùng LABA/LAMA liều cao.</p>
+      <div class="alert-box alert-info"><b>Audit đợt cấp hen (GINA):</b> Oxygen đích SpO₂ 93–95% (người lớn); SABA lặp lại; steroid toàn thân sớm (prednisolone 40–50 mg hoặc IV hydrocortisone); ipratropium khi nặng; cân nhắc MgSO₄ IV khi đáp ứng kém. <b>Không</b> an thần thường quy. Đánh giá nguy cơ tử vong (nhập ICU trước, gần ngừng thở…). Sau đợt cấp: kiểm tra kỹ thuật hít, ICS nền, kế hoạch hành động.</div>`,
+khuyen_cao:`
       ${rt(["Mức"],[
         ["Mọi bệnh nhân hen nên dùng phác đồ chứa ICS, không đơn trị SABA",'<span class="badge badge-I">I</span>'],
         ["ICS-formoterol liều thấp (MART) ưu tiên hơn SABA cắt cơn đơn thuần",'<span class="badge badge-I">I</span>'],
@@ -2019,8 +2208,9 @@ const diseases = [
         ["Prednisolone (đợt cấp)","40mg/ngày × 5 ngày","không cần giảm liều dần nếu đợt ngắn"]
       ])}
       <div class="age-tag">Người cao tuổi</div>
-      <p>Ưu tiên bình xịt định liều có buồng đệm hoặc bình hít bột khô dễ thao tác nếu lực hít vào yếu; đánh giá nguy cơ té ngã/loãng xương khi dùng corticoid toàn thân lặp lại.</p>`,
-    khuyen_cao:`
+      <p>Ưu tiên bình xịt định liều có buồng đệm hoặc bình hít bột khô dễ thao tác nếu lực hít vào yếu; đánh giá nguy cơ té ngã/loãng xương khi dùng corticoid toàn thân lặp lại.</p>
+      <div class="alert-box alert-info"><b>GOLD 2026 (P1):</b> Nhóm <b>E</b> / escalate: <b>≥1 đợt cấp mức vừa hoặc nặng</b> trong năm trước (không cần ≥2 như một số phiên bản cũ) → cân nhắc leo thang điều trị để đạt trạng thái ít hoạt động bệnh (ít/không đợt cấp). Đợt cấp: bronchodilator tăng cường ± prednisolone ~40 mg × 5 ngày; KS khi đàm mủ / nặng. <b>Vaccine:</b> cúm, phế cầu (PCV20/21 theo khuyến cáo địa phương), COVID-19, <b>RSV</b>, ho gà khi chỉ định. Bỏ thuốc lá + phục hồi chức năng nền tảng. Theo dõi kỹ thuật hít trước khi đổi thuốc.</div>`,
+khuyen_cao:`
       ${rt(["Mức"],[
         ["Ngưng thuốc lá là can thiệp ưu tiên hàng đầu, mọi giai đoạn",'<span class="badge badge-I">I</span>'],
         ["LABA+LAMA phối hợp ưu tiên hơn đơn trị ở nhóm B/E",'<span class="badge badge-I">I</span>'],
@@ -2082,8 +2272,9 @@ const diseases = [
         ["Piperacillin-tazobactam (nghi Pseudomonas)","4.5g × 4 lần/ngày TM (truyền kéo dài)","chỉnh liều theo CrCl"],
         ["Vancomycin (nghi MRSA)","15–20mg/kg × 2 lần/ngày TM, chỉnh theo nồng độ đáy","theo dõi chức năng thận sát ở người cao tuổi"]
       ])}
-      <p><b>Thời gian điều trị:</b> tối thiểu 5 ngày, ngưng khi ổn định lâm sàng ≥48–72h (hết sốt, sinh hiệu ổn) — không cần kéo dài thường quy trừ biến chứng (áp xe, mủ màng phổi, vi khuẩn không điển hình nặng).</p>`,
-    khuyen_cao:`
+      <p><b>Thời gian điều trị:</b> tối thiểu 5 ngày, ngưng khi ổn định lâm sàng ≥48–72h (hết sốt, sinh hiệu ổn) — không cần kéo dài thường quy trừ biến chứng (áp xe, mủ màng phổi, vi khuẩn không điển hình nặng).</p>
+      <div class="alert-box alert-info"><b>Audit CAP:</b> Chọn kháng sinh theo <b>mức đề kháng địa phương</b>, tiền sử KS 90 ngày, nguy cơ MRSA/Pseudomonas. ATS/IDSA 2019 là khung — ưu tiên hướng dẫn bệnh viện/Sở Y tế. Thời gian thường 5–7 ngày nếu ổn định lâm sàng; cấy máu/đàm trước KS khi nhập viện. Đánh giá CURB-65/PSI để quyết định nơi điều trị.</div>`,
+khuyen_cao:`
       ${rt(["Mức"],[
         ["Dùng thang điểm nặng (CURB-65/PSI) hỗ trợ quyết định nơi điều trị",'<span class="badge badge-I">I</span>'],
         ["Phối hợp beta-lactam + macrolide hoặc đơn trị fluoroquinolone hô hấp khi nhập viện",'<span class="badge badge-I">I</span>'],
@@ -2253,7 +2444,7 @@ const diseases = [
         <li>Theo dõi lại 3–6 tháng, leo thang nếu chưa đạt nguy cơ thấp.</li>
       </ul>
       <div class="subhead">Nhóm thuốc chính</div>
-      ${rt(["Nhóm","Ví dụ"],[
+      ${rt(["Ví dụ"],[
         ["ERA (đối kháng endothelin)","Bosentan, Ambrisentan, Macitentan"],
         ["PDE5i / sGC stimulator","Sildenafil, Tadalafil, Riociguat"],
         ["Prostacyclin pathway","Epoprostenol (TM), Treprostinil, Selexipag (uống)"],
@@ -2895,7 +3086,7 @@ const diseases = [
 },
 {
   spec:"tieu_hoa", id:"ibd", emoji:"🔥", short:"IBD", title:"Viêm ruột mạn (Crohn/Viêm loét ĐT)",
-  guidelines:["ACG 2019 (UC)","ACG 2018 (Crohn)","AGA 2021 (điều trị bằng thuốc)"],
+  guidelines:["ACG UC/Crohn","AGA","ECCO 2024 (tham chiếu)","Tóm tắt pocket"],
   sections:{
     dinh_nghia:`
       <p>Bệnh viêm ruột mạn (IBD) gồm 2 thể chính, tiến triển từng đợt-thuyên giảm mạn tính do rối loạn đáp ứng miễn dịch niêm mạc ruột:</p>
@@ -2935,7 +3126,9 @@ const diseases = [
         ["Vedolizumab (chọn lọc ruột)","300mg TM tuần 0,2,6 → mỗi 8 tuần","hồ sơ an toàn nhiễm trùng toàn thân thấp hơn anti-TNF do tác dụng chọn lọc ruột"]
       ])}
       <div class="age-tag">Người cao tuổi/thai kỳ</div>
-      <p>Người cao tuổi khởi phát IBD: ưu tiên vedolizumab/thuốc chọn lọc ruột nếu có thể do ít ảnh hưởng miễn dịch toàn thân hơn; anti-TNF và hầu hết sinh học tương đối an toàn trong thai kỳ (tiếp tục điều trị duy trì bệnh ổn định thường an toàn hơn để bệnh bùng phát) — cần hội chẩn chuyên khoa để cá thể hóa thời điểm liều cuối trước sinh.</p>`,
+      <p>Người cao tuổi khởi phát IBD: ưu tiên vedolizumab/thuốc chọn lọc ruột nếu có thể do ít ảnh hưởng miễn dịch toàn thân hơn; anti-TNF và hầu hết sinh học tương đối an toàn trong thai kỳ (tiếp tục điều trị duy trì bệnh ổn định thường an toàn hơn để bệnh bùng phát) — cần hội chẩn chuyên khoa để cá thể hóa thời điểm liều cuối trước sinh.</p>
+      <div class="alert-box alert-info"><b>P2 — Mức tóm tắt:</b> Phác đồ IBD trong app là khung (5-ASA, steroid cảm ứng, immunomodulator, anti-TNF/IL/JAK…). Lựa chọn biologic/JAK cụ thể, nội soi theo dõi và phẫu thuật cần <b>hội chẩn chuyên khoa tiêu hóa</b> theo ECCO/ACG mới nhất và thuốc sẵn có tại chỗ. Không duy trì steroid dài hạn.</div>
+`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["5-ASA là điều trị đầu tay cảm ứng và duy trì UC nhẹ-trung bình",'<span class="badge badge-I">I</span>'],
@@ -3545,7 +3738,7 @@ const diseases = [
       <p>Xác định nguyên nhân nền (đái tháo đường, tăng huyết áp, viêm cầu thận, bệnh thận đa nang...) để định hướng điều trị đặc hiệu; sinh thiết thận khi nguyên nhân không rõ ràng hoặc nghi bệnh cầu thận nguyên phát.</p>`,
     dieu_tri:`
       <div class="subhead">Bước 1 — Kiểm soát huyết áp & ức chế hệ RAAS (nền tảng, mọi bệnh nhân có albumin niệu)</div>
-      <p><b>ACEi hoặc ARB</b> (không phối hợp cả hai) là điều trị nền tảng khi có albumin niệu ≥A2, chỉnh liều tối đa dung nạp được. Đích HA tâm thu &lt;120mmHg (đo chuẩn hóa) theo KDIGO 2024 ở hầu hết bệnh nhân CKD không đái tháo đường có nguy cơ tim mạch cao, trừ khi không dung nạp.</p>
+      <p><b>ACEi hoặc ARB</b> (không phối hợp cả hai) là điều trị nền tảng khi có albumin niệu ≥A2, chỉnh liều tối đa dung nạp được. Đích HA tâm thu &lt;120 mmHg (đo <b>chuẩn hóa</b> theo protocol KDIGO) ở nhiều bệnh nhân CKD — khác với đích ESC HA 120–129 / AHA &lt;130/80 trên dân số chung. <b>Thực hành:</b> nếu không đo được BP chuẩn hóa hoặc không dung nạp, dùng đích cá thể hóa (thường &lt;130/80) và ưu tiên ACEi/ARB + SGLT2i.</p>
       <div class="subhead">Bước 2 — Ức chế SGLT2 (khuyến cáo mới, mở rộng chỉ định)</div>
       <p><b>SGLT2i</b> (dapagliflozin, empagliflozin) được khuyến cáo cho mọi bệnh nhân CKD có eGFR ≥20 mL/phút/1.73m² kèm albumin niệu ≥A2, <b>bất kể có đái tháo đường hay không</b> — giảm tiến triển CKD, biến cố tim mạch và tử vong (DAPA-CKD, EMPA-KIDNEY).</p>
       <div class="subhead">Bước 3 — Finerenone (đối kháng thụ thể mineralocorticoid không steroid)</div>
@@ -3567,8 +3760,9 @@ const diseases = [
         ["Atorvastatin","20–40mg/ngày","không cần chỉnh liều nhiều theo eGFR (chuyển hóa gan)"]
       ])}
       <div class="age-tag">Người cao tuổi</div>
-      <p>Cân nhắc lợi ích/nguy cơ điều trị tích cực ở người rất cao tuổi/nhiều bệnh đồng mắc — mục tiêu có thể cá thể hóa (ít nghiêm ngặt hơn) nếu kỳ vọng sống hạn chế hoặc nguy cơ tác dụng phụ (hạ HA, tổn thương thận cấp) vượt lợi ích.</p>`,
-    khuyen_cao:`
+      <p>Cân nhắc lợi ích/nguy cơ điều trị tích cực ở người rất cao tuổi/nhiều bệnh đồng mắc — mục tiêu có thể cá thể hóa (ít nghiêm ngặt hơn) nếu kỳ vọng sống hạn chế hoặc nguy cơ tác dụng phụ (hạ HA, tổn thương thận cấp) vượt lợi ích.</p>
+      <div class="alert-box alert-info"><b>Audit CKD:</b> Không phối hợp ACEi+ARB. Theo dõi creatinine/K+ 1–2 tuần sau khởi/tăng liều RASi. Finerenone (ns-MRA) cân nhắc khi ĐTĐ + albumin niệu theo chỉ định. Statin theo nguy cơ tim mạch.</div>`,
+khuyen_cao:`
       ${rt(["Mức"],[
         ["ACEi/ARB liều tối đa dung nạp khi có albumin niệu ≥A2",'<span class="badge badge-I">I</span>'],
         ["SGLT2i cho CKD có albumin niệu, bất kể có ĐTĐ hay không, eGFR≥20",'<span class="badge badge-I">I</span>'],
@@ -3949,6 +4143,331 @@ const diseases = [
       ])}`
   },
   source:"European Clinical Practice Guidelines on Hyponatraemia; US Expert Panel Recommendations; NDT Treatment Standard 2024"
+},
+{
+  spec:"tim_mach", id:"svt_superficial", emoji:"🦵", short:"VTN / PTS", title:"Viêm tắc tĩnh mạch nông & Hội chứng sau huyết khối",
+  guidelines:["ESC 2022 VTE","ASH 2020"],
+  sections:{
+    dinh_nghia:`
+      <p><b>Viêm tắc tĩnh mạch nông (SVT)</b>: viêm và huyết khối tĩnh mạch nông, thường chi dưới (hay gặp tại tĩnh mạch hiển). <b>Hội chứng sau huyết khối (PTS)</b>: đau, phù, thay đổi da mạn tính sau DVT do tăng áp lực tĩnh mạch và suy van.</p>`,
+    chan_doan:`
+      <p>SVT: dây đỏ nóng đau dọc đường tĩnh mạch nông; siêu âm Doppler loại trừ DVT kèm theo (bắt buộc nếu gần ổ nối sâu hoặc đoạn ≥5 cm). PTS: tiền sử DVT + triệu chứng mạn; Villalta score hỗ trợ phân độ.</p>`,
+    dieu_tri:`
+      ${rt(["Điều trị"],[
+        ["SVT đoạn ngắn, xa hệ sâu","NSAID, gạc ấm, đi tất áp lực, vận động"],
+        ["SVT ≥5 cm hoặc gần hệ sâu / nguy cơ cao","Fondaparinux 2.5 mg/ngày × 45 ngày (hoặc rivaroxaban liều dự phòng theo khuyến cáo)"],
+        ["Kèm DVT / PE","Điều trị kháng đông đầy đủ như VTE"],
+        ["PTS","Tất áp lực 20–30 mmHg, tập đi, giảm cân, nâng chi; thuốc giảm triệu chứng"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Siêu âm loại trừ DVT khi SVT chi dưới",'<span class="badge badge-I">I</span>'],
+        ["Fondaparinux 2.5 mg × 45 ngày cho SVT nguy cơ",'<span class="badge badge-I">I</span>'],
+        ["Tất áp lực trong PTS có triệu chứng",'<span class="badge badge-IIa">IIa</span>']
+      ])}`
+  },
+  source:"ESC 2022 VTE Guidelines; ASH VTE guidelines"
+},
+{
+  spec:"tim_mach", id:"acls", emoji:"⚡", short:"Ngừng TH", title:"Ngừng tuần hoàn & ACLS (tóm tắt)",
+  guidelines:["AHA ACLS 2025","ERC 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>Ngừng tuần hoàn: mất mạch trung tâm, ngừng thở hoặc thở agonal. Mục tiêu: ép ngực chất lượng, khử rung sớm khi nhịp sốc được, tìm nguyên nhân đảo ngược (Hs & Ts).</p>`,
+    chan_doan:`
+      <p>Kiểm tra đáp ứng + thở ≤10 giây; gọi hỗ trợ; bắt đầu CPR. Nhịp sốc được: VF/pVT. Nhịp không sốc: asystole/PEA. Monitor, đường thở, IV/IO, SpO₂/EtCO₂.</p>`,
+    dieu_tri:`
+      ${rt(["Xử trí"],[
+        ["VF / pVT","CPR → sốc → CPR 2 phút → epinephrine 1 mg q3–5 phút; antiarrhythmic: amiodarone 300 mg rồi 150 mg"],
+        ["Asystole / PEA","CPR + epinephrine 1 mg q3–5 phút; không sốc; tìm Hs/Ts"],
+        ["ROSC","ABC, huyết áp đích, 12-lead ECG, nhiệt độ, chuyển ICU/PCI nếu nghi ACS"],
+        ["Hs & Ts","Giảm thể tích, hypoxia, H+, hypo/hyperK, hạ thân nhiệt; tension PTX, tamponade, toxins, thrombosis (PE/MI)"]
+      ])}
+      <p class="alert-box alert-info"><b>Ép ngực:</b> 5–6 cm, 100–120/phút, giãn ngực đủ, giảm gián đoạn; tỷ lệ 30:2 nếu chưa có advanced airway.</p>`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Ép ngực chất lượng cao liên tục",'<span class="badge badge-I">I</span>'],
+        ["Khử rung sớm VF/pVT",'<span class="badge badge-I">I</span>'],
+        ["Epinephrine trong ngừng tuần hoàn",'<span class="badge badge-IIa">IIa</span>']
+      ])}`
+  },
+  source:"AHA Guidelines for CPR and ECC; ERC Guidelines"
+},
+{
+  spec:"noi_tiet", id:"gdm", emoji:"🤰", short:"ĐTĐ thai kỳ", title:"Đái tháo đường thai kỳ (GDM)",
+  guidelines:["ADA 2026","FIGO","WHO"],
+  sections:{
+    dinh_nghia:`
+      <p>Đái tháo đường được chẩn đoán trong thai kỳ (thường quý 2–3), không phải ĐTĐ rõ trước mang thai. Tăng nguy cơ macrosomia, sản giật, ĐTĐ típ 2 về sau.</p>`,
+    chan_doan:`
+      <p>Sàng lọc 24–28 tuần: one-step 75 g OGTT (ADA/WHO) — đói ≥92, 1h ≥180, 2h ≥153 mg/dL (một ngưỡng đủ chẩn đoán). Theo dõi đường huyết mao mạch khi đã chẩn đoán.</p>`,
+    dieu_tri:`
+      ${rt(["Chi tiết"],[
+        ["Nền tảng","Dinh dưỡng thai kỳ, hoạt động thể lực, theo dõi ĐH"],
+        ["Đích ĐH (tham khảo ADA)","Đói &lt;95; 1h sau ăn &lt;140; 2h &lt;120 mg/dL"],
+        ["Thuốc hàng đầu khi thất bại chế độ ăn","Insulin"],
+        ["Lựa chọn khác","Metformin / glyburide — cân nhắc theo khuyến cáo địa phương và thai kỳ"],
+        ["Sau sinh","OGTT 4–12 tuần; sàng lọc ĐTĐ suốt đời mỗi 1–3 năm"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Sàng lọc GDM 24–28 tuần",'<span class="badge badge-I">I</span>'],
+        ["Insulin khi không đạt đích bằng dinh dưỡng",'<span class="badge badge-I">I</span>'],
+        ["OGTT sau sinh",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"ADA Standards of Care 2026; WHO/FIGO GDM guidance"
+},
+{
+  spec:"noi_tiet", id:"hyperPTH", emoji:"🦴", short:"Cường cận giáp", title:"Cường cận giáp nguyên phát",
+  guidelines:["AAES 2022","Endocrine Society"],
+  sections:{
+    dinh_nghia:`
+      <p>Tăng PTH không phù hợp kèm tăng/canxi cao-bình thường, thường do adenoma một tuyến. Biểu hiện: sỏi thận, loãng xương, mệt, đa niệu; nhiều trường hợp phát hiện tình cờ.</p>`,
+    chan_doan:`
+      <p>Ca máu tăng + PTH tăng/không ức chế; loại trừ giả tăng Ca; 25-OH vitamin D, ClCr, DEXA; định vị (siêu âm cổ, sestamibi, 4D-CT) khi dự phẫu thuật.</p>`,
+    dieu_tri:`
+      ${rt(["Chi tiết"],[
+        ["Phẫu thuật (điều trị khỏi)","Cắt tuyến cận giáp khi có biến chứng hoặc đủ tiêu chuẩn AAES/NIH"],
+        ["Theo dõi","Ca, độ lọc cầu thận, DEXA định kỳ nếu không mổ"],
+        ["Thuốc","Cinacalcet (hạ Ca); bisphosphonate / denosumab bảo vệ xương"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Phẫu thuật khi có chỉ định rõ",'<span class="badge badge-I">I</span>'],
+        ["Đo mật độ xương và chức năng thận khi chẩn đoán",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"AAES Guidelines; Endocrine Society primary hyperparathyroidism"
+},
+{
+  spec:"ho_hap", id:"tb", emoji:"🦠", short:"Lao phổi", title:"Lao phổi",
+  guidelines:["WHO 2022/2025","ATS/CDC/IDSA"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhiễm <i>Mycobacterium tuberculosis</i> tại phổi: thể hoạt động (lây) hoặc tiềm ẩn (LTBI). Lâm sàng: ho ≥2 tuần, đàm máu, sốt về chiều, sụt cân.</p>`,
+    chan_doan:`
+      <p>Xquang ngực; AFB đàm / GeneXpert MTB/RIF; nuôi cấy khi cần. Loại trừ HIV. LTBI: IGRA hoặc tuberculin (theo ngữ cảnh).</p>`,
+    dieu_tri:`
+      ${rt(["Phác đồ (tóm tắt)"],[
+        ["Lao nhạy cảm (mới)",'2 tháng HRZE + 4 tháng HR (hoặc phác đồ rút gọn theo WHO khi đủ điều kiện)'],
+        ["Nghi kháng thuốc","Xpert + DST; phác đồ MDR theo WHO (BPaLM/BPaL…) — chuyên khoa lao"],
+        ["LTBI","Isoniazid ± rifapentine / rifampin theo phác đồ ngắn"]
+      ])}
+      <p class="alert-box alert-info">Theo dõi độc gan (H, R, Z); tương tác rifampin với thuốc tim mạch/kháng đông.</p>`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Xpert MTB/RIF trong chẩn đoán ban đầu",'<span class="badge badge-I">I</span>'],
+        ["Điều trị đủ liều, đủ thời gian, giám sát",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"WHO consolidated TB guidelines; ATS/CDC/IDSA"
+},
+{
+  spec:"ho_hap", id:"pneumothorax", emoji:"💨", short:"Tràn khí MP", title:"Tràn khí màng phổi",
+  guidelines:["BTS 2023","ESC/ERS"],
+  sections:{
+    dinh_nghia:`
+      <p>Khí trong khoang màng phổi làm xẹp phổi. Nguyên phát (không bệnh phổi nền) hoặc thứ phát (COPD, CF…); có thể tension (cấp cứu).</p>`,
+    chan_doan:`
+      <p>Đau ngực đột ngột, khó thở; giảm rì rào, gõ trong. Xquang hoặc bedside ultrasound; CT khi nghi phức tạp. <b>Tension:</b> sốc, lệch khí quản — xử trí ngay không chờ Xquang.</p>`,
+    dieu_tri:`
+      ${rt(["Xử trí"],[
+        ["Nguyên phát nhỏ, ổn định","Quan sát / oxy; một số hướng dẫn cho phép ambulatory"],
+        ["Lớn hoặc khó thở","Hút kim / dẫn lưu màng phổi"],
+        ["Thứ phát","Thường cần dẫn lưu + điều trị bệnh nền"],
+        ["Tension","Giải áp kim tức thì → dẫn lưu"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Nhận diện và giải áp tension ngay",'<span class="badge badge-I">I</span>'],
+        ["Dẫn lưu khi tràn khí có triệu chứng / thứ phát",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"BTS Pleural Disease Guideline 2023"
+},
+{
+  spec:"ho_hap", id:"aco", emoji:"🫁", short:"ACO", title:"Hội chứng chồng lấp hen–COPD (ACO)",
+  guidelines:["GINA 2025","GOLD 2026"],
+  sections:{
+    dinh_nghia:`
+      <p>Đặc điểm của cả hen và COPD ở cùng bệnh nhân: hạn chế tắc nghẽn dai dẳng + biến thiên / đáp ứng với ICS rõ hơn COPD thuần. Không phải chẩn đoán riêng biệt duy nhất — là mô tả lâm sàng để chọn điều trị.</p>`,
+    chan_doan:`
+      <p>Tiền sử hen hoặc atopy + hút thuốc / nghề nghiệp; hô hấp ký tắc nghẽn không hồi phục hoàn toàn; eosinophil máu / FeNO hỗ trợ. Loại trừ lao, giãn phế quản.</p>`,
+    dieu_tri:`
+      ${rt(["Chi tiết"],[
+        ["Không dùng LABA đơn độc","Luôn kèm ICS nếu có đặc điểm hen"],
+        ["Nền","ICS-LABA ± LAMA (triple khi cần)"],
+        ["Đợt cấp","Giống hen/COPD theo mức độ; steroid toàn thân ngắn"],
+        ["Non-pharma","Bỏ thuốc lá, vaccine, phục hồi chức năng"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["ICS sớm nếu nghi ACO / đặc điểm hen",'<span class="badge badge-I">I</span>'],
+        ["Tránh LABA/LAMA không ICS khi có hen",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"GINA & GOLD joint perspective on ACO"
+},
+{
+  spec:"tieu_hoa", id:"cholecystitis", emoji:"🟡", short:"VT mật cấp", title:"Viêm túi mật cấp",
+  guidelines:["Tokyo Guidelines 2018","WSES"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm túi mật, thường do sỏi kẹt cổ túi mật. Tam chứng: đau hạ sườn phải, sốt, tăng bạch cầu; Murphy (+).</p>`,
+    chan_doan:`
+      <p>Siêu âm: sỏi, thành dày, Murphy sonographic. CT/MRI khi nghi biến chứng. Phân độ Tokyo TG18 (I–III) để chọn thời điểm mổ / dẫn lưu.</p>`,
+    dieu_tri:`
+      ${rt(["Chi tiết"],[
+        ["Chung","Nhịn ăn, dịch, giảm đau, kháng sinh (phủ đường ruột + kỵ khí)"],
+        ["Mổ sớm (TG I–II)","Cắt túi mật nội soi trong 72 giờ nếu đủ điều kiện"],
+        ["Nặng / nguy cơ mổ cao","Dẫn lưu túi mật + kháng sinh, mổ trì hoãn"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Kháng sinh + cắt túi mật sớm khi phù hợp",'<span class="badge badge-I">I</span>'],
+        ["Dẫn lưu ở bệnh nhân nặng không mổ được",'<span class="badge badge-IIa">IIa</span>']
+      ])}`
+  },
+  source:"Tokyo Guidelines 2018; WSES guidelines"
+},
+{
+  spec:"tieu_hoa", id:"viral_hepatitis", emoji:"🦠", short:"VGB/C", title:"Viêm gan virus B & C (tóm tắt)",
+  guidelines:["EASL 2025","AASLD","WHO"],
+  sections:{
+    dinh_nghia:`
+      <p><b>HBV:</b> DNA virus; mạn tính có thể xơ gan/HCC. <b>HCV:</b> RNA virus; hầu hết mạn tính nếu không điều trị, chữa khỏi được bằng DAAs.</p>`,
+    chan_doan:`
+      <p>HBsAg, anti-HBc, HBV DNA; anti-HCV → HCV RNA. Đánh giá xơ gan (FibroScan/FIB-4), sàng HCC khi chỉ định.</p>`,
+    dieu_tri:`
+      ${rt(["Điều trị"],[
+        ["HBV mạn — chỉ định điều trị","Entecavir / tenofovir (TDF hoặc TAF) dài hạn; mục tiêu ức chế DNA"],
+        ["HCV","DAA 8–12 tuần theo genotype/xơ gan (sofosbuvir-based, glecaprevir/pibrentasvir…)"],
+        ["Theo dõi","HBV: men gan, DNA, HCC; HCV: SVR 12 tuần sau điều trị"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["DAA cho HCV đủ điều kiện",'<span class="badge badge-I">I</span>'],
+        ["Nucleos(t)ide analogue khi HBV đủ tiêu chuẩn điều trị",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"EASL HBV/HCV CPGs; AASLD; WHO hepatitis"
+},
+{
+  spec:"tieu_hoa", id:"diverticulitis", emoji:"🔵", short:"Viêm túi thừa", title:"Bệnh diverticulum & Viêm túi thừa đại tràng",
+  guidelines:["AGA 2021","WSES 2020"],
+  sections:{
+    dinh_nghia:`
+      <p>Diverticulum đại tràng (thường đại tràng sigma). Viêm túi thừa: đau hố chậu trái, sốt; có thể áp xe, thủng, viêm phúc mạc.</p>`,
+    chan_doan:`
+      <p>CT bụng có cản quang — tiêu chuẩn vàng cấp cứu. Phân độ đơn giản vs biến chứng (áp xe, thủng, rò).</p>`,
+    dieu_tri:`
+      ${rt(["Xử trí"],[
+        ["Không biến chứng, ổn định","Có thể ngoại trú; kháng sinh chọn lọc (một số BN miễn dịch tốt có thể quan sát)"],
+        ["Áp xe","Kháng sinh ± dẫn lưu"],
+        ["Thủng / phúc mạc","Phẫu thuật cấp cứu + kháng sinh"],
+        ["Dự phòng tái phát","Chế độ ăn giàu xơ khi ổn định; mổ phiên chọn lọc"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["CT để xác nhận viêm túi thừa cấp",'<span class="badge badge-I">I</span>'],
+        ["Không bắt buộc kháng sinh mọi ca không biến chứng",'<span class="badge badge-IIa">IIa</span>']
+      ])}`
+  },
+  source:"AGA Clinical Practice Update; WSES diverticulitis"
+},
+{
+  spec:"co_xuong_khop", id:"psa", emoji:"🟣", short:"PsA", title:"Viêm khớp vảy nến (Psoriatic Arthritis)",
+  guidelines:["GRAPPA 2021","EULAR 2023"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm khớp huyết thanh âm liên quan vảy nến da/móng: viêm khớp ngoại biên, viêm ngón, viêm điểm bám gân, viêm cột sống, viêm khớp mũi.</p>`,
+    chan_doan:`
+      <p>Lâm sàng + vảy nến; CASPAR criteria; CRP/ESR; Xquang/MRI; loại trừ RA, gout, SpA khác.</p>`,
+    dieu_tri:`
+      ${rt(["Thuốc"],[
+        ["Nền","NSAID, vật lý trị liệu; tiêm corticosteroid tại chỗ"],
+        ["csDMARD","Methotrexate, leflunomide (viêm ngoại biên)"],
+        ["bDMARD / tsDMARD","Anti-TNF, IL-17, IL-23, IL-12/23; JAK inhibitor"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Điều trị theo domain (da, khớp, trục…)",'<span class="badge badge-I">I</span>'],
+        ["bDMARD khi thất bại csDMARD / bệnh nặng",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"GRAPPA 2021; EULAR PsA recommendations"
+},
+{
+  spec:"co_xuong_khop", id:"anca_vasculitis", emoji:"🔥", short:"Viêm mạch ANCA", title:"Viêm mạch liên quan ANCA (tóm tắt)",
+  guidelines:["EULAR 2022","ACR/VF 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhóm viêm mạch nhỏ: GPA (Wegener), MPA, EGPA. Tổn thương thận (GN tiến triển nhanh), phổi (xuất huyết phế nang), tai mũi họng, thần kinh.</p>`,
+    chan_doan:`
+      <p>ANCA (PR3/MPO); creatinine, nước tiểu; CT ngực; sinh thiết khi cần. Cấp cứu: xuất huyết phổi / suy thận nhanh.</p>`,
+    dieu_tri:`
+      ${rt(["Điều trị"],[
+        ["Khởi trị nặng","Rituximab hoặc cyclophosphamide + glucocorticoid"],
+        ["Duy trì","Rituximab / azathioprine / MTX"],
+        ["Hỗ trợ","Plasma exchange chọn lọc (xuất huyết phổi / nặng — theo bằng chứng cập nhật)"]
+      ])}
+      <p class="alert-box alert-info">Giảm steroid sớm theo protocol hiện đại; dự phòng PCP khi dùng liệu pháp ức chế miễn dịch mạnh.</p>`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Rituximab hoặc CYC + GC khởi trị organ-threatening",'<span class="badge badge-I">I</span>'],
+        ["Duy trì để giảm tái phát",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"EULAR 2022 AAV; ACR/VF guidelines"
+},
+{
+  spec:"than", id:"dkd", emoji:"🫘", short:"Thận ĐTĐ", title:"Bệnh thận đái tháo đường (DKD)",
+  guidelines:["KDIGO 2022/2024","ADA 2026"],
+  sections:{
+    dinh_nghia:`
+      <p>Tổn thương thận do đái tháo đường: albumin niệu và/hoặc giảm eGFR, sau khi loại trừ nguyên nhân khác. Nguyên nhân hàng đầu ESRD ở nhiều quốc gia.</p>`,
+    chan_doan:`
+      <p>UACR + eGFR ≥1 lần/năm; lặp lại để xác nhận. Sinh thiết khi diễn tiến không điển hình (hội chứng thận hư đột ngột, hồng cầu niệu nhiều…).</p>`,
+    dieu_tri:`
+      ${rt(["Chi tiết"],[
+        ["Đường huyết","HbA1c cá thể hóa; ưu tiên SGLT2i / GLP-1 RA có lợi thận–tim"],
+        ["Huyết áp","Đích thường &lt;130/80; ACEi/ARB khi albumin niệu"],
+        ["SGLT2i","Chỉ định rộng khi eGFR cho phép — giảm tiến triển CKD"],
+        ["ns-MRA","Finerenone khi DKD + albumin niệu (theo chỉ định)"],
+        ["Khác","Statin, bỏ thuốc lá, hạn chế đạm vừa phải"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["SGLT2i cho T2D + CKD",'<span class="badge badge-I">I</span>'],
+        ["ACEi/ARB khi albumin niệu",'<span class="badge badge-I">I</span>'],
+        ["Finerenone khi đủ điều kiện",'<span class="badge badge-IIa">IIa</span>']
+      ])}`
+  },
+  source:"KDIGO Diabetes Management in CKD; ADA 2026"
+},
+{
+  spec:"than", id:"metabolic_acidosis", emoji:"🧪", short:"Toan CH", title:"Toan chuyển hóa (Metabolic Acidosis)",
+  guidelines:["KDIGO","Review critical care"],
+  sections:{
+    dinh_nghia:`
+      <p>Giảm HCO₃⁻ và pH, thường kèm base deficit. Phân loại: tăng anion gap (AG) vs AG bình thường (hyperchloremic).</p>`,
+    chan_doan:`
+      <p>ABG/VBG + điện giải: AG = Na − (Cl + HCO₃). Tăng AG: KULT (keto, ure, lactate, toxins) + khác. AG bình thường: mất HCO₃ tiêu hóa/thận, toan ống thận.</p>`,
+    dieu_tri:`
+      ${rt(["Hướng xử trí"],[
+        ["Nhiễm toan lactic","Bù dịch, tưới máu, điều trị sốc/nguyên nhân; thận trọng bicarbonate"],
+        ["DKA / HHS","Insulin + dịch + K+ theo protocol ĐTĐ"],
+        ["Toan ure huyết / CKD","Điều trị CKD; oral bicarbonate khi HCO₃ thấp mạn (theo KDIGO)"],
+        ["Ngộ độc","Đặc hiệu (fomepizole, lọc máu…)"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Class"],[
+        ["Tìm và điều trị nguyên nhân gốc",'<span class="badge badge-I">I</span>'],
+        ["Bicarbonate chọn lọc — không thường quy mọi toan lactic",'<span class="badge badge-IIb">IIb</span>']
+      ])}`
+  },
+  source:"KDIGO CKD; critical care acid-base reviews"
 }
 ];
 
@@ -3987,6 +4506,7 @@ function renderDiseaseTabs(){
     <div class="d-tab ${d.id===activeDiseaseId?'active':''}" onclick="selectDisease('${d.id}')">
       <span class="emoji">${d.emoji}</span>${d.short}
     </div>`).join('');
+  if(typeof updateAppHeaderOffsets==='function') setTimeout(updateAppHeaderOffsets, 0);
 }
 
 function renderSectionNav(){
@@ -4029,13 +4549,21 @@ function renderDiseaseContent(){
   `;
 
   sectionMeta.forEach((s, idx) => {
+    const legend = (s.key === 'khuyen_cao')
+      ? `<div class="class-legend">
+          <span><span class="badge badge-I">I</span> Nên làm</span>
+          <span><span class="badge badge-IIa">IIa</span> Cân nhắc</span>
+          <span><span class="badge badge-IIb">IIb</span> Cân nhắc (yếu hơn)</span>
+          <span><span class="badge badge-III">III</span> Không / có hại</span>
+        </div>`
+      : '';
     html += `
       <div class="card ${idx===0?'open':''}" id="card_${s.key}">
         <div class="card-head" onclick="toggleCard(this.parentElement)">
           <div class="card-head-title"><span class="ic">${s.icon}</span>${s.label}</div>
           <div class="chevron">▼</div>
         </div>
-        <div class="card-body"><div class="card-body-inner">${d.sections[s.key]}</div></div>
+        <div class="card-body"><div class="card-body-inner">${legend}${d.sections[s.key]||''}</div></div>
       </div>
     `;
   });
@@ -4058,10 +4586,15 @@ function toggleTheme(){
 
 /* ========== TÌM KIẾM THÔNG MINH ========== */
 function stripVN(str){
-  return (str||'').toString().toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/đ/g,'d').replace(/[^a-z0-9\s_+-]/g,' ')
-    .replace(/\s+/g,' ').trim();
+  if(str == null) return '';
+  str = String(str);
+  if(str.length < 2) return str.toLowerCase();
+  if(!stripVN._c) stripVN._c = new Map();
+  if(stripVN._c.has(str)) return stripVN._c.get(str);
+  let r = str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
+  if(stripVN._c.size > 400) stripVN._c.clear();
+  stripVN._c.set(str, r);
+  return r;
 }
 
 // Từ điển viết tắt / đồng nghĩa thường dùng
@@ -4198,7 +4731,34 @@ const SEARCH_ALIASES = {
   methotrexate:'viem khop dang thap',
   prednisolone:'corticoid',
   omeprazole:'ppi loet da day',
-  pantoprazole:'ppi'
+  pantoprazole:'ppi',
+  gdm:'dai thao duong thai ky',
+  'thai ky':'gdm',
+  hyperpth:'cuong can giap',
+  'can giap':'cuong can giap',
+  lao:'lao phoi tuberculosis tb',
+  tb:'lao phoi',
+  pneumothorax:'tran khi mang phoi',
+  'tran khi':'pneumothorax',
+  aco:'hen copd overlap',
+  cholecystitis:'viem tui mat',
+  'tui mat':'viem tui mat',
+  hepatitis:'viem gan hbv hcv',
+  hbv:'viem gan b',
+  hcv:'viem gan c',
+  diverticulitis:'viem tui thua',
+  psa:'viem khop vay nen',
+  'vay nen':'psa',
+  anca:'viem mach anca gpa mpa',
+  dkd:'benh than dai thao duong',
+  'than dtd':'dkd',
+  acidosis:'toan chuyen hoa',
+  'toan chuyen hoa':'metabolic acidosis',
+  acls:'ngung tuan hoan cpr',
+  'ngung tim':'acls',
+  svt:'viem tac tinh mach nong',
+  pts:'hoi chung sau huyet khoi',
+
 };
 
 function expandQuery(q){
@@ -4216,88 +4776,42 @@ function expandQuery(q){
   return (n + ' ' + extra.join(' ')).trim();
 }
 
-function scoreMatch(hayRaw, qRaw){
+function scoreMatch(hayRaw, qRaw, opts){
   const hay = stripVN(hayRaw);
   const q = stripVN(qRaw);
   if(!q) return 0;
   const expanded = expandQuery(q);
   let score = 0;
-  // exact id / short boost
-  if(hay === q) score += 100;
-  if(hay.startsWith(q)) score += 50;
-  if(hay.includes(' '+q) || hay.includes(q+' ')) score += 30;
-  if(hay.includes(q)) score += 20;
-  // token overlap
+  if(hay === q) score += 120;
+  if(hay.startsWith(q + ' ') || hay.startsWith(q)) score += 55;
+  if(hay.includes(' '+q) || hay.includes(q+' ')) score += 35;
+  if(hay.includes(q)) score += 22;
+  // Multi-token: user tokens must mostly appear (AND-ish)
+  const userTokens = q.split(/\s+/).filter(t => t.length > 1);
+  if(userTokens.length > 1){
+    let hit = 0;
+    userTokens.forEach(t => { if(hay.includes(t)) hit++; });
+    const ratio = hit / userTokens.length;
+    if(ratio < 0.5) return 0; // quá lệch → loại
+    score += Math.round(ratio * 40);
+  }
   const qTokens = expanded.split(/\s+/).filter(t=>t.length>1);
   const hayTokens = new Set(hay.split(/\s+/));
   qTokens.forEach(t => {
     if(hayTokens.has(t)) score += 8;
-    else if([...hayTokens].some(h => h.includes(t) || t.includes(h))) score += 3;
+    else if([...hayTokens].some(h => h.includes(t) || (t.length>3 && h.includes(t)))) score += 3;
   });
+  // Ưu tiên mục đã ghim
+  if(opts && opts.fav) score += 25;
+  // Ưu tiên khớp short/id ngắn
+  if(opts && opts.short){
+    const sh = stripVN(opts.short);
+    if(sh === q || sh.startsWith(q)) score += 40;
+  }
   return score;
 }
 
-function smartSearch(q){
-  const drop = document.getElementById('smartSearchDrop');
-  q = (q||'').trim();
-  if(!q){
-    drop.classList.remove('open');
-    drop.innerHTML = '';
-    renderDiseaseTabs();
-    return;
-  }
-  // Search diseases
-  const dMatches = diseases.map(d => {
-    const hay = [d.title, d.short, d.id, (d.guidelines||[]).join(' '), d.spec].join(' ');
-    return {type:'disease', item:d, score:scoreMatch(hay, q)};
-  }).filter(x => x.score > 0).sort((a,b)=>b.score-a.score);
-
-  // Search scales too
-  const sMatches = (typeof scalesData!=='undefined'?scalesData:[]).map(s => {
-    const hay = [s.title, s.subtitle, s.id, s.categoryName||'', s.category||''].join(' ');
-    return {type:'scale', item:s, score:scoreMatch(hay, q)};
-  }).filter(x => x.score > 0).sort((a,b)=>b.score-a.score);
-
-  if(!dMatches.length && !sMatches.length){
-    drop.innerHTML = `<div style="padding:16px;text-align:center;color:var(--text-secondary);font-size:13px;">Không thấy kết quả cho “${q}”</div>`;
-    drop.classList.add('open');
-    return;
-  }
-
-  let html = '';
-  if(dMatches.length){
-    html += `<div class="ss-group">📋 Phác đồ (${Math.min(dMatches.length,8)})</div>`;
-    dMatches.slice(0,8).forEach(m => {
-      const d = m.item;
-      const sp = specialties.find(s=>s.id===d.spec);
-      html += `<div class="ss-item" onclick="goSmartDisease('${d.id}')">
-        <div class="ss-emoji">${d.emoji||'📄'}</div>
-        <div class="ss-body">
-          <div class="ss-title">${d.title} <span class="ss-tag">${d.short||''}</span></div>
-          <div class="ss-meta">${sp?sp.label:d.spec} · ${(d.guidelines||[]).slice(0,2).join(', ')}</div>
-        </div>
-      </div>`;
-    });
-  }
-  if(sMatches.length){
-    html += `<div class="ss-group">🧮 Thang điểm (${Math.min(sMatches.length,6)})</div>`;
-    sMatches.slice(0,6).forEach(m => {
-      const s = m.item;
-      html += `<div class="ss-item" onclick="goSmartScale('${s.id}')">
-        <div class="ss-emoji">🧮</div>
-        <div class="ss-body">
-          <div class="ss-title">${s.title}</div>
-          <div class="ss-meta">${s.categoryName||s.category||''}</div>
-        </div>
-      </div>`;
-    });
-  }
-  drop.innerHTML = html;
-  drop.classList.add('open');
-
-  // Also filter disease tabs for quick pick
-  runQuickSearchLegacy(q);
-}
+/* smartSearch: use enhanced version below */
 
 function runQuickSearchLegacy(q){
   q = (q||'').trim().toLowerCase();
@@ -4320,39 +4834,10 @@ function runQuickSearchLegacy(q){
   wrap.innerHTML = html;
 }
 
-function goSmartDisease(id){
-  const d = diseases.find(x=>x.id===id);
-  if(!d) return;
-  document.getElementById('smartSearchDrop')?.classList.remove('open');
-  const qs = document.getElementById('quickSearch');
-  if(qs) qs.value = '';
-  switchMainTab('phacdo');
-  selectSpecialty(d.spec);
-  selectDisease(id);
-}
+/* goSmart* defined later */
 
-function goSmartScale(id){
-  document.getElementById('smartSearchDrop')?.classList.remove('open');
-  const qs = document.getElementById('quickSearch');
-  if(qs) qs.value = '';
-  switchMainTab('thangdiem');
-  setTimeout(()=>openScoreModal(id), 60);
-}
 
-function smartSearchScores(q){
-  q = (q||'').trim();
-  if(!q){
-    currentFilteredScales = [...scalesData];
-    renderScoreList(currentFilteredScales);
-    return;
-  }
-  currentFilteredScales = scalesData
-    .map(s => ({s, score: scoreMatch([s.title,s.subtitle,s.id,s.categoryName||'',s.category||''].join(' '), q)}))
-    .filter(x => x.score > 0)
-    .sort((a,b)=>b.score-a.score)
-    .map(x => x.s);
-  renderScoreList(currentFilteredScales);
-}
+/* smartSearchScores: use enhanced version below */
 
 function handleSmartSearchKey(e){
   if(e.key === 'Escape'){
@@ -4375,7 +4860,8 @@ document.addEventListener('click', (e) => {
 
 // Alias: giữ tên cũ
 function runQuickSearch(q){ smartSearch(q); }
-function handleScoreSearch(q){ smartSearchScores(q); }
+/* handleScoreSearch alias kept below */
+
 
 
 
@@ -4385,9 +4871,7 @@ document.addEventListener('keydown', (e) => {
   if(e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')){
     e.preventDefault();
     const td = document.getElementById('viewThangDiem');
-    const box = (td && td.style.display !== 'none')
-      ? document.getElementById('scoreSearch')
-      : document.getElementById('quickSearch');
+    const box = document.getElementById('quickSearch');
     if(box){ box.focus(); box.select(); }
   }
 });
@@ -4450,7 +4934,7 @@ function renderRecentBlock(){
     return d ? { label: d.short || d.title, kind: 'disease', id: d.id } : null;
   }).filter(Boolean).slice(0, 6);
   const favS = getFavScales().map(id => {
-    const s = (typeof scalesData !== 'undefined' ? scalesData : []).find(x => x.id === id);
+    const s = (typeof ensureScales==='function'?ensureScales():(scalesData||[])).find(x => x.id === id);
     return s ? { label: s.title.split('(')[0].trim().slice(0, 28), kind: 'scale', id: s.id } : null;
   }).filter(Boolean).slice(0, 6);
 
@@ -4494,6 +4978,7 @@ function smartSearch(q){
 }
 
 function smartSearchScores(q){
+  if(typeof ensureScales==='function') ensureScales();
   if(!(q||'').trim()){
     // show fav scales first
     const fav = getFavScales();
@@ -4512,6 +4997,7 @@ function smartSearchScores(q){
 
 // Keep original implementations under Core names
 function smartSearchCore(q){
+  if(typeof ensureScales==='function'){ try{ ensureScales(); }catch(e){} }
   const drop = document.getElementById('smartSearchDrop');
   q = (q||'').trim();
   if(!q){
@@ -4525,7 +5011,7 @@ function smartSearchCore(q){
     return {type:'disease', item:d, score:scoreMatch(hay, q)};
   }).filter(x => x.score > 0).sort((a,b)=>b.score-a.score);
 
-  const sMatches = (typeof scalesData!=='undefined'?scalesData:[]).map(s => {
+  const sMatches = (typeof ensureScales==='function'?ensureScales():(scalesData||[])).map(s => {
     const hay = [s.title, s.subtitle, s.id, s.categoryName||'', s.category||''].join(' ');
     return {type:'scale', item:s, score:scoreMatch(hay, q)};
   }).filter(x => x.score > 0).sort((a,b)=>b.score-a.score);
@@ -4574,6 +5060,7 @@ function smartSearchCore(q){
 }
 
 function smartSearchScoresCore(q){
+  ensureScales();
   q = (q||'').trim();
   if(!q){
     currentFilteredScales = [...scalesData];
@@ -4602,7 +5089,7 @@ function goSmartDisease(id){
   selectDisease(id);
 }
 function goSmartScale(id){
-  const s = (typeof scalesData!=='undefined'?scalesData:[]).find(x=>x.id===id);
+  const s = (typeof ensureScales==='function'?ensureScales():(scalesData||[])).find(x=>x.id===id);
   if(s) pushRecent((s.title||'').split('(')[0].trim().slice(0,32), 'scale', id);
   document.getElementById('smartSearchDrop')?.classList.remove('open');
   const qs = document.getElementById('quickSearch');
@@ -4617,12 +5104,7 @@ function enhanceScaleCardsWithFav(){
 }
 
 // Back to top visibility
-window.addEventListener('scroll', () => {
-  const btn = document.getElementById('backToTop');
-  if(!btn) return;
-  if(window.scrollY > 420) btn.classList.add('show');
-  else btn.classList.remove('show');
-}, { passive: true });
+/* backToTop handled in scroll hub */
 
 // PWA manifest blob
 (function setupManifest(){
@@ -4740,15 +5222,349 @@ async function tryNativeInstall(){
 function openChangelog(){ document.getElementById('changelogModal')?.classList.add('open'); }
 function closeChangelog(){ document.getElementById('changelogModal')?.classList.remove('open'); }
 
+
+/* iPhone: đo header thật để sticky không lệch notch */
+function updateAppHeaderOffsets(){
+  const header = document.querySelector('header');
+  if(!header) return;
+  const h = Math.ceil(header.getBoundingClientRect().height);
+  document.documentElement.style.setProperty('--app-header-h', h + 'px');
+
+  const viewPd = document.getElementById('viewPhacDo');
+  const viewTd = document.getElementById('viewThangDiem');
+  const viewAI = document.getElementById('viewAI');
+  const onPhac = viewPd && viewPd.style.display !== 'none';
+  const onScore = viewTd && viewTd.style.display !== 'none' && viewTd.style.display !== '';
+  const onAI = viewAI && (viewAI.style.display === 'flex' || viewAI.classList.contains('active-view'));
+
+  const spec = document.querySelector('.specialty-tabs-wrapper');
+  const dis = document.querySelector('.disease-tabs-wrapper');
+  const sec = document.querySelector('.section-nav');
+  const scoreBar = document.getElementById('scoreStickyBar');
+
+  // Ẩn thanh fixed của tab khác (tránh "bóng ma" trên iOS)
+  [spec, dis, sec].forEach(el => {
+    if(!el) return;
+    el.style.display = onPhac ? '' : 'none';
+  });
+  if(scoreBar) scoreBar.style.display = onScore ? '' : 'none';
+
+  const base = h;
+  const sh = (spec && onPhac) ? Math.ceil(spec.offsetHeight) : 0;
+  const dh = (dis && onPhac) ? Math.ceil(dis.offsetHeight) : 0;
+  const nh = (sec && onPhac) ? Math.ceil(sec.offsetHeight) : 0;
+
+  if(spec && onPhac){ spec.style.top = base + 'px'; spec.style.left='0'; spec.style.right='0'; }
+  if(dis && onPhac){ dis.style.top = (base + sh) + 'px'; dis.style.left='0'; dis.style.right='0'; }
+  if(sec && onPhac){ sec.style.top = (base + sh + dh) + 'px'; sec.style.left='0'; sec.style.right='0'; }
+
+  document.documentElement.style.setProperty('--app-disease-top', (base + sh) + 'px');
+  document.documentElement.style.setProperty('--app-section-top', (base + sh + dh) + 'px');
+  document.documentElement.style.setProperty('--app-chrome-h', (base + sh + dh + nh) + 'px');
+
+  let scoreH = 0;
+  if(scoreBar && onScore){
+    scoreBar.style.top = h + 'px';
+    scoreH = Math.ceil(scoreBar.offsetHeight);
+  }
+  document.documentElement.style.setProperty('--app-score-chrome-h', (h + scoreH + 8) + 'px');
+}
+
+function onGlobalSearch(q){
+  const viewTd = document.getElementById('viewThangDiem');
+  const viewAI = document.getElementById('viewAI');
+  const onScore = viewTd && viewTd.style.display !== 'none';
+  const onAI = viewAI && viewAI.style.display !== 'none' && viewAI.style.display !== '';
+  if(onAI){
+    /* keep dropdown for navigation while on AI */
+    smartSearch(q || '');
+    return;
+  }
+  if(onScore){
+    smartSearchScores(q || '');
+  } else {
+    smartSearch(q || '');
+  }
+}
+window.addEventListener('resize', updateAppHeaderOffsets, { passive: true });
+window.addEventListener('orientationchange', () => setTimeout(updateAppHeaderOffsets, 200));
+if(window.visualViewport){
+  visualViewport.addEventListener('resize', updateAppHeaderOffsets, { passive: true });
+}
+
+
+
+
+/* ========== AI Y KHOA — trợ lý tra cứu local ========== */
+function aiEscape(s){
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function aiAppend(role, htmlContent){
+  const box = document.getElementById('aiChat');
+  if(!box) return;
+  const div = document.createElement('div');
+  div.className = 'ai-bubble ' + (role === 'user' ? 'user' : 'bot');
+  div.innerHTML = htmlContent;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function aiWelcome(){
+  const box = document.getElementById('aiChat');
+  if(!box || box.dataset.ready) return;
+  box.dataset.ready = '1';
+  aiAppend('bot',
+    '<b>AI tra cứu nhanh</b> — trả lời ngắn từ phác đồ/thang điểm trong app.<br>' +
+    'Ví dụ: <i>đợt cấp COPD</i> · <i>HAS-BLED</i> · <i>đích HA ESC</i>'
+  );
+}
+
+function aiPlain(secHtml){
+  return String(secHtml||'')
+    .replace(/\$\{[^}]+\}/g, ' ')
+    .replace(/<li[^>]*>/gi, ' • ')
+    .replace(/<\/li>/gi, ' ')
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function aiPickBullets(text, maxN){
+  maxN = maxN || 5;
+  if(!text) return [];
+  // Prefer bullet-like segments
+  let parts = text.split(/\s*[•·\-–]\s+/).map(s => s.trim()).filter(s => s.length > 25);
+  if(parts.length < 2){
+    parts = text.split(/(?<=[.!?…])\s+/).map(s => s.trim()).filter(s => s.length > 30);
+  }
+  const out = [];
+  for(const p of parts){
+    let t = p.replace(/^[\d\)\.]+\s*/, '');
+    if(t.length > 110) t = t.slice(0, 108) + '…';
+    if(t.length >= 20) out.push(t);
+    if(out.length >= maxN) break;
+  }
+  if(!out.length && text){
+    out.push(text.length > 140 ? text.slice(0, 138) + '…' : text);
+  }
+  return out;
+}
+
+function aiRankItems(q){
+  if(typeof scoreMatch !== 'function' || typeof stripVN !== 'function') return {diseases:[], scales:[]};
+  const dMatches = (typeof diseases !== 'undefined' ? diseases : []).map(d => {
+    const hay = [d.title, d.short, d.id, (d.guidelines||[]).join(' ')].join(' ');
+    let sc = scoreMatch(hay, q, {short: d.short||d.id});
+    // small boost if query tokens in title
+    return {d, sc};
+  }).filter(x => x.sc >= 18).sort((a,b)=>b.sc-a.sc);
+
+  let scales = [];
+  try {
+    if(typeof ensureScales === 'function') ensureScales();
+    scales = (scalesData||[]).map(s => {
+      const hay = [s.title, s.subtitle, s.id, s.categoryName||''].join(' ');
+      return {s, sc: scoreMatch(hay, q, {short:s.id})};
+    }).filter(x => x.sc >= 18).sort((a,b)=>b.sc-a.sc);
+  } catch(e){}
+
+  // Prefer scale-only if query clearly about scores and scale score is high
+  return {diseases: dMatches.slice(0, 2), scales: scales.slice(0, 2)};
+}
+
+function aiDetectIntent(q){
+  const n = (typeof stripVN === 'function' ? stripVN(q) : q.toLowerCase());
+  const intent = {wantScale: false, wantDose: false, wantEmergency: false, wantDx: false, wantTx: false};
+  if(/thang diem|score|curb|grace|timi|gcs|sofa|wells|has.?bled|cha2|nihss|child.?pugh|findrisc|years/.test(n)) intent.wantScale = true;
+  if(/lieu|mg\b|mcg|uong|tiem|truyen/.test(n)) intent.wantDose = true;
+  if(/cap cuu|shock|ngung|sot cao|kho tho nang|dau nguc|tension|sốc/.test(n)) intent.wantEmergency = true;
+  if(/chan doan|tieu chuan|xet nghiem|khi nao nghi|phan biet/.test(n)) intent.wantDx = true;
+  if(/xu tri|dieu tri|phac do|thuoc|khang sinh|khang dong|muc tieu/.test(n)) intent.wantTx = true;
+  if(!intent.wantDx && !intent.wantTx && !intent.wantScale) intent.wantTx = true; // default: điều trị ngắn
+  return intent;
+}
+
+function aiSummarizeDisease(d, intent){
+  const sec = d.sections || {};
+  let focus = 'dieu_tri';
+  if(intent.wantDx) focus = 'chan_doan';
+  else if(intent.wantScale) focus = 'dieu_tri';
+  else if(intent.wantTx || intent.wantDose || intent.wantEmergency) focus = 'dieu_tri';
+
+  const labels = {dinh_nghia:'Định nghĩa', chan_doan:'Chẩn đoán', dieu_tri:'Điều trị', khuyen_cao:'Khuyến cáo'};
+  const plain = aiPlain(sec[focus] || sec.dieu_tri || sec.dinh_nghia || '');
+  const bullets = aiPickBullets(plain, intent.wantEmergency ? 4 : 5);
+
+  let html = '<div style="font-size:13px;line-height:1.4">';
+  html += '<b>' + aiEscape(d.emoji||'') + ' ' + aiEscape(d.title) + '</b>';
+  html += ' <span style="font-size:11px;color:var(--text-secondary)">(' + aiEscape(d.short||'') + ')</span>';
+  if(d.guidelines && d.guidelines[0])
+    html += '<div style="font-size:11px;color:var(--text-secondary);margin:2px 0 6px">' + aiEscape(d.guidelines.slice(0,2).join(' · ')) + '</div>';
+  html += '<div style="font-weight:700;margin-bottom:4px">' + (labels[focus]||'Tóm tắt') + '</div>';
+  html += '<ul style="margin:0;padding-left:18px">';
+  bullets.forEach(b => { html += '<li style="margin-bottom:4px">' + aiEscape(b) + '</li>'; });
+  html += '</ul>';
+  html += '<div class="ai-actions"><button type="button" onclick="goSmartDisease(\'' + d.id + '\')">Mở phác đồ</button></div>';
+  html += '</div>';
+  return html;
+}
+
+function aiAnswer(q){
+  q = (q||'').trim();
+  if(!q) return '';
+  const intent = aiDetectIntent(q);
+  let {diseases: dHits, scales: sHits} = aiRankItems(q);
+
+  // If clearly asking for a score, prioritize scales and drop weak disease matches
+  if(intent.wantScale && sHits.length){
+    dHits = dHits.filter(x => x.sc >= 40).slice(0,1);
+    sHits = sHits.slice(0,1);
+  } else {
+    dHits = dHits.slice(0,1); // only best disease
+    sHits = intent.wantScale ? sHits.slice(0,2) : sHits.slice(0,1);
+  }
+
+  if(!dHits.length && !sHits.length){
+    return 'Không khớp chắc trong thư viện.<br>Thử: <b>THA</b>, <b>COPD</b>, <b>GCS</b>, <b>HAS-BLED</b> — hoặc mở tab Phác đồ / Thang điểm.';
+  }
+
+  let out = '';
+  if(intent.wantEmergency)
+    out += '<div style="font-size:12px;margin-bottom:8px">🚨 Ưu tiên ABC / cấp cứu tại chỗ; dưới đây chỉ là tóm tắt app.</div>';
+
+  if(dHits.length) out += aiSummarizeDisease(dHits[0].d, intent);
+
+  if(sHits.length){
+    out += (dHits.length ? '<div style="margin-top:10px">' : '<div>');
+    out += '<b>🧮 Thang điểm</b>';
+    sHits.forEach(x => {
+      out += '<div style="margin-top:6px;font-size:13px">' + aiEscape(x.s.title);
+      out += '<div class="ai-actions"><button type="button" onclick="goSmartScale(\'' + x.s.id + '\')">Tính ngay</button></div></div>';
+    });
+    out += '</div>';
+  }
+
+  out += '<div style="font-size:10.5px;color:var(--text-secondary);margin-top:8px">Tóm tắt từ app — đối chiếu guideline gốc trước khi dùng.</div>';
+  return out;
+}
+
+function aiAsk(text){
+  const input = document.getElementById('aiInput');
+  if(input) input.value = text;
+  aiSend();
+}
+
+function aiSend(){
+  const input = document.getElementById('aiInput');
+  if(!input) return;
+  const q = input.value.trim();
+  if(!q) return;
+  input.value = '';
+  aiAppend('user', aiEscape(q));
+  // slight delay for UX
+  setTimeout(() => {
+    try {
+      const ans = aiAnswer(q);
+      aiAppend('bot', ans);
+    } catch(e){
+      aiAppend('bot', 'Lỗi xử lý câu hỏi. Thử lại hoặc dùng tab Phác đồ / Thang điểm.');
+    }
+  }, 120);
+}
+
+
+
+/* ===== Scroll performance hub (passive + rAF, 1 listener) ===== */
+(function(){
+  let lastY = window.scrollY || 0;
+  let hidden = false;
+  let ticking = false;
+  let lastToggle = 0;
+  const TOP_SHOW = 56;
+  const DELTA = 12;
+  const MIN_TOGGLE_MS = 80;
+
+  function setChromeHidden(on){
+    if(hidden === on) return;
+    const now = performance.now();
+    if(on === hidden) return;
+    if(now - lastToggle < MIN_TOGGLE_MS && on) return;
+    lastToggle = now;
+    hidden = on;
+    document.body.classList.toggle('chrome-hidden', on);
+    const header = document.querySelector('header');
+    if(header){
+      // dùng chiều cao đã cache nếu có
+      let h = header._hCache;
+      if(!h){ h = Math.ceil(header.offsetHeight) || 96; header._hCache = h; }
+      document.documentElement.style.setProperty('--chrome-shift', on ? (-h + 'px') : '0px');
+    }
+  }
+
+  function onScrollFrame(){
+    ticking = false;
+    document.body.classList.add('is-scrolling');
+    clearTimeout(onScrollFrame._t);
+    onScrollFrame._t = setTimeout(function(){ document.body.classList.remove('is-scrolling'); }, 150);
+    const y = window.scrollY || 0;
+    const dy = y - lastY;
+
+    const modal = document.getElementById('calcModal');
+    if(modal && modal.style.display === 'flex'){
+      if(hidden) setChromeHidden(false);
+      lastY = y;
+      return;
+    }
+
+    // back to top
+    const btn = document.getElementById('backToTop');
+    if(btn){
+      const show = y > 420;
+      if(show) btn.classList.add('show'); else btn.classList.remove('show');
+    }
+
+    if(y < TOP_SHOW) setChromeHidden(false);
+    else if(dy > DELTA) setChromeHidden(true);
+    else if(dy < -DELTA) setChromeHidden(false);
+
+    lastY = y;
+  }
+
+  window.addEventListener('scroll', function(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(onScrollFrame);
+  }, { passive: true });
+
+  document.addEventListener('touchstart', function(e){
+    if(e.touches && e.touches[0] && e.touches[0].clientY < 28) setChromeHidden(false);
+  }, { passive: true });
+
+  // invalidate header height cache on resize
+  window.addEventListener('resize', function(){
+    const header = document.querySelector('header');
+    if(header) header._hCache = 0;
+  }, { passive: true });
+})();
+
+
 document.addEventListener('DOMContentLoaded', () => {
   renderSpecialtyTabs();
   renderDiseaseTabs();
   renderSectionNav();
   renderDiseaseContent();
+  updateAppHeaderOffsets();
+  setTimeout(updateAppHeaderOffsets, 50);
+  setTimeout(updateAppHeaderOffsets, 300);
 });
 
 /* ========== THANG ĐIỂM MODULE ========== */
-const scalesData = [
+let scalesData = null;
+function __buildScalesData(){
+  return [
       {
         id: "abcd2",
         title: "ABCD2 Score (Cơn thiếu máu cục bộ não thoáng qua - TIA)",
@@ -5200,7 +6016,7 @@ const scalesData = [
       {
         id: "caprini",
         title: "Caprini Risk Assessment (Dự phòng thuyên tắc VTE phẫu thuật)",
-        subtitle: "Phân tầng nguy cơ huyết khối tĩnh mạch sâu & thuyên tắc phổi ở bệnh nhân ngoại khoa.",
+        subtitle: "Phân tầng nguy cơ VTE ngoại khoa. Chọn số yếu tố từng nhóm điểm (1/2/3/5) — cộng dồn các nhóm.",
         category: "cap_cuu",
         categoryName: "Cấp cứu / Ngoại khoa",
         source: "Caprini JA. Dis Mon 2005 / MDCalc",
@@ -6242,52 +7058,65 @@ const scalesData = [
         source: "Fine MJ et al. NEJM 1997 / MDCalc",
         criteria: [
           {
-            name: "Tuổi & Giới tính",
-            detail: "Tính điểm cơ bản theo tuổi và giới",
+            name: "1. Giới & Tuổi (chọn 1)",
+            detail: "PSI gốc: nam = tuổi (năm); nữ = tuổi − 10. Bảng dưới là ước lượng theo nhóm tuổi.",
+            multi: false,
             options: [
-              { text: "Nam < 50 tuổi (30 điểm)", score: 30 },
-              { text: "Nam 50 - 65 tuổi (60 điểm)", score: 60 },
-              { text: "Nam > 65 tuổi (80 điểm)", score: 80 },
-              { text: "Nữ < 50 tuổi (20 điểm)", score: 20 },
-              { text: "Nữ 50 - 65 tuổi (50 điểm)", score: 50 },
-              { text: "Nữ > 65 tuổi (70 điểm)", score: 70 }
+              { text: "Nam <50 tuổi (+30)", score: 30 },
+              { text: "Nam 50–64 tuổi (+55)", score: 55 },
+              { text: "Nam 65–74 tuổi (+70)", score: 70 },
+              { text: "Nam ≥75 tuổi (+85)", score: 85 },
+              { text: "Nữ <50 tuổi (+20)", score: 20 },
+              { text: "Nữ 50–64 tuổi (+45)", score: 45 },
+              { text: "Nữ 65–74 tuổi (+60)", score: 60 },
+              { text: "Nữ ≥75 tuổi (+75)", score: 75 }
             ]
           },
           {
-            name: "Bệnh đồng mắc",
-            detail: "Bệnh Ung thư, Gan, Suy tim, Mạch máu não, Thận",
+            name: "2. Nơi cư trú",
+            detail: "Sống tại viện dưỡng lão / cơ sở chăm sóc dài hạn",
+            multi: false,
             options: [
-              { text: "Không có bệnh kèm (0)", score: 0 },
-              { text: "Bệnh Ung thư (+30 điểm)", score: 30 },
-              { text: "Bệnh Gan mạn (+20 điểm)", score: 20 },
-              { text: "Suy tim sung huyết (+10 điểm)", score: 10 },
-              { text: "Bệnh mạch máu não (+10 điểm)", score: 10 },
-              { text: "Bệnh Thận mạn (+10 điểm)", score: 10 }
+              { text: "Không (0)", score: 0 },
+              { text: "Có — nursing home (+10)", score: 10 }
             ]
           },
           {
-            name: "Dấu hiệu khám lâm sàng",
-            detail: "Tri giác, Nhịp thở, Huyết áp, Nhiệt độ, Mạch",
+            name: "3. Bệnh đồng mắc (chọn nhiều nếu có)",
+            detail: "Cộng điểm từng bệnh — có thể tick nhiều mục",
+            multi: true,
             options: [
-              { text: "Lâm sàng ổn định (0)", score: 0 },
-              { text: "Lẫn lộn tri giác (+20)", score: 20 },
-              { text: "Nhịp thở ≥ 30 lần/phút (+20)", score: 20 },
-              { text: "HATT < 90 mmHg (+20)", score: 20 },
-              { text: "Nhiệt độ < 35°C hoặc ≥ 40°C (+15)", score: 15 },
-              { text: "Mạch ≥ 125 lần/phút (+10)", score: 10 }
+              { text: "Ung thư đang hoạt động / di căn (+30)", score: 30 },
+              { text: "Bệnh gan mạn (+20)", score: 20 },
+              { text: "Suy tim sung huyết (+10)", score: 10 },
+              { text: "Bệnh mạch máu não (+10)", score: 10 },
+              { text: "Bệnh thận mạn (+10)", score: 10 }
             ]
           },
           {
-            name: "Cận lâm sàng & X-quang",
-            detail: "Xét nghiệm máu, Khí máu, X-quang ngực",
+            name: "4. Khám lâm sàng (chọn nhiều nếu có)",
+            detail: "Cộng điểm từng dấu hiệu bất thường",
+            multi: true,
             options: [
-              { text: "Xét nghiệm bình thường (0)", score: 0 },
-              { text: "pH máu < 7.35 (+30 điểm)", score: 30 },
-              { text: "Urea máu ≥ 11 mmol/L (BUN ≥ 30) (+20 điểm)", score: 20 },
-              { text: "Natri máu < 130 mEq/L (+20 điểm)", score: 20 },
-              { text: "Glucose ≥ 14 mmol/L (≥ 250 mg/dL) (+10 điểm)", score: 10 },
-              { text: "Hematocrit < 30% (+10 điểm)", score: 10 },
-              { text: "Tràn dịch màng phổi trên X-quang (+10 điểm)", score: 10 }
+              { text: "Rối loạn tri giác / lẫn lộn (+20)", score: 20 },
+              { text: "Nhịp thở ≥30 lần/phút (+20)", score: 20 },
+              { text: "HATT <90 mmHg (+20)", score: 20 },
+              { text: "Nhiệt độ <35°C hoặc ≥40°C (+15)", score: 15 },
+              { text: "Mạch ≥125 lần/phút (+10)", score: 10 }
+            ]
+          },
+          {
+            name: "5. Xét nghiệm & X-quang (chọn nhiều nếu có)",
+            detail: "Cộng điểm từng bất thường cận lâm sàng",
+            multi: true,
+            options: [
+              { text: "pH động mạch <7.35 (+30)", score: 30 },
+              { text: "BUN ≥30 mg/dL (urea ≥11 mmol/L) (+20)", score: 20 },
+              { text: "Natri <130 mEq/L (+20)", score: 20 },
+              { text: "Glucose ≥250 mg/dL (≥14 mmol/L) (+10)", score: 10 },
+              { text: "Hematocrit <30% (+10)", score: 10 },
+              { text: "PaO₂ <60 mmHg hoặc SpO₂ <90% (+10)", score: 10 },
+              { text: "Tràn dịch màng phổi trên X-quang (+10)", score: 10 }
             ]
           }
         ],
@@ -6910,6 +7739,11 @@ const scalesData = [
       }
 
     ];
+}
+function ensureScales(){
+  if(!scalesData) scalesData = __buildScalesData();
+  return scalesData;
+}
 
 let currentFilteredScales = [];
 let currentScale = null;
@@ -6917,23 +7751,48 @@ let currentScale = null;
 function switchMainTab(tab) {
   const v1 = document.getElementById('viewPhacDo');
   const v2 = document.getElementById('viewThangDiem');
+  const v3 = document.getElementById('viewAI');
   const b1 = document.getElementById('tabPhacDo');
   const b2 = document.getElementById('tabThangDiem');
-  if (tab === 'phacdo') {
-    v1.style.display = '';
-    v2.style.display = 'none';
-    b1.classList.add('active-main');
-    b2.classList.remove('active-main');
-  } else {
-    v1.style.display = 'none';
-    v2.style.display = '';
-    b2.classList.add('active-main');
-    b1.classList.remove('active-main');
-    if (document.getElementById('scalesList').children.length === 0) {
-      currentFilteredScales = [...scalesData].sort((a,b)=>a.title.localeCompare(b.title));
-      renderScoreList(currentFilteredScales);
+  const b3 = document.getElementById('tabAI');
+  const qs = document.getElementById('quickSearch');
+
+  if(v1) v1.style.display = (tab === 'phacdo') ? '' : 'none';
+  if(v2) v2.style.display = (tab === 'thangdiem') ? '' : 'none';
+  if(v3) {
+    v3.style.display = (tab === 'ai') ? 'flex' : 'none';
+    if(tab === 'ai') aiWelcome();
+  }
+
+  [b1,b2,b3].forEach(b => b && b.classList.remove('active-main'));
+  if(tab === 'phacdo' && b1) b1.classList.add('active-main');
+  if(tab === 'thangdiem' && b2) b2.classList.add('active-main');
+  if(tab === 'ai' && b3) b3.classList.add('active-main');
+
+  if(qs){
+    if(tab === 'ai'){
+      qs.placeholder = 'Hoặc hỏi nhanh… (dùng ô chat bên dưới)';
+    } else if(tab === 'thangdiem'){
+      qs.placeholder = 'Tìm thang điểm: GCS, CURB-65, HAS-BLED, Wells…';
+    } else {
+      qs.placeholder = 'Tìm thông minh: THA, COPD, GCS, HAS-BLED, suy tim…';
     }
   }
+  document.getElementById('smartSearchDrop')?.classList.remove('open');
+
+  if(tab === 'thangdiem'){
+    try {
+      ensureScales();
+      if(document.getElementById('scalesList') && document.getElementById('scalesList').children.length === 0){
+        currentFilteredScales = [...scalesData].sort((a,b)=>a.title.localeCompare(b.title,'vi'));
+        renderScoreList(currentFilteredScales);
+      }
+    } catch(e){  }
+  }
+
+  document.body.classList.remove('chrome-hidden');
+  document.documentElement.style.setProperty('--chrome-shift', '0px');
+  setTimeout(() => { if(typeof updateAppHeaderOffsets==='function') updateAppHeaderOffsets(); }, 30);
 }
 
 function renderScoreList(data) {
@@ -7002,19 +7861,32 @@ function handleScoreSearch(q){ smartSearchScores(q); }
 
 
 function openScoreModal(id) {
-  currentScale = scalesData.find(s => s.id === id);
+  ensureScales(); currentScale = scalesData.find(s => s.id === id);
   if (!currentScale) return;
   if(typeof pushRecent==='function') pushRecent((currentScale.title||'').split('(')[0].trim().slice(0,32), 'scale', id);
   document.getElementById('modalScaleTitle').innerText = currentScale.title;
   const body = document.getElementById('modalScaleBody');
-  body.innerHTML = currentScale.criteria.map((c,i) => `
-    <div class="criterion-group">
-      <div class="criterion-title">${c.name}</div>
-      <div class="criterion-detail">${c.detail||''}</div>
+  body.innerHTML = currentScale.criteria.map((c,i) => {
+    const isMulti = !!c.multi;
+    let control = '';
+    if(isMulti){
+      control = `<div class="criterion-detail"><span class="multi-hint">☑ Có thể chọn nhiều mục — điểm cộng dồn</span></div>` +
+        c.options.map((o,j) =>
+          `<label class="crit-check"><input type="checkbox" class="criterion-check" data-score="${o.score}" onchange="calcScoreNow()"><span>${o.text}</span></label>`
+        ).join('');
+    } else {
+      control = `<div class="criterion-detail">${c.detail||''}</div>
       <select class="option-select criterion-val" onchange="calcScoreNow()">
         ${c.options.map(o => `<option value="${o.score}">${o.text}</option>`).join('')}
-      </select>
-    </div>`).join('') + `
+      </select>`;
+    }
+    return `<div class="criterion-group">
+      <div class="criterion-title">${c.name}</div>
+      ${isMulti ? '' : ''}
+      ${isMulti ? `<div class="criterion-detail">${c.detail||''}</div>` : ''}
+      ${control}
+    </div>`;
+  }).join('') + `
     <div style="font-size:11px;color:var(--text-secondary);text-align:center;margin-top:12px;font-style:italic;">Nguồn: ${currentScale.source||''}</div>
     <div style="height:72px;"></div>
     <div style="position:fixed;bottom:0;left:0;right:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg-card);border-top:1px solid var(--border-color);z-index:60;">
@@ -7034,6 +7906,9 @@ function calcScoreNow() {
   let total = 0;
   document.querySelectorAll('#modalScaleBody .criterion-val').forEach(sel => {
     total += parseFloat(sel.value) || 0;
+  });
+  document.querySelectorAll('#modalScaleBody .criterion-check:checked').forEach(chk => {
+    total += parseFloat(chk.getAttribute('data-score')) || 0;
   });
   const display = Number.isInteger(total) ? total : total.toFixed(1);
   document.getElementById('stickyScoreNum').innerText = display;
@@ -7102,7 +7977,7 @@ function calcScoreNow() {
 <div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
   <div class="cl-sheet" onclick="event.stopPropagation()">
     <h2>📝 Nhật ký cập nhật &amp; bảo trì</h2>
-    <div class="cl-item"><div class="cl-date">2026-08 — Bản hiện tại</div>
+    <div class="cl-item"><div class="cl-date">2026-08-29 — Tối ưu tổng thể: PSI multi, 1 ô tìm, AI ngắn, cache tìm kiếm</div>
       <ul>
         <li>Guideline: AHA/ACC 2025 HTN &amp; ACS, ADA 2026, GOLD 2026, GINA 2025/2026, ESC/EAS lipid focused update 2025, CKM 2026</li>
         <li>Tab Thang điểm: 38 thang; đồng bộ CHA₂DS₂-VA, ADD-RS, FINDRISC, YEARS, HCM Risk-SCD với phác đồ</li>
@@ -7127,6 +8002,24 @@ function calcScoreNow() {
       </ul>
     </div>
     <button onclick="closeChangelog()" style="width:100%;margin-top:8px;padding:12px;border:none;border-radius:12px;background:var(--tiffany-main);color:#fff;font-weight:800;">Đóng</button>
+  </div>
+</div>
+
+
+<!-- VIEW AI Y KHOA -->
+<div id="viewAI">
+  <div class="ai-disclaimer">⚠️ <b>AI hỗ trợ tra cứu</b> dựa trên phác đồ &amp; thang điểm trong app — <b>không thay thế</b> khám lâm sàng, xét nghiệm hay quyết định của bác sĩ điều trị.</div>
+  <div class="ai-suggest" id="aiSuggest">
+    <button type="button" onclick="aiAsk('Xử trí tăng huyết áp cấp cứu')">THA cấp cứu</button>
+    <button type="button" onclick="aiAsk('Khi nào dùng kháng đông rung nhĩ')">Kháng đông RN</button>
+    <button type="button" onclick="aiAsk('Thang điểm CURB-65 viêm phổi')">CURB-65</button>
+    <button type="button" onclick="aiAsk('Đợt cấp COPD điều trị')">Đợt cấp COPD</button>
+    <button type="button" onclick="aiAsk('Hạ natri máu có triệu chứng')">Hạ Na+</button>
+  </div>
+  <div class="ai-chat-wrap" id="aiChat"></div>
+  <div class="ai-input-bar">
+    <textarea id="aiInput" rows="1" placeholder="Hỏi AI: bệnh, thuốc, thang điểm, xử trí…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSend();}"></textarea>
+    <button type="button" class="send" onclick="aiSend()">Gửi</button>
   </div>
 </div>
 
