@@ -399,7 +399,7 @@
     <div>
       <h1>📖 Công Cụ Y Khoa Lâm Sàng</h1>
       <div class="sub">Phác đồ điều trị · Thang điểm — ESC/AHA/ADA/GINA/GOLD 2025–2026</div>
-      <div class="ver-badge">Bản 2026.08.29 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
+      <div class="ver-badge">Bản 2026.08.31 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
       <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇️ Cài app</button>
@@ -433,7 +433,7 @@
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
   <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px 24px;">
-    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.08.29
+    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.08.31
   </footer>
 </div>
 
@@ -478,11 +478,13 @@
    rows: [ [tieu_de_dong, giatri1, giatri2, ...], ... ]
    ========================================================= */
 function rt(headers, rows){
-  const body = rows.map(r => {
-    const title = r[0];
-    const cells = headers.map((h,i) => `
-      <div class="rtable-cell"><span class="rtable-label">${h}</span><span class="rtable-value">${r[i+1]}</span></div>
-    `).join('');
+  const body = (rows||[]).map(r => {
+    const title = r[0] ?? '';
+    const cells = headers.map((h,i) => {
+      const v = r[i+1];
+      const val = (v===undefined || v===null) ? '—' : v;
+      return `<div class="rtable-cell"><span class="rtable-label">${h}</span><span class="rtable-value">${val}</span></div>`;
+    }).join('');
     return `<div class="rtable-row"><div class="rtable-title">${title}</div>${cells}</div>`;
   }).join('');
   return `<div class="rtable">${body}</div>`;
@@ -823,6 +825,17 @@ const diseases = [
       ])}
 
       <div class="alert-box alert-info"><b>Nhắc:</b> Liều trên là khung lâm sàng nhanh. Cá thể hóa theo tuổi, eGFR, K+, bệnh đồng mắc và thuốc đang dùng.</div>
+    
+<div class="subhead">🔗 Tương tác thuốc thường gặp (THA)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["ACEi/ARB + NSAID + lợi tiểu","Tổn thương thận (triple whammy) — tránh NSAID nếu được; theo dõi creatinine"],
+        ["ACEi/ARB + MRA / K⁺ / TMP-SMX","Tăng kali — theo dõi K⁺"],
+        ["ACEi/ARB + ARB","Không phối hợp thường quy (Class III)"],
+        ["β-blocker + verapamil/diltiazem","Block AV, mạch chậm — tránh phối hợp"],
+        ["Thiazide + lithium","Tăng độc lithium"],
+        ["Amlodipine + simvastatin liều cao","Ưu tiên statin khác hoặc giảm simvastatin"],
+        ["Rifampin + nhiều thuốc HA","Giảm hiệu quả — theo dõi HA"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -923,6 +936,24 @@ ${rt(["Class"],[
       <div class="alert-box alert-info"><b>AF + HF:</b> OAC theo CHA₂DS₂-VA; tối ưu FMT; β-blocker hàng đầu kiểm soát tần số khi HFrEF ổn định; ablation chọn lọc. Tránh CCB non-DHP nếu HFrEF.</div>
       <div class="age-tag">Cao tuổi / eGFR 20–60</div>
       <p>Khởi liều thấp, chuẩn liều chậm; SGLT2i dùng khi eGFR cho phép; MRA/ARNI theo dõi sinh hóa sát. Không phối hợp ACEi+ARB.</p>
+    
+<div class="subhead">💊 Liều dùng chi tiết bổ sung</div>
+      ${rt(["Liều khởi → đích","Lưu ý"],[
+        ["Furosemide","20–40 mg uống/IV; tăng theo đáp ứng","Chỉnh theo ứ huyết, điện giải"],
+        ["Torasemide","5–10 mg → 20 mg","Sinh khả dụng ổn hơn furosemide uống"],
+        ["Ivabradine","5 mg ×2 → 7.5 mg ×2","Nhịp xoang ≥70, đã β-blocker tối ưu"],
+        ["Digoxin","0.125 mg/ngày (thấp hơn CKD)","AF + HF chọn lọc; theo dõi độc"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc thường gặp (suy tim)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["ARNI/ACEi + MRA + K⁺","Tăng K⁺ — theo dõi sát; tránh K⁺ bổ sung không chỉ định"],
+        ["SGLT2i + lợi tiểu mạnh","Giảm thể tích, hạ HA — chỉnh lợi tiểu khi khởi SGLT2i"],
+        ["Digoxin + amiodarone / verapamil","Tăng nồng độ digoxin — giảm liều digoxin"],
+        ["NSAID","Giữ muối, xấu HF, tổn thương thận — tránh"],
+        ["Non-DHP CCB (verapamil/diltiazem)","Có hại HFrEF — tránh"],
+        ["Ivabradine + CYP3A4 mạnh","Tăng nồng độ — tránh azole/macrolide mạnh"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -1044,7 +1075,21 @@ ${rt(["Class"],[
         <li>Dặn dấu hiệu xuất huyết: phân đen, đái máu, máu cam, đau đầu đột ngột, yếu nửa người…</li>
       </ul>
       <p style="font-size:12px;color:var(--text-secondary)">Chi tiết từng biệt dược: xem SPC / tra cứu tương tác (Lexicomp…). Dùng tab <b>HAS-BLED</b> khi đánh giá nguy cơ chảy máu.</p>
-`,
+
+<div class="subhead">💊 Liều dùng chi tiết (người lớn — chỉnh eGFR/cân/tuổi)</div>
+      <p style="font-size:12px;color:var(--text-secondary)">Tham khảo; đối chiếu SPC và chức năng thận trước khi kê.</p>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Apixaban (phòng đột quỵ AF)","5 mg ×2/ngày","Giảm 2.5 mg ×2 nếu ≥2/3: tuổi ≥80, cân ≤60 kg, creatinine ≥1.5 mg/dL"],
+        ["Rivaroxaban","20 mg ×1/ngày (cùng bữa ăn)","15 mg ×1 nếu CrCl 15–49 mL/phút"],
+        ["Dabigatran","150 mg ×2/ngày","110 mg ×2: cao tuổi/nguy cơ chảy máu; tránh eGFR thấp theo nhãn"],
+        ["Edoxaban","60 mg ×1/ngày","30 mg ×1 nếu cân ≤60 kg, CrCl 15–50, hoặc dùng P-gp inhibitor chọn lọc"],
+        ["Warfarin","Theo INR","Đích INR 2–3 hầu hết AF không van cơ học"],
+        ["Metoprolol (tần số)","25–100 mg ×2 (tartrate) hoặc 50–200 mg ×1 (succinate)","Theo mạch/HA"],
+        ["Bisoprolol","2.5–10 mg ×1/ngày","Ưu tiên khi có HF"],
+        ["Digoxin","Nạp thận trọng; duy trì 0.125–0.25 mg/ngày","Giảm liều CKD; theo dõi độc tính"],
+        ["Amiodarone","Nạp 600–800 mg/ngày vài ngày → duy trì 200 mg/ngày","Theo dõi tuyến giáp, gan, phổi; tương tác warfarin/NOAC"]
+      ])}
+    `,
     khuyen_cao:`
 ${rt(["Class"],[
         ["NOAC ưu tiên hơn VKA khi không chống chỉ định",'<span class="badge badge-I">I</span>'],
@@ -1122,7 +1167,14 @@ ${rt(["Class"],[
         ["Flecainide (không bệnh tim cấu trúc)","50–150 mg × 2 lần/ngày","chống chỉ định nếu có bệnh mạch vành/suy tim"],
         ["Verapamil/Diltiazem TM (CHỈ dùng cho NCT/SVT QRS hẹp xác định rõ)","Verapamil 5–10mg TM chậm; Diltiazem 0.25mg/kg TM","TUYỆT ĐỐI KHÔNG dùng cho QRS rộng (WCT) — Class III: Có hại"],
         ["Chẹn beta uống dự phòng","liều chuẩn theo thuốc (vd. bisoprolol 2.5–10mg/ngày)","giảm liều khởi đầu ở người cao tuổi"]
-      ])}`,
+      ])}
+<div class="subhead">🔗 Tương tác thuốc (chống loạn nhịp)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Amiodarone + warfarin/digoxin/NOAC","Tăng nồng độ — chỉnh liều"],
+        ["Nhiều thuốc QT dài (antiarrhythmic + macrolide/FQ/antipsychotic)","Xoắn đỉnh"],
+        ["Adenosine + theophylline/caffeine","Giảm hiệu quả adenosine"]
+      ])}
+    `,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Đốt điện qua catheter cho AVNRT/AVRT có triệu chứng tái phát",'<span class="badge badge-I">I</span>'],
@@ -1174,7 +1226,13 @@ ${rt(["Class"],[
         ["Adrenaline truyền TM","2–10 microgam/phút","dành cho nhịp chậm nặng kháng trị với atropine; AHA 2025 xếp ngang hàng dopamine làm lựa chọn vận mạch bắc cầu"]
       ])}
       <div class="age-tag">Người cao tuổi</div>
-      <p>Chỉ định máy tạo nhịp không bị giới hạn bởi tuổi cao đơn thuần — quyết định dựa trên triệu chứng, tổng trạng và kỳ vọng sống còn lại, không phải theo một mốc tuổi cụ thể.</p>`,
+      <p>Chỉ định máy tạo nhịp không bị giới hạn bởi tuổi cao đơn thuần — quyết định dựa trên triệu chứng, tổng trạng và kỳ vọng sống còn lại, không phải theo một mốc tuổi cụ thể.</p>
+<div class="subhead">🔗 Tương tác thuốc (nhịp chậm)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["β-blocker + verapamil/diltiazem + digoxin + amiodarone","Cộng lực chậm mạch / block"],
+        ["Ngừng thuốc gây chậm mạch khi có triệu chứng","Xem lại chỉ định"]
+      ])}
+    `,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Cấy máy tạo nhịp vĩnh viễn khi nhịp chậm có triệu chứng tương quan rõ",'<span class="badge badge-I">I</span>'],
@@ -1230,6 +1288,27 @@ ${rt(["Chi tiết"],[
         <li>O₂ chỉ khi SpO₂ thấp; morphin chọn lọc; điều trị sốc tim, hở van cấp, thủng vách — hội chẩn ngoại tim.</li>
       </ul>
       <div class="alert-box alert-info"><b>Audit DAPT:</b> Cân bằng ischemic vs bleeding từng BN; ghi rõ ngày dự kiến dừng DAPT khi xuất viện.</div>
+    
+<div class="subhead">💊 Liều kháng huyết khối & hỗ trợ (tham khảo)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Aspirin","Nạp 150–300 mg → duy trì 75–100 mg/ngày","Mãi mãi trừ chống chỉ định"],
+        ["Ticagrelor","Nạp 180 mg → 90 mg ×2/ngày","Khó thở, bradycardia; tránh aspirin &gt;100 mg"],
+        ["Prasugrel","Nạp 60 mg → 10 mg/ngày","CĐ: TIA/stroke cũ; thận trọng ≥75 tuổi, &lt;60 kg"],
+        ["Clopidogrel","Nạp 300–600 mg → 75 mg/ngày","Khi không dùng ticagrelor/prasugrel"],
+        ["Atorvastatin","40–80 mg/ngày","Cường độ cao sớm"],
+        ["Rosuvastatin","20–40 mg/ngày","Cường độ cao"],
+        ["Enoxaparin (NSTE chọn lọc)","1 mg/kg SC ×2/ngày","Giảm khi suy thận"],
+        ["UFH (PCI)","Bolus 60–70 ĐV/kg (tối đa theo protocol) + truyền","Theo ACT/aPTT viện"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc thường gặp (ACS / DAPT)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["DAPT + NSAID","Xuất huyết — tránh NSAID"],
+        ["DAPT + OAC (triple therapy)","Chảy máu cao — rút ngắn theo protocol"],
+        ["Clopidogrel + omeprazole/esomeprazole","Có thể giảm kích hoạt clopidogrel — ưu tiên pantoprazole nếu cần PPI"],
+        ["Ticagrelor + aspirin &gt;100 mg","Giảm hiệu quả ticagrelor"],
+        ["Statin cường độ cao + macrolide mạnh","Nguy cơ cơ — theo dõi"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -1264,6 +1343,15 @@ ${rt(["Chi tiết"],[
         ["Chống thiếu máu","Chẹn beta và/hoặc CCB; thêm nitrate dài, ranolazine…"],
         ["Toàn thân","Statin cường độ cao, HA, ĐTĐ, bỏ thuốc lá"],
         ["Tái thông","Khi triệu chứng dai dẳng / nguy cơ cao trên thăm dò — PCI hoặc CABG theo Heart Team"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Aspirin","75–100 mg/ngày","Nền tảng"],
+        ["Bisoprolol","2.5–10 mg/ngày","Chống thiếu máu"],
+        ["Amlodipine","5–10 mg/ngày","Hoặc thêm khi còn đau"],
+        ["Isosorbide mononitrate","30–60 mg/ngày","Nitrate dài — nghỉ nitrate"],
+        ["Atorvastatin","40–80 mg/ngày","Cường độ cao"]
       ])}
     `,
     khuyen_cao:`
@@ -1323,6 +1411,24 @@ ${rt(["Chi tiết"],[
         <li>Đau cơ: kiểm tra CK, tương tác (macrolide, azole…); có thể đổi statin / giảm liều / dùng cách ngày.</li>
         <li>Statin an toàn và khuyến cáo ở hầu hết BN CKD không lọc máu theo nguy cơ.</li>
       </ul>
+    
+<div class="subhead">💊 Liều statin & thuốc bổ sung</div>
+      ${rt(["Liều thường dùng","Cường độ / lưu ý"],[
+        ["Atorvastatin","10–20 mg (TB); 40–80 mg (cao)","Phổ biến nhất sau ACS"],
+        ["Rosuvastatin","5–10 mg (TB); 20–40 mg (cao)","Giảm liều suy thận nặng"],
+        ["Simvastatin","20–40 mg tối","Tương tác mạnh — tránh &gt;40 mg"],
+        ["Ezetimibe","10 mg ×1/ngày","Thêm khi chưa đạt LDL đích"],
+        ["Fenofibrate","145 mg ×1 (hoặc theo chế phẩm)","TG rất cao; thận trọng statin + fibrate"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc thường gặp (statin / lipid)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Simvastatin/lovastatin + clarithromycin/azole/cyclosporine","Tiêu cơ — tránh hoặc đổi statin (rosuva/atorva liều phù hợp)"],
+        ["Statin + gemfibrozil","Tiêu cơ — tránh; fenofibrate thận trọng hơn"],
+        ["Statin + amiodarone / verapamil","Giới hạn liều simvastatin theo nhãn"],
+        ["Statin + rifampin","Giảm hiệu quả statin — theo dõi LDL"],
+        ["Cholestyramine","Giảm hấp thu thuốc khác — cách giờ uống"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -1359,6 +1465,15 @@ ${rt(["Class"],[
         <li>Tái thông (nội mạch hoặc mổ) khi đau nghỉ, loét/hoại tử (CLTI), hoặc cách hồi nặng dù điều trị nội tối ưu.</li>
         <li>CLTI: chăm sóc vết thương + kháng sinh khi nhiễm + tái thông sớm — tránh cắt cụt có thể tránh được.</li>
       </ul>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Aspirin","75–100 mg/ngày","Dự phòng huyết khối"],
+        ["Clopidogrel","75 mg/ngày","Thay aspirin hoặc kết hợp chọn lọc"],
+        ["Atorvastatin","40–80 mg/ngày","Cường độ cao"],
+        ["Cilostazol","100 mg ×2/ngày","Cách hồi — CĐ suy tim"],
+        ["Ramipril","5–10 mg/ngày","Khi có THA/chỉ định"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -1490,7 +1605,16 @@ ${rt(["Class"],[
         <li>Dặn dấu hiệu xuất huyết: phân đen, đái máu, máu cam, đau đầu đột ngột, yếu nửa người…</li>
       </ul>
       <p style="font-size:12px;color:var(--text-secondary)">Chi tiết từng biệt dược: xem SPC / tra cứu tương tác (Lexicomp…). Dùng tab <b>HAS-BLED</b> khi đánh giá nguy cơ chảy máu.</p>
-`,
+
+<div class="subhead">💊 Liều dùng chi tiết kháng đông / tiêu sợi huyết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Apixaban (điều trị PE)","10 mg ×2 × 7 ngày → 5 mg ×2/ngày","Kéo dài dự phòng chọn lọc: 2.5 mg ×2 sau ≥6 tháng"],
+        ["Rivaroxaban","15 mg ×2 × 21 ngày → 20 mg ×1/ngày (cùng ăn)","CrCl 15–49: xem nhãn; kéo dài 10 mg ×1 chọn lọc"],
+        ["Enoxaparin","1 mg/kg ×2/ngày SC (hoặc 1.5 mg/kg ×1)","Giảm liều khi eGFR &lt;30; ưu tiên ung thư/mang thai"],
+        ["UFH IV","Bolus + truyền theo aPTT","Khi cân nhắc tiêu sợi huyết / suy thận nặng / phẫu thuật sớm"],
+        ["Alteplase (PE sốc)","Thường 100 mg/2 giờ (protocol viện)","Chỉ PE tụt HA/sốc; chống chỉ định xuất huyết"]
+      ])}
+    `,
 khuyen_cao:`
 ${rt(["Class"],[
         ["Kháng đông sớm khi nghi cao và chảy máu thấp",'<span class="badge badge-I">I</span>'],
@@ -1546,6 +1670,14 @@ ${rt(["Class"],[
         <li><b>Bóc tách type A:</b> phẫu thuật cấp cứu. <b>Type B không biến chứng:</b> điều trị nội tối ưu ± TEVAR khi có chỉ định (đau dai dẳng, thiếu tưới máu, giãn tiến triển).</li>
         <li>Nghi ngờ hội chứng ĐMC cấp: ABC, kiểm soát HA và mạch, CT cấp; thang ADD-RS hỗ trợ quyết định.</li>
       </ul>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Esmolol / labetalol IV","Theo protocol kiểm soát mạch & HA","Bóc tách cấp — đích theo ICU"],
+        ["Nicardipine / nitroprusside IV","Truyền chỉnh HA","Sau khi đã chẹn beta"],
+        ["Bisoprolol uống","2.5–10 mg/ngày","Giãn ĐMC mạn / Marfan"],
+        ["Losartan / irbesartan","Liều THA đích","Marfan — giảm tốc độ giãn"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -1598,6 +1730,14 @@ ${rt(["Class"],[
         <li>Rung nhĩ: kháng đông hầu như luôn (không phụ thuộc điểm CHA₂DS₂-VA đơn thuần).</li>
       </ul>
       <p><b>DCM:</b> tối ưu 4 trụ cột / GDMT; CRT/ICD theo chỉ định; sàng lọc gia đình khi nghi bệnh di truyền.</p>
+    
+<div class="subhead">💊 Liều dùng chi tiết (HCM / hỗ trợ)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Bisoprolol","1.25–10 mg/ngày","Triệu chứng tắc nghẽn HCM"],
+        ["Verapamil","120–480 mg/ngày chia liều","Khi không dung nạp β-blocker"],
+        ["Mavacamten","Theo chuyên khoa / nhãn","CYP2C19; theo dõi EF"],
+        ["Thuốc HF","Như phác đồ suy tim","Khi EF giảm / DCM"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -1656,7 +1796,15 @@ ${rt(["Class"],[
       <p><b>Dự phòng viêm nội tâm mạc:</b> vệ sinh răng miệng tốt; kháng sinh dự phòng chỉ còn ở nhóm nguy cơ rất cao (van nhân tạo, IE cũ, một số bệnh bẩm sinh) theo ESC.</p>
     
       <div class="alert-box alert-info"><b>Van cơ học + warfarin:</b> xem thêm mục <b>Tương tác kháng đông</b> trong phác đồ Rung nhĩ / PE (amiodarone, kháng sinh, rifampin, NSAID…). Không dùng NOAC.</div>
-`,
+
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Warfarin (van cơ học)","Theo INR","Đích INR theo vị trí van; không NOAC"],
+        ["Aspirin","75–100 mg/ngày","Van sinh học / TAVI theo protocol"],
+        ["Furosemide","20–40 mg khi ứ huyết","Suy tim do van"],
+        ["Bisoprolol / digoxin","Theo AF/tần số","Khi rung nhĩ kèm van"]
+      ])}
+    `,
     khuyen_cao:`
 ${rt(["Class"],[
         ["Heart Team quyết định can thiệp van nặng có triệu chứng",'<span class="badge badge-I">I</span>'],
@@ -1706,6 +1854,13 @@ ${rt(["Class"],[
         <li>Phòng thuyên tắc tái phát (sùi lớn, thuyên tắc nhiều lần).</li>
       </ul>
       <div class="alert-box alert-warn">Sốc tim hoặc phù phổi do hở van cấp trong IE: không trì hoãn đánh giá ngoại khoa.</div>
+    
+<div class="subhead">🔗 Tương tác thuốc (KS + tim)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Vancomycin + aminoglycoside","Độc thận — theo dõi mức đáy"],
+        ["Rifampin (van nhân tạo) + warfarin/NOAC/statin","Tương tác mạnh — chỉnh sát"],
+        ["Linezolid + SSRI","Serotonin syndrome — thận trọng"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -1740,6 +1895,13 @@ ${rt(["Chi tiết"],[
         ["Viêm màng ngoài tim","NSAID + colchicine; steroid khi chỉ định"],
         ["Viêm cơ tim nặng","ICU, hỗ trợ tuần hoàn; ức chế miễn dịch chỉ khi nguyên nhân tự miễn / eosinophil…"],
         ["Theo dõi","MRI, EF, loạn nhịp; hạn chế thể thao theo ESC 2025"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Ibuprofen / aspirin (màng ngoài tim)","Đủ liều kháng viêm","+ bảo vệ dạ dày"],
+        ["Colchicine","0.5 mg ×1–2/ngày","Viêm màng ngoài tim — giảm tái phát"],
+        ["Thuốc HF","Như HFrEF khi EF giảm","Tránh gắng sức"]
       ])}
     `,
     khuyen_cao:`
@@ -1849,6 +2011,27 @@ ${rt(["Chi tiết"],[
         ["Nền tảng đường huyết","Metformin nếu eGFR cho phép — dùng song song thuốc CV, không bắt buộc 'xong metformin mới thêm'"]
       ])}
       <p>Insulin khi đường huyết rất cao, có triệu chứng thiếu insulin, mang thai, hoặc không đạt đích bằng thuốc khác. Giáo dục nhận biết và xử trí hạ đường huyết khi dùng sulfonylurea hoặc insulin.</p>
+    
+<div class="subhead">💊 Liều dùng chi tiết thuốc hạ đường huyết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Metformin","500–1000 mg ×1–2/ngày; tối đa thường 2000 mg/ngày","Giảm liều eGFR 30–45; ngừng nếu eGFR &lt;30"],
+        ["Empagliflozin","10 mg ×1 (có thể 25 mg)","CV/HF/CKD — dùng theo eGFR nhãn"],
+        ["Dapagliflozin","10 mg ×1","HF/CKD/ĐTĐ theo chỉ định"],
+        ["Semaglutide (tiêm)","0.25 mg/tuần → 0.5 → 1 mg (hoặc cao hơn theo nhãn)","Buồn nôn khi tăng liều; CĐ MEN2/MTC"],
+        ["Liraglutide","0.6 → 1.2 → 1.8 mg/ngày","CV benefit"],
+        ["Insulin glargine","Khởi ~10 ĐV/ngày hoặc 0.1–0.2 ĐV/kg","Chỉnh theo ĐH đói"],
+        ["Insulin nhanh (bữa ăn)","Theo carb/ĐH","Giáo dục hạ ĐH"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc thường gặp (ĐTĐ)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["SU/insulin + FQ / rượu","Hạ đường huyết — giáo dục BN"],
+        ["β-blocker","Che triệu chứng hạ ĐH (tim đập nhanh)"],
+        ["SGLT2i + lợi tiểu","Mất nước — giảm lợi tiểu khi cần"],
+        ["Metformin + thuốc suy thận cấp (NSAID, contrast)","Nguy cơ acid lactic — tạm ngừng khi nguy cơ cao"],
+        ["GLP-1 + thuốc làm chậm rỗng dạ dày","Buồn nôn tăng — tăng liều chậm"],
+        ["Steroid / thiazide / một số tâm thần","Tăng đường huyết — theo dõi ĐH"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -1905,7 +2088,14 @@ ${rt(["Class"],[
         ["Orlistat","120mg × 3 lần/ngày cùng bữa ăn có chất béo"]
       ])}
       <div class="age-tag">Người cao tuổi (≥65)</div>
-      <p>Ưu tiên bảo tồn khối cơ (kết hợp tập kháng lực), tránh giảm cân quá nhanh; cân nhắc kỹ lợi ích/nguy cơ phẫu thuật giảm cân theo thể trạng chung.</p>`,
+      <p>Ưu tiên bảo tồn khối cơ (kết hợp tập kháng lực), tránh giảm cân quá nhanh; cân nhắc kỹ lợi ích/nguy cơ phẫu thuật giảm cân theo thể trạng chung.</p>
+<div class="subhead">🔗 Tương tác thuốc (GLP-1 / giảm cân)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["GLP-1 + insulin/SU","Hạ ĐH — giảm liều insulin/SU khi khởi"],
+        ["GLP-1 làm chậm rỗng dạ dày","Ảnh hưởng hấp thu thuốc uống một số loại"],
+        ["Orlistat","Giảm hấp thu vitamin tan trong mỡ / thuốc"]
+      ])}
+    `,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Can thiệp lối sống toàn diện là nền tảng cho mọi bệnh nhân béo phì",'<span class="badge badge-I">I</span>'],
@@ -1952,6 +2142,13 @@ ${rt(["Class"],[
         <li>Người già hoặc bệnh mạch vành: khởi liều thấp, tăng chậm.</li>
         <li>Theo dõi TSH để chỉnh liều (thường 6–8 tuần sau mỗi lần đổi liều).</li>
       </ul>
+    
+<div class="subhead">🔗 Tương tác thuốc (tuyến giáp)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Levothyroxine + calcium/sắt/PPI","Giảm hấp thu — cách 4 giờ"],
+        ["Warfarin + kháng giáp / levothyroxine","Đổi INR khi thay đổi trạng thái giáp"],
+        ["Amiodarone","Gây cường hoặc suy giáp — theo dõi TSH"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -2003,6 +2200,24 @@ ${rt(["Chi tiết"],[
         <li>Ipratropium khi nặng; MgSO₄ IV khi đáp ứng kém.</li>
         <li>Không an thần thường quy. Sau đợt cấp: kế hoạch hành động, kiểm tra ICS nền.</li>
       </ul>
+    
+<div class="subhead">💊 Liều dùng chi tiết (người lớn)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Budesonide-formoterol (MART)","Khi cần 1–2 nhát; duy trì theo bậc GINA","Tối đa theo nhãn (thường ≤8–12 nhát/ngày tùy hàm lượng)"],
+        ["Salbutamol (SABA)","1–2 nhát khi cần; đợt cấp: lặp 4–10 nhát q20 phút × 1 giờ","Kèm spacer; không dùng đơn độc dài hạn"],
+        ["Ipratropium (đợt cấp)","Khí dung 500 mcg q20 phút × 3 hoặc MDI","Kèm SABA khi hen nặng"],
+        ["Prednisolone (đợt cấp)","40–50 mg/ngày × 5–7 ngày","Không cần giảm liều nếu ngắn ngày"],
+        ["Hydrocortisone IV","100 mg q6–8h khi không uống được","Chuyển uống khi ổn"],
+        ["MgSO₄ IV","1.2–2 g trong 20 phút khi đợt cấp nặng đáp ứng kém","Theo dõi HA, phản xạ"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc thường gặp (hen)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["β-blocker (kể cả nhỏ mắt timolol)","Cơn hen — tránh không chọn lọc"],
+        ["Aspirin / NSAID","Hen nhạy cảm aspirin — tránh ở BN đã biết"],
+        ["Steroid + CYP3A4 ức chế mạnh","Tăng tác dụng steroid toàn thân"],
+        ["Theophylline + macrolide/FQ","Độc theophylline"]
+      ])}
     `,
 khuyen_cao:`
 ${rt(["Class"],[
@@ -2063,6 +2278,26 @@ ${rt(["Chi tiết"],[
         <li>O₂ đích SpO₂ <b>88–92%</b> nếu nghi giữ CO₂ mạn; ABG khi nặng.</li>
         <li>NIPPV khi toan hô hấp cấp (pH &lt;7.35 và PaCO₂ cao) — trừ chống chỉ định.</li>
       </ul>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Tiotropium (LAMA)","18 mcg hít ×1/ngày (HandiHaler) hoặc 5 mcg ×1 (Respimat)","Nền nhóm B/E"],
+        ["Umeclidinium/vilanterol…","1 nhát/ngày (theo device)","LABA+LAMA cố định"],
+        ["ICS-LABA / triple","Theo device 1–2 lần/ngày","Khi eos cao / đợt cấp / ACO"],
+        ["Salbutamol đợt cấp","Khí dung 2.5–5 mg q20 phút hoặc MDI + spacer","± ipratropium"],
+        ["Prednisolone đợt cấp","40 mg/ngày × 5 ngày","Không cần taper nếu ngắn"],
+        ["Azithromycin (chọn lọc)","250 mg/ngày hoặc 500 mg ×3 ngày/tuần","Dự phòng đợt cấp tái phát — QT, kháng thuốc"],
+        ["Roflumilast","500 mcg uống ×1/ngày","Viêm phế quản mạn + đợt cấp; tiêu chảy, sụt cân"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc thường gặp (COPD)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Azithromycin / FQ + amiodarone / kéo dài QT","Loạn nhịp — tránh chồng QT"],
+        ["Theophylline + ciprofloxacin/macrolide","Độc theophylline — tránh hoặc theo dõi nồng độ"],
+        ["Systemic steroid dài + NSAID","Xuất huyết tiêu hóa, loãng xương"],
+        ["β-blocker không chọn lọc","Có thể co thắt phế quản — ưu tiên chọn lọc tim nếu cần"],
+        ["Roflumilast + CYP cảm ứng mạnh","Giảm hiệu quả"]
+      ])}
     `,
 khuyen_cao:`
 ${rt(["Class"],[
@@ -2112,6 +2347,26 @@ ${rt(["Chi tiết"],[
         <li>Chuyển đường uống khi ổn định; dự phòng huyết khối nếu nằm lâu.</li>
       </ul>
       <div class="alert-box alert-info"><b>Quan trọng:</b> Ưu tiên bảng kháng sinh bệnh viện / Sở Y tế — tỷ lệ đề kháng địa phương quyết định lựa chọn.</div>
+    
+<div class="subhead">💊 Liều kháng sinh tham khảo (người lớn, chức năng thận bình thường)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Amoxicillin","1 g uống ×3/ngày","Ngoại trú không đồng mắc"],
+        ["Amoxicillin-clavulanate","875/125 mg ×2 hoặc 1 g ×3 (theo chế phẩm)","Có đồng mắc"],
+        ["Azithromycin","500 mg ngày 1 rồi 250 mg ×4 ngày; hoặc 500 mg ×3 ngày","± β-lactam"],
+        ["Clarithromycin","500 mg ×2/ngày","Tương tác CYP3A4"],
+        ["Ceftriaxone","1–2 g IV ×1/ngày","Nội trú"],
+        ["Levofloxacin","750 mg ×1/ngày","FQ — QT, gân, kháng địa phương"],
+        ["Vancomycin","Theo cân nặng & mức đáy","Khi phủ MRSA"],
+        ["Thời gian","Thường 5–7 ngày khi ổn định lâm sàng","Kéo dài nếu biến chứng"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc (kháng sinh CAP)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["FQ / macrolide + thuốc QT dài","Xoắn đỉnh — tránh chồng"],
+        ["Macrolide + warfarin","Tăng INR"],
+        ["FQ + steroid / vận động viên","Đứt gân"],
+        ["Linezolid + SSRI","Serotonin"]
+      ])}
     `,
 khuyen_cao:`
 ${rt(["Class"],[
@@ -2236,6 +2491,13 @@ ${rt(["Chi tiết"],[
         ["ILD tự miễn","Điều trị bệnh nền + ức chế miễn dịch theo chuyên khoa"],
         ["Ghép phổi","Đánh giá sớm khi tiến triển / suy hô hấp mạn"]
       ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Nintedanib","150 mg ×2/ngày","IPF; giảm 100 mg ×2 nếu không dung nạp"],
+        ["Pirfenidone","Theo tăng liều đến 801 mg ×3/ngày","Uống với thức ăn; ánh nắng"],
+        ["Prednisolone (đợt cấp)","Theo chuyên khoa","Không routinely dài hạn IPF"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -2281,6 +2543,16 @@ ${rt(["Chi tiết"],[
         ["Chiến lược","Nguy cơ thấp–TB: phối hợp uống sớm; nguy cơ cao: cân nhắc prostacyclin TM/duới da"]
       ])}
       <p>Hỗ trợ: lợi tiểu nếu suy tim phải, O₂ khi thiếu oxy, chống đông chọn lọc (chỉ định riêng). Tránh ngừng đột ngột thuốc PAH.</p>
+    
+<div class="subhead">💊 Liều dùng chi tiết (chuyên khoa PAH)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Sildenafil","20 mg ×3/ngày","PDE5i"],
+        ["Tadalafil","40 mg ×1/ngày","PDE5i"],
+        ["Ambrisentan","5–10 mg ×1/ngày","ERA — theo dõi men gan"],
+        ["Bosentan","62.5→125 mg ×2/ngày","ERA — tương tác, gan"],
+        ["Macitentan","10 mg ×1/ngày","ERA"],
+        ["Selexipag","Tăng dần theo nhãn","Prostacyclin đường uống"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -2319,6 +2591,13 @@ ${rt(["Xử trí"],[
         ["Mủ / phức tạp","Dẫn lưu + KS; cân nhắc tiêu sợi huyết trong màng phổi / VATS"],
         ["TB","Theo phác đồ lao + dẫn lưu khi cần"]
       ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Kháng sinh (mủ màng phổi)","Theo cấy / protocol viện","Kèm dẫn lưu"],
+        ["Furosemide","20–40 mg","Tràn dịch do suy tim"],
+        ["Giảm đau","Paracetamol / opioid ngắn","Sau dẫn lưu"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -2351,6 +2630,13 @@ ${rt(["Chi tiết"],[
         ["Nặng / hôn mê","Glucose 50% IV hoặc glucagon IM/SC/xịt mũi"],
         ["Sau xử trí","Ăn carbohydrate phức hợp; tìm nguyên nhân (insulin, SU, bỏ bữa, vận động)"],
         ["Dự phòng","Chỉnh liều hạ đường huyết; giáo dục nhận biết; glucagon mang theo nếu nguy cơ cao"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Glucose uống","15–20 g đường nhanh","BN tỉnh, nuốt được — lặp sau 15 phút nếu cần"],
+        ["Glucose 30–50% IV","25–50 mL (hoặc theo viện)","Hôn mê / không uống được"],
+        ["Glucagon","1 mg IM/SC hoặc xịt mũi theo nhãn","Không có đường truyền"]
       ])}
     `,
     khuyen_cao:`
@@ -2393,6 +2679,13 @@ ${rt(["Chi tiết"],[
         ["Điều trị","Phẫu thuật nguyên nhân khi được; ức chế steroid / thay thế khi suy"],
         ["Ngoại sinh","Giảm steroid iatrogenic từ từ"]
       ])}
+    
+<div class="subhead">💊 Liều / điều trị chi tiết</div>
+      ${rt(["Chi tiết","Lưu ý"],[
+        ["Phẫu thuật","Điều trị nguyên nhân khi được","Yên / thượng thận"],
+        ["Ketoconazole / metyrapone…","Theo chuyên khoa nội tiết","Ức chế cortisol — theo dõi gan"],
+        ["Hydrocortisone thay thế","Sau mổ khi suy","Giáo dục stress dose"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -2427,6 +2720,14 @@ ${rt(["Chi tiết"],[
         ["Giáo dục","Tăng liều khi bệnh/stress; kit cấp cứu hydrocortisone"],
         ["Cơn Addison","IV hydrocortisone + dịch NaCl 0.9% — không trì hoãn chờ cortisol"],
         ["Theo dõi","Triệu chứng, Na/K, huyết áp; tránh ngừng đột ngột"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Hydrocortisone","15–25 mg/ngày chia 2–3 lần","Tăng khi bệnh/stress"],
+        ["Prednisolone (thay thế)","3–5 mg/ngày","Ít sinh lý hơn hydrocortisone"],
+        ["Fludrocortisone","0.05–0.1 mg/ngày","Suy thượng thận nguyên phát"],
+        ["Cơn cấp","Hydrocortisone 100 mg IV rồi 100–200 mg/24h + NaCl 0.9%","Không trì hoãn"]
       ])}
     `,
     khuyen_cao:`
@@ -2464,6 +2765,14 @@ ${rt(["Chi tiết"],[
         ["Nặng / triệu chứng","Hồi sức NaCl 0.9%; calcitonin ngắn; bisphosphonate / denosumab"],
         ["Nguyên nhân","PTH, PTHrP, vitamin D, myeloma, thuốc…"],
         ["Nhẹ mạn","Điều trị nguyên nhân; tránh lợi tiểu thiazide, lithium nếu liên quan"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["NaCl 0.9%","1–2 L rồi duy trì theo tưới máu","Nặng / triệu chứng"],
+        ["Calcitonin","4–8 IU/kg SC q12h ngắn ngày","Tác dụng nhanh, ngắn"],
+        ["Zoledronate","4 mg IV (theo eGFR)","Hạ Ca kéo dài"],
+        ["Denosumab","Theo chỉ định","Khi bisphosphonate CĐ"]
       ])}
     `,
     khuyen_cao:`
@@ -2503,6 +2812,13 @@ ${rt(["Chi tiết"],[
         ["Tăng sản 2 bên","Spironolactone / eplerenone dài hạn"],
         ["HA","Thường cải thiện rõ sau điều trị đặc hiệu"]
       ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Spironolactone","25–100 mg/ngày (đến 200–400 mg chọn lọc)","Tăng sản 2 bên / trước mổ"],
+        ["Eplerenone","25–50 mg/ngày","Ít tác dụng nội tiết hơn"],
+        ["Phẫu thuật","Adenoma một bên","Sau khi chuẩn bị HA/K⁺"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -2533,6 +2849,14 @@ ${rt(["Chi tiết"],[
         ["Mổ","Cắt u tại trung tâm có kinh nghiệm"],
         ["Cấp cứu tăng HA","Tránh beta đơn độc trước khi chẹn alpha"],
         ["Theo dõi","Metanephrine sau mổ; sàng lọc di truyền chọn lọc"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Doxazosin","2–8 mg/ngày (tăng dần)","Chẹn alpha trước mổ"],
+        ["Phenoxybenzamine","Theo chuyên khoa","Chẹn alpha không chọn lọc"],
+        ["Beta-blocker","Chỉ sau khi đã chẹn alpha","Tránh beta đơn độc"],
+        ["Nicardipine IV…","Kiểm soát HA cấp","Theo ICU"]
       ])}
     `,
     khuyen_cao:`
@@ -2566,6 +2890,13 @@ ${rt(["Chi tiết"],[
         <li>Không đáp ứng: kiểm tra cách uống PPI (trước ăn), nội soi, cân nhắc pH-impedance / chuyên khoa.</li>
         <li>Phẫu thuật chống trào ngược: BN đã chứng minh trào ngược, hở hoành lớn, hoặc muốn ngừng PPI lâu dài.</li>
       </ul>
+    
+<div class="subhead">🔗 Tương tác thuốc (PPI)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Omeprazole/esomeprazole + clopidogrel","Ưu tiên pantoprazole nếu cần PPI + clopidogrel"],
+        ["PPI + thuốc cần pH thấp (ketoconazole, atazanavir…)","Giảm hấp thu"],
+        ["PPI dài hạn + methotrexate liều cao","Theo dõi độc MTX"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -2736,6 +3067,13 @@ ${rt(["Chi tiết"],[
         <li>Xuất huyết tiêu hóa trên: hồi sức, PPI tĩnh mạch, nội soi can thiệp sớm.</li>
         <li>Thủng hoặc hẹp môn vị: hội chẩn ngoại khoa.</li>
       </ul>
+    
+<div class="subhead">🔗 Tương tác thuốc (loét / diệt H. pylori)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Clarithromycin + statin/colchicine/warfarin","Tương tác CYP3A4 mạnh"],
+        ["NSAID + kháng đông/aspirin/steroid","Xuất huyết tiêu hóa"],
+        ["Bismuth / antacid","Cách giờ với kháng sinh khác nếu cần"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -2902,6 +3240,25 @@ ${rt(["Chi tiết"],[
         ["HCC","Siêu âm ± AFP mỗi 6 tháng ở bệnh xơ"],
         ["Hội chứng gan-thận / ACLF","Chuyển trung tâm gan chuyên sâu"]
       ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Carvedilol","6.25–12.5 mg/ngày (đích theo HA/mạch)","Dự phòng giãn TM"],
+        ["Propranolol","20–40 mg ×2 — chỉnh theo mạch","Dự phòng giãn TM"],
+        ["Spironolactone","50–100 mg → đến 200–400 mg","Cổ trướng"],
+        ["Furosemide","40 mg (tỷ lệ ~100:40 với spiro)","Kèm spironolactone"],
+        ["Terlipressin","Theo protocol XHTH","+ KS + nội soi"],
+        ["Ceftriaxone / norfloxacin","Theo SBP / dự phòng","Protocol viện"],
+        ["Lactulose","30–45 mL rồi chỉnh số lần phân","Bệnh não gan"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác / thận trọng thuốc (xơ gan)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["NSAID","Xuất huyết, HRS, cổ trướng xấu — tránh"],
+        ["An thần / opioid","Bệnh não gan — liều thấp nhất"],
+        ["Aminoglycoside","Độc thận — hạn chế"],
+        ["Kháng đông / KS","Chỉnh theo đông máu & thận; tương tác với NSBB"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -2945,6 +3302,14 @@ ${rt(["Class"],[
         ["Xơ / portal HTN","Theo xơ gan: varicose, HCC surveillance"]
       ])}
       <div class="alert-box alert-info"><b>2024:</b> Không dùng vitamin E thường quy cho mọi BN. Thuốc mới antifibrotic theo phê duyệt địa phương / chuyên khoa gan.</div>
+    
+<div class="subhead">💊 Liều / điều trị chi tiết</div>
+      ${rt(["Chi tiết","Lưu ý"],[
+        ["Semaglutide / GLP-1","Theo liều ĐTĐ/béo phì","Giảm cân + chuyển hóa"],
+        ["Pioglitazone","15–30 mg/ngày chọn lọc","MASH — phù, xương"],
+        ["Statin","Theo nguy cơ CV","An toàn ở MASLD không mất bù"],
+        ["Vitamin E","Không thường quy mọi BN","Chọn lọc theo chuyên khoa"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -2982,6 +3347,14 @@ ${rt(["Chi tiết"],[
         ["Kích thích","Bisacodyl, senna — ngắn hạn hoặc bổ sung"],
         ["Bí đại tràng / refractory","Secretagogue (linaclotide…), prucalopride tùy sẵn có"],
         ["Cảnh báo","Loại trừ tắc nghẽn, alarm features (máu, sụt cân, thiếu máu)"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["PEG (macrogol)","17 g trong nước ×1–2/ngày","Hàng đầu"],
+        ["Lactulose","15–30 mL ×1–2/ngày","Đầy hơi"],
+        ["Bisacodyl","5–10 mg uống hoặc 10 mg đặt","Ngắn hạn"],
+        ["Senna","Theo chế phẩm buổi tối","Ngắn hạn"]
       ])}
     `,
     khuyen_cao:`
@@ -3093,6 +3466,24 @@ ${rt(["Chi tiết"],[
         <li>Khi bắt đầu ULT: dự phòng cơn bằng colchicine hoặc NSAID <b>3–6 tháng</b>.</li>
         <li>Giảm bia rượu, nội tạng, fructose; kiểm soát cân nặng; xem lại lợi tiểu nếu có thể.</li>
       </ul>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Colchicine (cơn cấp)","1 mg rồi 0.5 mg sau 1 giờ (phác đồ thấp)","Giảm liều CKD; tương tác CYP3A4/P-gp"],
+        ["Prednisolone","30–35 mg/ngày × 3–5 ngày","Khi không dùng NSAID/colchicine"],
+        ["Naproxen","750 mg rồi 250 mg q8h × vài ngày","Tránh CKD/tim nặng"],
+        ["Allopurinol","Khởi 50–100 mg/ngày (thấp hơn nếu CKD) → tăng dần","Đích uric &lt;6 mg/dL; HLA-B*5801 nhóm nguy cơ"],
+        ["Febuxostat","40–80 mg/ngày","Khi không dung nạp allopurinol; thận trọng CV"],
+        ["Colchicine dự phòng khi ULT","0.5 mg ×1–2/ngày × 3–6 tháng","Giảm cơn khi bắt đầu hạ uric"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc thường gặp (gout)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Colchicine + clarithromycin/azole/cyclosporine","Độc colchicine — tránh hoặc giảm liều mạnh"],
+        ["Allopurinol + azathioprine/mercaptopurine","Độc tủy — giảm liều AZA mạnh hoặc tránh"],
+        ["Probenecid + nhiều beta-lactam","Tăng nồng độ kháng sinh"],
+        ["Lợi tiểu thiazide/loop","Tăng uric — đổi thuốc HA nếu được"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -3124,6 +3515,14 @@ ${rt(["Class"],[
         <li>Sinh học (belimumab, anifrolumab…) khi còn hoạt động dù điều trị chuẩn.</li>
         <li>Chống nắng, vaccine, bảo vệ xương, kế hoạch thai kỳ với bác sĩ chuyên khoa.</li>
       </ul>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Hydroxychloroquine","200–400 mg/ngày (≤5 mg/kg)","Hầu hết BN; khám mắt"],
+        ["Prednisolone","Liều thấp nhất kiểm soát","Giảm nhanh khi ổn"],
+        ["Mycophenolate","1–1.5 g ×2/ngày (theo chỉ định)","Lupus thận…"],
+        ["Azathioprine","1–2.5 mg/kg/ngày","Duy trì; TPMT"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -3167,6 +3566,15 @@ ${rt(["Chi tiết"],[
         ["Thận (SRC)","Cấp cứu: ACEi (kể cả creatinin tăng), huyết áp"],
         ["Tránh","Steroid liều cao không kiểm soát (nguy cơ SRC)"]
       ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Nifedipine / amlodipine","Theo liều Raynaud","Giữ ấm tay chân"],
+        ["Sildenafil","25–100 mg/ngày chia liều","Raynaud nặng / PAH"],
+        ["Mycophenolate","Theo ILD","Chuyên khoa"],
+        ["Nintedanib","150 mg ×2","ILD xơ cứng bì"],
+        ["ACEi (SRC)","Captopril/enalapril tăng nhanh","Cấp cứu thận"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -3208,6 +3616,14 @@ ${rt(["Chi tiết"],[
         ["KS","Phủ S. aureus (kể cả MRSA theo nguy cơ); chỉnh theo kháng sinh đồ"],
         ["Khớp nhân tạo","Protocol nhiễm protez — tháo/giữ dụng cụ theo ngoại"]
       ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Vancomycin","Theo cân nặng & mức đáy","Phủ MRSA"],
+        ["Cefazolin / oxacillin","Theo nhãn khi MSSA","Sau kháng sinh đồ"],
+        ["Ceftriaxone","2 g IV/ngày","Khi nghi lậu / trực khuẩn"],
+        ["Thời gian","Thường 2–4 tuần (khớp nhân tạo dài hơn)","+ dẫn lưu"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -3237,6 +3653,22 @@ ${rt(["Chi tiết"],[
         <li>Khi csDMARD không đủ: thêm hoặc chuyển <b>biologic / tsDMARD</b> (anti-TNF, IL-6, JAK inhibitor…).</li>
         <li>Trước ức chế miễn dịch mạnh: sàng lọc lao, HBV/HCV; cập nhật vaccine.</li>
       </ul>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Methotrexate","10–15 mg/tuần → đến 20–25 mg/tuần","+ acid folic 5 mg/tuần"],
+        ["Prednisolone cầu nối","≤10 mg/ngày ngắn","Không duy trì dài"],
+        ["Sulfasalazine","500 mg → 1 g ×2/ngày","csDMARD"],
+        ["Leflunomide","10–20 mg/ngày","Theo dõi gan"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc (RA)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Methotrexate + TMP-SMX","Độc tủy — tránh phối hợp kéo dài"],
+        ["Methotrexate + NSAID liều cao","Tăng độc MTX ở một số BN"],
+        ["MTX + rượu","Độc gan"],
+        ["JAK inhibitor + ức chế MH mạnh","Nhiễm trùng — theo chuyên khoa"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -3355,6 +3787,24 @@ ${rt(["Class"],[
         <li>Tránh NSAID, aminoglycoside nếu được; chỉnh liều thuốc theo eGFR.</li>
         <li>Chuẩn bị thận nhân tạo / ghép khi CKD tiến triển (G4–G5).</li>
       </ul>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Dapagliflozin","10 mg ×1/ngày","CKD eGFR ≥20 theo chỉ định"],
+        ["Empagliflozin","10 mg ×1/ngày","Theo nhãn eGFR"],
+        ["Finerenone","10–20 mg ×1 theo eGFR/K⁺","Theo dõi K⁺; ngừng nếu K⁺ cao"],
+        ["Ramipril","1.25–2.5 mg → 5–10 mg","Albumin niệu; theo dõi creatinine/K⁺"],
+        ["Losartan","25–50 mg → 50–100 mg","Khi ho với ACEi"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc thường gặp (CKD)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["RASi + NSAID + lợi tiểu","AKI — tránh NSAID"],
+        ["RASi + MRA / TMP-SMX / K⁺","Tăng kali"],
+        ["SGLT2i + lợi tiểu","Giảm thể tích"],
+        ["Nhiều thuốc thải thận","Tích lũy — chỉnh liều theo eGFR"],
+        ["Kháng đông / metformin / lithium…","Xem ngưỡng eGFR từng thuốc"]
+      ])}
     `,
 khuyen_cao:`
 ${rt(["Class"],[
@@ -3402,6 +3852,21 @@ ${rt(["Class"],[
         <li>Theo dõi nước xuất nhập, K⁺, acid–base; chỉnh liều thuốc theo eGFR.</li>
         <li><b>Lọc máu cấp:</b> khi toan nặng, tăng K⁺ không đáp ứng, phù phổi, ure triệu chứng, một số ngộ độc (AEIOU).</li>
       </ul>
+    
+<div class="subhead">💊 / xử trí chi tiết</div>
+      ${rt(["Chi tiết","Lưu ý"],[
+        ["NaCl 0.9% / Ringer","Bù nếu thiếu thể tích","Tránh quá tải"],
+        ["Calcium gluconate","10 mL 10% IV nếu ECG đổi + tăng K⁺","Bảo vệ tim"],
+        ["Insulin + glucose","Theo protocol tăng K⁺","Theo dõi ĐH"],
+        ["Furosemide","Khi quá tải dịch còn đáp ứng","Không 'ép' thận vô niệu"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác / thuốc cần tránh khi AKI</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["NSAID / ACEi-ARB mới / aminoglycoside / contrast","Làm nặng AKI — ngừng nephrotoxin nếu được"],
+        ["Metformin / lithium / DOAC…","Tích lũy — tạm ngừng hoặc chỉnh"],
+        ["K⁺-sparing + RASi","Tăng K⁺"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -3440,6 +3905,15 @@ ${rt(["Class"],[
         <li>Nam giới, mang thai, sỏi, suy giảm miễn dịch: đánh giá và thời gian điều trị dài hơn.</li>
       </ul>
       <p>Nhiễm trùng tái phát: tìm yếu tố nguy cơ; không dùng kháng sinh dự phòng dài hạn thường quy.</p>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Nitrofurantoin","100 mg ×2 × 5 ngày","Viêm bàng quang; tránh eGFR thấp"],
+        ["Fosfomycin","3 g uống 1 liều","Nữ không biến chứng"],
+        ["TMP-SMX","160/800 mg ×2 × 3 ngày","Nếu nhạy địa phương"],
+        ["Ciprofloxacin","500 mg ×2 × 7 ngày","Bể thận — hạn chế lạm dụng"],
+        ["Ceftriaxone","1–2 g IV/ngày","Nặng / không uống được"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -3473,6 +3947,14 @@ ${rt(["Chi tiết"],[
         ["Hỗ trợ","Hạn chế muối, lợi tiểu, ACEi/ARB, statin, chống đông khi chỉ định"],
         ["Nguyên nhân","Sinh thiết khi cần; steroid/ức chế miễn dịch theo bệnh cầu thận cụ thể"],
         ["Biến chứng","Nhiễm trùng, huyết khối, suy dinh dưỡng — theo dõi sát"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Furosemide","40–80 mg (± thiazide)","Phù"],
+        ["Ramipril / losartan","Liều albumin niệu","Nền tảng"],
+        ["Atorvastatin","20–40 mg","Rối loạn lipid"],
+        ["Prednisolone / ức chế MH","Theo sinh thiết","MCD, MN…"]
       ])}
     `,
     khuyen_cao:`
@@ -3509,6 +3991,14 @@ ${rt(["Chi tiết"],[
         ["Can thiệp","Khi sốt/nhiễm, suy thận, đau không kiểm soát, sỏi lớn — dẫn lưu / tán sỏi"],
         ["Dự phòng","Uống đủ nước, chế độ theo thành phần sỏi; kiềm hóa nước tiểu khi acid uric"]
       ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Ibuprofen / ketorolac","Theo nhãn giảm đau","Ưu tiên nếu thận cho phép"],
+        ["Paracetamol ± opioid","Khi không dùng NSAID","Đau cấp"],
+        ["Tamsulosin","0.4 mg/ngày","Sỏi niệu quản chọn lọc"],
+        ["Potassium citrate","Theo pH nước tiểu","Sỏi uric / hypocitraturia"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -3540,6 +4030,13 @@ ${rt(["Chi tiết"],[
         ["Hỗ trợ","HA (ACEi/ARB), phù, lipid, biến chứng ure"],
         ["Đặc hiệu","Theo sinh thiết (IgA, membranous, MCD, RPGN…) — ức chế miễn dịch / rituximab"],
         ["RPGN / nặng","Điều trị cấp tại trung tâm thận; plasma exchange chọn lọc"]
+      ])}
+    
+<div class="subhead">💊 Liều / điều trị chi tiết</div>
+      ${rt(["Chi tiết","Lưu ý"],[
+        ["ACEi/ARB","Liều tối ưu albumin","Hỗ trợ mọi GN protein niệu"],
+        ["Steroid / CTX / MMF / RTX","Theo type sinh thiết","Chuyên khoa thận"],
+        ["Lợi tiểu","Theo phù","Tránh giảm tưới máu quá"]
       ])}
     `,
     khuyen_cao:`
@@ -3574,6 +4071,22 @@ ${rt(["Bước"],[
         ["Dời K vào tế bào","Insulin + glucose; beta-agonist khí dung; bicarbonate chọn lọc (toan chuyển hóa)"],
         ["Thải K","Kayexalate / zirconium / patiromer (theo sẵn có); lợi tiểu quai nếu còn nước tiểu; lọc máu khi nặng/Vô niệu"],
         ["Nguyên nhân","Ngừng K-sparing, RASi tạm nếu cần; xử trí tan máu, tiêu cơ"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Calcium gluconate 10%","10 mL IV trong 2–5 phút","ECG đổi / K⁺ rất cao — có thể lặp"],
+        ["Insulin regular","10 ĐV + glucose 25–50 g IV","Hạ K⁺ trong 15–30 phút"],
+        ["Salbutamol khí dung","10–20 mg","Hỗ trợ dời K⁺"],
+        ["Furosemide","40–80 mg IV nếu còn nước tiểu","Thải K⁺"],
+        ["Patiromer / SPS / zirconium","Theo nhãn sẵn có","Thải K⁺ đường tiêu hóa"]
+      ])}
+    
+<div class="subhead">🔗 Thuốc làm tăng kali (tránh chồng)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["ACEi/ARB + MRA + TMP-SMX + K⁺","Cộng lực tăng K⁺"],
+        ["NSAID","Giảm thải K⁺ qua thận"],
+        ["Succinylcholine / digoxin độc","Tình huống đặc biệt"]
       ])}
     `,
     khuyen_cao:`
@@ -3610,6 +4123,14 @@ ${rt(["Chi tiết"],[
         ["SIADH","Hạn chế dịch; urea / vaptan chọn lọc; bỏ thuốc gây SIADH"],
         ["Đích chỉnh","Thường ≤8–10 mmol/L/24h (chặt hơn nếu nguy cơ ODS cao)"]
       ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["NaCl 3%","Bolus 100–150 mL/10–20 phút khi co giật/hôn mê (protocol)","Tránh chỉnh quá nhanh"],
+        ["NaCl 0.9%","Thiếu thể tích giảm Na","Theo nguyên nhân"],
+        ["Tolvaptan","Theo chuyên khoa SIADH","Theo dõi Na sát"],
+        ["Hạn chế dịch","SIADH nhẹ","+ bỏ thuốc gây SIADH"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -3635,6 +4156,13 @@ ${rt(["Chi tiết"],[
         ["Gần hệ sâu / dài","Cân nhắc kháng đông theo nguy cơ lan DVT"],
         ["Loại trừ DVT","Siêu âm khi nghi"],
         ["PTS","Tất áp lực, tập, giảm cân; loét tĩnh mạch — chăm sóc vết thương"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Ibuprofen / NSAID","Theo nhãn vài ngày","SVT nông đoạn ngắn"],
+        ["Fondaparinux / LMWH / rivaroxaban","Theo độ dài đoạn / nguy cơ","Khi gần hệ sâu"],
+        ["Paracetamol","Khi không dùng NSAID","Giảm đau"]
       ])}
     `,
     khuyen_cao:`
@@ -3664,6 +4192,15 @@ ${rt(["Chi tiết"],[
         ["Thuốc","Không trì hoãn sốc vì thuốc; IV/IO sớm"]
       ])}
       <div class="alert-box alert-danger"><b>Ưu tiên:</b> Ép ngực liên tục, tần số 100–120, độ sâu đủ, xẹp ngực hoàn toàn, giảm gián đoạn.</div>
+    
+<div class="subhead">💊 Liều dùng chi tiết ACLS (người lớn)</div>
+      ${rt(["Liều","Lưu ý"],[
+        ["Epinephrine","1 mg IV/IO q3–5 phút","Mọi nhịp ngừng tuần hoàn"],
+        ["Amiodarone","300 mg bolus → có thể 150 mg","VF/pVT kháng sốc"],
+        ["Lidocaine","1–1.5 mg/kg → 0.5–0.75 mg/kg","Thay amiodarone"],
+        ["Atropine (nhịp chậm)","1 mg q3–5 phút, tối đa 3 mg","Nhịp chậm có triệu chứng"],
+        ["Adenosine (SVT)","6 mg → 12 mg nhanh + flush","QRS hẹp đều ổn định"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Class"],[
@@ -3691,6 +4228,13 @@ ${rt(["Chi tiết"],[
         ["Sau sinh","OGTT 4–12 tuần; sàng lọc ĐTĐ suốt đời mỗi 1–3 năm"]
       ])}
       <div class="alert-box alert-info"><b>ADA 2026:</b> Sàng lọc 24–28 tuần (75 g OGTT one-step). Kiểm soát chặt làm giảm macrosomia và biến chứng sản khoa.</div>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Insulin NPH / detemir / glargine","Theo ĐH đói — khởi thấp tăng dần","Hàng đầu khi cần thuốc"],
+        ["Insulin aspart / lispro","Trước bữa theo ĐH/carb",""],
+        ["Metformin","500–2000 mg/ngày chia liều","Theo hướng dẫn địa phương / thai kỳ"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Class"],[
@@ -3714,6 +4258,13 @@ ${rt(["Chi tiết"],[
         ["Phẫu thuật","Cắt tuyến cận giáp khi có chỉ định (sỏi, xương, GFR, Ca rất cao, tuổi &lt;50…) — điều trị khỏi"],
         ["Theo dõi","Ca, eGFR, DEXA nếu không mổ"],
         ["Thuốc","Cinacalcet hạ Ca; bisphosphonate/denosumab bảo vệ xương"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Cinacalcet","30 mg ×2 → chỉnh theo Ca","Khi không mổ được"],
+        ["Vitamin D / calcium","Sau mổ nếu hungry bone","Theo Ca, PTH"],
+        ["Bisphosphonate","Khi loãng xương kèm",""]
       ])}
     `,
     khuyen_cao:`
@@ -3740,6 +4291,24 @@ ${rt(["Phác đồ (tóm tắt)"],[
         ["Theo dõi","Độc gan (H,R,Z); tương tác rifampin (thuốc tim, kháng đông, ARV)"]
       ])}
       <div class="alert-box alert-info"><b>WHO:</b> Xpert MTB/RIF trong chẩn đoán ban đầu. Không tự ý rút ngắn / ngắt quãng điều trị.</div>
+    
+<div class="subhead">💊 Liều dùng chi tiết (lao nhạy cảm — người lớn)</div>
+      ${rt(["Liều (mg/kg hoặc cố định)","Lưu ý"],[
+        ["Isoniazid (H)","5 mg/kg (thường 300 mg)","+ pyridoxine 25–50 mg khi nguy cơ"],
+        ["Rifampin (R)","10 mg/kg (thường 600 mg)","Tương tác nhiều thuốc"],
+        ["Pyrazinamide (Z)","25 mg/kg","Giai đoạn tấn"],
+        ["Ethambutol (E)","15–20 mg/kg","Theo dõi thị lực"],
+        ["Thời gian","2 tháng HRZE + 4 tháng HR","Hoặc phác đồ rút gọn WHO khi đủ ĐK"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc (rifampin — rất mạnh)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["Rifampin + NOAC","Giảm NOAC mạnh — tránh NOAC"],
+        ["Rifampin + warfarin","Cần tăng warfarin, INR sát"],
+        ["Rifampin + steroid / chẹn calci / statin nhiều loại","Giảm hiệu quả — chỉnh liều hoặc đổi thuốc"],
+        ["Rifampin + ARV / thuốc tránh thai","Mất hiệu quả — hội chẩn chuyên khoa"],
+        ["Isoniazid + paracetamol liều cao / rượu","Độc gan"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Class"],[
@@ -3764,6 +4333,13 @@ ${rt(["Xử trí"],[
         ["Lớn / khó thở / nguyên phát có triệu chứng","Hút kim hoặc dẫn lưu"],
         ["Thứ phát (COPD…)","Thường cần dẫn lưu + điều trị bệnh nền"],
         ["Tái phát","Cân nhắc pleurodesis / phẫu thuật lồng ngực"]
+      ])}
+    
+<div class="subhead">💊 / xử trí chi tiết</div>
+      ${rt(["Chi tiết","Lưu ý"],[
+        ["Oxy","Đích SpO₂ bình thường","Hỗ trợ hấp thu khí"],
+        ["Giảm đau","NSAID / opioid ngắn",""],
+        ["Dẫn lưu","Theo kích thước / triệu chứng","Tension: giải áp kim trước"]
       ])}
     `,
     khuyen_cao:`
@@ -3790,6 +4366,14 @@ ${rt(["Chi tiết"],[
         ["Non-drug","Bỏ thuốc lá, vaccine, phục hồi chức năng, kỹ thuật hít"]
       ])}
       <div class="alert-box alert-info"><b>GINA/GOLD:</b> BN COPD có đặc điểm hen/eosinophil cao cần ICS; ngược lại hen kèm tắc nghẽn cố định vẫn ưu tiên ICS.</div>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["ICS-LABA","1–2 nhát/ngày theo device","Bắt buộc có ICS"],
+        ["LAMA thêm","1 nhát/ngày","Triple khi cần"],
+        ["Prednisolone đợt cấp","40 mg × 5 ngày","Như COPD/hen"],
+        ["Salbutamol","Khi cần / đợt cấp","Không đơn trị dài hạn"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Class"],[
@@ -3813,6 +4397,13 @@ ${rt(["Chi tiết"],[
         ["Tokyo I–II","Cắt túi mật nội soi sớm (thường trong 72 giờ) nếu đủ điều kiện"],
         ["Nặng / nguy cơ mổ cao","Dẫn lưu túi mật + KS, mổ trì hoãn"],
         ["Biến chứng","Áp xe, thủng, viêm tụy — hội chẩn ngoại khoa"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Ceftriaxone + metronidazole","1–2 g + 500 mg IV q8h","Phác đồ mẫu — theo viện"],
+        ["Piperacillin-tazobactam","4.5 g IV q6–8h","Nặng / nguy cơ kháng"],
+        ["Giảm đau","NSAID / opioid","Nhịn ăn, dịch"]
       ])}
     `,
     khuyen_cao:`
@@ -3838,6 +4429,14 @@ ${rt(["Điều trị"],[
         ["Theo dõi","HBV: men gan, DNA, HCC theo nguy cơ; HCV: xác nhận SVR; đồng nhiễm HIV/HBV"]
       ])}
       <div class="alert-box alert-info"><b>EASL/WHO:</b> Không “quan sát” HCV mạn nếu đủ điều kiện DAA. HBV: không ngừng đột ngột NA ở BN nguy cơ bùng phát.</div>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Tenofovir TDF","300 mg ×1/ngày","HBV; theo dõi thận, xương"],
+        ["Tenofovir TAF","25 mg ×1/ngày","Ít ảnh hưởng thận hơn TDF"],
+        ["Entecavir","0.5 mg ×1 (1 mg nếu kháng lamivudine)","HBV; đói"],
+        ["Sofosbuvir-based / GLE/PIB","Theo phác đồ DAA 8–12 tuần","HCV — chuyên khoa"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Class"],[
@@ -3861,6 +4460,13 @@ ${rt(["Xử trí"],[
         ["Áp xe","KS ± dẫn lưu"],
         ["Thủng / phúc mạc","Phẫu thuật cấp + KS"],
         ["Sau ổn định","Chế độ giàu xơ; mổ phiên khi tái phát nhiều / biến chứng"]
+      ])}
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Amoxicillin-clavulanate","Uống theo nhãn × 4–7 ngày","Ngoại trú chọn lọc"],
+        ["Ciprofloxacin + metronidazole","500 mg ×2 + 500 mg ×3","Thay thế"],
+        ["Ceftriaxone + metro IV","Khi nhập viện","Theo mức độ"]
       ])}
     `,
     khuyen_cao:`
@@ -3889,6 +4495,13 @@ ${rt(["Xử trí"],[
         ["Da / móng","Phối hợp da liễu; điều trị systemic khi lan tỏa"]
       ])}
       <p>Đánh giá trước biologic: nhiễm trùng, lao, HBV/HCV, thai kỳ. Mục tiêu: giảm đau, bảo tồn chức năng, lui bệnh da–khớp.</p>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Methotrexate","15–25 mg/tuần","Viêm khớp ngoại biên"],
+        ["NSAID","Đủ liều ngắn–TB ngày","Triệu chứng"],
+        ["Anti-TNF / IL-17…","Theo chuyên khoa","Sinh học"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Class"],[
@@ -3914,6 +4527,14 @@ ${rt(["Điều trị"],[
         ["Dự phòng","PCP khi ức chế miễn dịch mạnh; theo dõi nhiễm trùng, immunoglobulin"]
       ])}
       <div class="alert-box alert-info"><b>EULAR 2022:</b> Cấp cứu khi xuất huyết phế nang / GN tiến triển nhanh — chuyển trung tâm chuyên khoa sớm.</div>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Rituximab","Theo protocol cảm ứng (vd. 375 mg/m² ×4 hoặc 1 g ×2)","Ưu tiên nhiều BN"],
+        ["Cyclophosphamide","Theo protocol IV/uống","Thay RTX"],
+        ["Prednisolone","Giảm liều sớm theo phác đồ hiện đại","Tránh steroid cao kéo dài"],
+        ["TMP-SMX dự phòng PCP","Theo nguy cơ","Khi ức chế MH mạnh"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Class"],[
@@ -3944,6 +4565,22 @@ ${rt(["Điều trị"],[
         <li>Kiểm soát đường huyết cá thể hóa; tránh hạ đường huyết ở CKD nặng.</li>
         <li>Có thể cân nhắc khởi <b>đồng thời</b> SGLT2i + finerenone ở UACR cao (ADA 2026).</li>
       </ul>
+    
+<div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Dapagliflozin / empagliflozin","10 mg ×1","eGFR ≥20"],
+        ["Finerenone","10–20 mg ×1 theo eGFR/K⁺","ĐTĐ + albumin niệu"],
+        ["Ramipril","2.5→10 mg","Tối ưu liều"],
+        ["Losartan","50→100 mg","Thay ACEi nếu ho"],
+        ["Semaglutide","Theo tăng liều tuần","Lợi ích thận–tim"]
+      ])}
+    
+<div class="subhead">🔗 Tương tác thuốc (DKD)</div>
+      ${rt(["Rủi ro / hướng xử trí"],[
+        ["RASi + finerenone + K⁺","Tăng K⁺ — theo dõi"],
+        ["SGLT2i + lợi tiểu","Giảm thể tích"],
+        ["NSAID","Tránh — bảo vệ thận"]
+      ])}
     `,
     khuyen_cao:`
 ${rt(["Class"],[
@@ -3970,6 +4607,13 @@ ${rt(["Hướng xử trí"],[
         ["DKA/HHS","Insulin + dịch + K+ theo protocol ĐTĐ"],
         ["CKD / toan mạn","Bicarbonate uống khi HCO₃ thấp theo KDIGO"],
         ["Ngộ độc","Đặc hiệu + lọc máu khi chỉ định"]
+      ])}
+    
+<div class="subhead">💊 Liều / xử trí chi tiết</div>
+      ${rt(["Chi tiết","Lưu ý"],[
+        ["NaHCO₃ uống","0.5–1 mEq/kg/ngày chia liều (CKD mạn)","Khi HCO₃ thấp theo KDIGO"],
+        ["NaHCO₃ IV","Chọn lọc toan nặng / ngộ độc","Không routinely mọi lactic"],
+        ["Insulin + dịch (DKA)","Theo protocol ĐTĐ","Bù K⁺"]
       ])}
     `,
     khuyen_cao:`
@@ -4051,6 +4695,7 @@ function selectDisease(id){
 function renderDiseaseContent(){
   const d = diseases.find(x=>x.id===activeDiseaseId);
   const container = document.getElementById('mainContainer');
+  if(!d || !container){ if(container) container.innerHTML = '<p class="empty-hint">Không tìm thấy phác đồ.</p>'; return; }
 
   let html = `
     <div class="disease-header">
@@ -7488,6 +8133,13 @@ function calcScoreNow() {
 <div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
   <div class="cl-sheet" onclick="event.stopPropagation()">
     <h2>📝 Nhật ký cập nhật &amp; bảo trì</h2>
+    <div class="cl-item"><div class="cl-date">2026-08-31 — Liều chi tiết toàn bệnh + tương tác thuốc + audit logic</div>
+      <ul>
+        <li>Bổ sung bảng 💊 Liều dùng chi tiết cho hầu hết bệnh; 🔗 Tương tác thuốc (THA, HF, ĐTĐ, lipid, COPD…)</li>
+        <li>AF/PE: mục tương tác kháng đông; HF theo ESC 2026; bảo vệ rt() khỏi undefined</li>
+        <li>Audit: 73 bệnh unique, JS OK, 1 scroll listener, null-safe render</li>
+      </ul>
+    </div>
     <div class="cl-item"><div class="cl-date">2026-08-29 — Tối ưu tổng thể: PSI multi, 1 ô tìm, AI ngắn, cache tìm kiếm</div>
       <ul>
         <li>Guideline: AHA/ACC 2025 HTN &amp; ACS, ADA 2026, GOLD 2026, GINA 2025/2026, ESC/EAS lipid focused update 2025, CKM 2026</li>
