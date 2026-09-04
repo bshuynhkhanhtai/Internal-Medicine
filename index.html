@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Y Khoa">
+<meta name="apple-mobile-web-app-title" content="Sổ Y Khoa">
 <meta name="theme-color" content="#028090">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" id="appManifestLink">
-<link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/180/00a896/heart-with-pulse.png">
-<title>Công Cụ Y Khoa — Phác Đồ &amp; Thang Điểm (2025–2026)</title>
+<link rel="apple-touch-icon" id="appleTouchIcon" href="">
+<link rel="icon" id="appFavicon" type="image/png" href="">
+<title>Sổ Y Khoa — Tra cứu phác đồ &amp; thang điểm</title>
 <style>
   :root{
     --tiffany-main:#00a896; --tiffany-dark:#028090; --tiffany-light:#e6f7f5;
@@ -401,8 +402,8 @@
 <header>
   <div class="top-bar">
     <div>
-      <h1>📖 Công Cụ Y Khoa Lâm Sàng</h1>
-      <div class="sub">Phác đồ điều trị · Thang điểm — ESC/AHA/ADA/GINA/GOLD 2025–2026</div>
+      <h1>📖 Sổ Y Khoa</h1>
+      <div class="sub">Cuốn sổ tra cứu phác đồ &amp; thang điểm · ESC/AHA/ADA/GINA/GOLD</div>
       <div class="ver-badge">Bản 2026.08.31 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
@@ -5280,21 +5281,100 @@ function enhanceScaleCardsWithFav(){
 // Back to top visibility
 /* backToTop handled in scroll hub */
 
-// PWA manifest blob
+// PWA: icon cuốn sổ tra cứu + manifest
 (function setupManifest(){
-  const manifest = {
-    name: "Công Cụ Y Khoa Lâm Sàng",
-    short_name: "Y Khoa",
-    start_url: ".",
-    display: "standalone",
-    background_color: "#00a896",
-    theme_color: "#028090",
-    icons: [{ src: "https://img.icons8.com/ios-filled/180/00a896/heart-with-pulse.png", sizes: "180x180", type: "image/png", purpose: "any maskable" }]
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
+    if(typeof r==='number') r={tl:r,tr:r,br:r,bl:r};
+    this.moveTo(x+r.tl,y); this.lineTo(x+w-r.tr,y); this.quadraticCurveTo(x+w,y,x+w,y+r.tr);
+    this.lineTo(x+w,y+h-r.br); this.quadraticCurveTo(x+w,y+h,x+w-r.br,y+h);
+    this.lineTo(x+r.bl,y+h); this.quadraticCurveTo(x,y+h,x,y+h-r.bl);
+    this.lineTo(x,y+r.tl); this.quadraticCurveTo(x,y,x+r.tl,y);
   };
-  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.getElementById('appManifestLink');
-  if(link) link.href = url;
+}
+
+  function drawNotebookIcon(size){
+    const c = document.createElement('canvas');
+    c.width = size; c.height = size;
+    const ctx = c.getContext('2d');
+    const s = size / 180;
+    // nền maskable
+    ctx.fillStyle = '#028090';
+    ctx.beginPath();
+    const r = 36 * s;
+    ctx.moveTo(r, 0); ctx.lineTo(size - r, 0); ctx.quadraticCurveTo(size, 0, size, r);
+    ctx.lineTo(size, size - r); ctx.quadraticCurveTo(size, size, size - r, size);
+    ctx.lineTo(r, size); ctx.quadraticCurveTo(0, size, 0, size - r);
+    ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0); ctx.closePath(); ctx.fill();
+    // bìa sổ
+    const bx = 38 * s, by = 28 * s, bw = 104 * s, bh = 124 * s;
+    ctx.fillStyle = '#e8f7f5';
+    ctx.beginPath();
+    ctx.roundRect(bx, by, bw, bh, 8 * s);
+    ctx.fill();
+    // gáy sổ
+    ctx.fillStyle = '#00a896';
+    ctx.fillRect(bx, by, 16 * s, bh);
+    // đường gáy
+    ctx.strokeStyle = 'rgba(2,128,144,.35)';
+    ctx.lineWidth = 1.5 * s;
+    for (let i = 1; i <= 3; i++) {
+      const x = bx + 4 * s * i;
+      ctx.beginPath(); ctx.moveTo(x, by + 6 * s); ctx.lineTo(x, by + bh - 6 * s); ctx.stroke();
+    }
+    // dòng kẻ trang
+    ctx.strokeStyle = 'rgba(2,128,144,.22)';
+    ctx.lineWidth = 1.2 * s;
+    for (let i = 0; i < 5; i++) {
+      const y = by + 36 * s + i * 16 * s;
+      ctx.beginPath(); ctx.moveTo(bx + 28 * s, y); ctx.lineTo(bx + bw - 12 * s, y); ctx.stroke();
+    }
+    // dấu thập y khoa
+    const cx = bx + 62 * s, cy = by + 28 * s, arm = 10 * s, t = 5 * s;
+    ctx.fillStyle = '#028090';
+    ctx.fillRect(cx - t / 2, cy - arm, t, arm * 2);
+    ctx.fillRect(cx - arm, cy - t / 2, arm * 2, t);
+    // nhãn nhỏ
+    ctx.fillStyle = '#028090';
+    ctx.font = `bold ${11 * s}px -apple-system, system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('Y KHOA', bx + bw * 0.58, by + bh - 14 * s);
+    return c.toDataURL('image/png');
+  }
+  let icon180 = '';
+  try {
+    icon180 = drawNotebookIcon(180);
+    const icon192 = drawNotebookIcon(192);
+    const icon512 = drawNotebookIcon(512);
+    const apple = document.getElementById('appleTouchIcon');
+    if (apple) apple.href = icon180;
+    const fav = document.getElementById('appFavicon');
+    if (fav) fav.href = icon192;
+    const manifest = {
+      name: "Sổ Y Khoa — Tra cứu phác đồ",
+      short_name: "Sổ Y Khoa",
+      description: "Cuốn sổ tra cứu phác đồ điều trị và thang điểm lâm sàng",
+      start_url: ".",
+      scope: ".",
+      display: "standalone",
+      orientation: "portrait-primary",
+      background_color: "#028090",
+      theme_color: "#028090",
+      categories: ["medical", "health"],
+      icons: [
+        { src: icon192, sizes: "192x192", type: "image/png", purpose: "any" },
+        { src: icon512, sizes: "512x512", type: "image/png", purpose: "any" },
+        { src: icon192, sizes: "192x192", type: "image/png", purpose: "maskable" },
+        { src: icon512, sizes: "512x512", type: "image/png", purpose: "maskable" }
+      ]
+    };
+    const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.getElementById('appManifestLink');
+    if (link) link.href = url;
+  } catch (e) {
+    console.warn('PWA icon', e);
+  }
 })();
 
 // Lightweight service worker for offline shell (same page)
