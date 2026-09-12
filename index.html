@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Sổ Y Khoa">
+<meta name="apple-mobile-web-app-title" content="Sổ tay LS">
 <meta name="theme-color" content="#028090">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" id="appManifestLink">
 <link rel="apple-touch-icon" id="appleTouchIcon" href="">
 <link rel="icon" id="appFavicon" type="image/png" href="">
-<title>Sổ Y Khoa — Tra cứu phác đồ &amp; thang điểm</title>
+<title>Sổ tay lâm sàng — Phác đồ &amp; thang điểm</title>
 <style>
   :root{
     --tiffany-main:#00a896; --tiffany-dark:#028090; --tiffany-light:#e6f7f5;
@@ -55,7 +55,7 @@
   .s-pill{flex-shrink:0;font-size:11.5px;font-weight:700;color:var(--tiffany-dark);background:var(--bg-card);padding:6px 11px;border-radius:12px;cursor:pointer;border:1px solid var(--border-color);}
   .s-pill.active{background:var(--tiffany-dark);color:#fff;border-color:var(--tiffany-dark);}
 
-  .container{flex:1;padding:14px 14px 50px;display:flex;flex-direction:column;gap:14px;max-width:720px;margin:0 auto;width:100%;overflow-x:hidden;}
+  .container{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px));flex:1;padding:14px 14px 50px;display:flex;flex-direction:column;gap:14px;max-width:720px;margin:0 auto;width:100%;overflow-x:hidden;}
 
   .disease-header{background:linear-gradient(135deg,var(--tiffany-light),var(--bg-card));border:1px solid var(--border-color);border-radius:16px;padding:16px;}
   .disease-header h2{font-size:18px;font-weight:800;color:var(--tiffany-dark);margin-bottom:4px;}
@@ -139,7 +139,7 @@
 
   .score-chip{padding:8px 14px;border-radius:16px;border:none;background:var(--bg-primary);color:var(--text-secondary);font-size:13px;font-weight:600;white-space:nowrap;cursor:pointer;}
   .score-chip.active{background:var(--tiffany-main);color:#fff;}
-  .scale-card{background:var(--bg-card);border-radius:14px;padding:14px 16px;box-shadow:var(--card-shadow,0 2px 10px rgba(0,168,150,.08));border:1px solid var(--border-color);cursor:pointer;}
+  /* scale-card moved */
   .scale-card:active{transform:scale(0.98);}
   .scale-title{font-size:15px;font-weight:700;color:var(--tiffany-dark);margin-bottom:4px;}
   [data-theme="dark"] .scale-title{color:var(--tiffany-main);}
@@ -202,8 +202,13 @@
   
   header .search-wrap{position:relative;z-index:60;}
   header .smart-search-drop{top:calc(100% + 4px);left:0;right:0;max-height:min(60vh, 420px);z-index:70;}
-  .smart-search-drop{position:absolute;left:0;right:0;top:100%;max-height:55vh;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:80;display:none;}
+  .smart-search-drop{position:absolute;left:0;right:0;top:100%;max-height:55vh;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:80;display:none;color:var(--text-primary);}
   .smart-search-drop.open{display:block;}
+  .smart-search-drop .ss-item{color:var(--text-primary);}
+  .smart-search-drop .ss-title{color:var(--text-primary)!important;}
+  .smart-search-drop .ss-meta{color:var(--text-secondary)!important;}
+  .smart-search-drop .ss-group{color:var(--tiffany-dark)!important;background:var(--bg-primary);}
+  .smart-search-drop b,.smart-search-drop small{color:inherit;}
 
   .smart-search-drop{position:absolute;left:0;right:0;top:100%;max-height:55vh;overflow-y:auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:80;display:none;}
   .smart-search-drop.open{display:block;}
@@ -221,11 +226,18 @@
 
   /* Sticky toolbar trong tab Thang điểm */
   #scoreStickyBar{position:fixed;top:var(--app-header-h, 72px);left:0;right:0;z-index:49;background:var(--bg-primary);padding-bottom:2px;border-bottom:1px solid var(--border-color);}
-  #scoreAbcBar{display:flex;gap:2px;overflow-x:auto;padding:4px 10px 6px;background:var(--tiffany-light);scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  #scoreAbcBar{display:flex;flex-wrap:nowrap;gap:4px;padding:8px 10px 4px;background:var(--bg-card);border-bottom:1px solid var(--border-color);overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
   #scoreAbcBar::-webkit-scrollbar{display:none;}
-  .abc-letter{flex-shrink:0;min-width:26px;padding:5px 6px;text-align:center;font-size:12px;font-weight:800;color:var(--tiffany-dark);border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
-  .abc-letter:active,.abc-letter.active{background:var(--tiffany-main);color:#fff;}
-  .abc-group-header{font-size:15px;font-weight:800;color:var(--tiffany-dark);margin:12px 0 6px;padding-bottom:3px;border-bottom:2px solid var(--tiffany-main);scroll-margin-top:calc(env(safe-area-inset-top) + 170px);}
+  .abc-letter{flex-shrink:0;min-width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;padding:0 6px;text-align:center;font-size:12px;font-weight:800;color:var(--tiffany-dark);border-radius:8px;cursor:pointer;background:var(--bg-card);border:1px solid var(--border-color);-webkit-tap-highlight-color:transparent;}
+  .abc-letter:active,.abc-letter.active{background:var(--tiffany-main);color:#fff;border-color:var(--tiffany-main);}
+  .abc-letter.dim{opacity:.35;pointer-events:none;}
+  .abc-toc-label{display:none;}
+  .abc-group-header{font-size:16px;font-weight:800;color:#fff;background:var(--tiffany-dark);margin:14px 0 8px;padding:8px 12px;border-radius:10px;scroll-margin-top:calc(var(--app-header-h, 72px) + 120px);display:flex;justify-content:space-between;align-items:center;}
+  .abc-group-header .abc-count{font-size:12px;font-weight:700;opacity:.85;}
+  .scale-card{background:var(--bg-card);border-radius:14px;padding:0;box-shadow:var(--card-shadow,0 2px 10px rgba(0,168,150,.08));border:1px solid var(--border-color);cursor:pointer;display:flex;align-items:stretch;overflow:hidden;margin-bottom:2px;}
+  .scale-card .scale-main{flex:1;padding:12px 14px;min-width:0;}
+  .scale-card .fav-btn{flex-shrink:0;width:44px;border:none;background:var(--bg-primary);color:var(--tiffany-dark);font-size:18px;cursor:pointer;border-left:1px solid var(--border-color);}
+  /* abc-group-header moved */
   [data-theme="dark"] .abc-group-header{color:var(--tiffany-main);}
 
 
@@ -395,6 +407,125 @@
   body.is-scrolling header{ box-shadow: none; }
   .theme-toggle-btn{ backdrop-filter: none; -webkit-backdrop-filter: none; }
 
+
+  /* Modal thang điểm — full màn hình, không lộ list phía sau */
+  .calc-modal{
+    display:none !important;
+    position:fixed !important;
+    top:0 !important; left:0 !important; right:0 !important; bottom:0 !important;
+    width:100vw !important;
+    height:100vh !important;
+    height:100dvh !important;
+    max-height:100dvh !important;
+    z-index:99999 !important;
+    background:var(--bg-primary) !important;
+    flex-direction:column !important;
+    overflow:hidden !important;
+    margin:0 !important;
+    padding:0 !important;
+    transform:none !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+  }
+  .calc-modal.open{display:flex !important;}
+  body.modal-open header,
+  body.modal-open #viewPhacDo,
+  body.modal-open #viewThangDiem,
+  body.modal-open #viewAI,
+  body.modal-open .specialty-tabs-wrapper,
+  body.modal-open .disease-tabs-wrapper,
+  body.modal-open .section-nav,
+  body.modal-open #scoreStickyBar,
+  body.modal-open #backToTop {
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  .calc-modal-head{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    flex-shrink:0;
+    padding:10px 14px;
+    padding-top:max(10px, env(safe-area-inset-top, 0px));
+    background:var(--bg-card);
+    border-bottom:1px solid var(--border-color);
+  }
+  .calc-modal-title{
+    font-weight:700;font-size:14px;flex:1;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;
+    color:var(--text-primary);
+  }
+  .calc-btn-back{
+    background:var(--tiffany-light);border:none;color:var(--tiffany-dark);
+    font-weight:700;padding:8px 12px;border-radius:10px;cursor:pointer;font-size:13px;flex-shrink:0;
+  }
+  .calc-btn-close{
+    background:transparent;border:1px solid var(--border-color);color:var(--text-secondary);
+    font-weight:600;padding:8px 12px;border-radius:10px;cursor:pointer;font-size:13px;flex-shrink:0;
+  }
+  .calc-modal-score{
+    flex-shrink:0;
+    display:flex;align-items:center;gap:14px;
+    padding:10px 16px;
+    background:var(--bg-card);
+    border-bottom:2px solid var(--tiffany-main);
+  }
+  .calc-score-box{
+    min-width:70px;text-align:center;padding:6px 10px;
+    background:var(--tiffany-light);border-radius:10px;border:1px solid var(--tiffany-main);
+  }
+  #stickyScoreNum{font-size:22px;font-weight:800;color:var(--tiffany-dark);line-height:1.1;}
+  .calc-score-label{font-size:9px;font-weight:700;color:var(--tiffany-dark);}
+  .calc-score-eval{font-size:13px;font-weight:600;line-height:1.35;flex:1;color:var(--text-primary);}
+  .calc-modal-body{
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:14px 16px 20px;
+    background:var(--bg-primary);
+  }
+  .calc-modal-foot{
+    flex-shrink:0;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    background:var(--bg-card);
+    border-top:1px solid var(--border-color);
+  }
+  .calc-btn-footer{
+    width:100%;padding:14px;border:none;border-radius:12px;
+    background:var(--tiffany-main);color:#fff;font-weight:800;font-size:15px;cursor:pointer;
+  }
+  body.modal-open{overflow:hidden;position:fixed;width:100%;}
+
+
+  .header-abc-bar{
+    display:none;
+    flex-wrap:nowrap;
+    gap:4px;
+    padding:6px 0 2px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .header-abc-bar::-webkit-scrollbar{display:none;}
+  body.tab-scores .header-abc-bar{display:flex !important;}
+  .header-abc-bar .abc-letter{
+    flex-shrink:0;min-width:28px;height:28px;
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:0 6px;font-size:12px;font-weight:800;
+    color:#fff;background:rgba(255,255,255,.2);
+    border:1px solid rgba(255,255,255,.35);border-radius:8px;cursor:pointer;
+  }
+  .header-abc-bar .abc-letter.active,
+  .header-abc-bar .abc-letter:active{background:#fff;color:var(--tiffany-dark);}
+  .header-abc-bar .abc-letter.dim{opacity:.35;pointer-events:none;}
+  #scoreStickyBar{z-index:52;background:var(--bg-card);}
+
+
+  .ai-em{font-size:12px;margin-bottom:8px;padding:8px 10px;background:#fef3c7;border-radius:10px;color:#92400e;}
+  .ai-scale-block{margin-top:10px;padding-top:8px;border-top:1px dashed var(--border-color);}
+  .ai-scale-row{margin-top:6px;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+  .ai-foot{font-size:10.5px;color:var(--text-secondary);margin-top:10px;}
+  .ai-chat-wrap .bot .ai-actions{margin-top:8px;}
+
 </style>
 </head>
 <body>
@@ -402,9 +533,9 @@
 <header>
   <div class="top-bar">
     <div>
-      <h1>📖 Sổ Y Khoa</h1>
-      <div class="sub">Cuốn sổ tra cứu phác đồ &amp; thang điểm · ESC/AHA/ADA/GINA/GOLD</div>
-      <div class="ver-badge">Bản 2026.08.31 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
+      <h1>📘 Sổ tay lâm sàng</h1>
+      <div class="sub">Phác đồ điều trị · Thang điểm · ESC/AHA/ADA/GINA/GOLD/ACG</div>
+      <div class="ver-badge">Bản 2026.09.04 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
       <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇️ Cài app</button>
@@ -424,6 +555,7 @@
       oninput="onGlobalSearch(this.value)" onfocus="onGlobalSearch(this.value)"
       onkeydown="handleSmartSearchKey(event)">
     <div id="smartSearchDrop" class="smart-search-drop"></div>
+    <div id="headerAbcBar" class="header-abc-bar" style="display:none;"></div>
   </div>
 </header>
 
@@ -437,16 +569,16 @@
   </div>
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
-  <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px 24px;">
-    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.08.31
+  <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px calc(72px + env(safe-area-inset-bottom,0px));">
+    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.09.04
   </footer>
 </div>
 
 
 <div id="viewThangDiem" style="display:none;">
   <div id="scoreStickyBar">
-    <div style="padding:6px 14px 2px;font-size:11px;color:var(--text-secondary);font-weight:600;">Dùng ô tìm trên header · hoặc chọn danh mục / A–Z</div>
-    <div style="display:flex;gap:6px;overflow-x:auto;padding:2px 14px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+    <div id="scoreAbcBar"></div>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding:4px 12px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
       <button class="score-chip active" data-cat="all" onclick="filterScoreCat('all',this)">Tất cả</button>
       <button class="score-chip" data-cat="tim_mach" onclick="filterScoreCat('tim_mach',this)">Tim mạch</button>
       <button class="score-chip" data-cat="cap_cuu" onclick="filterScoreCat('cap_cuu',this)">Cấp cứu</button>
@@ -454,26 +586,28 @@
       <button class="score-chip" data-cat="ho_hap" onclick="filterScoreCat('ho_hap',this)">Hô hấp</button>
       <button class="score-chip" data-cat="tieu_hoa" onclick="filterScoreCat('tieu_hoa',this)">Tiêu hóa</button>
     </div>
-    <div id="scoreAbcBar"></div>
   </div>
-  <div id="scalesList" style="padding:8px 14px 40px;display:flex;flex-direction:column;gap:8px;"></div>
+  <div id="scalesList" style="padding:8px 14px calc(96px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;"></div>
 </div>
 
 
-<div id="calcModal" style="display:none;position:fixed;inset:0;z-index:200;background:var(--bg-primary);flex-direction:column;">
-  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--bg-card);border-bottom:1px solid var(--border-color);gap:8px;">
-    <button onclick="closeScoreModal()" style="background:var(--tiffany-light);border:none;color:var(--tiffany-dark);font-weight:700;padding:8px 12px;border-radius:10px;cursor:pointer;flex-shrink:0;font-size:13px;">← Quay lại</button>
-    <div id="modalScaleTitle" style="font-weight:700;font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;"></div>
-    <button onclick="closeScoreModal()" style="background:transparent;border:1px solid var(--border-color);color:var(--text-secondary);font-weight:600;padding:8px 12px;border-radius:10px;cursor:pointer;flex-shrink:0;font-size:13px;">Đóng</button>
+<div id="calcModal" class="calc-modal" aria-hidden="true">
+  <div class="calc-modal-head">
+    <button type="button" class="calc-btn-back" onclick="closeScoreModal()">← Quay lại</button>
+    <div id="modalScaleTitle" class="calc-modal-title"></div>
+    <button type="button" class="calc-btn-close" onclick="closeScoreModal()">Đóng</button>
   </div>
-  <div style="position:sticky;top:0;z-index:50;background:var(--bg-card);border-bottom:2px solid var(--tiffany-main);padding:10px 16px;display:flex;align-items:center;gap:14px;">
-    <div style="min-width:70px;text-align:center;padding:6px 10px;background:var(--tiffany-light);border-radius:10px;border:1px solid var(--tiffany-main);">
-      <div id="stickyScoreNum" style="font-size:22px;font-weight:800;color:var(--tiffany-dark);">0</div>
-      <div style="font-size:9px;font-weight:700;color:var(--tiffany-dark);">ĐIỂM</div>
+  <div class="calc-modal-score">
+    <div class="calc-score-box">
+      <div id="stickyScoreNum">0</div>
+      <div class="calc-score-label">ĐIỂM</div>
     </div>
-    <div id="stickyScoreEval" style="font-size:13px;font-weight:600;line-height:1.35;flex:1;"></div>
+    <div id="stickyScoreEval" class="calc-score-eval"></div>
   </div>
-  <div id="modalScaleBody" style="flex:1;overflow-y:auto;padding:14px 16px 40px;-webkit-overflow-scrolling:touch;"></div>
+  <div id="modalScaleBody" class="calc-modal-body"></div>
+  <div class="calc-modal-foot">
+    <button type="button" class="calc-btn-footer" onclick="closeScoreModal()">← Quay lại danh sách thang điểm</button>
+  </div>
 </div>
 
 <script>
@@ -3065,45 +3199,89 @@ ${rt(["Chi tiết"],[
 },
 {
   spec:"tieu_hoa", id:"pud", emoji:"🩹", short:"Loét DD-TT", title:"Loét dạ dày-tá tràng & H. pylori",
-  guidelines:["ACG 2024 (H. pylori)","ACG 2021 (Loét do NSAID)"],
+  guidelines:["ACG 2024 H. pylori","ACG PUD/NSAID"],
   sections:{
     dinh_nghia:`
-      <p>Loét dạ dày-tá tràng là tổn thương mất niêm mạc sâu qua lớp cơ niêm, hai nguyên nhân chính: nhiễm <b>Helicobacter pylori</b> và dùng <b>NSAID/aspirin</b>.</p>`,
+<p><b>Helicobacter pylori</b> là vi khuẩn Gram âm sống ở niêm mạc dạ dày, nguyên nhân chính của <b>viêm dạ dày mạn, loét dạ dày–tá tràng</b>, và liên quan ung thư dạ dày / MALT lymphoma.</p>
+      <p><b>Loét dạ dày–tá tràng (PUD):</b> tổn thương mất niêm mạc ≥5 mm; hai nguyên nhân thường gặp nhất là <b>H. pylori</b> và <b>NSAID/aspirin</b>.</p>
+    `,
     chan_doan:`
-      <div class="subhead">Xét nghiệm tìm H. pylori</div>
-      ${rt(["Đặc điểm"],[
-        ["Test hơi thở Urea (UBT)","Không xâm lấn, độ chính xác cao — xét nghiệm ưu tiên chẩn đoán và xác nhận tiệt trừ"],
-        ["Kháng nguyên phân (SAT)","Không xâm lấn, tương đương UBT, chi phí thấp hơn"],
-        ["Test nhanh urease/mô bệnh học qua nội soi","Khi đã có chỉ định nội soi vì lý do khác"],
-        ["Huyết thanh học (IgG)","Không dùng để xác nhận tiệt trừ (kháng thể tồn tại kéo dài); độ chính xác thấp hơn"]
-      ])}
-      <div class="alert-box alert-warn">Ngưng PPI ≥2 tuần và kháng sinh/bismuth ≥4 tuần trước khi làm UBT/SAT để tránh âm tính giả.</div>
-      <p>Nội soi dạ dày-tá tràng cho ổ loét, sinh thiết loét dạ dày để loại trừ ác tính (loét tá tràng hiếm ác tính, không bắt buộc sinh thiết thường quy) và xác nhận lành sau điều trị ở loét dạ dày lớn/nguy cơ cao.</p>`,
-    dieu_tri:`
-<ul>
-        <li><b>H. pylori dương tính:</b> diệt trừ theo phác đồ phù hợp kháng clarithromycin địa phương (thường phác đồ 4 thuốc hoặc dựa kháng sinh đồ — ACG 2024). Xác nhận diệt bằng test urea hơi thở hoặc kháng nguyên phân (≥4 tuần sau kháng sinh, ≥2 tuần ngừng PPI).</li>
-        <li>Loét: PPI đủ liều; ngừng NSAID nếu được; nếu buộc dùng NSAID dài → PPI bảo vệ + ưu tiên COX-2 chọn lọc khi phù hợp.</li>
-        <li>Xuất huyết tiêu hóa trên: hồi sức, PPI tĩnh mạch, nội soi can thiệp sớm.</li>
-        <li>Thủng hoặc hẹp môn vị: hội chẩn ngoại khoa.</li>
+<div class="subhead">Chỉ định xét nghiệm H. pylori (ACG 2024)</div>
+      <ul>
+        <li>Loét dạ dày hoặc tá tràng (đang hoạt động hoặc tiền sử).</li>
+        <li>Dyspepsia chưa điều trị (chiến lược test-and-treat ở &lt;60 tuổi không alarm features — theo ngữ cảnh).</li>
+        <li>Trước khi dùng NSAID dài hạn ở người có nguy cơ cao; sau xuất huyết tiêu hóa trên.</li>
+        <li>Thiếu máu thiếu sắt không giải thích, ITP người lớn, theo dõi sau điều trị diệt trừ.</li>
+        <li>Ung thư dạ dày gia đình / nguy cơ cao theo hướng dẫn địa phương.</li>
       </ul>
-    
-<div class="subhead">🔗 Tương tác thuốc (loét / diệt H. pylori)</div>
+      <div class="subhead">Phương pháp xét nghiệm</div>
+      ${rt(["Chi tiết"],[
+        ["Không xâm lấn","Urea breath test (UBT); kháng nguyên H. pylori trong phân"],
+        ["Xâm lấn (khi nội soi)","CLO/urease nhanh, mô bệnh học, nuôi cấy + kháng sinh đồ khi nghi kháng"],
+        ["Huyết thanh học","Không dùng để xác nhận diệt trừ; hạn chế chẩn đoán hiện nhiễm"]
+      ])}
+      <div class="alert-box alert-warn"><b>Trước test UBT / kháng nguyên phân / urease:</b> ngừng PPI ≥2 tuần (lý tưởng); ngừng kháng sinh / bismuth ≥4 tuần — tránh âm tính giả.</div>
+    `,
+    dieu_tri:`
+<div class="subhead">Nguyên tắc ACG 2024</div>
+      <ul>
+        <li>Chỉ điều trị khi <b>đã chứng minh nhiễm</b>; sau điều trị phải <b>xác nhận diệt trừ</b>.</li>
+        <li>Ưu tiên phác đồ tối ưu theo <b>tỷ lệ kháng clarithromycin địa phương</b> và tiền sử macrolide.</li>
+        <li><b>Không</b> dùng triple clarithromycin thường quy nếu kháng clarithromycin cao hoặc đã từng dùng macrolide.</li>
+        <li>Thời gian hầu hết phác đồ: <b>14 ngày</b>.</li>
+      </ul>
+
+      <div class="subhead">Phác đồ diệt trừ ưu tiên (người lớn)</div>
+      ${rt(["Thành phần (tham khảo)","Thời gian"],[
+        ["Bismuth quadruple (hàng đầu nhiều nơi)","PPI chuẩn + bismuth + metronidazole + tetracycline","14 ngày"],
+        ["Rifabutin triple (chọn lọc)","PPI + amoxicillin + rifabutin","14 ngày"],
+        ["PCAB-based (nơi có vonoprazan)","Vonoprazan + amoxicillin ± clarithromycin theo nhãn/địa phương","Theo nhãn"],
+        ["Clarithromycin triple","Chỉ khi biết nhạy clarithromycin / kháng địa phương thấp và chưa dùng macrolide","14 ngày"]
+      ])}
+
+      <div class="subhead">💊 Liều dùng chi tiết (người lớn — tham khảo)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["PPI (omeprazole, esomeprazole…)","Thường 20–40 mg ×2/ngày trong phác đồ","Uống trước ăn; đủ liều ức chế acid"],
+        ["Bismuth subsalicylate / subcitrate","Theo chế phẩm (vd. 262–524 mg ×4 hoặc tương đương)","Phân đen — báo BN"],
+        ["Metronidazole","500 mg ×3–4/ngày trong quadruple","Tránh rượu"],
+        ["Tetracycline","500 mg ×4/ngày","Không dùng ở trẻ em / thai kỳ"],
+        ["Amoxicillin","1 g ×2–3/ngày","Dị ứng penicillin → đổi phác đồ"],
+        ["Clarithromycin","500 mg ×2/ngày","Chỉ khi còn vai trò; tương tác CYP3A4"],
+        ["Levofloxacin (cứu cánh chọn lọc)","500 mg ×1/ngày trong phác đồ cứu","Hạn chế vì kháng FQ và ADR"]
+      ])}
+
+      <div class="subhead">Xác nhận diệt trừ</div>
+      <ul>
+        <li>UBT hoặc kháng nguyên phân (hoặc sinh thiết khi nội soi lại).</li>
+        <li>Thời điểm: <b>≥4 tuần</b> sau hết kháng sinh; <b>≥2 tuần</b> ngừng PPI.</li>
+        <li>Thất bại: tránh lặp lại cùng kháng sinh đã dùng; cân nhắc nuôi cấy / phác đồ cứu cánh; hội chẩn chuyên khoa.</li>
+      </ul>
+
+      <div class="subhead">Loét — điều trị hỗ trợ</div>
+      <ul>
+        <li>PPI đủ liệu trình lành loét (thường thêm sau diệt trừ tùy vị trí loét / biến chứng).</li>
+        <li>Ngừng NSAID nếu được; nếu bắt buộc: PPI bảo vệ ± COX-2 chọn lọc.</li>
+        <li>Xuất huyết: hồi sức, PPI IV, nội soi can thiệp — diệt H. pylori sau ổn định.</li>
+      </ul>
+
+      <div class="subhead">🔗 Tương tác thuốc (diệt H. pylori)</div>
       ${rt(["Rủi ro / hướng xử trí"],[
-        ["Clarithromycin + statin/colchicine/warfarin","Tương tác CYP3A4 mạnh"],
-        ["NSAID + kháng đông/aspirin/steroid","Xuất huyết tiêu hóa"],
-        ["Bismuth / antacid","Cách giờ với kháng sinh khác nếu cần"]
+        ["Clarithromycin + statin/colchicine/warfarin","CYP3A4 — tránh hoặc chỉnh sát"],
+        ["Metronidazole + rượu","Phản ứng giống disulfiram"],
+        ["Tetracycline + sữa/sắt/antacid","Giảm hấp thu — cách giờ"],
+        ["PPI + clopidogrel (omeprazole)","Ưu tiên pantoprazole nếu cần"]
       ])}
     `,
     khuyen_cao:`
-      ${rt(["Mức"],[
-        ["Phác đồ 4 thuốc (bismuth hoặc đồng thời) ưu tiên hơn 3 thuốc chuẩn ở vùng kháng clarithromycin cao",'<span class="badge badge-I">I</span>'],
-        ["Xác nhận tiệt trừ bằng UBT/SAT sau điều trị ở mọi bệnh nhân",'<span class="badge badge-I">I</span>'],
-        ["PPI dự phòng dài hạn khi bắt buộc tiếp tục NSAID",'<span class="badge badge-I">I</span>'],
-        ["Dùng huyết thanh học IgG để xác nhận tiệt trừ",'<span class="badge badge-III">III</span>'],
-        ["Phác đồ 3 thuốc chuẩn khi chưa rõ tỷ lệ kháng clarithromycin tại chỗ",'<span class="badge badge-III">III</span>']
-      ])}`
+${rt(["Class"],[
+        ["Xác nhận diệt trừ sau điều trị",'<span class="badge badge-I">I</span>'],
+        ["Bismuth quadruple 14 ngày là lựa chọn hàng đầu khi kháng clarithromycin cao / không rõ",'<span class="badge badge-I">I</span>'],
+        ["Tránh clarithromycin triple thường quy nếu đã dùng macrolide hoặc kháng địa phương cao",'<span class="badge badge-III">III</span>'],
+        ["Ngừng PPI trước test xác nhận theo hướng dẫn (tránh âm tính giả)",'<span class="badge badge-I">I</span>']
+      ])}
+    `
   },
-  source:"ACG Clinical Guideline: Treatment of Helicobacter pylori Infection 2024 update; ACG Guideline for Prevention of NSAID-Related GI Injury 2021"
+  source:"ACG Clinical Guideline: Treatment of Helicobacter pylori Infection (2024); ACG peptic ulcer / NSAID guidance"
 },
 {
   spec:"tieu_hoa", id:"ibs", emoji:"🌀", short:"IBS", title:"Hội chứng ruột kích thích",
@@ -5153,21 +5331,23 @@ function smartSearch(q){
 }
 
 function smartSearchScores(q){
-  if(typeof ensureScales==='function') ensureScales();
-  if(!(q||'').trim()){
-    // show fav scales first
-    const fav = getFavScales();
-    if(fav.length){
+  try { if(typeof ensureScales==='function') ensureScales(); } catch(e){}
+  q = (q||'').trim();
+  if(!q){
+    const fav = (typeof getFavScales==='function') ? getFavScales() : [];
+    if(fav.length && scalesData){
       const favItems = fav.map(id => scalesData.find(s => s.id === id)).filter(Boolean);
       const rest = scalesData.filter(s => !fav.includes(s.id));
       currentFilteredScales = [...favItems, ...rest];
     } else {
-      currentFilteredScales = [...scalesData];
+      currentFilteredScales = [...(scalesData||[])];
     }
-    renderScoreList(currentFilteredScales);
+    if(typeof renderScoreList==='function') renderScoreList(currentFilteredScales);
     return;
   }
-  smartSearchScoresDebounced(q);
+  // lọc ngay + debounce để gõ mượt
+  if(typeof smartSearchScoresCore==='function') smartSearchScoresCore(q);
+  else smartSearchScoresDebounced(q);
 }
 
 // Keep original implementations under Core names
@@ -5235,19 +5415,30 @@ function smartSearchCore(q){
 }
 
 function smartSearchScoresCore(q){
-  ensureScales();
+  try { ensureScales(); } catch(e){}
   q = (q||'').trim();
   if(!q){
-    currentFilteredScales = [...scalesData];
-    renderScoreList(currentFilteredScales);
+    currentFilteredScales = [...(scalesData||[])];
+    if(typeof renderScoreList==='function') renderScoreList(currentFilteredScales);
     return;
   }
-  currentFilteredScales = scalesData
-    .map(s => ({s, score: scoreMatch([s.title,s.subtitle,s.id,s.categoryName||'',s.category||''].join(' '), q)}))
+  const qn = (typeof stripVN==='function') ? stripVN(q) : q.toLowerCase();
+  currentFilteredScales = (scalesData||[])
+    .map(s => {
+      const hay = [s.title, s.subtitle, s.id, s.categoryName||'', s.category||''].join(' ');
+      let score = scoreMatch(hay, q);
+      const hayN = (typeof stripVN==='function') ? stripVN(hay) : hay.toLowerCase();
+      // thưởng khớp trực tiếp title/id
+      if((s.id||'').toLowerCase() === qn) score += 100;
+      if(hayN.includes(qn)) score += 40;
+      // bỏ nhiễu: không có query trong hay và score chỉ từ alias yếu
+      if(!hayN.includes(qn) && score < 30) score = 0;
+      return {s, score};
+    })
     .filter(x => x.score > 0)
     .sort((a,b)=>b.score-a.score)
     .map(x => x.s);
-  renderScoreList(currentFilteredScales);
+  if(typeof renderScoreList==='function') renderScoreList(currentFilteredScales);
 }
 
 // Enhance navigation to save recent
@@ -5338,7 +5529,7 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
     ctx.fillStyle = '#028090';
     ctx.font = `bold ${11 * s}px -apple-system, system-ui, sans-serif`;
     ctx.textAlign = 'center';
-    ctx.fillText('Y KHOA', bx + bw * 0.58, by + bh - 14 * s);
+    ctx.fillText('SỔ TAY', bx + bw * 0.58, by + bh - 14 * s);
     return c.toDataURL('image/png');
   }
   let icon180 = '';
@@ -5351,9 +5542,9 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
     const fav = document.getElementById('appFavicon');
     if (fav) fav.href = icon192;
     const manifest = {
-      name: "Sổ Y Khoa — Tra cứu phác đồ",
-      short_name: "Sổ Y Khoa",
-      description: "Cuốn sổ tra cứu phác đồ điều trị và thang điểm lâm sàng",
+      name: "Sổ tay lâm sàng",
+      short_name: "Sổ tay LS",
+      description: "Sổ tay lâm sàng: phác đồ điều trị và thang điểm",
       start_url: ".",
       scope: ".",
       display: "standalone",
@@ -5524,21 +5715,63 @@ function updateAppHeaderOffsets(){
   document.documentElement.style.setProperty('--app-score-chrome-h', (h + scoreH + 8) + 'px');
 }
 
+window.__mainTab = window.__mainTab || 'phacdo';
 function onGlobalSearch(q){
-  const viewTd = document.getElementById('viewThangDiem');
-  const viewAI = document.getElementById('viewAI');
-  const onScore = viewTd && viewTd.style.display !== 'none';
-  const onAI = viewAI && viewAI.style.display !== 'none' && viewAI.style.display !== '';
-  if(onAI){
-    /* keep dropdown for navigation while on AI */
-    smartSearch(q || '');
+  const tab = window.__mainTab || 'phacdo';
+  q = (q == null) ? '' : String(q);
+  if(tab === 'ai'){
+    smartSearch(q);
     return;
   }
-  if(onScore){
-    smartSearchScores(q || '');
-  } else {
-    smartSearch(q || '');
+  if(tab === 'thangdiem'){
+    try {
+      if(typeof ensureScales === 'function') ensureScales();
+      smartSearchScores(q);
+      // đồng bộ dropdown gợi ý thang điểm khi gõ
+      const drop = document.getElementById('smartSearchDrop');
+      if(drop && q.trim()){
+        const list = (typeof currentFilteredScales !== 'undefined' && currentFilteredScales.length)
+          ? currentFilteredScales
+          : (scalesData || []).filter(s => scoreMatch([s.title,s.subtitle,s.id,s.categoryName||''].join(' '), q) > 0);
+        // Lọc chắc: phải khớp query gốc trên title/id (tránh nhiễu alias)
+        const qn = (typeof stripVN==='function'?stripVN(q):q.toLowerCase());
+        const solid = list.filter(s => {
+          if(!s || !s.id) return false;
+          const hay = (typeof stripVN==='function'?stripVN: (x)=>String(x||'').toLowerCase())([s.title,s.id,s.subtitle||'',s.categoryName||''].join(' '));
+          return hay.includes(qn) || (s.id||'').toLowerCase().includes(qn);
+        });
+        const use = solid.length ? solid : list.filter(s => s && s.title);
+        if(use.length){
+          let h = `<div class="ss-group">🧮 Thang điểm (${Math.min(use.length,12)})</div>`;
+          use.slice(0,12).forEach(s => {
+            const id = String(s.id||'').replace(/'/g,'');
+            const title = String(s.title||s.id||'Thang điểm').replace(/</g,'&lt;');
+            const meta = String(s.categoryName||s.category||s.subtitle||'').replace(/</g,'&lt;');
+            h += `<div class="ss-item" onclick="goSmartScale('${id}')">
+              <div class="ss-emoji">🧮</div>
+              <div class="ss-body">
+                <div class="ss-title">${title}</div>
+                <div class="ss-meta">${meta}</div>
+              </div>
+            </div>`;
+          });
+          drop.innerHTML = h;
+          drop.classList.add('open');
+        } else {
+          drop.innerHTML = `<div style="padding:14px;text-align:center;color:var(--text-secondary);font-size:13px;">Không thấy thang điểm “${q.replace(/[<>]/g,'')}”</div>`;
+          drop.classList.add('open');
+        }
+      } else if(drop && !q.trim()){
+        drop.classList.remove('open');
+        drop.innerHTML = '';
+      }
+    } catch(e){
+      console.warn('score search', e);
+      smartSearch(q);
+    }
+    return;
   }
+  smartSearch(q);
 }
 window.addEventListener('resize', updateAppHeaderOffsets, { passive: true });
 window.addEventListener('orientationchange', () => setTimeout(updateAppHeaderOffsets, 200));
@@ -5609,12 +5842,19 @@ function aiPickBullets(text, maxN){
 
 function aiRankItems(q){
   if(typeof scoreMatch !== 'function' || typeof stripVN !== 'function') return {diseases:[], scales:[]};
+  const qn = stripVN(q);
   const dMatches = (typeof diseases !== 'undefined' ? diseases : []).map(d => {
     const hay = [d.title, d.short, d.id, (d.guidelines||[]).join(' ')].join(' ');
     let sc = scoreMatch(hay, q, {short: d.short||d.id});
-    // small boost if query tokens in title
+    const hayN = stripVN(hay);
+    // boost khớp bệnh rõ
+    if(hayN.includes(qn)) sc += 30;
+    if((d.id==='htn'||d.short==='THA') && /huyet ap|tha\b|hypertension|htn/.test(qn)) sc += 50;
+    if((d.id==='hf') && /suy tim|heart failure|hfrEF|hfpEF/.test(qn)) sc += 50;
+    if((d.id==='copd') && /copd|phoi tac nghe/.test(qn)) sc += 50;
+    if((d.id==='acs') && /acs|nmct|stemi|nstemi|vanh cap/.test(qn)) sc += 50;
     return {d, sc};
-  }).filter(x => x.sc >= 18).sort((a,b)=>b.sc-a.sc);
+  }).filter(x => x.sc >= 20).sort((a,b)=>b.sc-a.sc);
 
   let scales = [];
   try {
@@ -5672,36 +5912,38 @@ function aiAnswer(q){
   const intent = aiDetectIntent(q);
   let {diseases: dHits, scales: sHits} = aiRankItems(q);
 
-  // If clearly asking for a score, prioritize scales and drop weak disease matches
-  if(intent.wantScale && sHits.length){
-    dHits = dHits.filter(x => x.sc >= 40).slice(0,1);
-    sHits = sHits.slice(0,1);
+  if(intent.wantScale){
+    sHits = sHits.filter(x => x.sc >= 28).slice(0, 2);
+    dHits = dHits.filter(x => x.sc >= 45).slice(0, 1);
   } else {
-    dHits = dHits.slice(0,1); // only best disease
-    sHits = intent.wantScale ? sHits.slice(0,2) : sHits.slice(0,1);
+    dHits = dHits.filter(x => x.sc >= 22).slice(0, 1);
+    sHits = sHits.filter(x => x.sc >= 50).slice(0, 1);
   }
 
   if(!dHits.length && !sHits.length){
-    return 'Không khớp chắc trong thư viện.<br>Thử: <b>THA</b>, <b>COPD</b>, <b>GCS</b>, <b>HAS-BLED</b> — hoặc mở tab Phác đồ / Thang điểm.';
+    return 'Chưa khớp chắc trong sổ tay.<br>Thử: <b>THA</b>, <b>suy tim</b>, <b>COPD</b>, <b>GCS</b>, <b>HAS-BLED</b> — hoặc tab Phác đồ / Thang điểm.';
   }
 
   let out = '';
   if(intent.wantEmergency)
-    out += '<div style="font-size:12px;margin-bottom:8px">🚨 Ưu tiên ABC / cấp cứu tại chỗ; dưới đây chỉ là tóm tắt app.</div>';
+    out += '<div class="ai-em">🚨 Ưu tiên ABC / cấp cứu tại chỗ. Dưới đây là tóm tắt trong app.</div>';
 
-  if(dHits.length) out += aiSummarizeDisease(dHits[0].d, intent);
+  if(dHits.length){
+    const did = dHits[0].d.id;
+    out += aiSummarizeDisease(dHits[0].d, intent);
+    out += '<div class="ai-actions"><button type="button" onclick="goSmartDisease(\'' + did + '\')">Mở phác đồ</button></div>';
+  }
 
   if(sHits.length){
-    out += (dHits.length ? '<div style="margin-top:10px">' : '<div>');
-    out += '<b>🧮 Thang điểm</b>';
+    out += '<div class="ai-scale-block"><b>🧮 Thang điểm liên quan</b>';
     sHits.forEach(x => {
-      out += '<div style="margin-top:6px;font-size:13px">' + aiEscape(x.s.title);
-      out += '<div class="ai-actions"><button type="button" onclick="goSmartScale(\'' + x.s.id + '\')">Tính ngay</button></div></div>';
+      out += '<div class="ai-scale-row">' + aiEscape(x.s.title) +
+        ' <button type="button" onclick="goSmartScale(\'' + x.s.id + '\')">Tính</button></div>';
     });
     out += '</div>';
   }
 
-  out += '<div style="font-size:10.5px;color:var(--text-secondary);margin-top:8px">Tóm tắt từ app — đối chiếu guideline gốc trước khi dùng.</div>';
+  out += '<div class="ai-foot">Tóm tắt từ sổ tay — đối chiếu guideline gốc trước khi dùng.</div>';
   return out;
 }
 
@@ -5737,9 +5979,10 @@ function aiSend(){
   let hidden = false;
   let ticking = false;
   let lastToggle = 0;
-  const TOP_SHOW = 56;
-  const DELTA = 12;
-  const MIN_TOGGLE_MS = 80;
+  const TOP_SHOW = 48;
+  const DELTA_HIDE = 18;   // vuốt lên ẩn header
+  const DELTA_SHOW = 48;   // cần vuốt xuống mạnh mới hiện lại — tránh chạm nhầm
+  const MIN_TOGGLE_MS = 220;
 
   function setChromeHidden(on){
     if(hidden === on) return;
@@ -5780,9 +6023,14 @@ function aiSend(){
       if(show) btn.classList.add('show'); else btn.classList.remove('show');
     }
 
-    if(y < TOP_SHOW) setChromeHidden(false);
-    else if(dy > DELTA) setChromeHidden(true);
-    else if(dy < -DELTA) setChromeHidden(false);
+    // Cao su (rubber-band) cuối trang: bỏ qua — tránh hiện header khi chạm
+    const docH = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    const atBottom = (y + window.innerHeight) >= (docH - 80);
+    const atTop = y < TOP_SHOW;
+
+    if(atTop) setChromeHidden(false);
+    else if(dy > DELTA_HIDE) setChromeHidden(true);           // cuộn xuống → ẩn
+    else if(dy < -DELTA_SHOW && !atBottom) setChromeHidden(false); // cuộn lên rõ → hiện
 
     lastY = y;
   }
@@ -8034,14 +8282,23 @@ function switchMainTab(tab) {
   }
   document.getElementById('smartSearchDrop')?.classList.remove('open');
 
+  window.__mainTab = tab;
+  document.body.classList.toggle('tab-scores', tab === 'thangdiem');
+  document.body.classList.toggle('tab-ai', tab === 'ai');
+  document.body.classList.toggle('tab-phacdo', tab === 'phacdo');
+  const hab0 = document.getElementById('headerAbcBar');
+  if(hab0) hab0.style.display = (tab === 'thangdiem') ? 'flex' : 'none';
   if(tab === 'thangdiem'){
     try {
       ensureScales();
-      if(document.getElementById('scalesList') && document.getElementById('scalesList').children.length === 0){
-        currentFilteredScales = [...scalesData].sort((a,b)=>a.title.localeCompare(b.title,'vi'));
+      const q = (document.getElementById('quickSearch')||{}).value || '';
+      if(q.trim()){
+        smartSearchScores(q);
+      } else {
+        currentFilteredScales = [...(scalesData||[])].sort((a,b)=>a.title.localeCompare(b.title,'vi'));
         renderScoreList(currentFilteredScales);
       }
-    } catch(e){  }
+    } catch(e){ console.warn('thangdiem tab', e); }
   }
 
   document.body.classList.remove('chrome-hidden');
@@ -8052,17 +8309,21 @@ function switchMainTab(tab) {
 function renderScoreList(data) {
   const box = document.getElementById('scalesList');
   const abcBar = document.getElementById('scoreAbcBar');
-  if (!data.length) {
+  if (!box) return;
+  if (!data || !data.length) {
     box.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary);">Không tìm thấy thang điểm phù hợp.</div>';
-    if (abcBar) abcBar.innerHTML = '';
+    if (abcBar) abcBar.innerHTML = '<div class="abc-toc-label">MỤC LỤC A–Z</div>';
     return;
   }
-  // Gom nhóm A-Z theo chữ cái đầu tiêu đề
-  const sorted = [...data].sort((a,b) => a.title.localeCompare(b.title, 'vi'));
+  const sorted = [...data].sort((a,b) => (a.title||'').localeCompare(b.title||'', 'vi'));
   const grouped = {};
   sorted.forEach(s => {
-    let letter = s.title.trim().charAt(0).toUpperCase();
-    if (letter >= '0' && letter <= '9') letter = '#';
+    let letter = (s.title||'?').trim().charAt(0).toUpperCase();
+    if (!letter || letter < 'A' || letter > 'Z') {
+      if (letter >= '0' && letter <= '9') letter = '#';
+      else letter = (letter.normalize && letter.normalize('NFD').replace(/\u0300-\u036f/g,'').charAt(0).toUpperCase()) || '#';
+      if (letter < 'A' || letter > 'Z') letter = (letter >= '0' && letter <= '9') ? '#' : '#';
+    }
     if (!grouped[letter]) grouped[letter] = [];
     grouped[letter].push(s);
   });
@@ -8071,27 +8332,35 @@ function renderScoreList(data) {
     if (b === '#') return 1;
     return a.localeCompare(b);
   });
-  // Thanh ABC
-  if (abcBar) {
-    abcBar.innerHTML = letters.map(L =>
-      `<span class="abc-letter" onclick="scrollToScoreLetter('${L}')">${L}</span>`
-    ).join('');
-  }
-  // Danh sách theo nhóm
+  // Mục lục A–Z đầy đủ (chữ không có mục → mờ)
+  const ALL = ['#'].concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
+  const abcHtml = ALL.map(L => {
+        const has = !!grouped[L];
+        const cls = has ? 'abc-letter' : 'abc-letter dim';
+        const click = has ? `onclick="scrollToScoreLetter('${L}')"` : '';
+        return `<span class="${cls}" ${click}>${L === '#' ? '0-9' : L}</span>`;
+      }).join('');
+  if (abcBar) abcBar.innerHTML = abcHtml;
+  const hab = document.getElementById('headerAbcBar');
+  if (hab) hab.innerHTML = abcHtml;
   box.innerHTML = letters.map(L => {
-    const cards = grouped[L].map(s => {
+    const items = grouped[L] || [];
+    const cards = items.map(s => {
       const star = (typeof isFavScale==='function' && isFavScale(s.id)) ? '★' : '☆';
-      return `
-      <div class="scale-card">
+      const title = String(s.title||'').replace(/</g,'&lt;');
+      const desc = String(s.subtitle||'').replace(/</g,'&lt;');
+      const cat = String(s.categoryName || s.category || '').replace(/</g,'&lt;');
+      return `<div class="scale-card">
         <div class="scale-main" onclick="openScoreModal('${s.id}')">
-          <div class="scale-title">${s.title}</div>
-          <div class="scale-desc">${s.subtitle}</div>
-          <span class="scale-badge">${s.categoryName || s.category}</span>
+          <div class="scale-title">${title}</div>
+          <div class="scale-desc">${desc}</div>
+          <span class="scale-badge">${cat}</span>
         </div>
-        <button class="fav-btn" onclick="event.stopPropagation();toggleFavScale('${s.id}',this)">${star}</button>
+        <button type="button" class="fav-btn" onclick="event.stopPropagation();toggleFavScale('${s.id}',this)">${star}</button>
       </div>`;
     }).join('');
-    return `<div class="abc-group-header" id="scoreSec_${L}">${L}</div>${cards}`;
+    const label = L === '#' ? '0–9' : L;
+    return `<div class="abc-group-header" id="scoreSec_${L}"><span>${label}</span><span class="abc-count">${items.length} thang</span></div>${cards}`;
   }).join('');
 }
 
@@ -8115,44 +8384,68 @@ function handleScoreSearch(q){ smartSearchScores(q); }
 
 
 function openScoreModal(id) {
-  ensureScales(); currentScale = scalesData.find(s => s.id === id);
+  ensureScales();
+  currentScale = scalesData.find(s => s.id === id);
   if (!currentScale) return;
   if(typeof pushRecent==='function') pushRecent((currentScale.title||'').split('(')[0].trim().slice(0,32), 'scale', id);
-  document.getElementById('modalScaleTitle').innerText = currentScale.title;
+  const titleEl = document.getElementById('modalScaleTitle');
+  if(titleEl) titleEl.innerText = currentScale.title || '';
   const body = document.getElementById('modalScaleBody');
-  body.innerHTML = currentScale.criteria.map((c,i) => {
+  if(!body) return;
+  body.innerHTML = (currentScale.criteria||[]).map((c) => {
     const isMulti = !!c.multi;
     let control = '';
     if(isMulti){
       control = `<div class="criterion-detail"><span class="multi-hint">☑ Có thể chọn nhiều mục — điểm cộng dồn</span></div>` +
-        c.options.map((o,j) =>
+        (c.options||[]).map((o) =>
           `<label class="crit-check"><input type="checkbox" class="criterion-check" data-score="${o.score}" onchange="calcScoreNow()"><span>${o.text}</span></label>`
         ).join('');
     } else {
       control = `<div class="criterion-detail">${c.detail||''}</div>
       <select class="option-select criterion-val" onchange="calcScoreNow()">
-        ${c.options.map(o => `<option value="${o.score}">${o.text}</option>`).join('')}
+        ${(c.options||[]).map(o => `<option value="${o.score}">${o.text}</option>`).join('')}
       </select>`;
     }
     return `<div class="criterion-group">
-      <div class="criterion-title">${c.name}</div>
-      ${isMulti ? '' : ''}
+      <div class="criterion-title">${c.name||''}</div>
       ${isMulti ? `<div class="criterion-detail">${c.detail||''}</div>` : ''}
       ${control}
     </div>`;
-  }).join('') + `
-    <div style="font-size:11px;color:var(--text-secondary);text-align:center;margin-top:12px;font-style:italic;">Nguồn: ${currentScale.source||''}</div>
-    <div style="height:72px;"></div>
-    <div style="position:fixed;bottom:0;left:0;right:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg-card);border-top:1px solid var(--border-color);z-index:60;">
-      <button onclick="closeScoreModal()" style="width:100%;padding:14px;border:none;border-radius:12px;background:var(--tiffany-main);color:#fff;font-weight:800;font-size:15px;cursor:pointer;">← Quay lại danh sách thang điểm</button>
-    </div>`;
+  }).join('') + `<div style="font-size:11px;color:var(--text-secondary);text-align:center;margin:16px 0 8px;font-style:italic;">Nguồn: ${currentScale.source||''}</div>`;
+
   const modal = document.getElementById('calcModal');
-  modal.style.display = 'flex';
+  if(modal){
+    // Gắn trực tiếp vào body để tránh lỗi fixed trong container
+    if(modal.parentElement !== document.body){
+      document.body.appendChild(modal);
+    }
+    modal.classList.add('open');
+    modal.style.cssText = 'display:flex !important;position:fixed !important;top:0;left:0;right:0;bottom:0;width:100vw;height:100dvh;z-index:99999;background:var(--bg-primary);flex-direction:column;overflow:hidden;';
+    modal.setAttribute('aria-hidden','false');
+  }
+  document.body.classList.add('modal-open');
+  document.body.dataset.scrollY = String(window.scrollY||0);
+  document.body.style.top = `-${window.scrollY||0}px`;
+  body.scrollTop = 0;
   calcScoreNow();
 }
 
 function closeScoreModal() {
-  document.getElementById('calcModal').style.display = 'none';
+  const modal = document.getElementById('calcModal');
+  if(modal){
+    modal.classList.remove('open');
+    modal.style.cssText = '';
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden','true');
+  }
+  document.body.classList.remove('modal-open');
+  const y = parseInt(document.body.dataset.scrollY||'0',10) || 0;
+  document.body.style.top = '';
+  document.body.style.position = '';
+  document.body.style.width = '';
+  delete document.body.dataset.scrollY;
+  window.scrollTo(0, y);
+  currentScale = null;
 }
 
 function calcScoreNow() {
@@ -8231,6 +8524,9 @@ function calcScoreNow() {
 <div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
   <div class="cl-sheet" onclick="event.stopPropagation()">
     <h2>📝 Nhật ký cập nhật &amp; bảo trì</h2>
+    <div class="cl-item"><div class="cl-date">2026-09-04 — H. pylori ACG 2024; Sổ tay lâm sàng
+      </div>
+    </div>
     <div class="cl-item"><div class="cl-date">2026-08-31 — Liều chi tiết toàn bệnh + tương tác thuốc + audit logic</div>
       <ul>
         <li>Bổ sung bảng 💊 Liều dùng chi tiết cho hầu hết bệnh; 🔗 Tương tác thuốc (THA, HF, ĐTĐ, lipid, COPD…)</li>
