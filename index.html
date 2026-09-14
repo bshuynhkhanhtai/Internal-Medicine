@@ -526,6 +526,13 @@
   .ai-foot{font-size:10.5px;color:var(--text-secondary);margin-top:10px;}
   .ai-chat-wrap .bot .ai-actions{margin-top:8px;}
 
+
+  .crcl-mode-row{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 8px;}
+  .crcl-radio{font-size:13px;font-weight:600;color:var(--text-primary);display:flex;align-items:center;gap:6px;}
+  .crcl-sub{font-size:12px;color:var(--text-secondary);margin:8px 0 4px;font-weight:600;}
+  .crcl-unit-row{display:flex;gap:8px;align-items:center;}
+  .crcl-result{margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--tiffany-light);color:var(--tiffany-dark);font-size:13px;font-weight:700;}
+
 </style>
 </head>
 <body>
@@ -5035,6 +5042,11 @@ const SEARCH_ALIASES = {
   chads:'cha2ds2-va',
   'cha2ds2':'rung nhi',
   grace:'grace acs nguy co',
+  dapt:'dapt score keo dai khang tieu cau',
+  precise:'precise-dapt precise dapt chay mau',
+  'precise-dapt':'precise dapt',
+  archbr:'arc-hbr arc hbr chay mau pci',
+  'arc-hbr':'arc hbr high bleeding risk',
   timi:'timi acs',
   wells:'wells pe dvt',
   years:'years pe thuyen tac',
@@ -8239,6 +8251,220 @@ function __buildScalesData(){
           return { text: "Chưa có yếu tố nguy cơ chính được chọn. Tiếp tục theo dõi định kỳ theo guideline HCM.", color: "var(--success)" };
         }
       }
+      ,
+      {
+        id: "dapt",
+        title: "DAPT Score (Kéo dài liệu pháp kháng tiểu cầu kép)",
+        subtitle: "Dự đoán lợi ích vs nguy cơ khi kéo dài DAPT sau PCI/stent — Yeh RW et al. JAMA 2016.",
+        category: "tim_mach",
+        categoryName: "Tim mạch",
+        source: "Yeh RW et al. JAMA 2016; ESC/AHA revascularization & DAPT guidance",
+        criteria: [
+          {
+            name: "Tuổi",
+            detail: "Age (năm)",
+            options: [
+              { text: "< 65 tuổi (0)", score: 0 },
+              { text: "65 – 74 tuổi (−1)", score: -1 },
+              { text: "≥ 75 tuổi (−2)", score: -2 }
+            ]
+          },
+          {
+            name: "Hút thuốc lá",
+            detail: "Cigarette smoking (đang hút)",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+1)", score: 1 }
+            ]
+          },
+          {
+            name: "Đái tháo đường",
+            detail: "Diabetes mellitus",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+1)", score: 1 }
+            ]
+          },
+          {
+            name: "NMCT lúc nhập viện",
+            detail: "MI at presentation",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+1)", score: 1 }
+            ]
+          },
+          {
+            name: "PCI hoặc NMCT trước đó",
+            detail: "Prior PCI or prior MI",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+1)", score: 1 }
+            ]
+          },
+          {
+            name: "Đường kính stent < 3 mm",
+            detail: "Stent diameter < 3 mm",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+1)", score: 1 }
+            ]
+          },
+          {
+            name: "Stent paclitaxel-eluting",
+            detail: "Paclitaxel-eluting stent (PES)",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+1)", score: 1 }
+            ]
+          },
+          {
+            name: "Suy tim / LVEF < 30%",
+            detail: "CHF or LVEF < 30%",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+2)", score: 2 }
+            ]
+          },
+          {
+            name: "Stent mảnh ghép tĩnh mạch",
+            detail: "Vein graft stent",
+            options: [
+              { text: "Không (0)", score: 0 },
+              { text: "Có (+2)", score: 2 }
+            ]
+          }
+        ],
+        evaluate: function(s) {
+          if (s >= 2) return { text: "DAPT ≥2: xu hướng lợi ích khi kéo dài DAPT (thường >12 tháng) — cân nhắc nguy cơ chảy máu (HAS-BLED / PRECISE-DAPT / ARC-HBR).", color: "var(--warning)" };
+          return { text: "DAPT <2: lợi ích kéo dài DAPT thấp — ưu tiên DAPT chuẩn (thường 6–12 tháng theo ngữ cảnh ACS/CCS và nguy cơ chảy máu).", color: "var(--success)" };
+        }
+      },
+      {
+        id: "precise_dapt",
+        title: "PRECISE-DAPT Score (Nguy cơ chảy máu khi DAPT)",
+        subtitle: "Đánh giá nguy cơ xuất huyết để quyết định thời gian DAPT. Có thể nhập CrCl sẵn hoặc tự tính (Cockcroft–Gault).",
+        category: "tim_mach",
+        categoryName: "Tim mạch",
+        source: "Costa F et al. Lancet 2017; PRECISE-DAPT",
+        criteria: [
+          {
+            name: "1. Tuổi (năm)",
+            detail: "Age — công thức clamp 50–90",
+            type: "number",
+            key: "age",
+            min: 18,
+            max: 110,
+            step: 1,
+            placeholder: "vd. 68"
+          },
+          {
+            name: "2. Mức lọc cầu thận (CrCl)",
+            detail: "Chọn cách nhập CrCl",
+            type: "crcl_mode"
+          },
+          {
+            name: "3. Hemoglobin (g/dL)",
+            detail: "Hb — công thức clamp 10–12",
+            type: "number",
+            key: "hb",
+            min: 5,
+            max: 20,
+            step: 0.1,
+            placeholder: "vd. 12.5"
+          },
+          {
+            name: "4. Số lượng bạch cầu (×10⁹/L)",
+            detail: "WBC — clamp 5–20",
+            type: "number",
+            key: "wbc",
+            min: 1,
+            max: 40,
+            step: 0.1,
+            placeholder: "vd. 8.0"
+          },
+          {
+            name: "5. Tiền sử chảy máu nặng",
+            detail: "Prior bleeding (Hemorrhage history)",
+            options: [
+              { text: "Không", score: 0 },
+              { text: "Có", score: 1 }
+            ]
+          }
+        ],
+        evaluate: function(s) {
+          if (s === null || isNaN(s)) return { text: "Nhập đủ Tuổi, CrCl (hoặc đủ số để tính), Hb, WBC và tiền sử chảy máu.", color: "var(--text-secondary)" };
+          if (s >= 25) return { text: "PRECISE-DAPT ≥25 — Nguy cơ CAO. Cân nhắc rút ngắn DAPT <12 tháng (cân nguy cơ thiếu máu cục bộ).", color: "var(--danger)" };
+          if (s >= 19) return { text: "PRECISE-DAPT 19–25 — Trung bình. Xem xét DAPT khoảng 12 tháng.", color: "var(--warning)" };
+          if (s >= 12) return { text: "PRECISE-DAPT 12–18 — Thấp. Nên DAPT đủ ~12 tháng nếu không chống chỉ định.", color: "var(--success)" };
+          return { text: "PRECISE-DAPT ≤11 — Rất thấp. Nên DAPT đủ ~12 tháng nếu phù hợp lâm sàng.", color: "var(--success)" };
+        },
+        computePrecise: function(vals) {
+          let age = vals.age, hb = vals.hb, wbc = vals.wbc, crcl = vals.crcl, hem = vals.hem;
+          if ([age,hb,wbc,crcl].some(v => v === null || v === undefined || isNaN(v))) return null;
+          age = Math.max(50, Math.min(90, age));
+          hb = Math.max(10, Math.min(12, hb));
+          wbc = Math.max(5, Math.min(20, wbc));
+          crcl = Math.max(0, Math.min(100, crcl));
+          hem = hem ? 1 : 0;
+          const raw = ((age * 0.02595618) - (hb * 0.40551264) + (wbc * 0.05697497) - (crcl * 0.0140439) + (hem * 1.41955653) + 4.68785783) / 5.52784356;
+          return Math.round(100 * raw);
+        }
+      },
+
+      {
+        id: "arc_hbr",
+        title: "ARC-HBR (Nguy cơ chảy máu cao sau PCI)",
+        subtitle: "Academic Research Consortium – High Bleeding Risk: ≥1 tiêu chí major hoặc ≥2 minor → HBR.",
+        category: "tim_mach",
+        categoryName: "Tim mạch",
+        source: "Urban P et al. Circulation 2019 (ARC-HBR); ESC consensus",
+        criteria: [
+          {
+            name: "Tiêu chí MAJOR (chọn tất cả đúng)",
+            detail: "Mỗi mục = 1 major. ≥1 major → High Bleeding Risk",
+            multi: true,
+            options: [
+              { text: "Dự kiến OAC dài hạn", score: 1 },
+              { text: "CKD nặng (eGFR <30)", score: 1 },
+              { text: "Hb <11 g/dL", score: 1 },
+              { text: "Xuất huyết tự phát cần nhập viện/truyền máu ≤6 tháng (hoặc tái phát bất kỳ lúc nào)", score: 1 },
+              { text: "Giảm tiểu cầu <100 ×10⁹/L", score: 1 },
+              { text: "Cơ địa chảy máu mạn (bleeding diathesis)", score: 1 },
+              { text: "Xơ gan có tăng áp lực tĩnh mạch cửa", score: 1 },
+              { text: "Ung thư đang hoạt động / ≤12 tháng (trừ da không melanoma)", score: 1 },
+              { text: "ICH tự phát (bất kỳ lúc nào)", score: 1 },
+              { text: "ICH chấn thương ≤12 tháng", score: 1 },
+              { text: "Dị dạng mạch máu não (AVM)", score: 1 },
+              { text: "Đột quỵ thiếu máu vừa/nặng ≤6 tháng", score: 1 },
+              { text: "Phẫu thuật/chấn thương lớn ≤30 ngày trước PCI", score: 1 },
+              { text: "Phẫu thuật lớn không trì hoãn được trên nền DAPT", score: 1 }
+            ]
+          },
+          {
+            name: "Tiêu chí MINOR (chọn tất cả đúng)",
+            detail: "≥2 minor (khi không có major) → High Bleeding Risk",
+            multi: true,
+            options: [
+              { text: "Tuổi ≥75", score: 1 },
+              { text: "CKD trung bình (eGFR 30–59)", score: 1 },
+              { text: "Hb 11–12.9 (nam) hoặc 11–11.9 (nữ)", score: 1 },
+              { text: "Xuất huyết cần nhập viện/truyền trong 12 tháng (không đủ major)", score: 1 },
+              { text: "NSAID hoặc corticoid dài hạn", score: 1 },
+              { text: "Đột quỵ thiếu máu bất kỳ (không đủ tiêu chí major)", score: 1 }
+            ]
+          }
+        ],
+        evaluate: function(s) {
+          // s will be passed specially - see calcScoreNow patch; fallback
+          return { text: "Chọn các tiêu chí major/minor phù hợp.", color: "var(--text-secondary)" };
+        },
+        evaluateArc: function(major, minor) {
+          if (major >= 1) return { text: "ARC-HBR: CÓ nguy cơ chảy máu cao (≥1 major, major=" + major + ", minor=" + minor + "). Cân nhắc DAPT ngắn hơn, bảo vệ dạ dày, tránh NSAID.", color: "var(--danger)" };
+          if (minor >= 2) return { text: "ARC-HBR: CÓ nguy cơ chảy máu cao (≥2 minor, minor=" + minor + "). Cá thể hóa thời gian DAPT.", color: "var(--danger)" };
+          return { text: "ARC-HBR: Không đạt HBR (major=" + major + ", minor=" + minor + "). Vẫn đánh giá lâm sàng tổng thể.", color: "var(--success)" };
+        }
+      }
+
 
     ];
 }
@@ -8395,7 +8621,42 @@ function openScoreModal(id) {
   body.innerHTML = (currentScale.criteria||[]).map((c) => {
     const isMulti = !!c.multi;
     let control = '';
-    if(isMulti){
+    if(c.type === 'number'){
+      control = `<div class="criterion-detail">${c.detail||''}</div>
+      <input type="number" class="option-select criterion-num" data-key="${c.key||''}"
+        min="${c.min??''}" max="${c.max??''}" step="${c.step??'any'}"
+        placeholder="${c.placeholder||''}" oninput="calcScoreNow()" inputmode="decimal">`;
+    } else if(c.type === 'crcl_mode'){
+      control = `<div class="criterion-detail">${c.detail||''}</div>
+        <div class="crcl-mode-row">
+          <label class="crcl-radio"><input type="radio" name="crclMode" value="direct" checked onchange="toggleCrclMode()"> Có sẵn CrCl</label>
+          <label class="crcl-radio"><input type="radio" name="crclMode" value="calc" onchange="toggleCrclMode()"> Tự tính (Cockcroft–Gault)</label>
+        </div>
+        <div id="crclDirectBox">
+          <input type="number" class="option-select criterion-num" data-key="crcl" min="0" max="200" step="1"
+            placeholder="CrCl mL/phút" oninput="calcScoreNow()" inputmode="decimal">
+        </div>
+        <div id="crclCalcBox" style="display:none;margin-top:8px;">
+          <div class="crcl-sub">a. Tuổi (năm) — dùng tuổi đã nhập ở mục 1 nếu để trống</div>
+          <input type="number" class="option-select" id="crclAge" min="18" max="110" step="1" placeholder="Tuổi (tuỳ chọn)" oninput="calcScoreNow()" inputmode="numeric">
+          <div class="crcl-sub">b. Giới tính</div>
+          <select class="option-select" id="crclSex" onchange="calcScoreNow()">
+            <option value="male">Nam</option>
+            <option value="female">Nữ</option>
+          </select>
+          <div class="crcl-sub">c. Cân nặng (kg)</div>
+          <input type="number" class="option-select" id="crclWt" min="30" max="200" step="0.1" placeholder="vd. 60" oninput="calcScoreNow()" inputmode="decimal">
+          <div class="crcl-sub">d. Creatinin huyết thanh</div>
+          <div class="crcl-unit-row">
+            <input type="number" class="option-select" id="crclCreat" min="20" max="2000" step="1" placeholder="Creatinin" oninput="calcScoreNow()" inputmode="decimal">
+            <select class="option-select" id="crclCreatUnit" onchange="calcScoreNow()" style="max-width:120px;">
+              <option value="umol">µmol/L</option>
+              <option value="mg">mg/dL</option>
+            </select>
+          </div>
+          <div id="crclComputed" class="crcl-result">CrCl tính được: —</div>
+        </div>`;
+    } else if(isMulti){
       control = `<div class="criterion-detail"><span class="multi-hint">☑ Có thể chọn nhiều mục — điểm cộng dồn</span></div>` +
         (c.options||[]).map((o) =>
           `<label class="crit-check"><input type="checkbox" class="criterion-check" data-score="${o.score}" onchange="calcScoreNow()"><span>${o.text}</span></label>`
@@ -8448,8 +8709,91 @@ function closeScoreModal() {
   currentScale = null;
 }
 
+
+function toggleCrclMode(){
+  const mode = (document.querySelector('input[name="crclMode"]:checked')||{}).value || 'direct';
+  const d = document.getElementById('crclDirectBox');
+  const c = document.getElementById('crclCalcBox');
+  if(d) d.style.display = (mode === 'direct') ? '' : 'none';
+  if(c) c.style.display = (mode === 'calc') ? '' : 'none';
+  calcScoreNow();
+}
+function getPreciseCrcl(){
+  const mode = (document.querySelector('input[name="crclMode"]:checked')||{}).value || 'direct';
+  if(mode === 'direct'){
+    const inp = document.querySelector('#crclDirectBox .criterion-num[data-key="crcl"]');
+    const v = inp ? parseFloat(inp.value) : NaN;
+    return isNaN(v) ? null : v;
+  }
+  // Cockcroft–Gault: CrCl = (140-age)*wt*(0.85 if female) / (72 * Scr_mg/dL)
+  let age = parseFloat((document.getElementById('crclAge')||{}).value);
+  if(isNaN(age)){
+    const ageMain = document.querySelector('#modalScaleBody .criterion-num[data-key="age"]');
+    age = ageMain ? parseFloat(ageMain.value) : NaN;
+  }
+  const sex = (document.getElementById('crclSex')||{}).value || 'male';
+  const wt = parseFloat((document.getElementById('crclWt')||{}).value);
+  let creat = parseFloat((document.getElementById('crclCreat')||{}).value);
+  const unit = (document.getElementById('crclCreatUnit')||{}).value || 'umol';
+  const out = document.getElementById('crclComputed');
+  if([age,wt,creat].some(v => isNaN(v))){
+    if(out) out.textContent = 'CrCl tính được: — (nhập đủ tuổi, cân, creatinin)';
+    return null;
+  }
+  let scrMg = creat;
+  if(unit === 'umol') scrMg = creat / 88.4; // µmol/L → mg/dL
+  if(scrMg <= 0){ if(out) out.textContent = 'CrCl tính được: —'; return null; }
+  let crcl = ((140 - age) * wt) / (72 * scrMg);
+  if(sex === 'female') crcl *= 0.85;
+  crcl = Math.round(crcl * 10) / 10;
+  if(out) out.textContent = 'CrCl tính được: ' + crcl + ' mL/phút (Cockcroft–Gault)';
+  return crcl;
+}
+
 function calcScoreNow() {
   if (!currentScale) return;
+  const el = document.getElementById('stickyScoreEval');
+  const numEl = document.getElementById('stickyScoreNum');
+
+  // PRECISE-DAPT: công thức liên tục + CrCl có sẵn / tự tính
+  if (currentScale.id === 'precise_dapt' && typeof currentScale.computePrecise === 'function') {
+    const vals = { age:null, hb:null, wbc:null, crcl:null, hem:0 };
+    document.querySelectorAll('#modalScaleBody .criterion-num').forEach(inp => {
+      const k = inp.getAttribute('data-key');
+      if(!k || k === 'crcl') return; // crcl lấy qua getPreciseCrcl
+      const v = parseFloat(inp.value);
+      if (!isNaN(v)) vals[k] = v;
+    });
+    vals.crcl = (typeof getPreciseCrcl === 'function') ? getPreciseCrcl() : null;
+    const sel = document.querySelector('#modalScaleBody .criterion-val');
+    if (sel) vals.hem = parseFloat(sel.value) ? 1 : 0;
+    const score = currentScale.computePrecise(vals);
+    if (score === null) {
+      numEl.innerText = '—';
+      const ev = currentScale.evaluate(null);
+      el.innerText = ev.text; el.style.color = ev.color;
+      return;
+    }
+    numEl.innerText = score;
+    const ev = currentScale.evaluate(score);
+    el.innerText = ev.text; el.style.color = ev.color;
+    return;
+  }
+
+  // ARC-HBR: major / minor riêng
+  if (currentScale.id === 'arc_hbr' && typeof currentScale.evaluateArc === 'function') {
+    const groups = document.querySelectorAll('#modalScaleBody .criterion-group');
+    let major = 0, minor = 0;
+    groups.forEach((g, idx) => {
+      const n = g.querySelectorAll('.criterion-check:checked').length;
+      if (idx === 0) major = n; else minor = n;
+    });
+    numEl.innerText = major + minor;
+    const ev = currentScale.evaluateArc(major, minor);
+    el.innerText = ev.text; el.style.color = ev.color;
+    return;
+  }
+
   let total = 0;
   document.querySelectorAll('#modalScaleBody .criterion-val').forEach(sel => {
     total += parseFloat(sel.value) || 0;
@@ -8458,9 +8802,8 @@ function calcScoreNow() {
     total += parseFloat(chk.getAttribute('data-score')) || 0;
   });
   const display = Number.isInteger(total) ? total : total.toFixed(1);
-  document.getElementById('stickyScoreNum').innerText = display;
+  numEl.innerText = display;
   const ev = currentScale.evaluate(total);
-  const el = document.getElementById('stickyScoreEval');
   el.innerText = ev.text;
   el.style.color = ev.color;
 }
