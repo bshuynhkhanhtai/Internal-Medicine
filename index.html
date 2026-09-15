@@ -545,9 +545,9 @@
       <div class="ver-badge">Bản 2026.09.04 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
-      <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇️ Cài app</button>
+      <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇ Cài app</button>
       <button class="theme-toggle-btn" onclick="toggleTheme()">
-        <span id="themeIcon">☀️</span><span id="themeText">Sáng</span>
+        <span id="themeIcon">☀</span><span id="themeText">Sáng</span>
       </button>
     </div>
   </div>
@@ -577,7 +577,7 @@
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
   <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px calc(72px + env(safe-area-inset-bottom,0px));">
-    ⚠️ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.09.04
+    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.09.04
   </footer>
 </div>
 
@@ -822,27 +822,27 @@ function calcSCORE2(){
 }
 
 const scoreInterp = {
-  cha2ds2va: (t) => t>=2 ? `⚠️ Nguy cơ đột quỵ cao — <b>khuyến cáo kháng đông</b> (Class I)` : t===1 ? `Nguy cơ trung bình — cân nhắc kháng đông theo đặc điểm bệnh nhân (Class IIa)` : `Nguy cơ thấp — có thể không cần kháng đông thường quy`,
-  hasbled: (t) => t>=3 ? `⚠️ Nguy cơ chảy máu cao — không loại trừ kháng đông, nhưng cần theo dõi sát/hiệu chỉnh yếu tố nguy cơ có thể sửa được` : `Nguy cơ chảy máu không cao — theo dõi định kỳ như thường quy`,
+  cha2ds2va: (t) => t>=2 ? `⚠ Nguy cơ đột quỵ cao — <b>khuyến cáo kháng đông</b> (Class I)` : t===1 ? `Nguy cơ trung bình — cân nhắc kháng đông theo đặc điểm bệnh nhân (Class IIa)` : `Nguy cơ thấp — có thể không cần kháng đông thường quy`,
+  hasbled: (t) => t>=3 ? `⚠ Nguy cơ chảy máu cao — không loại trừ kháng đông, nhưng cần theo dõi sát/hiệu chỉnh yếu tố nguy cơ có thể sửa được` : `Nguy cơ chảy máu không cao — theo dõi định kỳ như thường quy`,
   curb65: (t) => t<=1 ? `Nhẹ — có thể điều trị ngoại trú` : t===2 ? `Trung bình — cân nhắc nhập viện ngắn ngày/theo dõi sát` : `Nặng — khuyến cáo nhập viện, cân nhắc ICU nếu ≥4 điểm`,
   childpugh: (t) => t<=6 ? `Child-Pugh A — xơ gan còn bù, tiên lượng tốt` : t<=9 ? `Child-Pugh B — mất bù trung bình` : `Child-Pugh C — mất bù nặng, cân nhắc đánh giá ghép gan`,
   das28ra: (t) => t<3 ? `Kiểm soát tốt — hoạt động bệnh thấp/lui bệnh` : t<5 ? `Hoạt động bệnh trung bình — cân nhắc tối ưu/leo thang điều trị` : `Hoạt động bệnh cao — cần leo thang điều trị theo treat-to-target`,
-  findrisc: (t) => t<7 ? `Nguy cơ thấp — ước tính ~1% sẽ mắc ĐTĐ type 2 trong 10 năm` : t<=11 ? `Nguy cơ hơi tăng — ước tính ~4% trong 10 năm` : t<=14 ? `Nguy cơ trung bình — ước tính ~17% trong 10 năm, nên xét nghiệm glucose/HbA1c` : t<=20 ? `⚠️ Nguy cơ cao — ước tính ~33% trong 10 năm, khuyến cáo xét nghiệm glucose/HbA1c và tư vấn thay đổi lối sống` : `⚠️ Nguy cơ rất cao — ước tính ~50% trong 10 năm, cần xét nghiệm glucose/HbA1c ngay`,
-  gbs: (t) => t===0 ? `Nguy cơ rất thấp — có thể cân nhắc điều trị ngoại trú, không cần nội soi cấp cứu` : t<=5 ? `Nguy cơ thấp-trung bình — cân nhắc nhập viện theo dõi, nội soi trong vòng 24h` : `⚠️ Nguy cơ cao — cần nhập viện, hồi sức tích cực, nội soi sớm trong vòng 24h (càng sớm càng tốt nếu huyết động không ổn)`,
+  findrisc: (t) => t<7 ? `Nguy cơ thấp — ước tính ~1% sẽ mắc ĐTĐ type 2 trong 10 năm` : t<=11 ? `Nguy cơ hơi tăng — ước tính ~4% trong 10 năm` : t<=14 ? `Nguy cơ trung bình — ước tính ~17% trong 10 năm, nên xét nghiệm glucose/HbA1c` : t<=20 ? `⚠ Nguy cơ cao — ước tính ~33% trong 10 năm, khuyến cáo xét nghiệm glucose/HbA1c và tư vấn thay đổi lối sống` : `⚠ Nguy cơ rất cao — ước tính ~50% trong 10 năm, cần xét nghiệm glucose/HbA1c ngay`,
+  gbs: (t) => t===0 ? `Nguy cơ rất thấp — có thể cân nhắc điều trị ngoại trú, không cần nội soi cấp cứu` : t<=5 ? `Nguy cơ thấp-trung bình — cân nhắc nhập viện theo dõi, nội soi trong vòng 24h` : `⚠ Nguy cơ cao — cần nhập viện, hồi sức tích cực, nội soi sớm trong vòng 24h (càng sớm càng tốt nếu huyết động không ổn)`,
   rockallpre: (t) => t===0 ? `Nguy cơ tử vong/tái xuất huyết rất thấp (điểm trước nội soi)` : t<=2 ? `Nguy cơ thấp (điểm trước nội soi)` : `Nguy cơ cao (điểm trước nội soi) — cần đánh giá khẩn, tính lại điểm đầy đủ sau nội soi`,
-  rockallfull: (t) => t<=2 ? `Nguy cơ thấp — tử vong &lt;5%, có thể cân nhắc xuất viện sớm nếu ổn định` : t<=5 ? `Nguy cơ trung bình — tử vong ~5-15%, cần theo dõi sát tại bệnh viện` : `⚠️ Nguy cơ cao — tử vong &gt;15-40% tùy điểm, cần hồi sức tích cực/ICU và theo dõi sát nguy cơ tái xuất huyết`,
-  kocher: (t) => t===0 ? `Nguy cơ nhiễm trùng khớp rất thấp (&lt;3%)` : t===1 ? `Nguy cơ thấp (~3%) — theo dõi sát, cân nhắc chọc dò nếu nghi ngờ lâm sàng cao` : t===2 ? `Nguy cơ trung bình (~40%) — cân nhắc chọc dò dịch khớp` : t===3 ? `⚠️ Nguy cơ cao (~93%) — khuyến cáo chọc dò dịch khớp khẩn cấp` : `⚠️ Nguy cơ rất cao (&gt;99%) — xử trí như viêm khớp nhiễm trùng cho đến khi loại trừ`,
-  bisap: (t) => t<3 ? `Nguy cơ thấp — tiên lượng thuận lợi` : `⚠️ Nguy cơ cao (BISAP≥3) — tăng đáng kể nguy cơ tử vong/biến chứng nặng, cân nhắc theo dõi sát/ICU sớm`,
-  timi: (t) => t<=1 ? `Nguy cơ thấp (~5% biến cố trong 14 ngày)` : t<=3 ? `Nguy cơ trung bình — cân nhắc chiến lược can thiệp xâm lấn sớm` : t<=5 ? `⚠️ Nguy cơ cao — ủng hộ can thiệp xâm lấn sớm` : `⚠️ Nguy cơ rất cao — ưu tiên can thiệp xâm lấn sớm`,
-  act: (t) => t>=20 ? `Hen được kiểm soát tốt` : t>=16 ? `Hen chưa được kiểm soát tốt — cân nhắc leo thang điều trị` : `⚠️ Hen kiểm soát kém — cần leo thang điều trị và đánh giá lại kỹ thuật hít/tuân thủ`,
-  cat: (t) => t<10 ? `Ảnh hưởng thấp lên chất lượng cuộc sống` : t<=20 ? `Ảnh hưởng trung bình` : t<=30 ? `⚠️ Ảnh hưởng cao` : `⚠️ Ảnh hưởng rất cao lên chất lượng cuộc sống`,
-  wellspe: (t) => t<2 ? `Xác suất thấp — (2 mức: ≤4 = "PE ít khả năng", làm D-dimer trước khi quyết định chụp CT)` : t<=6 ? `Xác suất trung bình — cân nhắc D-dimer hoặc CTPA tùy ngưỡng 2-mức (≤4 vs &gt;4)` : `⚠️ Xác suất cao (&gt;6đ, hoặc &gt;4đ theo thang 2-mức) — cân nhắc CTPA trực tiếp, không cần chờ D-dimer`,
-  years: (t) => t===0 ? `0 tiêu chí dương tính — loại trừ PE nếu D-dimer &lt;1000 ng/mL` : `⚠️ ${t} tiêu chí dương tính — cần ngưỡng D-dimer thấp hơn (&lt;500 ng/mL) mới loại trừ được PE`,
-  spesi: (t) => t===0 ? `Nguy cơ tử vong 30 ngày rất thấp — có thể cân nhắc điều trị ngoại trú nếu phù hợp` : `⚠️ sPESI≥1 — nguy cơ tăng, cân nhắc nhập viện theo dõi`,
-  grace: (t) => t<=108 ? `Nguy cơ thấp (&lt;1% tử vong nội viện) — chiến lược xâm lấn có thể trong 72h/chọn lọc` : t<=140 ? `Nguy cơ trung bình (1-3% tử vong nội viện) — can thiệp xâm lấn sớm trong &lt;24h` : `⚠️ Nguy cơ cao (&gt;3% tử vong nội viện) — can thiệp xâm lấn ngay trong &lt;2h`,
+  rockallfull: (t) => t<=2 ? `Nguy cơ thấp — tử vong &lt;5%, có thể cân nhắc xuất viện sớm nếu ổn định` : t<=5 ? `Nguy cơ trung bình — tử vong ~5-15%, cần theo dõi sát tại bệnh viện` : `⚠ Nguy cơ cao — tử vong &gt;15-40% tùy điểm, cần hồi sức tích cực/ICU và theo dõi sát nguy cơ tái xuất huyết`,
+  kocher: (t) => t===0 ? `Nguy cơ nhiễm trùng khớp rất thấp (&lt;3%)` : t===1 ? `Nguy cơ thấp (~3%) — theo dõi sát, cân nhắc chọc dò nếu nghi ngờ lâm sàng cao` : t===2 ? `Nguy cơ trung bình (~40%) — cân nhắc chọc dò dịch khớp` : t===3 ? `⚠ Nguy cơ cao (~93%) — khuyến cáo chọc dò dịch khớp khẩn cấp` : `⚠ Nguy cơ rất cao (&gt;99%) — xử trí như viêm khớp nhiễm trùng cho đến khi loại trừ`,
+  bisap: (t) => t<3 ? `Nguy cơ thấp — tiên lượng thuận lợi` : `⚠ Nguy cơ cao (BISAP≥3) — tăng đáng kể nguy cơ tử vong/biến chứng nặng, cân nhắc theo dõi sát/ICU sớm`,
+  timi: (t) => t<=1 ? `Nguy cơ thấp (~5% biến cố trong 14 ngày)` : t<=3 ? `Nguy cơ trung bình — cân nhắc chiến lược can thiệp xâm lấn sớm` : t<=5 ? `⚠ Nguy cơ cao — ủng hộ can thiệp xâm lấn sớm` : `⚠ Nguy cơ rất cao — ưu tiên can thiệp xâm lấn sớm`,
+  act: (t) => t>=20 ? `Hen được kiểm soát tốt` : t>=16 ? `Hen chưa được kiểm soát tốt — cân nhắc leo thang điều trị` : `⚠ Hen kiểm soát kém — cần leo thang điều trị và đánh giá lại kỹ thuật hít/tuân thủ`,
+  cat: (t) => t<10 ? `Ảnh hưởng thấp lên chất lượng cuộc sống` : t<=20 ? `Ảnh hưởng trung bình` : t<=30 ? `⚠ Ảnh hưởng cao` : `⚠ Ảnh hưởng rất cao lên chất lượng cuộc sống`,
+  wellspe: (t) => t<2 ? `Xác suất thấp — (2 mức: ≤4 = "PE ít khả năng", làm D-dimer trước khi quyết định chụp CT)` : t<=6 ? `Xác suất trung bình — cân nhắc D-dimer hoặc CTPA tùy ngưỡng 2-mức (≤4 vs &gt;4)` : `⚠ Xác suất cao (&gt;6đ, hoặc &gt;4đ theo thang 2-mức) — cân nhắc CTPA trực tiếp, không cần chờ D-dimer`,
+  years: (t) => t===0 ? `0 tiêu chí dương tính — loại trừ PE nếu D-dimer &lt;1000 ng/mL` : `⚠ ${t} tiêu chí dương tính — cần ngưỡng D-dimer thấp hơn (&lt;500 ng/mL) mới loại trừ được PE`,
+  spesi: (t) => t===0 ? `Nguy cơ tử vong 30 ngày rất thấp — có thể cân nhắc điều trị ngoại trú nếu phù hợp` : `⚠ sPESI≥1 — nguy cơ tăng, cân nhắc nhập viện theo dõi`,
+  grace: (t) => t<=108 ? `Nguy cơ thấp (&lt;1% tử vong nội viện) — chiến lược xâm lấn có thể trong 72h/chọn lọc` : t<=140 ? `Nguy cơ trung bình (1-3% tử vong nội viện) — can thiệp xâm lấn sớm trong &lt;24h` : `⚠ Nguy cơ cao (&gt;3% tử vong nội viện) — can thiệp xâm lấn ngay trong &lt;2h`,
   framingham: (t) => t>=4 ? `✅ Đủ tiêu chuẩn chẩn đoán suy tim theo Framingham (tương đương ≥2 chính, hoặc 1 chính+2 phụ)` : `Chưa đủ tiêu chuẩn Framingham — cần thêm NT-proBNP/siêu âm tim để đánh giá`,
-  bova: (t) => t<=2 ? `Giai đoạn I — nguy cơ thấp biến chứng liên quan PE trong 30 ngày` : t<=4 ? `Giai đoạn II — nguy cơ trung bình` : `⚠️ Giai đoạn III — nguy cơ cao biến chứng liên quan PE trong 30 ngày`,
-  addrs: (t) => t===0 ? `Nguy cơ thấp — cân nhắc D-dimer để loại trừ AAS` : t===1 ? `Nguy cơ trung bình — làm D-dimer; nếu ≥500 ng/mL → CTA` : `⚠️ Nguy cơ cao — CTA khẩn cấp, không chờ D-dimer`,
+  bova: (t) => t<=2 ? `Giai đoạn I — nguy cơ thấp biến chứng liên quan PE trong 30 ngày` : t<=4 ? `Giai đoạn II — nguy cơ trung bình` : `⚠ Giai đoạn III — nguy cơ cao biến chứng liên quan PE trong 30 ngày`,
+  addrs: (t) => t===0 ? `Nguy cơ thấp — cân nhắc D-dimer để loại trừ AAS` : t===1 ? `Nguy cơ trung bình — làm D-dimer; nếu ≥500 ng/mL → CTA` : `⚠ Nguy cơ cao — CTA khẩn cấp, không chờ D-dimer`,
   hcmriskscd: (t) => t===0 ? `Chưa có yếu tố nguy cơ chính liệt kê — tính công thức đầy đủ HCM Risk-SCD để ước tính %` : `Có ${t} yếu tố nguy cơ chính — cân nhắc ICD theo shared decision-making + tính HCM Risk-SCD chính thức`
 };
 
@@ -870,10 +870,10 @@ function resetScore(calcId){
    CHUYÊN KHOA
    ========================================================= */
 const specialties = [
-  {id:"tim_mach", emoji:"❤️", label:"Tim mạch"},
+  {id:"tim_mach", emoji:"❤", label:"Tim mạch"},
   {id:"noi_tiet", emoji:"🍬", label:"Nội tiết"},
   {id:"ho_hap", emoji:"🫁", label:"Hô hấp"},
-  {id:"tieu_hoa", emoji:"🍽️", label:"Tiêu hóa"},
+  {id:"tieu_hoa", emoji:"🍽", label:"Tiêu hóa"},
   {id:"co_xuong_khop", emoji:"🦴", label:"Cơ xương khớp"},
   {id:"than", emoji:"🫘", label:"Thận"}
 ];
@@ -991,7 +991,7 @@ const diseases = [
         ["ACEi/ARB + NSAID + lợi tiểu","Tổn thương thận (triple whammy) — tránh NSAID nếu được; theo dõi creatinine"],
         ["ACEi/ARB + MRA / K⁺ / TMP-SMX","Tăng kali — theo dõi K⁺"],
         ["ACEi/ARB + ARB","Không phối hợp thường quy (Class III)"],
-        ["β-blocker + verapamil/diltiazem","Block AV, mạch chậm — tránh phối hợp"],
+        ["beta-blocker + verapamil/diltiazem","Block AV, mạch chậm — tránh phối hợp"],
         ["Thiazide + lithium","Tăng độc lithium"],
         ["Amlodipine + simvastatin liều cao","Ưu tiên statin khác hoặc giảm simvastatin"],
         ["Rifampin + nhiều thuốc HA","Giảm hiệu quả — theo dõi HA"]
@@ -1075,14 +1075,14 @@ ${rt(["Class"],[
         <li><b>SGLT2i</b> (dapagliflozin/empagliflozin) nền tảng — giảm nhập viện HF.</li>
         <li><b>MRA</b> khi dung nạp (theo dõi K⁺/thận).</li>
         <li>Điều trị THA, ĐTĐ, béo phì, thiếu máu, sleep apnea, vành, van.</li>
-        <li>Lợi tiểu khi ứ huyết. Không dùng β-blocker/ACEi chỉ vì HFpEF nếu không có chỉ định khác.</li>
+        <li>Lợi tiểu khi ứ huyết. Không dùng beta-blocker/ACEi chỉ vì HFpEF nếu không có chỉ định khác.</li>
       </ul>
 
       <div class="subhead">Decompensated HF</div>
       ${rt(["Hướng"],[
         ["Ứ huyết","Lợi tiểu quai IV/uống tăng; theo dõi nước tiểu, cân, điện giải"],
         ["Giảm tưới máu / sốc","ICU: vận mạch–inotrope theo protocol; tìm nguyên nhân đảo ngược"],
-        ["Thuốc nền","Giữ FMT nếu HA cho phép; có thể giảm tạm β-blocker khi giảm tưới máu cơ quan"],
+        ["Thuốc nền","Giữ FMT nếu HA cho phép; có thể giảm tạm beta-blocker khi giảm tưới máu cơ quan"],
         ["Trước xuất viện","Tối ưu lại FMT; hẹn tái khám sớm; giáo dục cân/muối"]
       ])}
 
@@ -1093,7 +1093,7 @@ ${rt(["Class"],[
         <li>Giai đoạn D: đánh giá ghép / hỗ trợ cơ học tại trung tâm chuyên sâu.</li>
       </ul>
 
-      <div class="alert-box alert-info"><b>AF + HF:</b> OAC theo CHA₂DS₂-VA; tối ưu FMT; β-blocker hàng đầu kiểm soát tần số khi HFrEF ổn định; ablation chọn lọc. Tránh CCB non-DHP nếu HFrEF.</div>
+      <div class="alert-box alert-info"><b>AF + HF:</b> OAC theo CHA₂DS₂-VA; tối ưu FMT; beta-blocker hàng đầu kiểm soát tần số khi HFrEF ổn định; ablation chọn lọc. Tránh CCB non-DHP nếu HFrEF.</div>
       <div class="age-tag">Cao tuổi / eGFR 20–60</div>
       <p>Khởi liều thấp, chuẩn liều chậm; SGLT2i dùng khi eGFR cho phép; MRA/ARNI theo dõi sinh hóa sát. Không phối hợp ACEi+ARB.</p>
     
@@ -1101,7 +1101,7 @@ ${rt(["Class"],[
       ${rt(["Liều khởi → đích","Lưu ý"],[
         ["Furosemide","20–40 mg uống/IV; tăng theo đáp ứng","Chỉnh theo ứ huyết, điện giải"],
         ["Torasemide","5–10 mg → 20 mg","Sinh khả dụng ổn hơn furosemide uống"],
-        ["Ivabradine","5 mg ×2 → 7.5 mg ×2","Nhịp xoang ≥70, đã β-blocker tối ưu"],
+        ["Ivabradine","5 mg ×2 → 7.5 mg ×2","Nhịp xoang ≥70, đã beta-blocker tối ưu"],
         ["Digoxin","0.125 mg/ngày (thấp hơn CKD)","AF + HF chọn lọc; theo dõi độc"]
       ])}
     
@@ -1129,7 +1129,7 @@ ${rt(["Class"],[
   source:"2026 ESC Guidelines for the management of heart failure (Eur Heart J 2026); 2022 AHA/ACC/HFSA HF Guideline; Universal Definition of HF"
 },
 {
-  spec:"tim_mach", id:"af", emoji:"〰️", short:"RN", title:"Rung nhĩ (Atrial Fibrillation)",
+  spec:"tim_mach", id:"af", emoji:"-", short:"RN", title:"Rung nhĩ (Atrial Fibrillation)",
   guidelines:["ESC 2024 (AF-CARE)"],
   sections:{
     dinh_nghia:`
@@ -1189,10 +1189,10 @@ ${rt(["Class"],[
       <ul>
         <li>Kiểm soát <b>nhịp sớm</b> (thuốc / đốt) trong 12 tháng đầu — EAST-AFNET4 — giảm biến cố ở BN phù hợp.</li>
         <li>Đốt điện: lựa chọn hàng đầu AF triệu chứng, đặc biệt thất bại thuốc.</li>
-        <li>Tần số: β-blocker hàng đầu; digoxin bổ sung; CCB non-DHP khi không HFrEF.</li>
+        <li>Tần số: beta-blocker hàng đầu; digoxin bổ sung; CCB non-DHP khi không HFrEF.</li>
       </ul>
 
-      <div class="alert-box alert-info"><b>AF + HF (ESC 2026):</b> OAC theo CHA₂DS₂-VA; tối ưu FMT suy tim; β-blocker rate control khi HFrEF ổn định; ablation chọn lọc. Tránh non-DHP CCB nếu HFrEF.</div>
+      <div class="alert-box alert-info"><b>AF + HF (ESC 2026):</b> OAC theo CHA₂DS₂-VA; tối ưu FMT suy tim; beta-blocker rate control khi HFrEF ổn định; ablation chọn lọc. Tránh non-DHP CCB nếu HFrEF.</div>
     
       <div class="subhead">💊 Tương tác thuốc kháng đông</div>
       <p>Kháng đông gồm <b>VKA (warfarin)</b> và <b>NOAC/DOAC</b> (apixaban, rivaroxaban, dabigatran, edoxaban). Tương tác có thể <b>tăng chảy máu</b> hoặc <b>giảm tác dụng (huyết khối)</b>.</p>
@@ -1389,7 +1389,7 @@ ${rt(["Class"],[
       <p>Chỉ định máy tạo nhịp không bị giới hạn bởi tuổi cao đơn thuần — quyết định dựa trên triệu chứng, tổng trạng và kỳ vọng sống còn lại, không phải theo một mốc tuổi cụ thể.</p>
 <div class="subhead">🔗 Tương tác thuốc (nhịp chậm)</div>
       ${rt(["Rủi ro / hướng xử trí"],[
-        ["β-blocker + verapamil/diltiazem + digoxin + amiodarone","Cộng lực chậm mạch / block"],
+        ["beta-blocker + verapamil/diltiazem + digoxin + amiodarone","Cộng lực chậm mạch / block"],
         ["Ngừng thuốc gây chậm mạch khi có triệu chứng","Xem lại chỉ định"]
       ])}
     `,
@@ -1406,7 +1406,7 @@ ${rt(["Class"],[
   source:"2018 ACC/AHA/HRS Guideline on the Evaluation and Management of Patients with Bradycardia and Cardiac Conduction Delay; 2025 American Heart Association Guidelines for CPR and Emergency Cardiovascular Care (Adult Bradycardia), Circulation 2025"
 },
 {
-  spec:"tim_mach", id:"acs", emoji:"❤️‍🔥", short:"HCVC", title:"Hội chứng vành cấp",
+  spec:"tim_mach", id:"acs", emoji:"❤🔥", short:"HCVC", title:"Hội chứng vành cấp",
   guidelines:["ESC 2023 (ACS)","AHA/ACC 2025 (ACS)"],
   sections:{
     dinh_nghia:`
@@ -1421,7 +1421,7 @@ ${rt(["Chi tiết"],[
       ])}
     `,
     dieu_tri:`
-<div class="subhead">🅰️ Tái tưới máu</div>
+<div class="subhead">🅰 Tái tưới máu</div>
       <p><b>STEMI:</b> PCI thì đầu là ưu tiên — mục tiêu từ chẩn đoán ECG đến bóng <b>&lt;120 phút</b> (lý tưởng &lt;60–90 phút nếu đến thẳng trung tâm PCI). Nếu không thể PCI kịp và không chống chỉ định: <b>tiêu sợi huyết</b> trong 12h đầu (càng sớm càng tốt, lý tưởng &lt;10 phút cửa–kim), sau đó chuyển PCI (pharmacoinvasive).</p>
       <p><b>NSTE-ACS:</b></p>
       <ul>
@@ -1430,7 +1430,7 @@ ${rt(["Chi tiết"],[
         <li>Nguy cơ thấp: chiến lược chọn lọc, đánh giá không xâm lấn khi phù hợp.</li>
       </ul>
 
-      <div class="subhead">🅱️ Kháng huyết khối</div>
+      <div class="subhead">🅱 Kháng huyết khối</div>
       <ul>
         <li><b>Aspirin</b> 150–300 mg nạp → 75–100 mg/ngày duy trì.</li>
         <li><b>P2Y₁₂:</b> ticagrelor (180 mg nạp → 90 mg ×2) hoặc prasugrel (60 mg nạp → 10 mg; thận trọng cao tuổi/cân nhẹ/TIA–stroke trước) ưu tiên hơn clopidogrel khi PCI và nguy cơ huyết khối cao.</li>
@@ -1442,7 +1442,7 @@ ${rt(["Chi tiết"],[
       <div class="subhead">🅲 Nội khoa & biến chứng</div>
       <ul>
         <li>Statin <b>cường độ cao</b> sớm (atorvastatin 40–80 / rosuvastatin 20–40).</li>
-        <li>β-blocker khi HA/mạch cho phép (đặc biệt giảm EF, đau thiếu máu).</li>
+        <li>beta-blocker khi HA/mạch cho phép (đặc biệt giảm EF, đau thiếu máu).</li>
         <li>ACEi/ARB (hoặc ARNI nếu HF); MRA khi HF/EF giảm và K⁺ cho phép.</li>
         <li>SGLT2i khi HF, ĐTĐ hoặc CKD kèm theo.</li>
         <li>O₂ chỉ khi SpO₂ thấp; morphin chọn lọc; điều trị sốc tim, hở van cấp, thủng vách — hội chẩn ngoại tim.</li>
@@ -1786,11 +1786,11 @@ ${rt(["Class"],[
   source:"2026 AHA/ACC/ACCP/ACEP/CHEST/SCAI/SHM/SIR/SVM/SVN Guideline for the Evaluation and Management of Acute Pulmonary Embolism in Adults, Circulation 2026; CHEST 2021 Antithrombotic Therapy for VTE Disease"
 },
 {
-  spec:"tim_mach", id:"aortic", emoji:"🩸", short:"Phình ĐMC", title:"Phình động mạch chủ & Hội chứng động mạch chủ cấp",
+  spec:"tim_mach", id:"aortic", emoji:"🩸", short:"Phình ĐMC", title:"Phình động mạchh chủ & Hội chứng động mạch chủ cấp",
   guidelines:["ACC/AHA 2022 (Aortic Disease)","ESC 2024 (Peripheral Arterial & Aortic Diseases)","ESVS 2026"],
   sections:{
     dinh_nghia:`
-      <p>Phình động mạch chủ (Aortic Aneurysm) là sự giãn khu trú của động mạch chủ ≥1.5 lần đường kính bình thường (thường ≥30 mm với AAA; TAA phụ thuộc vị trí, tuổi, giới, BSA).</p>
+      <p>Phình động mạchh chủ (Aortic Aneurysm) là sự giãn khu trú của động mạch chủ ≥1.5 lần đường kính bình thường (thường ≥30 mm với AAA; TAA phụ thuộc vị trí, tuổi, giới, BSA).</p>
       <div class="subhead">Phân loại theo vị trí</div>
       ${rt(["Đặc điểm"],[
         ["Phình gốc/ĐMC lên (Root/Ascending TAA)","≈60% TAA, liên quan van ĐMC, hội chứng di truyền (Marfan, Loeys-Dietz…)"],
@@ -1811,7 +1811,7 @@ ${rt(["Class"],[
         {label:"[Nhóm 1] Tiền sử gia đình bệnh động mạch chủ",pts:1},
         {label:"[Nhóm 1] Bệnh van động mạch chủ đã biết",pts:1},
         {label:"[Nhóm 1] Thao tác trên động mạch chủ gần đây",pts:1},
-        {label:"[Nhóm 1] Phình động mạch chủ ngực đã biết",pts:1},
+        {label:"[Nhóm 1] Phình động mạchh chủ ngực đã biết",pts:1},
         {label:"[Nhóm 2] Đau ngực/lưng/bụng khởi phát đột ngột",pts:1},
         {label:"[Nhóm 2] Đau cường độ tối đa ngay từ đầu",pts:1},
         {label:"[Nhóm 2] Đau kiểu xé/rách/cắt",pts:1},
@@ -1894,7 +1894,7 @@ ${rt(["Class"],[
 <div class="subhead">💊 Liều dùng chi tiết (HCM / hỗ trợ)</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
         ["Bisoprolol","1.25–10 mg/ngày","Triệu chứng tắc nghẽn HCM"],
-        ["Verapamil","120–480 mg/ngày chia liều","Khi không dung nạp β-blocker"],
+        ["Verapamil","120–480 mg/ngày chia liều","Khi không dung nạp beta-blocker"],
         ["Mavacamten","Theo chuyên khoa / nhãn","CYP2C19; theo dõi EF"],
         ["Thuốc HF","Như phác đồ suy tim","Khi EF giảm / DCM"]
       ])}
@@ -2033,7 +2033,7 @@ ${rt(["Class"],[
   source:"2023 ESC Guidelines for the management of endocarditis, Eur Heart J 2023"
 },
 {
-  spec:"tim_mach", id:"myocarditis", emoji:"❤️‍🔥", short:"Viêm cơ tim", title:"Viêm cơ tim & Viêm màng ngoài tim",
+  spec:"tim_mach", id:"myocarditis", emoji:"❤🔥", short:"Viêm cơ tim", title:"Viêm cơ tim & Viêm màng ngoài tim",
   guidelines:["ESC 2025 (Myocarditis & Pericarditis)","ACC 2024 ECDP Myocarditis"],
   sections:{
     dinh_nghia:`
@@ -2136,14 +2136,14 @@ ${rt(["Chi tiết"],[
       <div class="subhead">🧮 Tầm soát nguy cơ ĐTĐ type 2 trước xét nghiệm — Thang điểm FINDRISC</div>
       <p>Công cụ sàng lọc không xâm lấn giúp xác định người cần làm xét nghiệm glucose/HbA1c chẩn đoán, dựa hoàn toàn vào đặc điểm lâm sàng dễ thu thập.</p>
       ${scr("findrisc","Thang điểm FINDRISC (nguy cơ ĐTĐ type 2 trong 10 năm)",[
-        {label:"Tuổi", options:[{text:"&lt;45 tuổi (0đ)",pts:0},{text:"45–54 tuổi (2đ)",pts:2},{text:"55–64 tuổi (3đ)",pts:3},{text:"&gt;64 tuổi (4đ)",pts:4}]},
-        {label:"BMI (chỉ số khối cơ thể)", options:[{text:"&lt;25 kg/m² (0đ)",pts:0},{text:"25–30 kg/m² (1đ)",pts:1},{text:"&gt;30 kg/m² (3đ)",pts:3}]},
-        {label:"Vòng eo (Nam: &lt;94/94-102/&gt;102cm — Nữ: &lt;80/80-88/&gt;88cm)", options:[{text:"Bình thường (0đ)",pts:0},{text:"Tăng nhẹ (3đ)",pts:3},{text:"Tăng nhiều (4đ)",pts:4}]},
-        {label:"Hoạt động thể lực ≥30 phút/ngày (công việc hoặc giải trí)", options:[{text:"Có (0đ)",pts:0},{text:"Không (2đ)",pts:2}]},
-        {label:"Tần suất ăn rau củ/trái cây hàng ngày", options:[{text:"Hàng ngày (0đ)",pts:0},{text:"Không phải hàng ngày (1đ)",pts:1}]},
-        {label:"Từng dùng thuốc điều trị tăng huyết áp", options:[{text:"Không (0đ)",pts:0},{text:"Có (2đ)",pts:2}]},
-        {label:"Từng được phát hiện glucose máu cao (khám sức khỏe/ốm/thai kỳ)", options:[{text:"Không (0đ)",pts:0},{text:"Có (5đ)",pts:5}]},
-        {label:"Tiền sử gia đình mắc ĐTĐ", options:[{text:"Không (0đ)",pts:0},{text:"Có — họ hàng xa (cô/dì/chú/bác/anh chị em họ) (3đ)",pts:3},{text:"Có — quan hệ trực hệ (bố/mẹ/anh chị em ruột/con) (5đ)",pts:5}]}
+        {label:"Tuổi", options:[{text:"&lt;45 tuổi (0 điểm)",pts:0},{text:"45–54 tuổi (2đ)",pts:2},{text:"55–64 tuổi (3đ)",pts:3},{text:"&gt;64 tuổi (4đ)",pts:4}]},
+        {label:"BMI (chỉ số khối cơ thể)", options:[{text:"&lt;25 kg/m² (0 điểm)",pts:0},{text:"25–30 kg/m² (1đ)",pts:1},{text:"&gt;30 kg/m² (3đ)",pts:3}]},
+        {label:"Vòng eo (Nam: &lt;94/94-102/&gt;102cm — Nữ: &lt;80/80-88/&gt;88cm)", options:[{text:"Bình thường (0 điểm)",pts:0},{text:"Tăng nhẹ (3đ)",pts:3},{text:"Tăng nhiều (4đ)",pts:4}]},
+        {label:"Hoạt động thể lực ≥30 phút/ngày (công việc hoặc giải trí)", options:[{text:"Có (0 điểm)",pts:0},{text:"Không (2đ)",pts:2}]},
+        {label:"Tần suất ăn rau củ/trái cây hàng ngày", options:[{text:"Hàng ngày (0 điểm)",pts:0},{text:"Không phải hàng ngày (1đ)",pts:1}]},
+        {label:"Từng dùng thuốc điều trị tăng huyết áp", options:[{text:"Không (0 điểm)",pts:0},{text:"Có (2đ)",pts:2}]},
+        {label:"Từng được phát hiện glucose máu cao (khám sức khỏe/ốm/thai kỳ)", options:[{text:"Không (0 điểm)",pts:0},{text:"Có (5đ)",pts:5}]},
+        {label:"Tiền sử gia đình mắc ĐTĐ", options:[{text:"Không (0 điểm)",pts:0},{text:"Có — họ hàng xa (cô/dì/chú/bác/anh chị em họ) (3đ)",pts:3},{text:"Có — quan hệ trực hệ (bố/mẹ/anh chị em ruột/con) (5đ)",pts:5}]}
       ])}
       <div class="subhead">Ngưỡng chẩn đoán xác định ĐTĐ (xét nghiệm)</div>
       ${rt(["Ngưỡng chẩn đoán ĐTĐ"],[
@@ -2186,7 +2186,7 @@ ${rt(["Chi tiết"],[
 <div class="subhead">🔗 Tương tác thuốc thường gặp (ĐTĐ)</div>
       ${rt(["Rủi ro / hướng xử trí"],[
         ["SU/insulin + FQ / rượu","Hạ đường huyết — giáo dục BN"],
-        ["β-blocker","Che triệu chứng hạ ĐH (tim đập nhanh)"],
+        ["beta-blocker","Che triệu chứng hạ ĐH (tim đập nhanh)"],
         ["SGLT2i + lợi tiểu","Mất nước — giảm lợi tiểu khi cần"],
         ["Metformin + thuốc suy thận cấp (NSAID, contrast)","Nguy cơ acid lactic — tạm ngừng khi nguy cơ cao"],
         ["GLP-1 + thuốc làm chậm rỗng dạ dày","Buồn nôn tăng — tăng liều chậm"],
@@ -2205,7 +2205,7 @@ ${rt(["Class"],[
   source:"2023 ESC Guidelines on diabetes and cardiovascular disease; ADA Standards of Care in Diabetes 2026; 2026 AHA/ACC/ADA/ASN CKM Syndrome Guideline"
 },
 {
-  spec:"noi_tiet", id:"obesity", emoji:"⚖️", short:"Béo phì", title:"Béo phì & Hội chứng chuyển hóa",
+  spec:"noi_tiet", id:"obesity", emoji:"⚖", short:"Béo phì", title:"Béo phì & Hội chứng chuyển hóa",
   guidelines:["ADA 2026","SELECT/STEP evidence","EASO"],
   sections:{
     dinh_nghia:`
@@ -2323,7 +2323,7 @@ ${rt(["Class"],[
   source:"2016 ATA Guidelines for Hyperthyroidism (Graves); 2014 ATA Guidelines for Hypothyroidism; 2018 ETA Guideline on Subclinical Hypothyroidism"
 },
 {
-  spec:"ho_hap", id:"asthma", emoji:"🌬️", short:"Hen PQ", title:"Hen phế quản",
+  spec:"ho_hap", id:"asthma", emoji:"🌬", short:"Hen PQ", title:"Hen phế quản",
   guidelines:["GINA 2025/2026"],
   sections:{
     dinh_nghia:`
@@ -2373,7 +2373,7 @@ ${rt(["Chi tiết"],[
     
 <div class="subhead">🔗 Tương tác thuốc thường gặp (hen)</div>
       ${rt(["Rủi ro / hướng xử trí"],[
-        ["β-blocker (kể cả nhỏ mắt timolol)","Cơn hen — tránh không chọn lọc"],
+        ["beta-blocker (kể cả nhỏ mắt timolol)","Cơn hen — tránh không chọn lọc"],
         ["Aspirin / NSAID","Hen nhạy cảm aspirin — tránh ở BN đã biết"],
         ["Steroid + CYP3A4 ức chế mạnh","Tăng tác dụng steroid toàn thân"],
         ["Theophylline + macrolide/FQ","Độc theophylline"]
@@ -2455,7 +2455,7 @@ ${rt(["Chi tiết"],[
         ["Azithromycin / FQ + amiodarone / kéo dài QT","Loạn nhịp — tránh chồng QT"],
         ["Theophylline + ciprofloxacin/macrolide","Độc theophylline — tránh hoặc theo dõi nồng độ"],
         ["Systemic steroid dài + NSAID","Xuất huyết tiêu hóa, loãng xương"],
-        ["β-blocker không chọn lọc","Có thể co thắt phế quản — ưu tiên chọn lọc tim nếu cần"],
+        ["beta-blocker không chọn lọc","Có thể co thắt phế quản — ưu tiên chọn lọc tim nếu cần"],
         ["Roflumilast + CYP cảm ứng mạnh","Giảm hiệu quả"]
       ])}
     `,
@@ -2495,8 +2495,8 @@ ${rt(["Chi tiết"],[
       ${rt(["Phác đồ gợi ý"],[
         ["Ngoại trú, khỏe mạnh","Amoxicillin 1 g ×3; hoặc doxycycline; macrolide chỉ nếu tỷ lệ kháng pneumococcus thấp"],
         ["Ngoại trú + đồng mắc","Amoxicillin-clavulanate (hoặc cephalosporin) + macrolide/doxycycline; hoặc levofloxacin/moxifloxacin"],
-        ["Nội trú không ICU","β-lactam (ampicillin-sulbactam, ceftriaxone…) + macrolide; hoặc FQ hô hấp"],
-        ["ICU","β-lactam + macrolide; phủ MRSA (vancomycin/linezolid) và/hoặc Pseudomonas khi có yếu tố nguy cơ"]
+        ["Nội trú không ICU","beta-lactam (ampicillin-sulbactam, ceftriaxone…) + macrolide; hoặc FQ hô hấp"],
+        ["ICU","beta-lactam + macrolide; phủ MRSA (vancomycin/linezolid) và/hoặc Pseudomonas khi có yếu tố nguy cơ"]
       ])}
 
       <div class="subhead">Thực hành</div>
@@ -2512,7 +2512,7 @@ ${rt(["Chi tiết"],[
       ${rt(["Liều thường dùng","Lưu ý"],[
         ["Amoxicillin","1 g uống ×3/ngày","Ngoại trú không đồng mắc"],
         ["Amoxicillin-clavulanate","875/125 mg ×2 hoặc 1 g ×3 (theo chế phẩm)","Có đồng mắc"],
-        ["Azithromycin","500 mg ngày 1 rồi 250 mg ×4 ngày; hoặc 500 mg ×3 ngày","± β-lactam"],
+        ["Azithromycin","500 mg ngày 1 rồi 250 mg ×4 ngày; hoặc 500 mg ×3 ngày","± beta-lactam"],
         ["Clarithromycin","500 mg ×2/ngày","Tương tác CYP3A4"],
         ["Ceftriaxone","1–2 g IV ×1/ngày","Nội trú"],
         ["Levofloxacin","750 mg ×1/ngày","FQ — QT, gân, kháng địa phương"],
@@ -2632,7 +2632,7 @@ ${rt(["Class"],[
   source:"IDSA/HIVMA 2024 Guidelines for the Prevention and Treatment of Opportunistic Infections in Adults and Adolescents with HIV"
 },
 {
-  spec:"ho_hap", id:"ild", emoji:"🌫️", short:"BPK / IPF", title:"Bệnh phổi kẽ & Xơ phổi tự phát (IPF)",
+  spec:"ho_hap", id:"ild", emoji:"🌫", short:"BPK / IPF", title:"Bệnh phổi kẽ & Xơ phổi tự phát (IPF)",
   guidelines:["ATS/ERS/JRS/ALAT 2022 (IPF & PPF)"],
   sections:{
     dinh_nghia:`
@@ -3138,30 +3138,30 @@ ${rt(["Chi tiết"],[
       <div class="subhead">🧮 Thang điểm Glasgow-Blatchford (GBS) — phân tầng nguy cơ TRƯỚC nội soi</div>
       <p>Dùng ngay tại thời điểm tiếp nhận (không cần nội soi) để xác định bệnh nhân nguy cơ rất thấp có thể quản lý ngoại trú an toàn, không cần nhập viện/nội soi cấp cứu.</p>
       ${scr("gbs","Thang điểm Glasgow-Blatchford",[
-        {label:"Ure máu (mmol/L)", options:[{text:"&lt;6.5 (0đ)",pts:0},{text:"6.5–&lt;8.0 (2đ)",pts:2},{text:"8.0–&lt;10.0 (3đ)",pts:3},{text:"10.0–&lt;25.0 (4đ)",pts:4},{text:"≥25.0 (6đ)",pts:6}]},
-        {label:"Hemoglobin — Nam (g/dL)", options:[{text:"≥13 (0đ)",pts:0},{text:"12–&lt;13 (1đ)",pts:1},{text:"10–&lt;12 (3đ)",pts:3},{text:"&lt;10 (6đ)",pts:6}]},
-        {label:"Hemoglobin — Nữ (g/dL, bỏ qua nếu đã chọn ở dòng Nam)", options:[{text:"Không áp dụng/đã tính ở dòng Nam (0đ)",pts:0},{text:"≥12 (0đ)",pts:0},{text:"10–&lt;12 (1đ)",pts:1},{text:"&lt;10 (6đ)",pts:6}]},
-        {label:"Huyết áp tâm thu (mmHg)", options:[{text:"≥110 (0đ)",pts:0},{text:"100–109 (1đ)",pts:1},{text:"90–99 (2đ)",pts:2},{text:"&lt;90 (3đ)",pts:3}]},
-        {label:"Mạch ≥100 lần/phút", options:[{text:"Không (0đ)",pts:0},{text:"Có (1đ)",pts:1}]},
-        {label:"Đi tiêu phân đen (melena)", options:[{text:"Không (0đ)",pts:0},{text:"Có (1đ)",pts:1}]},
-        {label:"Ngất/tiền ngất", options:[{text:"Không (0đ)",pts:0},{text:"Có (2đ)",pts:2}]},
-        {label:"Bệnh gan mạn (tiền sử/lâm sàng)", options:[{text:"Không (0đ)",pts:0},{text:"Có (2đ)",pts:2}]},
-        {label:"Suy tim", options:[{text:"Không (0đ)",pts:0},{text:"Có (2đ)",pts:2}]}
+        {label:"Ure máu (mmol/L)", options:[{text:"&lt;6.5 (0 điểm)",pts:0},{text:"6.5–&lt;8.0 (2đ)",pts:2},{text:"8.0–&lt;10.0 (3đ)",pts:3},{text:"10.0–&lt;25.0 (4đ)",pts:4},{text:"≥25.0 (6đ)",pts:6}]},
+        {label:"Hemoglobin — Nam (g/dL)", options:[{text:"≥13 (0 điểm)",pts:0},{text:"12–&lt;13 (1đ)",pts:1},{text:"10–&lt;12 (3đ)",pts:3},{text:"&lt;10 (6đ)",pts:6}]},
+        {label:"Hemoglobin — Nữ (g/dL, bỏ qua nếu đã chọn ở dòng Nam)", options:[{text:"Không áp dụng/đã tính ở dòng Nam (0 điểm)",pts:0},{text:"≥12 (0 điểm)",pts:0},{text:"10–&lt;12 (1đ)",pts:1},{text:"&lt;10 (6đ)",pts:6}]},
+        {label:"Huyết áp tâm thu (mmHg)", options:[{text:"≥110 (0 điểm)",pts:0},{text:"100–109 (1đ)",pts:1},{text:"90–99 (2đ)",pts:2},{text:"&lt;90 (3đ)",pts:3}]},
+        {label:"Mạch ≥100 lần/phút", options:[{text:"Không (0 điểm)",pts:0},{text:"Có (1đ)",pts:1}]},
+        {label:"Đi tiêu phân đen (melena)", options:[{text:"Không (0 điểm)",pts:0},{text:"Có (1đ)",pts:1}]},
+        {label:"Ngất/tiền ngất", options:[{text:"Không (0 điểm)",pts:0},{text:"Có (2đ)",pts:2}]},
+        {label:"Bệnh gan mạn (tiền sử/lâm sàng)", options:[{text:"Không (0 điểm)",pts:0},{text:"Có (2đ)",pts:2}]},
+        {label:"Suy tim", options:[{text:"Không (0 điểm)",pts:0},{text:"Có (2đ)",pts:2}]}
       ])}
       <div class="alert-box alert-info"><b>GBS = 0</b>: nguy cơ cực thấp cần can thiệp (truyền máu, nội soi, phẫu thuật) hoặc tử vong — nhóm này có thể an toàn điều trị ngoại trú, không cần nhập viện, theo khuyến cáo ACG 2021/NICE.</div>
       <div class="subhead">🧮 Thang điểm Rockall — TRƯỚC nội soi (đánh giá ban đầu)</div>
       ${scr("rockallpre","Rockall trước nội soi (tối đa 7 điểm)",[
-        {label:"Tuổi", options:[{text:"&lt;60 (0đ)",pts:0},{text:"60–79 (1đ)",pts:1},{text:"≥80 (2đ)",pts:2}]},
-        {label:"Tình trạng huyết động (sốc)", options:[{text:"Không sốc: SBP≥100, mạch&lt;100 (0đ)",pts:0},{text:"Mạch nhanh: SBP≥100, mạch≥100 (1đ)",pts:1},{text:"Hạ huyết áp: SBP&lt;100 (2đ)",pts:2}]},
-        {label:"Bệnh đồng mắc", options:[{text:"Không có bệnh nặng kèm theo (0đ)",pts:0},{text:"Suy tim/thiếu máu cơ tim/bệnh đồng mắc nặng khác (2đ)",pts:2},{text:"Suy thận/suy gan/ung thư di căn (3đ)",pts:3}]}
+        {label:"Tuổi", options:[{text:"&lt;60 (0 điểm)",pts:0},{text:"60–79 (1đ)",pts:1},{text:"≥80 (2đ)",pts:2}]},
+        {label:"Tình trạng huyết động (sốc)", options:[{text:"Không sốc: SBP≥100, mạch&lt;100 (0 điểm)",pts:0},{text:"Mạch nhanh: SBP≥100, mạch≥100 (1đ)",pts:1},{text:"Hạ huyết áp: SBP&lt;100 (2đ)",pts:2}]},
+        {label:"Bệnh đồng mắc", options:[{text:"Không có bệnh nặng kèm theo (0 điểm)",pts:0},{text:"Suy tim/thiếu máu cơ tim/bệnh đồng mắc nặng khác (2đ)",pts:2},{text:"Suy thận/suy gan/ung thư di căn (3đ)",pts:3}]}
       ])}
       <div class="subhead">🧮 Thang điểm Rockall — ĐẦY ĐỦ (sau nội soi)</div>
       ${scr("rockallfull","Rockall đầy đủ (tối đa 11 điểm — bao gồm 3 mục trên + 2 mục dưới)",[
-        {label:"Tuổi", options:[{text:"&lt;60 (0đ)",pts:0},{text:"60–79 (1đ)",pts:1},{text:"≥80 (2đ)",pts:2}]},
-        {label:"Tình trạng huyết động (sốc)", options:[{text:"Không sốc (0đ)",pts:0},{text:"Mạch nhanh, còn HA (1đ)",pts:1},{text:"Hạ huyết áp (2đ)",pts:2}]},
-        {label:"Bệnh đồng mắc", options:[{text:"Không (0đ)",pts:0},{text:"Suy tim/TMCB tim/bệnh nặng khác (2đ)",pts:2},{text:"Suy thận/suy gan/ung thư di căn (3đ)",pts:3}]},
-        {label:"Chẩn đoán qua nội soi", options:[{text:"Mallory-Weiss/không thấy tổn thương/không dấu hiệu chảy máu (0đ)",pts:0},{text:"Chẩn đoán khác (loét, viêm trợt...) (1đ)",pts:1},{text:"Ung thư đường tiêu hóa trên (2đ)",pts:2}]},
-        {label:"Dấu hiệu chảy máu gần đây trên nội soi", options:[{text:"Không có/chỉ có chấm đen đáy ổ loét (0đ)",pts:0},{text:"Máu trong lòng ống tiêu hóa/cục máu đông bám/mạch máu lộ hoặc đang chảy (2đ)",pts:2}]}
+        {label:"Tuổi", options:[{text:"&lt;60 (0 điểm)",pts:0},{text:"60–79 (1đ)",pts:1},{text:"≥80 (2đ)",pts:2}]},
+        {label:"Tình trạng huyết động (sốc)", options:[{text:"Không sốc (0 điểm)",pts:0},{text:"Mạch nhanh, còn HA (1đ)",pts:1},{text:"Hạ huyết áp (2đ)",pts:2}]},
+        {label:"Bệnh đồng mắc", options:[{text:"Không (0 điểm)",pts:0},{text:"Suy tim/TMCB tim/bệnh nặng khác (2đ)",pts:2},{text:"Suy thận/suy gan/ung thư di căn (3đ)",pts:3}]},
+        {label:"Chẩn đoán qua nội soi", options:[{text:"Mallory-Weiss/không thấy tổn thương/không dấu hiệu chảy máu (0 điểm)",pts:0},{text:"Chẩn đoán khác (loét, viêm trợt...) (1đ)",pts:1},{text:"Ung thư đường tiêu hóa trên (2đ)",pts:2}]},
+        {label:"Dấu hiệu chảy máu gần đây trên nội soi", options:[{text:"Không có/chỉ có chấm đen đáy ổ loét (0 điểm)",pts:0},{text:"Máu trong lòng ống tiêu hóa/cục máu đông bám/mạch máu lộ hoặc đang chảy (2đ)",pts:2}]}
       ])}
       <p>Nội soi tiêu hóa trên trong vòng <b>24 giờ</b> ở hầu hết trường hợp XHTH trên; <b>trong 12 giờ</b> nếu huyết động không ổn/nghi xuất huyết do giãn tĩnh mạch. XHTH dưới ổn định: nội soi đại tràng có chuẩn bị trong vòng 24–48h.</p>`,
     dieu_tri:`
@@ -3325,7 +3325,7 @@ ${rt(["Class"],[
       <div class="subhead">IBS-D — bậc thang điều trị</div>
       <ul>
         <li><b>Bước 1:</b> loperamide kiểm soát triệu chứng theo nhu cầu (không cải thiện đau bụng nền)</li>
-        <li><b>Bước 2:</b> <b>rifaximin</b> (kháng sinh không hấp thu, đợt 2 tuần) — có thể lặp lại nếu tái phát sau đáp ứng ban đầu; hoặc eluxadoline (đồng vận µ-opioid/đối kháng δ-opioid, tránh nếu đã cắt túi mật/nghiện rượu)</li>
+        <li><b>Bước 2:</b> <b>rifaximin</b> (kháng sinh không hấp thu, đợt 2 tuần) — có thể lặp lại nếu tái phát sau đáp ứng ban đầu; hoặc eluxadoline (đồng vận µ-opioid/đối kháng delta-opioid, tránh nếu đã cắt túi mật/nghiện rượu)</li>
         <li><b>Bước 3:</b> thuốc gắn acid mật (cholestyramine) nếu nghi kèm kém hấp thu acid mật</li>
       </ul>
       <div class="subhead">Đau bụng chiếm ưu thế/kháng trị (mọi kiểu hình)</div>
@@ -3420,8 +3420,8 @@ ${rt(["Class"],[
         {label:"Bilirubin (mg/dL)", options:[{text:"&lt;2 (1đ)",pts:1},{text:"2–3 (2đ)",pts:2},{text:"&gt;3 (3đ)",pts:3}]},
         {label:"Albumin (g/dL)", options:[{text:"&gt;3.5 (1đ)",pts:1},{text:"2.8–3.5 (2đ)",pts:2},{text:"&lt;2.8 (3đ)",pts:3}]},
         {label:"INR", options:[{text:"&lt;1.7 (1đ)",pts:1},{text:"1.7–2.3 (2đ)",pts:2},{text:"&gt;2.3 (3đ)",pts:3}]},
-        {label:"Cổ trướng", options:[{text:"Không (1đ)",pts:1},{text:"Nhẹ, đáp ứng thuốc (2đ)",pts:2},{text:"Nhiều, kháng trị (3đ)",pts:3}]},
-        {label:"Bệnh não gan", options:[{text:"Không (1đ)",pts:1},{text:"Độ I–II (2đ)",pts:2},{text:"Độ III–IV (3đ)",pts:3}]}
+        {label:"Cổ trướng", options:[{text:"Không (1 điểm)",pts:1},{text:"Nhẹ, đáp ứng thuốc (2đ)",pts:2},{text:"Nhiều, kháng trị (3đ)",pts:3}]},
+        {label:"Bệnh não gan", options:[{text:"Không (1 điểm)",pts:1},{text:"Độ I–II (2 điểm)",pts:2},{text:"Độ III–IV (3 điểm)",pts:3}]}
       ])}
       <p>Child A: 5–6 điểm · Child B: 7–9 điểm · Child C: 10–15 điểm. MELD-Na dùng để ưu tiên danh sách ghép gan.</p>`,
     chan_doan:`
@@ -3841,7 +3841,7 @@ ${rt(["Chi tiết"],[
   source:"IDSA General Approach to Septic Arthritis; Kocher et al. J Bone Joint Surg 1999/2004 (Kocher Criteria)"
 },
 {
-  spec:"co_xuong_khop", id:"ra", emoji:"🖐️", short:"VKDT", title:"Viêm khớp dạng thấp",
+  spec:"co_xuong_khop", id:"ra", emoji:"🖐", short:"VKDT", title:"Viêm khớp dạng thấp",
   guidelines:["ACR 2021","EULAR 2023"],
   sections:{
     dinh_nghia:`
@@ -4255,7 +4255,7 @@ ${rt(["Chi tiết"],[
   source:"KDIGO 2021 Clinical Practice Guideline for the Management of Glomerular Diseases"
 },
 {
-  spec:"than", id:"hyperK", emoji:"⬆️", short:"Tăng K+", title:"Tăng kali máu",
+  spec:"than", id:"hyperK", emoji:"⬆", short:"Tăng K+", title:"Tăng kali máu",
   guidelines:["UKKA 2023","KDIGO 2024 CKD"],
   sections:{
     dinh_nghia:`
@@ -4296,7 +4296,7 @@ ${rt(["Bước"],[
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Calcium TM ngay khi K+ nặng hoặc ECG bất thường",'<span class="badge badge-I">I</span>'],
-        ["Insulin + glucose và/hoặc β2-agonist để chuyển K+ vào tế bào",'<span class="badge badge-I">I</span>'],
+        ["Insulin + glucose và/hoặc beta2-agonist để chuyển K+ vào tế bào",'<span class="badge badge-I">I</span>'],
         ["Dùng potassium binder để duy trì RAASi ở CKD/HF có tăng K+",'<span class="badge badge-IIa">IIa</span>'],
         ["Ngừng vĩnh viễn RAASi chỉ vì tăng K+ nhẹ–trung bình mà không thử binder",'<span class="badge badge-III">III</span>']
       ])}`
@@ -4304,7 +4304,7 @@ ${rt(["Bước"],[
   source:"UKKA Clinical Practice Guideline – Management of Hyperkalaemia in Adults 2023; KDIGO 2024 CKD Guideline"
 },
 {
-  spec:"than", id:"hypoNa", emoji:"⬇️", short:"Hạ Na+", title:"Hạ natri máu",
+  spec:"than", id:"hypoNa", emoji:"⬇", short:"Hạ Na+", title:"Hạ natri máu",
   guidelines:["European Guidelines","US Expert Panel","NDT 2024"],
   sections:{
     dinh_nghia:`
@@ -4938,7 +4938,7 @@ function toggleTheme(){
   const cur = html.getAttribute('data-theme');
   const next = cur === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
-  document.getElementById('themeIcon').innerText = next === 'dark' ? '🌙' : '☀️';
+  document.getElementById('themeIcon').innerText = next === 'dark' ? '🌙' : '☀';
   document.getElementById('themeText').innerText = next === 'dark' ? 'Tối' : 'Sáng';
 }
 
@@ -5624,7 +5624,7 @@ function enhanceDiseaseHeaderFav(){
   btn.onclick = (e) => { e.stopPropagation(); toggleFavDisease(id, btn); };
   const pr = document.createElement('button');
   pr.className = 'fav-btn';
-  pr.textContent = '🖨️';
+  pr.textContent = '🖨';
   pr.title = 'In phác đồ này';
   pr.onclick = (e) => { e.stopPropagation(); window.print(); };
   wrap.appendChild(pr);
@@ -6725,7 +6725,7 @@ function __buildScalesData(){
             ]
           },
           {
-            name: "Bệnh脑 gan (Encephalopathy)",
+            name: "Bệnh não gan (Hepatic encephalopathy)",
             detail: "Mức độ hôn mê gan",
             options: [
               { text: "Không có (+1 điểm)", score: 1 },
@@ -8812,7 +8812,7 @@ function calcScoreNow() {
 
 <div id="pwaGuide" onclick="if(event.target.id==='pwaGuide')closePwaGuide()">
   <div class="pwa-sheet" onclick="event.stopPropagation()">
-    <h2>⬇️ Cài đặt như ứng dụng (PWA)</h2>
+    <h2>⬇ Cài đặt như ứng dụng (PWA)</h2>
     <p class="lead">Cài lên màn hình chính để mở nhanh, toàn màn hình, dùng tiện như app — không cần App Store / CH Play.</p>
 
     <div class="pwa-step-block">
@@ -8866,7 +8866,7 @@ function calcScoreNow() {
 
 <div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
   <div class="cl-sheet" onclick="event.stopPropagation()">
-    <h2>📝 Nhật ký cập nhật &amp; bảo trì</h2>
+    <h2>📝 Nhật ký cập nhật và bảo trì</h2>
     <div class="cl-item"><div class="cl-date">2026-09-04 — H. pylori ACG 2024; Sổ tay lâm sàng
       </div>
     </div>
@@ -8908,7 +8908,7 @@ function calcScoreNow() {
 
 <!-- VIEW AI Y KHOA -->
 <div id="viewAI">
-  <div class="ai-disclaimer">⚠️ <b>AI hỗ trợ tra cứu</b> dựa trên phác đồ &amp; thang điểm trong app — <b>không thay thế</b> khám lâm sàng, xét nghiệm hay quyết định của bác sĩ điều trị.</div>
+  <div class="ai-disclaimer">⚠ <b>AI hỗ trợ tra cứu</b> dựa trên phác đồ &amp; thang điểm trong app — <b>không thay thế</b> khám lâm sàng, xét nghiệm hay quyết định của bác sĩ điều trị.</div>
   <div class="ai-suggest" id="aiSuggest">
     <button type="button" onclick="aiAsk('Xử trí tăng huyết áp cấp cứu')">THA cấp cứu</button>
     <button type="button" onclick="aiAsk('Khi nào dùng kháng đông rung nhĩ')">Kháng đông RN</button>
