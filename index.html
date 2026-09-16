@@ -533,6 +533,9 @@
   .crcl-unit-row{display:flex;gap:8px;align-items:center;}
   .crcl-result{margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--tiffany-light);color:var(--tiffany-dark);font-size:13px;font-weight:700;}
 
+
+  .ai-chip{display:inline-block;margin:3px 4px 0 0;padding:5px 10px;border-radius:14px;border:1px solid var(--border-color);
+    background:var(--tiffany-light);color:var(--tiffany-dark);font-size:12px;font-weight:700;cursor:pointer;}
 </style>
 </head>
 <body>
@@ -4827,7 +4830,1477 @@ ${rt(["Hướng xử trí"],[
       ])}`
   },
   source:"KDIGO CKD; critical care acid-base reviews"
+},
+{
+  spec:"tim_mach", id:"cardiogenic_shock", emoji:"⚠", short:"Sốc tim", title:"Sốc tim (Cardiogenic Shock)",
+  guidelines:["ACC/AHA/SCAI 2022","ESC HF 2021+2023"],
+  sections:{
+    dinh_nghia:`
+      <p>Sốc tim là tình trạng giảm tưới máu mô nặng do rối loạn chức năng tim nguyên phát (không phải do giảm thể tích hay nhiễm khuẩn), thường gặp nhất do nhồi máu cơ tim cấp (AMI-CS) hoặc suy tim mất bù cấp giai đoạn cuối.</p>
+      <div class="subhead">Nguyên nhân chính</div>
+      <ul>
+        <li>Nhồi máu cơ tim cấp diện rộng, biến chứng cơ học (hở van hai lá cấp do đứt cơ nhũ, thủng vách liên thất, vỡ thành tự do).</li>
+        <li>Suy tim mất bù cấp giai đoạn cuối (ADHF), viêm cơ tim tối cấp, loạn nhịp nặng, sốc sau phẫu thuật tim, hở/hẹp van cấp.</li>
+      </ul>
+      <div class="subhead">🆕 Phân loại giai đoạn SCAI (A–E)</div>
+      ${rt(["Đặc điểm huyết động/lâm sàng"],[
+        ["A – Có nguy cơ","Không triệu chứng hiện tại nhưng có nguy cơ tiến triển sốc (AMI diện rộng, ADHF nặng)"],
+        ["B – Bắt đầu (Beginning)","Tụt HA/nhịp nhanh nhưng còn tưới máu bình thường (\"cold & wet\" nhẹ chưa rõ giảm tưới máu)"],
+        ["C – Cổ điển (Classic)","Giảm tưới máu rõ, cần ≥1 can thiệp (thuốc vận mạch/tăng co bóp hoặc thiết bị hỗ trợ cơ học)"],
+        ["D – Suy giảm (Deteriorating)","Không cải thiện dù đã can thiệp ban đầu, cần leo thang điều trị"],
+        ["E – Cực kỳ nặng (Extremis)","Ngừng tuần hoàn hoặc cần hồi sức tim phổi/ECMO ngay"]
+      ])}`,
+    chan_doan:`
+      <p>Chẩn đoán lâm sàng: HA tâm thu &lt;90mmHg &gt;30 phút (hoặc cần vận mạch để duy trì) <b>kèm</b> dấu hiệu giảm tưới máu (chi lạnh/ẩm, thiểu niệu &lt;30mL/h, rối loạn tri giác, lactate máu &gt;2 mmol/L).</p>
+      <div class="alert-box alert-danger">Luôn siêu âm tim cấp cứu tại giường để tìm nguyên nhân cơ học có thể sửa chữa (hở van cấp, TSLT, chèn ép tim, rối loạn vận động vùng gợi ý AMI) — quyết định can thiệp không chờ đủ xét nghiệm.</div>
+      <p>Thông tim phải (Swan-Ganz) khi chẩn đoán không rõ hoặc trước đặt thiết bị hỗ trợ cơ học: CI &lt;2.2 L/phút/m², PCWP &gt;15mmHg, chỉ số công tim (CPI) thấp tiên lượng xấu.</p>`,
+    dieu_tri:`
+<ul>
+        <li>Kích hoạt <b>đội đáp ứng sốc tim</b> (shock team) đa chuyên khoa sớm khi có sẵn — cải thiện tỉ lệ sống.</li>
+        <li>Tái thông mạch vành sớm (PCI/CABG) nếu nguyên nhân là AMI — ưu tiên cao nhất.</li>
+        <li>Thuốc vận mạch đầu tay: <b>Norepinephrine</b> (ưu tiên hơn dopamine — ít loạn nhịp, tử vong thấp hơn trong thử nghiệm SOAP-II).</li>
+        <li>Thêm thuốc tăng co bóp (dobutamine hoặc milrinone) nếu còn giảm tưới máu dù đã đủ vận mạch — milrinone cân nhắc nếu không suy thận và không hạ áp nặng.</li>
+        <li>Hạn chế bù dịch ồ ạt trừ khi rõ giảm thể tích đi kèm; theo dõi sát bilan dịch.</li>
+        <li>Thiết bị hỗ trợ tuần hoàn cơ học (IABP, Impella, VA-ECMO) khi không đáp ứng thuốc — lựa chọn theo mức độ nặng và kinh nghiệm trung tâm; IABP không còn thường quy trong AMI-CS (theo thử nghiệm IABP-SHOCK II).</li>
+      </ul>
+    <div class="subhead">💊 Liều thuốc vận mạch/tăng co bóp</div>
+      ${rt(["Liều","Lưu ý"],[
+        ["Norepinephrine","0.05–0.5 mcg/kg/phút TTM","Đầu tay; qua đường TM lớn/CVC nếu liều cao kéo dài"],
+        ["Dobutamine","2.5–20 mcg/kg/phút TTM","Có thể gây nhịp nhanh/loạn nhịp; giảm liều nếu đã dùng chẹn beta"],
+        ["Milrinone","0.125–0.75 mcg/kg/phút, không bolus nếu tụt áp","Tránh/giảm liều nếu suy thận; bán thải dài hơn dobutamine"],
+        ["Vasopressin","0.01–0.04 U/phút TTM","Thêm khi cần giảm liều norepinephrine hoặc sốc trơ"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Kích hoạt đội đáp ứng sốc tim đa chuyên khoa khi có sẵn",'<span class="badge badge-IIa">IIa</span>'],
+        ["Norepinephrine là vận mạch đầu tay hơn dopamine",'<span class="badge badge-I">I</span>'],
+        ["Tái thông mạch vành sớm trong AMI-CS",'<span class="badge badge-I">I</span>'],
+        ["Đặt IABP thường quy trong AMI-CS không biến chứng cơ học",'<span class="badge badge-III">III</span>'],
+        ["Thông tim phải hỗ trợ chẩn đoán/theo dõi khi không rõ nguyên nhân",'<span class="badge badge-IIa">IIa</span>']
+      ])}`
+  },
+  source:"ACC/AHA/SCAI 2022 Consensus on Cardiogenic Shock; ESC Heart Failure Guidelines 2021 + 2023 focused update"
+},
+{
+  spec:"tim_mach", id:"achd", emoji:"🫀", short:"Tim BS ở NL", title:"Bệnh tim bẩm sinh ở người lớn (ACHD)",
+  guidelines:["ESC ACHD 2020","ACC/AHA ACHD 2018"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhờ phẫu thuật sửa chữa từ nhỏ, phần lớn bệnh nhân tim bẩm sinh (TBS) hiện sống đến tuổi trưởng thành — tạo ra nhóm bệnh lý ACHD (Adult Congenital Heart Disease) với tổng trạng và biến chứng khác hẳn TBS ở trẻ em.</p>
+      <div class="subhead">Phân loại độ phức tạp</div>
+      <ul>
+        <li><b>Đơn giản:</b> thông liên nhĩ/thất nhỏ đã đóng, còn ống động mạch đã đóng đơn thuần.</li>
+        <li><b>Trung bình:</b> tứ chứng Fallot đã sửa, hẹp eo động mạch chủ, bất thường Ebstein.</li>
+        <li><b>Phức tạp:</b> tuần hoàn Fontan (tâm thất độc nhất), chuyển gốc động mạch, thất phải hệ thống, tím tái chưa sửa/sửa một phần (Eisenmenger).</li>
+      </ul>`,
+    chan_doan:`
+      <p>Siêu âm tim qua thành ngực là công cụ hàng đầu; cộng hưởng từ tim đánh giá thể tích/chức năng thất phải, shunt tồn lưu, mạch máu lớn khi siêu âm hạn chế. Thông tim khi cần đo áp lực/kháng lực mạch phổi trước quyết định phẫu thuật lại.</p>
+      <div class="alert-box alert-warn">Mọi bệnh nhân ACHD trung bình–phức tạp nên được theo dõi định kỳ tại trung tâm ACHD chuyên sâu, đặc biệt trước mang thai, phẫu thuật ngoài tim, hoặc khi xuất hiện triệu chứng mới (khó thở, tím tăng, loạn nhịp).</div>`,
+    dieu_tri:`
+<ul>
+        <li>Kháng sinh dự phòng viêm nội tâm mạc chỉ ở nhóm nguy cơ cao (van nhân tạo, TBS tím chưa sửa/mới sửa &lt;6 tháng có vật liệu tồn lưu, tiền sử viêm nội tâm mạc) trước thủ thuật răng miệng nguy cơ.</li>
+        <li>Loạn nhịp nhĩ (cuồng nhĩ trong Fontan, rung nhĩ) rất thường gặp — cần chiến lược kiểm soát nhịp/tần số riêng biệt do giải phẫu bất thường; cắt đốt qua catheter khi khả thi.</li>
+        <li>Đánh giá nguy cơ thai kỳ theo phân loại <b>mWHO</b> (I–IV) trước khi mang thai — nhóm IV (Eisenmenger, Fontan biến chứng, tâm thất hệ thống suy nặng) chống chỉ định mang thai.</li>
+        <li>Bệnh nhân tuần hoàn Fontan/tím tái: theo dõi chức năng gan, huyết khối (thường cần kháng đông dự phòng), tránh mất nước.</li>
+        <li>Hội chứng Eisenmenger: tránh giảm hậu tải hệ thống quá mức, cẩn trọng thuốc giãn mạch, tránh sắt thiếu ở tím tái mạn (đa hồng cầu thứ phát ≠ cần trích máu thường quy).</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Theo dõi định kỳ tại trung tâm ACHD chuyên sâu cho ACHD trung bình/phức tạp",'<span class="badge badge-I">I</span>'],
+        ["Đánh giá nguy cơ thai kỳ theo phân loại mWHO trước mang thai",'<span class="badge badge-I">I</span>'],
+        ["Kháng sinh dự phòng viêm nội tâm mạc thường quy ở mọi ACHD",'<span class="badge badge-III">III</span>'],
+        ["Trích máu thường quy trong đa hồng cầu thứ phát do tím mạn không triệu chứng tăng độ nhớt",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ESC Guidelines for the management of adult congenital heart disease 2020; ACC/AHA ACHD Guideline 2018"
 }
+,
+{
+  spec:"noi_tiet", id:"dka_hhs", emoji:"🧪", short:"DKA/HHS", title:"Toan ceton do ĐTĐ (DKA) & Tăng áp lực thẩm thấu tăng đường huyết (HHS)",
+  guidelines:["ADA Standards of Care 2026","Joint British Diabetes Societies"],
+  sections:{
+    dinh_nghia:`
+      <p>DKA và HHS là hai biến chứng cấp tăng đường huyết nặng, cùng phổ bệnh lý do thiếu insulin tuyệt đối/tương đối, có thể chồng lấp.</p>
+      ${rt(["DKA","HHS"],[
+        ["Glucose","Thường >250 mg/dL",">600 mg/dL"],
+        ["pH động mạch","<7.3","Thường >7.3"],
+        ["HCO₃⁻","<18 mEq/L","Thường >18 mEq/L"],
+        ["Ketone","Dương rõ (máu/niệu)","Nhẹ hoặc âm"],
+        ["Áp lực thẩm thấu hiệu dụng","Thay đổi",">320 mOsm/kg"],
+        ["Tri giác","Thường tỉnh (trừ nặng)","Thường thay đổi/hôn mê"]
+      ])}
+      <p>Yếu tố khởi phát thường gặp: nhiễm trùng, bỏ/giảm liều insulin, ĐTĐ týp 1 mới khởi phát, nhồi máu cơ tim/đột quỵ, thuốc <b>SGLT2i</b> (có thể gây DKA đường huyết bình thường — "euglycemic DKA").</p>`,
+    chan_doan:`
+      <p>Anion gap = Na⁺ − (Cl⁻ + HCO₃⁻); AG tăng &gt;12 gợi ý DKA. Áp lực thẩm thấu hiệu dụng = 2×Na⁺(đo) + Glucose/18 (mg/dL). Natri hiệu chỉnh = Na đo + 1.6×[(Glucose−100)/100].</p>
+      <div class="alert-box alert-danger">Luôn tìm yếu tố khởi phát (cấy máu/nước tiểu, ECG, troponin nếu nghi ngờ) — không điều trị xong rồi bỏ qua nguyên nhân nền, đặc biệt nhiễm trùng ẩn.</div>`,
+    dieu_tri:`
+<ul>
+        <li><b>Bước 1 — Dịch:</b> NaCl 0.9% 15–20 mL/kg (hoặc 1–1.5L) trong giờ đầu, sau đó điều chỉnh theo Na hiệu chỉnh và huyết động.</li>
+        <li><b>Bước 2 — Kali:</b> kiểm tra K⁺ TRƯỚC khi bắt đầu insulin — nếu K⁺&lt;3.3 mEq/L, bù kali trước, hoãn insulin để tránh loạn nhịp nặng do hạ K cấp.</li>
+        <li><b>Bước 3 — Insulin:</b> truyền tĩnh mạch liên tục 0.1 U/kg/giờ (không cần bolus) sau khi đã bù dịch và đảm bảo K⁺≥3.3; mục tiêu giảm glucose 50–75 mg/dL/giờ.</li>
+        <li>Thêm dextrose vào dịch truyền khi glucose &lt;200–250 mg/dL để tránh hạ đường huyết trong khi tiếp tục insulin đến khi AG đóng.</li>
+        <li>Bicarbonate: chỉ xem xét khi pH&lt;6.9 — không dùng thường quy.</li>
+        <li>Chuyển insulin tiêm dưới da khi: AG đã đóng, BN tỉnh táo ăn được, HCO₃⁻ ổn định — chồng lấp insulin nền trước khi ngừng truyền TM 1–2 giờ.</li>
+        <li>HHS: bù dịch tích cực hơn (thiếu dịch nhiều hơn DKA), theo dõi Na/áp lực thẩm thấu sát để tránh giảm quá nhanh gây phù não.</li>
+      </ul>
+    <div class="subhead">💊 Tóm tắt phác đồ</div>
+      ${rt(["Liều/ngưỡng","Lưu ý"],[
+        ["Insulin regular TTM","0.1 U/kg/giờ liên tục","Không bolus; không ngừng đột ngột trước khi có insulin nền"],
+        ["Ngưỡng hoãn insulin","K⁺ <3.3 mEq/L","Bù K trước để tránh loạn nhịp"],
+        ["Thêm Dextrose","Khi Glucose <200–250 mg/dL","Duy trì glucose 150–200 tránh hạ ĐH khi còn AG mở"],
+        ["Bicarbonate","Chỉ khi pH <6.9","Không thường quy"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Kiểm tra và bù Kali trước khi bắt đầu insulin nếu K⁺<3.3",'<span class="badge badge-I">I</span>'],
+        ["Truyền insulin liên tục liều thấp (0.1 U/kg/giờ) không bolus",'<span class="badge badge-I">I</span>'],
+        ["Bicarbonate thường quy cho mọi mức pH",'<span class="badge badge-III">III</span>'],
+        ["Tìm và xử trí yếu tố khởi phát song song hồi sức",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"ADA Standards of Care in Diabetes 2026; Joint British Diabetes Societies Inpatient Care Group — DKA/HHS management"
+},
+{
+  spec:"noi_tiet", id:"pcos", emoji:"🌸", short:"PCOS", title:"Hội chứng buồng trứng đa nang (PCOS)",
+  guidelines:["International Evidence-based Guideline for PCOS 2023","Rotterdam Criteria"],
+  sections:{
+    dinh_nghia:`
+      <p>PCOS là bệnh nội tiết-chuyển hóa thường gặp nhất ở phụ nữ tuổi sinh sản, chẩn đoán theo <b>tiêu chuẩn Rotterdam</b>: có ≥2/3 tiêu chí sau (sau khi loại trừ nguyên nhân khác):</p>
+      <ul>
+        <li>Rối loạn phóng noãn/kinh (thiểu kinh, vô kinh).</li>
+        <li>Cường androgen lâm sàng (rậm lông, mụn, hói kiểu nam) và/hoặc cận lâm sàng (testosterone tự do tăng).</li>
+        <li>Hình ảnh buồng trứng đa nang trên siêu âm (≥20 nang nhỏ/buồng trứng hoặc thể tích ≥10mL, tùy máy).</li>
+      </ul>
+      <p>Đi kèm thường có đề kháng insulin, béo phì, tăng nguy cơ ĐTĐ týp 2, rối loạn lipid, ngưng thở khi ngủ, trầm cảm/lo âu.</p>`,
+    chan_doan:`
+      <p>Loại trừ nguyên nhân khác gây cường androgen/rối loạn kinh trước khi chẩn đoán PCOS: TSH (bệnh tuyến giáp), prolactin (tăng prolactin máu), 17-OH-progesterone (tăng sản tuyến thượng thận bẩm sinh không điển hình), và loại trừ u tiết androgen nếu triệu chứng nặng/khởi phát nhanh.</p>
+      <div class="alert-box alert-info">Siêu âm buồng trứng đa nang không cần thiết nếu đã đủ 2 tiêu chí còn lại (rối loạn phóng noãn + cường androgen) — tránh chẩn đoán quá mức ở vị thành niên.</div>`,
+    dieu_tri:`
+<ul>
+        <li>Thay đổi lối sống (giảm 5–10% cân nặng nếu thừa cân) là nền tảng — cải thiện phóng noãn, chuyển hóa.</li>
+        <li>Viên tránh thai kết hợp (COC) là điều trị đầu tay cho rối loạn kinh và cường androgen (rậm lông, mụn) khi không có chống chỉ định.</li>
+        <li><b>Metformin</b> khi có rối loạn dung nạp glucose/đề kháng insulin, hoặc kết hợp COC nếu chỉ COC chưa đủ kiểm soát chuyển hóa.</li>
+        <li>Muốn có thai: <b>Letrozole</b> là thuốc kích thích phóng noãn đầu tay (ưu tiên hơn clomiphene — tỉ lệ sinh sống cao hơn); metformin có thể phối hợp.</li>
+        <li>Rậm lông: cần tránh thai hiệu quả trước khi dùng spironolactone (kháng androgen) do nguy cơ nữ hóa thai nam.</li>
+        <li>Sàng lọc định kỳ: glucose/HbA1c, lipid, huyết áp, tầm soát ngưng thở khi ngủ và sức khỏe tâm thần.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Chẩn đoán theo tiêu chuẩn Rotterdam sau loại trừ nguyên nhân khác",'<span class="badge badge-I">I</span>'],
+        ["Letrozole là thuốc kích phóng noãn đầu tay khi cần có thai",'<span class="badge badge-I">I</span>'],
+        ["Siêu âm buồng trứng đa nang thường quy ở vị thành niên để chẩn đoán",'<span class="badge badge-III">III</span>'],
+        ["Sàng lọc chuyển hóa (glucose, lipid) định kỳ ở mọi bệnh nhân PCOS",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"International Evidence-based Guideline for the Assessment and Management of PCOS 2023"
+}
+,
+{
+  spec:"ho_hap", id:"osa", emoji:"😴", short:"OSA", title:"Ngưng thở tắc nghẽn khi ngủ (OSA)",
+  guidelines:["AASM 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>OSA là tình trạng tắc nghẽn tái diễn đường thở trên trong khi ngủ gây ngừng thở (apnea) hoặc giảm thông khí (hypopnea), dẫn đến giảm oxy máu và giấc ngủ bị phân đoạn.</p>
+      <div class="subhead">Phân độ theo AHI (số cơn ngừng/giảm thở mỗi giờ)</div>
+      ${rt(["Mức độ"],[
+        ["AHI 5–<15","Nhẹ"],
+        ["AHI 15–<30","Trung bình"],
+        ["AHI ≥30","Nặng"]
+      ])}`,
+    chan_doan:`
+      <p>Sàng lọc bằng thang <b>STOP-BANG</b> (Snoring, Tiredness, Observed apnea, blood Pressure, BMI, Age, Neck size, Gender) — điểm càng cao càng gợi ý OSA trung bình-nặng.</p>
+      <p>Đa ký giấc ngủ (Polysomnography) tại phòng lab là tiêu chuẩn vàng; đo giấc ngủ tại nhà (HSAT) là lựa chọn hợp lý cho người có xác suất tiền nghiệm cao và không có bệnh đồng mắc phức tạp (suy tim nặng, bệnh phổi nặng, nghi giảm thông khí).</p>
+      <div class="alert-box alert-info">Luôn nghĩ đến OSA ở bệnh nhân THA kháng trị, rung nhĩ tái phát sau cắt đốt, hoặc béo phì kèm ngủ ngày quá mức — điều trị OSA cải thiện kiểm soát các bệnh này.</div>`,
+    dieu_tri:`
+<ul>
+        <li>Giảm cân, tránh rượu/an thần trước ngủ, điều trị nghẹt mũi nếu có.</li>
+        <li><b>CPAP</b> (thở áp lực dương liên tục) là điều trị đầu tay cho OSA trung bình-nặng có triệu chứng — hiệu quả phụ thuộc tuân thủ đeo máy.</li>
+        <li>Dụng cụ đẩy hàm dưới (oral appliance) là lựa chọn cho OSA nhẹ-trung bình hoặc không dung nạp CPAP.</li>
+        <li>Liệu pháp theo vị trí ngủ (positional therapy) khi OSA chủ yếu xảy ra khi nằm ngửa.</li>
+        <li>Phẫu thuật đường thở trên (UPPP, tiến hàm...) hoặc kích thích thần kinh hạ thiệt cân nhắc ở trường hợp chọn lọc không đáp ứng CPAP.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["CPAP cho OSA trung bình-nặng có triệu chứng",'<span class="badge badge-I">I</span>'],
+        ["Sàng lọc STOP-BANG ở bệnh nhân THA kháng trị hoặc rung nhĩ tái phát",'<span class="badge badge-IIa">IIa</span>'],
+        ["Dụng cụ đẩy hàm cho OSA nhẹ hoặc không dung nạp CPAP",'<span class="badge badge-IIa">IIa</span>']
+      ])}`
+  },
+  source:"AASM Clinical Practice Guideline for Diagnostic Testing and Management of OSA 2021"
+},
+{
+  spec:"ho_hap", id:"bronchiectasis", emoji:"🌳", short:"Giãn PQ", title:"Giãn phế quản (Bronchiectasis)",
+  guidelines:["ERS Guideline 2017"],
+  sections:{
+    dinh_nghia:`
+      <p>Giãn phế quản là tình trạng giãn không hồi phục của đường thở do vòng xoắn viêm-nhiễm trùng mạn tính, gây khạc đàm mạn tính và các đợt cấp tái diễn.</p>
+      <div class="subhead">Nguyên nhân thường gặp cần tìm</div>
+      <p>Hậu nhiễm (lao, viêm phổi nặng), xơ nang (CF), suy giảm miễn dịch (thiếu gammaglobulin), rối loạn chức năng lông chuyển tiên phát, ABPA (dị ứng phế nang phổi do Aspergillus), bệnh mô liên kết, vô căn (~40% trường hợp).</p>`,
+    chan_doan:`
+      <p><b>CT ngực độ phân giải cao (HRCT)</b> là tiêu chuẩn chẩn đoán: đường thở giãn, mất thuôn nhọn, dấu "vòng nhẫn" (đường kính phế quản > động mạch đi kèm).</p>
+      <p>Tìm nguyên nhân nền: công thức máu + globulin miễn dịch, test mồ hôi/gen CF nếu nghi ngờ, IgE + IgE đặc hiệu Aspergillus (ABPA), cấy đàm định kỳ tìm vi khuẩn thường trú (đặc biệt <i>Pseudomonas aeruginosa</i>).</p>`,
+    dieu_tri:`
+<ul>
+        <li>Vật lý trị liệu hô hấp làm sạch đường thở hằng ngày (kỹ thuật ho có kiểm soát, thiết bị dao động áp lực dương) — nền tảng điều trị dài hạn.</li>
+        <li>Điều trị nguyên nhân nền nếu xác định được (ví dụ corticoid + kháng nấm cho ABPA).</li>
+        <li>Kháng sinh đợt cấp theo kết quả cấy đàm/kinh nghiệm, đủ liệu trình (thường 14 ngày).</li>
+        <li>Macrolide dài hạn (azithromycin) giảm số đợt cấp ở người có ≥3 đợt cấp/năm — cần loại trừ lao/NTM trước khi bắt đầu.</li>
+        <li>Kháng sinh khí dung (tobramycin, colistin) khi nhiễm <i>Pseudomonas</i> mạn tính gây đợt cấp thường xuyên.</li>
+        <li>Không dùng corticoid hít thường quy trừ khi có hen/COPD chồng lấp thật sự.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Vật lý trị liệu làm sạch đường thở hằng ngày",'<span class="badge badge-I">I</span>'],
+        ["Macrolide dài hạn khi ≥3 đợt cấp/năm (đã loại trừ NTM)",'<span class="badge badge-I">I</span>'],
+        ["Corticoid hít thường quy khi không có hen/COPD chồng lấp",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"European Respiratory Society (ERS) Guidelines for the management of adult bronchiectasis 2017"
+}
+,
+{
+  spec:"tieu_hoa", id:"celiac", emoji:"🌾", short:"Celiac", title:"Bệnh Celiac (Celiac Disease)",
+  guidelines:["ACG 2023"],
+  sections:{
+    dinh_nghia:`
+      <p>Bệnh Celiac là bệnh ruột do miễn dịch, khởi phát bởi gluten (lúa mì, lúa mạch, mạch nha) ở người có yếu tố di truyền phù hợp (HLA-DQ2/DQ8), gây tổn thương nhung mao ruột non.</p>
+      <p>Biểu hiện đa dạng: tiêu chảy/đầy hơi/sụt cân điển hình, hoặc chỉ có biểu hiện ngoài ruột (thiếu máu thiếu sắt không rõ nguyên nhân, loãng xương, vô sinh, viêm da herpetiformis, tăng men gan không rõ nguyên nhân, thiếu B12/folate).</p>`,
+    chan_doan:`
+      <p>Xét nghiệm huyết thanh đầu tay: <b>IgA anti-tTG</b> kèm định lượng IgA toàn phần (loại trừ thiếu IgA gây âm giả). Nếu thiếu IgA: dùng IgG-DGP hoặc IgG-tTG.</p>
+      <div class="alert-box alert-danger">KHÔNG bắt đầu chế độ ăn không gluten trước khi làm huyết thanh học/sinh thiết — sẽ làm âm tính giả và khó chẩn đoán sau này.</div>
+      <p>Sinh thiết tá tràng (≥4 mẫu hành tá tràng xa + 1–2 mẫu bulb) khi huyết thanh dương hoặc nghi ngờ cao dù âm tính, xác nhận bằng tổn thương nhung mao/tăng lympho biểu mô (phân độ Marsh).</p>`,
+    dieu_tri:`
+<ul>
+        <li>Chế độ ăn <b>không gluten tuyệt đối, suốt đời</b> — nền tảng điều trị duy nhất đã được chứng minh.</li>
+        <li>Chuyển gặp chuyên gia dinh dưỡng để hướng dẫn tránh nguồn gluten ẩn.</li>
+        <li>Bổ sung/điều chỉnh thiếu hụt: sắt, folate, B12, vitamin D, canxi.</li>
+        <li>Đo mật độ xương (DEXA) tại thời điểm chẩn đoán nếu có yếu tố nguy cơ loãng xương.</li>
+        <li>Theo dõi huyết thanh học định kỳ (tTG) để đánh giá tuân thủ chế độ ăn.</li>
+        <li>Nếu không cải thiện dù đã ăn kiêng nghiêm ngặt → xem lại tuân thủ, loại trừ nhiễm gluten ẩn, rồi mới nghĩ đến Celiac kháng trị.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Xét nghiệm huyết thanh học trước khi loại gluten khỏi chế độ ăn",'<span class="badge badge-I">I</span>'],
+        ["Sinh thiết tá tràng xác nhận chẩn đoán ở người lớn",'<span class="badge badge-I">I</span>'],
+        ["Chế độ ăn không gluten suốt đời sau chẩn đoán xác định",'<span class="badge badge-I">I</span>'],
+        ["Bắt đầu ăn không gluten trước khi xét nghiệm chẩn đoán",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"American College of Gastroenterology (ACG) Clinical Guideline: Diagnosis and Management of Celiac Disease 2023"
+},
+{
+  spec:"tieu_hoa", id:"cdiff", emoji:"🦠", short:"C.diff", title:"Viêm đại tràng do Clostridioides difficile",
+  guidelines:["ACG 2021","IDSA/SHEA 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhiễm <i>C. difficile</i> gây viêm đại tràng qua trung gian độc tố, thường sau dùng kháng sinh phá vỡ hệ vi sinh đường ruột bình thường.</p>
+      ${rt(["Đặc điểm"],[
+        ["Không nặng","Tiêu chảy, không có dấu hiệu nặng"],
+        ["Nặng","Bạch cầu ≥15.000/µL hoặc Creatinine ≥1.5mg/dL"],
+        ["Tối cấp (Fulminant)","Tụt HA/sốc, liệt ruột, hoặc phình đại tràng nhiễm độc"]
+      ])}`,
+    chan_doan:`
+      <p>Chỉ xét nghiệm khi có tiêu chảy thật sự (≥3 lần phân không thành khuôn/24h) — tránh xét nghiệm phân thành khuôn hoặc test khỏi bệnh (test of cure).</p>
+      <div class="alert-box alert-warn">Chỉ dùng NAAT/PCR đơn độc có thể dương giả do phát hiện người mang trùng không triệu chứng — nên dùng thuật toán 2 bước (GDH + toxin EIA, PCR làm trọng tài khi kết quả không đồng nhất) để tăng độ đặc hiệu.</div>`,
+    dieu_tri:`
+<ul>
+        <li>Ngừng kháng sinh gây bệnh nếu có thể; tránh thuốc giảm nhu động ruột.</li>
+        <li>Đợt đầu không nặng/nặng: <b>Fidaxomicin</b> được ưu tiên hơn vancomycin (giảm tái phát) — vancomycin uống là lựa chọn thay thế hợp lý; metronidazole chỉ dùng khi không có 2 thuốc trên và bệnh không nặng.</li>
+        <li>Tối cấp: <b>Vancomycin uống/qua sonde ± thụt hậu môn</b> phối hợp <b>Metronidazole TM</b>; hội chẩn ngoại khoa sớm nếu nghi phình đại tràng nhiễm độc/thủng.</li>
+        <li>Tái phát lần 1: fidaxomicin hoặc vancomycin liều giảm dần (taper/pulse); từ tái phát lần 2: cân nhắc ghép vi sinh phân (FMT) hoặc bezlotoxumab kèm kháng sinh chuẩn ở nhóm nguy cơ tái phát cao.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Chỉ xét nghiệm khi có tiêu chảy thực sự, không lặp lại test khỏi bệnh",'<span class="badge badge-I">I</span>'],
+        ["Fidaxomicin ưu tiên hơn vancomycin cho đợt đầu để giảm tái phát",'<span class="badge badge-I">I</span>'],
+        ["Ghép vi sinh phân (FMT) cho tái phát nhiều lần",'<span class="badge badge-IIa">IIa</span>'],
+        ["Metronidazole đơn độc cho bệnh nặng/tối cấp",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACG Clinical Guideline: Clostridioides difficile Infection 2021; IDSA/SHEA Clinical Practice Guideline 2021"
+}
+,
+{
+  spec:"co_xuong_khop", id:"gca", emoji:"👁", short:"GCA", title:"Viêm động mạch tế bào khổng lồ (Giant Cell Arteritis)",
+  guidelines:["EULAR 2018 + cập nhật 2023","ACR/VF 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>GCA là viêm mạch máu lớn thường gặp nhất ở người ≥50 tuổi, ưu tiên các nhánh sọ của động mạch cảnh (động mạch thái dương) nhưng có thể ảnh hưởng động mạch lớn khác (chủ, dưới đòn — "large-vessel GCA"). Khoảng 40–50% bệnh nhân PMR có kèm GCA.</p>`,
+    chan_doan:`
+      <p>Triệu chứng kinh điển: đau đầu mới khởi phát, đau cách hồi hàm khi nhai, đau/nhạy cảm da đầu, sốt/sụt cân, kèm CRP/ESR tăng cao.</p>
+      <div class="alert-box alert-danger">Rối loạn thị giác (nhìn mờ, nhìn đôi, mất thị lực một phần/hoàn toàn — amaurosis fugax) là CẤP CỨU NHÃN KHOA-THẤP KHỚP: nguy cơ mù vĩnh viễn nếu không điều trị corticoid ngay, không chờ kết quả sinh thiết.</div>
+      <p>Sinh thiết động mạch thái dương là tiêu chuẩn tham chiếu nhưng không nên trì hoãn điều trị để chờ kết quả; siêu âm Doppler màu động mạch thái dương (dấu hiệu "halo") hoặc PET-CT (khi nghi tổn thương mạch lớn) là công cụ hỗ trợ chẩn đoán không xâm lấn.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Bắt đầu glucocorticoid liều cao NGAY khi nghi ngờ GCA</b> trên lâm sàng — không chờ sinh thiết hoặc chẩn đoán hình ảnh xác nhận.</li>
+        <li>Có triệu chứng thị giác đe dọa mất thị lực: <b>Methylprednisolone TM</b> liều cao 3 ngày trước khi chuyển uống.</li>
+        <li>Không có triệu chứng thị giác: Prednisone uống liều cao khởi đầu, giảm dần theo đáp ứng lâm sàng/CRP trong nhiều tháng.</li>
+        <li><b>Tocilizumab</b> (kháng thụ thể IL-6) phối hợp corticoid giúp giảm liều corticoid tích lũy và giảm tái phát (thử nghiệm GiACTA) — cân nhắc ở bệnh nhân nguy cơ tái phát cao hoặc cần giảm corticoid nhanh.</li>
+        <li>Aspirin liều thấp thường được thêm để giảm nguy cơ biến chứng thiếu máu cục bộ trừ khi chống chỉ định.</li>
+        <li>Theo dõi định kỳ hình ảnh học động mạch chủ (siêu âm/CT) tìm phình/tách động mạch chủ về sau — biến chứng muộn quan trọng.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bắt đầu glucocorticoid ngay khi nghi ngờ lâm sàng, không chờ sinh thiết",'<span class="badge badge-I">I</span>'],
+        ["Methylprednisolone TM khi có triệu chứng thị giác đe dọa",'<span class="badge badge-I">I</span>'],
+        ["Tocilizumab phối hợp như thuốc giảm liều corticoid",'<span class="badge badge-IIa">IIa</span>'],
+        ["Trì hoãn điều trị để chờ kết quả sinh thiết ở bệnh nghi ngờ cao",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"EULAR recommendations for the management of large vessel vasculitis, 2023 update; ACR/Vasculitis Foundation 2021 Guideline for GCA"
+},
+{
+  spec:"co_xuong_khop", id:"sjogren", emoji:"💧", short:"Sjögren", title:"Hội chứng Sjögren",
+  guidelines:["ACR/EULAR Classification 2016","EULAR Management 2020"],
+  sections:{
+    dinh_nghia:`
+      <p>Hội chứng Sjögren là bệnh tự miễn mạn tính với thâm nhiễm lympho các tuyến ngoại tiết (nước mắt, nước bọt) gây khô mắt-khô miệng (sicca), có thể nguyên phát hoặc thứ phát (kèm RA, SLE, xơ cứng bì).</p>
+      <p>Biểu hiện toàn thân có thể gặp: đau khớp, viêm tuyến nước bọt tái phát, bệnh phổi kẽ, toan hóa ống thận, viêm mạch da, bệnh lý thần kinh ngoại biên, tăng nguy cơ lymphoma (đặc biệt khi sưng tuyến mang tai kéo dài, hạch to, hoặc gammaglobulin đơn dòng).</p>`,
+    chan_doan:`
+      <p>Tiêu chuẩn phân loại ACR/EULAR 2016 (thang điểm có trọng số, chẩn đoán khi tổng ≥4): sinh thiết môi có ổ lympho (focus score ≥1) = 3 điểm; anti-SSA/Ro dương = 3 điểm; điểm nhuộm giác mạc-kết mạc ≥5 = 1 điểm; test Schirmer ≤5mm/5phút = 1 điểm; lưu lượng nước bọt không kích thích ≤0.1mL/phút = 1 điểm.</p>
+      <p>Anti-SSB/La thường đi kèm anti-SSA nhưng ít đặc hiệu hơn khi đứng riêng lẻ.</p>`,
+    dieu_tri:`
+<ul>
+        <li>Khô mắt: nước mắt nhân tạo, cyclosporine/lifitegrast nhãn khi nặng; khô miệng: nước bọt nhân tạo, kẹo không đường kích thích tiết nước bọt.</li>
+        <li><b>Pilocarpine hoặc cevimeline</b> uống khi còn mô tuyến hoạt động — kích thích tiết nước bọt/nước mắt toàn thân.</li>
+        <li><b>Hydroxychloroquine</b> cho triệu chứng khớp và mệt mỏi, bệnh nhẹ-trung bình.</li>
+        <li>Corticoid/thuốc ức chế miễn dịch (rituximab cân nhắc) cho biểu hiện toàn thân nặng (viêm mạch, bệnh phổi kẽ tiến triển, viêm thận).</li>
+        <li>Theo dõi định kỳ tìm dấu hiệu gợi ý lymphoma (sưng tuyến mang tai dai dẳng, hạch to, giảm bổ thể, cryoglobulin, gammaglobulin đơn dòng).</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Nước mắt/nước bọt nhân tạo là điều trị nền tảng cho triệu chứng sicca",'<span class="badge badge-I">I</span>'],
+        ["Hydroxychloroquine cho đau khớp/mệt mỏi",'<span class="badge badge-IIa">IIa</span>'],
+        ["Theo dõi dấu hiệu gợi ý lymphoma định kỳ",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"EULAR recommendations for the management of Sjögren's syndrome 2020; ACR/EULAR Classification Criteria 2016"
+}
+,
+{
+  spec:"than", id:"hypoK", emoji:"⬇", short:"Hạ K+", title:"Hạ kali máu (Hypokalemia)",
+  guidelines:["Thực hành điện giải theo KDIGO/hồi sức"],
+  sections:{
+    dinh_nghia:`
+      <p>K⁺ huyết thanh &lt;3.5 mEq/L. Nguyên nhân chính: mất qua đường tiêu hóa (nôn, tiêu chảy), mất qua thận (lợi tiểu, cường Aldosterone, toan ống thận type 1/2, hạ Mg đi kèm), hoặc dịch chuyển nội-ngoại bào (insulin, chủ vận beta-2, kiềm máu, liệt chu kỳ giảm kali).</p>
+      ${rt(["Mức độ"],[
+        ["3.0–<3.5 mEq/L","Nhẹ"],
+        ["2.5–<3.0 mEq/L","Trung bình"],
+        ["<2.5 mEq/L","Nặng"]
+      ])}`,
+    chan_doan:`
+      <p>ECG: sóng T dẹt, xuất hiện sóng U, ST chênh xuống; K rất thấp có thể gây loạn nhịp nguy hiểm (xoắn đỉnh, ngoại thu thất, ngừng tim).</p>
+      <div class="alert-box alert-warn">Luôn kiểm tra và bù đồng thời <b>Magie</b> — hạ Mg thường đi kèm và làm kali khó bù đủ nếu không sửa Mg trước/cùng lúc.</div>
+      <p>Kali/creatinine niệu hoặc TTKG giúp phân biệt mất qua thận (TTKG cao, kali niệu cao) với mất ngoài thận/dịch chuyển nội bào (kali niệu thấp).</p>`,
+    dieu_tri:`
+<ul>
+        <li>Nhẹ-trung bình, không triệu chứng/ECG bình thường: bù <b>KCl uống</b>, chia liều nhỏ nhiều lần để tránh kích ứng dạ dày.</li>
+        <li>Nặng hoặc có triệu chứng/thay đổi ECG: bù <b>KCl truyền tĩnh mạch</b>, tốc độ hạn chế qua đường ngoại vi, cần theo dõi ECG liên tục và bơm tiêm điện nếu tốc độ cao qua đường trung tâm.</li>
+        <li>Bù Magie song song nếu Mg thấp hoặc kali khó lên dù đã bù đủ.</li>
+        <li>Điều trị/loại bỏ nguyên nhân nền (giảm liều lợi tiểu, điều trị nôn/tiêu chảy, tầm soát cường Aldosterone nếu hạ K tự phát dai dẳng kèm THA).</li>
+        <li>Thận trọng ở bệnh nhân suy thận — nguy cơ tăng kali nhanh khi bù, cần theo dõi sát hơn.</li>
+      </ul>
+    <div class="subhead">💊 Tốc độ bù Kali tĩnh mạch (tham khảo)</div>
+      ${rt(["Tốc độ tối đa","Lưu ý"],[
+        ["Đường ngoại vi","≈10 mEq/giờ","Nồng độ pha loãng phù hợp tránh viêm tĩnh mạch"],
+        ["Đường trung tâm + theo dõi ECG liên tục","≈20 mEq/giờ (trường hợp nặng có giám sát chặt)","Chỉ tại đơn vị có monitor liên tục"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Kiểm tra và bù Magie đồng thời khi hạ Kali kèm hạ Magie",'<span class="badge badge-I">I</span>'],
+        ["Truyền KCl tốc độ cao qua đường ngoại vi không theo dõi ECG",'<span class="badge badge-III">III</span>'],
+        ["Tìm nguyên nhân nền (đặc biệt cường Aldosterone khi hạ K tự phát + THA)",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"Nguyên tắc xử trí rối loạn điện giải theo thực hành hồi sức, tương thích khung KDIGO"
+},
+{
+  spec:"than", id:"adpkd", emoji:"🫘", short:"ADPKD", title:"Bệnh thận đa nang di truyền trội (ADPKD)",
+  guidelines:["KDIGO Controversies Conference ADPKD 2015"],
+  sections:{
+    dinh_nghia:`
+      <p>ADPKD là bệnh thận di truyền phổ biến nhất, do đột biến gen PKD1 (~78%, tiến triển nhanh hơn) hoặc PKD2 (~15%, tiến triển chậm hơn), gây phát triển nang tiến triển tại thận dẫn đến bệnh thận mạn/suy thận giai đoạn cuối.</p>
+      <p>Biểu hiện ngoài thận: nang gan (thường gặp hơn ở nữ), túi phình mạch não (nguy cơ cao hơn nếu có tiền sử gia đình phình/xuất huyết dưới nhện), sa van hai lá, thoát vị bẹn/rốn, túi thừa đại tràng.</p>`,
+    chan_doan:`
+      <p>Chẩn đoán thường dựa vào tiền sử gia đình + siêu âm thận (tiêu chuẩn Ravine-Pei theo tuổi số lượng nang hai bên). Xét nghiệm gen khi tiền sử gia đình không rõ, hình ảnh không điển hình, hoặc cần chẩn đoán trước khi hiến thận.</p>
+      <p>Phân loại tiên lượng Mayo Imaging Classification dựa trên thể tích thận hiệu chỉnh theo chiều cao (htTKV) trên MRI — nhóm 1C-1E tiến triển nhanh, là nhóm ưu tiên cân nhắc điều trị đặc hiệu.</p>
+      <div class="alert-box alert-info">Chỉ sàng lọc phình mạch não bằng MRI mạch máu ở người có tiền sử gia đình phình/xuất huyết dưới nhện, tiền sử cá nhân đã có phình, hoặc nghề nghiệp/hoạt động nguy cơ cao khi vỡ (phi công, thợ lặn) — không sàng lọc thường quy mọi bệnh nhân không yếu tố nguy cơ.</div>`,
+    dieu_tri:`
+<ul>
+        <li>Kiểm soát huyết áp chặt (mục tiêu &lt;110/75mmHg ở người trẻ chức năng thận còn tốt, theo nghiên cứu HALT-PKD) làm chậm tăng thể tích thận.</li>
+        <li><b>Tolvaptan</b> (kháng thụ thể vasopressin V2) cho nhóm tiến triển nhanh (Mayo 1C-1E hoặc giảm eGFR nhanh) — làm chậm giảm GFR; cần theo dõi men gan định kỳ do nguy cơ độc gan và theo dõi natri máu do nguy cơ tăng Na.</li>
+        <li>Uống nhiều nước để ức chế vasopressin nội sinh (vai trò còn đang nghiên cứu, hợp lý về sinh lý).</li>
+        <li>Xử trí biến chứng: đau/xuất huyết nang, sỏi thận, nhiễm trùng nang/đường tiết niệu tái phát.</li>
+        <li>Tư vấn di truyền cho người thân, lập kế hoạch điều trị thay thế thận khi tiến triển đến giai đoạn cuối.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Kiểm soát huyết áp chặt ở người trẻ nguy cơ tiến triển nhanh",'<span class="badge badge-I">I</span>'],
+        ["Tolvaptan ở nhóm tiến triển nhanh (Mayo 1C-1E), theo dõi men gan/natri",'<span class="badge badge-IIa">IIa</span>'],
+        ["Sàng lọc phình mạch não thường quy khi không có yếu tố nguy cơ",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"KDIGO Controversies Conference Report: Autosomal Dominant Polycystic Kidney Disease 2015"
+},
+{
+  spec:"tim_mach", id:"pericarditis", emoji:"🫧", short:"VMNT/CET", title:"Viêm màng ngoài tim cấp & Chèn ép tim",
+  guidelines:["ESC Pericardial Diseases 2015"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm màng ngoài tim cấp là viêm lớp màng bao quanh tim, thường vô căn/do virus ở nước phát triển, do lao ở vùng dịch tễ lao cao. Tràn dịch màng ngoài tim lượng nhiều/tích tụ nhanh có thể gây <b>chèn ép tim cấp</b> — cấp cứu tim mạch thực sự.</p>
+      <div class="subhead">Chẩn đoán viêm màng ngoài tim cấp (≥2/4 tiêu chuẩn)</div>
+      <ul>
+        <li>Đau ngực kiểu màng ngoài tim (tăng khi hít sâu/nằm ngửa, giảm khi ngồi cúi ra trước).</li>
+        <li>Tiếng cọ màng ngoài tim khi nghe tim.</li>
+        <li>ECG: ST chênh lên lan tỏa, PR chênh xuống (giai đoạn sớm).</li>
+        <li>Tràn dịch màng ngoài tim mới/tăng trên siêu âm tim.</li>
+      </ul>`,
+    chan_doan:`
+      <p>Siêu âm tim là công cụ đầu tay đánh giá lượng dịch và dấu hiệu huyết động (xẹp nhĩ/thất phải thì tâm trương, thay đổi hô hấp dòng chảy qua van hai lá/ba lá).</p>
+      <div class="alert-box alert-danger">Tam chứng Beck (tụt huyết áp, tĩnh mạch cổ nổi, tiếng tim mờ) + mạch nghịch thường (pulsus paradoxus) gợi ý <b>chèn ép tim</b> — cần chọc dẫn lưu màng ngoài tim cấp cứu, không chờ hoàn tất xét nghiệm.</div>
+      <p>Tìm nguyên nhân: troponin/CRP, tầm soát lao nếu dịch tễ, tế bào học dịch màng tim nếu nghi ác tính, ANA nếu nghi bệnh mô liên kết.</p>`,
+    dieu_tri:`
+<ul>
+        <li>Viêm màng ngoài tim cấp không biến chứng: <b>NSAID liều cao</b> (ibuprofen hoặc aspirin nếu sau NMCT) + <b>colchicine</b> phối hợp ngay từ đầu — giảm tái phát rõ rệt so với NSAID đơn độc.</li>
+        <li>Hạn chế gắng sức thể lực đến khi hết triệu chứng và CRP về bình thường (thường ≥1 tháng, vận động viên cần lâu hơn).</li>
+        <li><b>Tránh corticoid toàn thân ở tuyến đầu</b> (trừ khi có chống chỉ định NSAID, bệnh mô liên kết, hoặc viêm màng ngoài tim do ure huyết) — corticoid sớm làm tăng nguy cơ tái phát.</li>
+        <li>Chèn ép tim: <b>chọc dẫn lưu màng ngoài tim</b> (dưới hướng dẫn siêu âm) cấp cứu; bù dịch thận trọng trong lúc chờ dẫn lưu để duy trì tiền tải.</li>
+        <li>Tái phát nhiều lần/kháng trị: cân nhắc <b>anakinra</b> (kháng IL-1) hoặc cắt màng ngoài tim ở trường hợp chọn lọc.</li>
+      </ul>
+    <div class="subhead">💊 Liều tham khảo</div>
+      ${rt(["Liều","Thời gian"],[
+        ["Ibuprofen","600mg ×3/ngày","1–2 tuần, giảm liều dần"],
+        ["Colchicine","0.5mg ×1–2/ngày (giảm nửa liều nếu <70kg)","3 tháng — giảm tái phát"],
+        ["Aspirin (nếu sau NMCT)","750–1000mg ×3/ngày","1–2 tuần"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["NSAID + Colchicine phối hợp ngay từ đầu cho viêm màng ngoài tim cấp",'<span class="badge badge-I">I</span>'],
+        ["Chọc dẫn lưu màng ngoài tim cấp cứu khi có chèn ép tim",'<span class="badge badge-I">I</span>'],
+        ["Corticoid toàn thân là điều trị đầu tay thường quy",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ESC Guidelines for the diagnosis and management of pericardial diseases 2015"
+},
+{
+  spec:"tim_mach", id:"htn_emergency", emoji:"🆘", short:"THA cấp cứu", title:"Tăng huyết áp cấp cứu (Hypertensive Emergency)",
+  guidelines:["ACC/AHA Hypertension 2017/2025 update","ESC/ESH"],
+  sections:{
+    dinh_nghia:`
+      <p>THA cấp cứu = HA tăng rất cao (thường tâm thu &gt;180 hoặc tâm trương &gt;120mmHg) <b>kèm tổn thương cơ quan đích cấp tính</b> (não, tim, mắt, thận) — khác với "THA cấp tính" (hypertensive urgency) là HA cao nhưng không tổn thương cơ quan đích, không cần hạ áp tĩnh mạch cấp tốc.</p>
+      <div class="subhead">Các thể lâm sàng cần nhận diện</div>
+      <p>Bệnh não do THA, phù phổi cấp do THA, hội chứng vành cấp kèm THA nặng, bóc tách động mạch chủ, sản giật/tiền sản giật nặng, xuất huyết nội sọ với THA nặng, suy thận cấp do THA ác tính.</p>`,
+    chan_doan:`
+      <p>Đánh giá nhanh tổn thương cơ quan đích: soi đáy mắt (xuất huyết/phù gai thị), thần kinh (lú lẫn, co giật, dấu thần kinh khu trú), tim (đau ngực, ran phổi, ECG/troponin), thận (creatinine, tổng phân tích nước tiểu), và luôn nghĩ đến bóc tách động mạch chủ nếu đau ngực/lưng dữ dội kèm THA nặng.</p>
+      <div class="alert-box alert-danger">Không hạ HA quá nhanh trừ khi bóc tách ĐMC hoặc sản giật — hạ áp đột ngột có thể gây thiếu máu cơ quan (đột quỵ do giảm tưới máu não).</div>`,
+    dieu_tri:`
+<ul>
+        <li>Nguyên tắc chung (trừ bóc tách ĐMC/sản giật): hạ HA trung bình <b>không quá 25% trong giờ đầu</b>, sau đó về ~160/100mmHg trong 2–6 giờ tiếp theo, về bình thường dần trong 24–48 giờ.</li>
+        <li><b>Bóc tách động mạch chủ:</b> hạ nhanh HA tâm thu &lt;120mmHg và nhịp tim &lt;60/phút trong vòng 20 phút — chẹn beta TM (esmolol/labetalol) trước, thêm nitroprusside nếu chưa đạt đích (tránh dùng giãn mạch đơn độc trước chẹn beta vì gây phản xạ nhịp nhanh làm nặng thêm bóc tách).</li>
+        <li><b>Phù phổi cấp do THA:</b> Nitroglycerin TM, lợi tiểu quai, tránh chẹn beta khi còn sung huyết cấp.</li>
+        <li><b>Bệnh não do THA/xuất huyết não:</b> Nicardipine hoặc Labetalol truyền TM, chỉnh liều theo đích cá thể hóa.</li>
+        <li><b>Sản giật/tiền sản giật nặng:</b> Magie sulfat dự phòng co giật + Labetalol/Hydralazine/Nifedipine hạ áp — tránh ức chế men chuyển/ức chế thụ thể (chống chỉ định thai kỳ).</li>
+        <li>THA cấp tính không tổn thương cơ quan đích (urgency): hạ áp bằng thuốc uống từ từ trong 24–48 giờ, KHÔNG cần nhập ICU hay thuốc TM.</li>
+      </ul>
+    <div class="subhead">💊 Thuốc tĩnh mạch thường dùng</div>
+      ${rt(["Liều","Chỉ định ưu tiên"],[
+        ["Labetalol TM","20mg bolus, sau đó 0.5–2mg/phút TTM","Đa số tình huống, an toàn thai kỳ"],
+        ["Nicardipine TTM","5mg/giờ, tăng dần tối đa 15mg/giờ","Bệnh não/đột quỵ do THA"],
+        ["Nitroprusside TTM","0.3–10 mcg/kg/phút","Kiểm soát nhanh, theo dõi ngộ độc cyanide nếu kéo dài"],
+        ["Nitroglycerin TTM","5–200 mcg/phút","Phù phổi cấp/HCVC"],
+        ["Esmolol TTM","500mcg/kg bolus, 50–200mcg/kg/phút","Bóc tách ĐMC — dùng trước giãn mạch"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Hạ HA tâm thu <120 và nhịp <60/phút nhanh trong bóc tách ĐMC",'<span class="badge badge-I">I</span>'],
+        ["Dùng giãn mạch đơn độc trước chẹn beta trong bóc tách ĐMC",'<span class="badge badge-III">III</span>'],
+        ["Hạ áp bằng thuốc TM cho THA urgency không tổn thương cơ quan đích",'<span class="badge badge-III">III</span>'],
+        ["Magie sulfat dự phòng co giật trong tiền sản giật nặng",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"ACC/AHA Hypertension Guideline 2017 + cập nhật; ESC/ESH Guidelines for Hypertension"
+}
+,
+{
+  spec:"noi_tiet", id:"acromegaly", emoji:"🦴", short:"To đầu chi", title:"Bệnh to đầu chi (Acromegaly)",
+  guidelines:["Endocrine Society 2014/2023 update"],
+  sections:{
+    dinh_nghia:`
+      <p>Do tăng tiết hormone tăng trưởng (GH) kéo dài, gần như luôn do u tuyến yên tiết GH, gây tăng IGF-1 và biến đổi hình thể tiến triển chậm (thường chẩn đoán trễ 7–10 năm sau khởi phát).</p>
+      <div class="subhead">Triệu chứng gợi ý</div>
+      <p>Bàn tay/chân to dần (thay giày/nhẫn không vừa), xương hàm nhô, khoảng cách răng thưa, ngưng thở khi ngủ, ra mồ hôi nhiều, đau khớp, hội chứng ống cổ tay, tăng nguy cơ ĐTĐ/THA/bệnh tim mạch, polyp đại tràng.</p>`,
+    chan_doan:`
+      <p>Xét nghiệm sàng lọc: <b>IGF-1</b> huyết thanh (nhạy, ổn định hơn GH đo đơn lẻ do GH tiết theo nhịp xung). Xác định bằng nghiệm pháp dung nạp glucose đường uống (OGTT) — GH không bị ức chế &lt;1 ng/mL sau tải glucose là bất thường.</p>
+      <p>MRI tuyến yên xác định u sau khi sinh hóa dương tính; đánh giá thị trường nếu u lớn chèn ép giao thoa thị giác.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Phẫu thuật qua xoang bướm</b> là điều trị đầu tay cho hầu hết trường hợp — mục tiêu cắt u, bình thường hóa IGF-1.</li>
+        <li>Thuốc dùng khi không phẫu thuật được/còn tồn lưu sau mổ: <b>Đồng vận somatostatin</b> (octreotide LAR, lanreotide) là đầu tay nội khoa; <b>Pegvisomant</b> (đối kháng thụ thể GH) khi kháng đồng vận somatostatin; cabergoline (đồng vận dopamin) cho bệnh nhẹ/kết hợp.</li>
+        <li>Xạ trị dành cho trường hợp còn hoạt động bệnh sau phẫu thuật + thuốc không kiểm soát được.</li>
+        <li>Tầm soát định kỳ: nội soi đại tràng (tăng nguy cơ polyp/ung thư đại tràng), siêu âm tim, đường huyết, đa ký giấc ngủ.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Phẫu thuật qua xoang bướm là điều trị đầu tay",'<span class="badge badge-I">I</span>'],
+        ["Đồng vận somatostatin là thuốc nội khoa đầu tay sau phẫu thuật thất bại",'<span class="badge badge-I">I</span>'],
+        ["Tầm soát polyp đại tràng định kỳ ở bệnh nhân to đầu chi",'<span class="badge badge-IIa">IIa</span>']
+      ])}`
+  },
+  source:"Endocrine Society Clinical Practice Guideline: Acromegaly 2014, cập nhật thực hành 2023"
+},
+{
+  spec:"noi_tiet", id:"hyperprolactinemia", emoji:"🎗", short:"Tăng Prolactin", title:"Tăng Prolactin máu (Hyperprolactinemia)",
+  guidelines:["Endocrine Society 2011"],
+  sections:{
+    dinh_nghia:`
+      <p>Tăng Prolactin máu có thể do u tuyến yên tiết prolactin (prolactinoma — nguyên nhân u tuyến yên thường gặp nhất), thuốc (thuốc chống loạn thần, chống nôn nhóm đối kháng dopamin), suy giáp nguyên phát, suy thận, thai kỳ/cho con bú (sinh lý), hoặc chèn ép cuống tuyến yên bởi u không tiết.</p>
+      <p>Biểu hiện: rối loạn kinh nguyệt/vô kinh, tiết sữa bất thường, giảm ham muốn, vô sinh ở nữ; giảm testosterone/rối loạn cương/giảm ham muốn ở nam (thường chẩn đoán trễ hơn do triệu chứng kín đáo).</p>`,
+    chan_doan:`
+      <p>Loại trừ nguyên nhân thứ phát trước khi tìm prolactinoma: thai kỳ, thuốc (đối kháng dopamin), TSH (suy giáp), creatinine (suy thận). Xét nghiệm lại prolactin nếu tăng nhẹ (tránh giả tạo do stress lấy máu — nên lấy máu buổi sáng, tránh sau khám vú/giao hợp gần đó).</p>
+      <div class="alert-box alert-info">Hiện tượng "hook effect": prolactin cực cao (macroprolactinoma) có thể cho kết quả xét nghiệm thấp giả do bão hòa antibody — pha loãng mẫu nếu lâm sàng rất nghi ngờ mà kết quả không tương xứng kích thước u.</div>
+      <p>MRI tuyến yên nếu đã loại trừ nguyên nhân thứ phát và prolactin tăng có ý nghĩa.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Đồng vận Dopamin (Cabergoline ưu tiên hơn Bromocriptine</b> — hiệu quả cao hơn, ít tác dụng phụ hơn) là điều trị đầu tay cho prolactinoma — thu nhỏ u và bình thường hóa prolactin ở đa số trường hợp.</li>
+        <li>Ngừng/đổi thuốc gây tăng prolactin nếu do thuốc (phối hợp bác sĩ tâm thần nếu là thuốc chống loạn thần, không tự ý ngừng).</li>
+        <li>Phẫu thuật chỉ dành cho trường hợp kháng thuốc, không dung nạp thuốc, hoặc u chèn ép thị giác không đáp ứng nhanh với thuốc.</li>
+        <li>Theo dõi prolactin định kỳ, MRI lại nếu triệu chứng mới hoặc prolactin tăng trở lại; cân nhắc ngừng thuốc thử sau ≥2 năm điều trị nếu u đã thu nhỏ rõ và prolactin về bình thường lâu dài.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Cabergoline ưu tiên hơn Bromocriptine cho prolactinoma",'<span class="badge badge-I">I</span>'],
+        ["Loại trừ thai kỳ/thuốc/suy giáp/suy thận trước khi chẩn đoán prolactinoma",'<span class="badge badge-I">I</span>'],
+        ["Phẫu thuật là điều trị đầu tay thường quy",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Endocrine Society Clinical Practice Guideline: Hyperprolactinemia 2011"
+}
+,
+{
+  spec:"ho_hap", id:"lung_cancer", emoji:"🫁", short:"Ung thư phổi", title:"Ung thư phổi — Tầm soát & Tiếp cận ban đầu",
+  guidelines:["USPSTF 2021 (tầm soát)","NCCN"],
+  sections:{
+    dinh_nghia:`
+      <p>Ung thư phổi gồm 2 nhóm mô học chính: <b>không tế bào nhỏ (NSCLC, ~85%)</b> — biểu mô tuyến, biểu mô vảy, tế bào lớn; và <b>tế bào nhỏ (SCLC, ~15%)</b> — tiến triển nhanh, thường di căn sớm, đáp ứng hóa-xạ ban đầu tốt nhưng dễ tái phát.</p>
+      <p>Yếu tố nguy cơ chính: hút thuốc lá (quan trọng nhất), phơi nhiễm radon/amiăng, tiền sử gia đình, bệnh phổi nền (COPD/xơ phổi).</p>`,
+    chan_doan:`
+      <p><b>Tầm soát</b> bằng CT ngực liều thấp (LDCT) hàng năm cho người 50–80 tuổi, hút thuốc ≥20 gói-năm, đang hút hoặc đã bỏ trong vòng 15 năm — ngừng tầm soát khi bỏ thuốc &gt;15 năm hoặc bệnh nặng giới hạn tuổi thọ/không còn khả năng phẫu thuật chữa khỏi.</p>
+      <p>Nốt phổi nghi ngờ: đánh giá theo kích thước/đặc điểm hình ảnh (Lung-RADS hoặc Fleischner), PET-CT đánh giá chuyển hóa và giai đoạn, sinh thiết mô (qua nội soi phế quản, xuyên thành ngực, hoặc phẫu thuật) để chẩn đoán mô học + xét nghiệm dấu ấn phân tử (EGFR, ALK, ROS1, PD-L1…) định hướng điều trị đích/miễn dịch ở NSCLC giai đoạn tiến xa.</p>`,
+    dieu_tri:`
+<ul>
+        <li>NSCLC giai đoạn sớm (I–II, chọn lọc IIIA): phẫu thuật cắt thùy phổi ± hóa trị bổ trợ là điều trị chính; xạ trị định vị thân (SBRT) cho người không đủ điều kiện phẫu thuật.</li>
+        <li>NSCLC giai đoạn tiến xa: điều trị theo dấu ấn phân tử — thuốc ức chế tyrosine kinase đích (nếu có đột biến EGFR/ALK...) hoặc hóa trị + miễn dịch trị liệu (ức chế PD-1/PD-L1) nếu không có đích phù hợp.</li>
+        <li>SCLC: hóa-xạ trị đồng thời cho giai đoạn khu trú; hóa trị + miễn dịch trị liệu cho giai đoạn lan tràn.</li>
+        <li>Chăm sóc giảm nhẹ tích hợp sớm ngay từ chẩn đoán giai đoạn tiến xa — cải thiện chất lượng sống, một số nghiên cứu cho thấy cải thiện cả sống còn.</li>
+        <li>Cai thuốc lá là can thiệp bắt buộc ở mọi giai đoạn — cải thiện đáp ứng điều trị và giảm biến chứng.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Tầm soát LDCT hàng năm cho người 50–80 tuổi, ≥20 gói-năm",'<span class="badge badge-I">I</span>'],
+        ["Xét nghiệm dấu ấn phân tử trước điều trị NSCLC giai đoạn tiến xa",'<span class="badge badge-I">I</span>'],
+        ["Chăm sóc giảm nhẹ tích hợp sớm ở giai đoạn di căn",'<span class="badge badge-I">I</span>'],
+        ["Tầm soát bằng X-quang ngực thường quy thay LDCT",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"USPSTF Lung Cancer Screening Recommendation 2021; NCCN Guidelines for NSCLC/SCLC"
+},
+{
+  spec:"ho_hap", id:"hap_vap", emoji:"🏥", short:"VP BV/thở máy", title:"Viêm phổi bệnh viện & Viêm phổi thở máy (HAP/VAP)",
+  guidelines:["IDSA/ATS 2016"],
+  sections:{
+    dinh_nghia:`
+      <p><b>HAP</b> (Hospital-Acquired Pneumonia): viêm phổi xuất hiện ≥48 giờ sau nhập viện, không đặt nội khí quản trước đó. <b>VAP</b> (Ventilator-Associated Pneumonia): viêm phổi xuất hiện ≥48 giờ sau đặt nội khí quản. Khác biệt căn nguyên rõ so với viêm phổi cộng đồng — nguy cơ cao vi khuẩn Gram âm đa kháng (<i>Pseudomonas</i>, <i>Acinetobacter</i>, Enterobacteriaceae sinh ESBL) và <i>S. aureus</i> kháng methicillin (MRSA).</p>`,
+    chan_doan:`
+      <p>Lâm sàng: sốt mới, đàm mủ tăng, X-quang/CT xuất hiện thâm nhiễm mới, giảm oxy hóa máu tăng nhu cầu hỗ trợ hô hấp. Cấy đàm/dịch hút nội khí quản (hoặc rửa phế quản-phế nang nếu khả thi) TRƯỚC khi đổi/bắt đầu kháng sinh mới.</p>
+      <div class="alert-box alert-info">Đánh giá yếu tố nguy cơ vi khuẩn đa kháng thuốc (MDR): dùng kháng sinh tĩnh mạch trong 90 ngày qua, sốc nhiễm khuẩn lúc chẩn đoán VAP, ARDS trước VAP, nằm viện ≥5 ngày trước khi khởi phát, lọc máu cấp trước khởi phát VAP — quyết định phổ kháng sinh kinh nghiệm ban đầu.</div>`,
+    dieu_tri:`
+<ul>
+        <li>Kháng sinh kinh nghiệm ban đầu <b>phổ rộng, dựa theo dịch tễ kháng thuốc tại chỗ</b> — không có yếu tố nguy cơ MDR: kháng sinh phổ hẹp hơn nhắm Gram âm thường gặp + tụ cầu nhạy methicillin.</li>
+        <li>Có yếu tố nguy cơ MDR hoặc sốc nhiễm khuẩn: phối hợp <b>2 thuốc phủ Gram âm</b> (VD beta-lactam kháng Pseudomonas + fluoroquinolone/aminoglycoside) <b>+ Vancomycin hoặc Linezolid</b> nếu nguy cơ MRSA cao.</li>
+        <li>Xuống thang kháng sinh dựa trên kết quả cấy và đáp ứng lâm sàng sau 48–72 giờ — nguyên tắc quan trọng để giảm kháng thuốc.</li>
+        <li>Thời gian điều trị chuẩn: <b>7 ngày</b> cho đa số trường hợp (kể cả do trực khuẩn Gram âm không lên men như <i>Pseudomonas</i>), trừ khi đáp ứng chậm/biến chứng.</li>
+        <li>Phòng ngừa VAP: nâng đầu giường 30–45°, vệ sinh răng miệng, đánh giá cai máy thở hàng ngày, hạn chế an thần không cần thiết.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Cấy đàm/dịch hút trước khi đổi kháng sinh khi có thể",'<span class="badge badge-I">I</span>'],
+        ["Phối hợp 2 kháng sinh Gram âm khi có yếu tố nguy cơ MDR/sốc nhiễm khuẩn",'<span class="badge badge-IIa">IIa</span>'],
+        ["Thời gian điều trị chuẩn 7 ngày thay vì kéo dài thường quy",'<span class="badge badge-I">I</span>'],
+        ["Nâng đầu giường 30–45° để phòng ngừa VAP",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"IDSA/ATS Clinical Practice Guidelines for HAP and VAP 2016"
+}
+,
+{
+  spec:"tieu_hoa", id:"chronic_pancreatitis", emoji:"🥞", short:"VT mạn", title:"Viêm tụy mạn (Chronic Pancreatitis)",
+  guidelines:["ACG 2020"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm tụy mạn là tổn thương xơ hóa tụy tiến triển, không hồi phục, dẫn đến mất dần chức năng ngoại tiết (kém hấp thu) và nội tiết (ĐTĐ thứ phát — "type 3c"). Nguyên nhân thường gặp: rượu (chiếm phần lớn), hút thuốc (yếu tố nguy cơ độc lập và hiệp đồng với rượu), tắc nghẽn ống tụy, di truyền/tự miễn, tăng triglyceride nặng tái phát.</p>`,
+    chan_doan:`
+      <p>Giai đoạn sớm khó chẩn đoán vì hình ảnh học có thể còn bình thường. CT/MRI/siêu âm nội soi tìm vôi hóa nhu mô, giãn ống tụy, teo tụy — siêu âm nội soi (EUS) nhạy nhất giai đoạn sớm. Xét nghiệm chức năng ngoại tiết: elastase phân giảm gợi ý suy tụy ngoại tiết.</p>
+      <div class="alert-box alert-info">Đau bụng mạn tính tái phát ở người có yếu tố nguy cơ (rượu/hút thuốc) cần nghĩ đến viêm tụy mạn ngay cả khi amylase/lipase bình thường (thường không tăng ở giai đoạn muộn do mất nhu mô chức năng).</div>`,
+    dieu_tri:`
+<ul>
+        <li><b>Ngừng rượu và thuốc lá tuyệt đối</b> — can thiệp quan trọng nhất làm chậm tiến triển và giảm đau.</li>
+        <li>Kiểm soát đau theo bậc thang: giảm đau không opioid trước, cân nhắc thuốc hỗ trợ (pregabalin), hạn chế tối đa opioid kéo dài do nguy cơ lệ thuộc; chuyển can thiệp (nội soi lấy sỏi/đặt stent ống tụy, ESWL, phẫu thuật) nếu đau kháng trị có tắc nghẽn ống tụy rõ.</li>
+        <li><b>Bổ sung men tụy</b> (pancrelipase) uống cùng bữa ăn khi có suy tụy ngoại tiết (sụt cân, phân mỡ, elastase phân thấp) — cải thiện hấp thu và dinh dưỡng.</li>
+        <li>Bổ sung vitamin tan trong dầu (A, D, E, K) nếu kém hấp thu kéo dài.</li>
+        <li>Tầm soát và điều trị ĐTĐ thứ phát (type 3c) — kiểm soát đường huyết có thể cần insulin sớm hơn ĐTĐ type 2 thông thường.</li>
+        <li>Theo dõi nguy cơ ung thư tụy tăng nhẹ ở viêm tụy mạn lâu năm, đặc biệt thể di truyền.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Ngừng rượu và thuốc lá hoàn toàn",'<span class="badge badge-I">I</span>'],
+        ["Bổ sung men tụy khi có bằng chứng suy tụy ngoại tiết",'<span class="badge badge-I">I</span>'],
+        ["Dùng opioid kéo dài là lựa chọn đầu tay để kiểm soát đau mạn",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"American College of Gastroenterology (ACG) Clinical Guideline: Chronic Pancreatitis 2020"
+},
+{
+  spec:"tieu_hoa", id:"crc_screening", emoji:"🎗", short:"TS UTĐTT", title:"Tầm soát ung thư đại trực tràng (CRC Screening)",
+  guidelines:["USPSTF 2021","ACG/USMSTF 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>Ung thư đại trực tràng (CRC) là ung thư đường tiêu hóa thường gặp, phần lớn phát triển từ polyp tuyến qua nhiều năm — tầm soát nhằm phát hiện và cắt polyp tiền ung thư hoặc phát hiện ung thư giai đoạn sớm còn chữa khỏi được.</p>`,
+    chan_doan:`
+      <p><b>Nguy cơ trung bình</b> (không tiền sử gia đình/bản thân, không bệnh viêm ruột): bắt đầu tầm soát từ <b>45 tuổi</b>, tiếp tục đến 75 tuổi (cá thể hóa 76–85 tuổi tùy tình trạng sức khỏe).</p>
+      ${rt(["Chu kỳ"],[
+        ["Nội soi đại tràng toàn bộ","Mỗi 10 năm (tiêu chuẩn, vừa tầm soát vừa cắt polyp)"],
+        ["Xét nghiệm máu ẩn trong phân miễn dịch (FIT)","Hàng năm"],
+        ["FIT-DNA (xét nghiệm DNA phân)","Mỗi 1–3 năm"],
+        ["Nội soi đại tràng sigma","Mỗi 5 năm"],
+        ["CT đại tràng (nội soi ảo)","Mỗi 5 năm"]
+      ])}
+      <p>Nguy cơ cao (tiền sử gia đình thế hệ 1 mắc CRC/polyp tiến triển, hội chứng Lynch, đa polyp tuyến gia đình, viêm ruột mạn) cần bắt đầu sớm hơn và tầm soát bằng nội soi đại tràng theo phác đồ riêng.</p>`,
+    dieu_tri:`
+<ul>
+        <li>Bất kỳ xét nghiệm tầm soát nào <b>dương tính (trừ nội soi đại tràng)</b> đều cần <b>nội soi đại tràng toàn bộ xác nhận</b> — không lặp lại xét nghiệm không xâm lấn khác thay thế.</li>
+        <li>Cắt polyp qua nội soi khi phát hiện — hầu hết polyp tuyến được xử lý ngay trong cùng lần soi.</li>
+        <li>Sau cắt polyp, khoảng theo dõi tiếp theo tùy số lượng/kích thước/mô học polyp (polyp nguy cơ cao cần soi lại sớm hơn 10 năm, thường 3–5 năm).</li>
+        <li>Tư vấn di truyền nếu nghi hội chứng Lynch (CRC nhiều thế hệ, tuổi trẻ) hoặc đa polyp tuyến gia đình.</li>
+        <li>Không có xét nghiệm tầm soát nào ưu việt tuyệt đối — chọn xét nghiệm mà bệnh nhân sẽ thực sự tuân thủ định kỳ là quan trọng nhất.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bắt đầu tầm soát CRC từ 45 tuổi ở người nguy cơ trung bình",'<span class="badge badge-I">I</span>'],
+        ["Nội soi đại tràng xác nhận sau mọi xét nghiệm tầm soát dương tính",'<span class="badge badge-I">I</span>'],
+        ["Ngừng tầm soát hoàn toàn thường quy sau 75 tuổi không cá thể hóa",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"USPSTF Colorectal Cancer Screening Recommendation 2021; ACG/US Multi-Society Task Force 2021"
+}
+,
+{
+  spec:"co_xuong_khop", id:"fibromyalgia", emoji:"🌫", short:"Fibromyalgia", title:"Hội chứng đau cơ xơ hóa (Fibromyalgia)",
+  guidelines:["ACR 2016 Criteria"],
+  sections:{
+    dinh_nghia:`
+      <p>Fibromyalgia là hội chứng đau lan tỏa mạn tính do rối loạn xử lý cảm giác đau trung ương (central sensitization), không có tổn thương viêm khớp/mô thực thể tương ứng. Thường kèm mệt mỏi, rối loạn giấc ngủ, rối loạn nhận thức ("fibro fog"), lo âu/trầm cảm.</p>`,
+    chan_doan:`
+      <p>Chẩn đoán lâm sàng theo tiêu chuẩn ACR 2016: đau lan tỏa ≥4/5 vùng cơ thể, kéo dài ≥3 tháng, kèm thang điểm triệu chứng (mệt mỏi, giấc ngủ không phục hồi, rối loạn nhận thức) đạt ngưỡng quy định — không còn bắt buộc đếm điểm đau ấn (tender points) như tiêu chuẩn cũ 1990.</p>
+      <div class="alert-box alert-info">Xét nghiệm cơ bản (CTM, CRP/ESR, TSH, CK) chủ yếu để loại trừ bệnh khác (viêm khớp, suy giáp, bệnh cơ) — không có xét nghiệm đặc hiệu chẩn đoán fibromyalgia; kết quả bình thường không loại trừ bệnh.</div>`,
+    dieu_tri:`
+<ul>
+        <li><b>Vận động thể lực đều đặn</b> (aerobic cường độ nhẹ-vừa) là can thiệp có bằng chứng mạnh nhất — nên là nền tảng điều trị dù bệnh nhân thường ngại vận động vì đau.</li>
+        <li>Liệu pháp nhận thức-hành vi (CBT), giáo dục bệnh nhân, vệ sinh giấc ngủ.</li>
+        <li>Thuốc có bằng chứng: <b>Duloxetine/Milnacipran</b> (SNRI), <b>Pregabalin</b>, hoặc <b>Amitriptyline liều thấp</b> — chọn theo triệu chứng nổi trội (trầm cảm/lo âu đi kèm → SNRI; rối loạn giấc ngủ nổi trội → amitriptyline/pregabalin buổi tối).</li>
+        <li><b>Tránh Opioid</b> — không hiệu quả trong fibromyalgia và tăng nguy cơ lệ thuộc/tác dụng phụ.</li>
+        <li>NSAID/corticoid thường không hiệu quả do đây không phải bệnh viêm — cần giải thích rõ cho bệnh nhân để tránh lạm dụng.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Vận động thể lực đều đặn là điều trị nền tảng",'<span class="badge badge-I">I</span>'],
+        ["Duloxetine/Pregabalin/Amitriptyline theo triệu chứng nổi trội",'<span class="badge badge-I">I</span>'],
+        ["Opioid là điều trị hiệu quả và nên dùng thường quy",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"American College of Rheumatology (ACR) 2016 Fibromyalgia Diagnostic Criteria; EULAR management guideline"
+},
+{
+  spec:"co_xuong_khop", id:"low_back_pain", emoji:"🦴", short:"Đau lưng CH", title:"Đau thắt lưng cơ học & Thoát vị đĩa đệm",
+  guidelines:["ACP 2017","NASS"],
+  sections:{
+    dinh_nghia:`
+      <p>Đau thắt lưng cơ học (non-specific low back pain) chiếm phần lớn các trường hợp đau lưng, không có nguyên nhân thực thể nghiêm trọng, tiên lượng tự giới hạn tốt trong vài tuần. Thoát vị đĩa đệm chèn ép rễ thần kinh gây đau lan kiểu rễ (đau thần kinh tọa) là nguyên nhân đặc hiệu thường gặp.</p>`,
+    chan_doan:`
+      <p>Phần lớn chẩn đoán dựa lâm sàng, KHÔNG cần hình ảnh học thường quy trong 4–6 tuần đầu nếu không có "cờ đỏ".</p>
+      <div class="alert-box alert-danger">Cờ đỏ cần hình ảnh học/chuyển tuyến ngay: hội chứng chùm đuôi ngựa (bí tiểu/đại tiện, tê yên ngựa, yếu 2 chân), yếu vận động tiến triển, sốt kèm tiền sử tiêm chích/suy giảm miễn dịch (nghi áp xe/viêm đĩa đệm-đốt sống), tiền sử ung thư/sụt cân không rõ nguyên nhân (nghi di căn), chấn thương mới/loãng xương nặng (nghi gãy xẹp đốt sống).</div>
+      <p>MRI cột sống là lựa chọn hình ảnh khi có cờ đỏ hoặc đau kiểu rễ kéo dài &gt;6 tuần không đáp ứng điều trị bảo tồn, hoặc trước khi cân nhắc can thiệp/phẫu thuật.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Duy trì vận động, tránh nằm nghỉ tại giường kéo dài</b> — nằm nghỉ lâu làm chậm hồi phục.</li>
+        <li>Điều trị đầu tay không dùng thuốc: giáo dục, chườm nóng/lạnh, vận động trị liệu, có thể phối hợp xoa bóp/châm cứu.</li>
+        <li>Thuốc: NSAID là lựa chọn đầu tay nếu cần; giãn cơ ngắn ngày cho co thắt cơ cấp; <b>tránh opioid</b> là điều trị đầu tay (chỉ cân nhắc ngắn hạn khi các biện pháp khác thất bại).</li>
+        <li>Đau kiểu rễ (thoát vị đĩa đệm) cấp: phần lớn tự cải thiện trong 6–12 tuần với điều trị bảo tồn; tiêm corticoid ngoài màng cứng có thể giảm đau ngắn hạn ở trường hợp chọn lọc.</li>
+        <li>Phẫu thuật (cắt bản sống vi phẫu/lấy nhân thoát vị) cân nhắc khi: hội chứng chùm đuôi ngựa (cấp cứu), yếu vận động tiến triển, hoặc đau kiểu rễ dai dẳng &gt;6–12 tuần dù điều trị bảo tồn đầy đủ và hình ảnh học tương ứng triệu chứng.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Duy trì vận động thay vì nằm nghỉ tại giường",'<span class="badge badge-I">I</span>'],
+        ["Chụp MRI/X-quang thường quy trong 4–6 tuần đầu không có cờ đỏ",'<span class="badge badge-III">III</span>'],
+        ["Phẫu thuật cấp cứu khi có hội chứng chùm đuôi ngựa",'<span class="badge badge-I">I</span>'],
+        ["Opioid là điều trị đầu tay cho đau lưng cấp không biến chứng",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"American College of Physicians (ACP) Noninvasive Treatment for Low Back Pain 2017; North American Spine Society (NASS)"
+}
+,
+{
+  spec:"than", id:"rta", emoji:"🧫", short:"Toan hóa OT", title:"Toan hóa ống thận (Renal Tubular Acidosis - RTA)",
+  guidelines:["Nguyên tắc sinh lý bệnh thận-điện giải"],
+  sections:{
+    dinh_nghia:`
+      <p>RTA là nhóm rối loạn khả năng thận bài tiết acid hoặc tái hấp thu bicarbonate, gây toan chuyển hóa <b>anion gap bình thường (toan tăng Clo máu)</b> dù chức năng lọc cầu thận (GFR) có thể còn bảo tồn.</p>
+      ${rt(["Cơ chế","Kali máu điển hình"],[
+        ["Type 1 (xa)","Không bài tiết được H⁺ ở ống xa","Hạ Kali"],
+        ["Type 2 (gần)","Giảm tái hấp thu bicarbonate ở ống gần","Hạ Kali"],
+        ["Type 4","Thiếu/kháng Aldosterone","Tăng Kali (đặc điểm phân biệt quan trọng)"]
+      ])}`,
+    chan_doan:`
+      <p>Toan chuyển hóa AG bình thường + pH nước tiểu không phù hợp mức toan máu (pH niệu &gt;5.5 dù toan máu nặng gợi ý RTA type 1) gợi ý chẩn đoán. Anion gap niệu (Na⁺ + K⁺ − Cl⁻ niệu) dương tính gợi ý giảm bài tiết NH₄⁺ ở thận (RTA xa/type 4); âm tính gợi ý mất bicarbonate ngoài thận (tiêu chảy) hoặc RTA type 2.</p>
+      <p>RTA type 4 thường gặp nhất trên lâm sàng — hay gặp ở bệnh thận đái tháo đường, dùng ức chế men chuyển/ARB/lợi tiểu giữ kali, kèm tăng Kali máu không tương xứng mức độ suy thận.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Type 1 (xa):</b> bù kiềm bằng Natri bicarbonate hoặc Kali citrate (ưu tiên nếu đồng thời hạ Kali — vừa bù kiềm vừa bù Kali, giảm nguy cơ sỏi thận); theo dõi phòng ngừa sỏi thận/vôi hóa thận (biến chứng đặc trưng).</li>
+        <li><b>Type 2 (gần):</b> cần liều bicarbonate cao hơn nhiều (thận mất nhiều qua nước tiểu khi bù), thường kèm hội chứng Fanconi (mất glucose/phosphate/acid amin niệu) — tìm và xử trí nguyên nhân nền.</li>
+        <li><b>Type 4:</b> điều trị nhắm nguyên nhân nền + hạn chế Kali khẩu phần, lợi tiểu quai/thiazide hỗ trợ thải Kali, fludrocortisone nếu thực sự thiếu Aldosterone (thận trọng ở người THA/suy tim); xem lại và ngưng thuốc giữ Kali nếu có thể (ƯCMC/ARB/lợi tiểu giữ Kali).</li>
+        <li>Theo dõi lâu dài chức năng thận, điện giải, và ở trẻ em — tăng trưởng (RTA gây chậm tăng trưởng nếu không kiểm soát).</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bù kiềm bằng Kali citrate ưu tiên khi RTA kèm hạ Kali",'<span class="badge badge-IIa">IIa</span>'],
+        ["Xem lại/ngưng thuốc giữ Kali (ƯCMC/ARB) khi có RTA type 4",'<span class="badge badge-I">I</span>'],
+        ["Bỏ qua tầm soát sỏi thận/vôi hóa thận ở RTA type 1",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Nguyên tắc sinh lý bệnh và xử trí toan hóa ống thận theo thực hành thận học hiện hành"
+},
+{
+  spec:"than", id:"hypomagnesemia", emoji:"⬇", short:"Hạ Mg2+", title:"Hạ Magie máu (Hypomagnesemia)",
+  guidelines:["Thực hành điện giải lâm sàng"],
+  sections:{
+    dinh_nghia:`
+      <p>Mg²⁺ huyết thanh &lt;1.7 mg/dL (&lt;0.7 mmol/L). Nguyên nhân: mất qua tiêu hóa (tiêu chảy mạn, kém hấp thu, thuốc ức chế bơm proton kéo dài), mất qua thận (lợi tiểu quai/thiazide, thuốc độc thận như aminoglycoside/cisplatin, rượu), suy dinh dưỡng, đái tháo đường kiểm soát kém.</p>
+      <div class="alert-box alert-warn">Hạ Magie thường đi kèm và làm <b>hạ Kali và hạ Canxi kháng trị</b> — không sửa được Kali/Canxi nếu chưa bù đủ Magie trước/đồng thời.</div>`,
+    chan_doan:`
+      <p>Triệu chứng: yếu cơ, run, chuột rút, dị cảm, co giật khi nặng; ECG có thể thấy QT kéo dài, tăng nguy cơ xoắn đỉnh — đặc biệt nguy hiểm khi phối hợp hạ Kali.</p>
+      <p>Magie niệu 24h hoặc phân suất bài xuất Magie (FEMg) giúp phân biệt mất qua thận (FEMg &gt;2%) với mất ngoài thận (FEMg thấp, thận đáp ứng giữ Magie phù hợp).</p>`,
+    dieu_tri:`
+<ul>
+        <li>Nhẹ-không triệu chứng: bù <b>Magie oxide/gluconate đường uống</b>, chia liều nhỏ (hấp thu kém, dễ gây tiêu chảy liều cao).</li>
+        <li>Nặng/có triệu chứng (loạn nhịp, co giật): <b>Magie sulfat truyền tĩnh mạch</b>, theo dõi phản xạ gân xương và chức năng thận trong khi truyền (nguy cơ tích lũy gây độc nếu suy thận).</li>
+        <li>Luôn kiểm tra và bù đồng thời Kali/Canxi nếu thấp kèm theo.</li>
+        <li>Xử trí nguyên nhân nền (xem lại PPI kéo dài không cần thiết, điều chỉnh liều lợi tiểu, kiểm soát tiêu chảy).</li>
+        <li>Thận trọng liều ở bệnh nhân suy thận — nguy cơ tăng Magie máu gây ức chế hô hấp/tim mạch nếu bù quá mức.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bù Magie trước/đồng thời khi hạ Kali hoặc hạ Canxi kháng trị không rõ nguyên nhân",'<span class="badge badge-I">I</span>'],
+        ["Magie sulfat TM cho hạ Magie nặng có triệu chứng/loạn nhịp",'<span class="badge badge-I">I</span>'],
+        ["Bù Magie liều cao không theo dõi ở người suy thận",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Nguyên tắc xử trí rối loạn điện giải theo thực hành hồi sức/thận học hiện hành"
+},
+{
+  spec:"tim_mach", id:"aortic_dissection", emoji:"⚡", short:"Bóc tách ĐMC", title:"Bóc tách động mạch chủ cấp (Aortic Dissection)",
+  guidelines:["ESC Aortic Diseases 2024","ACC/AHA 2022"],
+  sections:{
+    dinh_nghia:`
+      <p>Bóc tách ĐMC là rách lớp áo trong động mạch chủ tạo dòng máu giả, tiến triển dọc chiều dài động mạch — cấp cứu tim mạch tử vong rất cao nếu bỏ sót (tăng ~1–2%/giờ nếu type A không mổ).</p>
+      <div class="subhead">Phân loại Stanford</div>
+      <ul>
+        <li><b>Type A:</b> liên quan động mạch chủ lên (± lan xuống) — <b>cần phẫu thuật cấp cứu</b>.</li>
+        <li><b>Type B:</b> chỉ động mạch chủ xuống (sau động mạch dưới đòn trái) — thường điều trị nội khoa trừ khi biến chứng.</li>
+      </ul>`,
+    chan_doan:`
+      <p>Đau ngực/lưng dữ dội, đột ngột, kiểu "xé rách", có thể di chuyển theo hướng lan của bóc tách; chênh huyết áp/mạch giữa 2 tay gợi ý cao.</p>
+      <div class="alert-box alert-danger">Luôn nghĩ đến bóc tách ĐMC ở bệnh nhân đau ngực dữ dội kèm THA nặng, hội chứng Marfan, van ĐMC 2 lá, hoặc thai kỳ tam cá nguyệt 3 — CT ngực có cản quang (hoặc TEE nếu không ổn định để di chuyển) là công cụ chẩn đoán nhanh, độ nhạy/đặc hiệu cao.</div>
+      <p>D-dimer có thể hỗ trợ loại trừ ở nhóm nguy cơ thấp-trung bình (âm tính giúp loại trừ hợp lý) nhưng KHÔNG thay thế chẩn đoán hình ảnh khi nghi ngờ cao.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Type A:</b> hội chẩn phẫu thuật tim cấp cứu ngay khi xác định — trì hoãn làm tăng tử vong rõ rệt theo từng giờ.</li>
+        <li>Trong khi chờ mổ/mọi trường hợp: hạ nhanh HA tâm thu &lt;120mmHg và nhịp tim &lt;60/phút — <b>chẹn beta TM trước</b> (esmolol/labetalol), thêm giãn mạch (nitroprusside) nếu chưa đạt đích — không dùng giãn mạch đơn độc trước chẹn beta (gây phản xạ tăng nhịp/tăng sức căng thành ĐMC).</li>
+        <li>Giảm đau tích cực (thường cần opioid) — đau không kiểm soát tự làm tăng HA/nhịp tim.</li>
+        <li><b>Type B không biến chứng:</b> điều trị nội khoa (kiểm soát HA/nhịp như trên) + theo dõi hình ảnh định kỳ; can thiệp nội mạch (TEVAR) khi có biến chứng (thiếu máu cơ quan, vỡ dọa vỡ, đau/THA kháng trị, giãn nhanh).</li>
+        <li>Theo dõi lâu dài bằng hình ảnh học định kỳ (CT/MRI) suốt đời do nguy cơ giãn/tái phát.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Phẫu thuật cấp cứu cho bóc tách type A ngay khi xác định",'<span class="badge badge-I">I</span>'],
+        ["Chẹn beta TM trước khi dùng giãn mạch để kiểm soát HA/nhịp",'<span class="badge badge-I">I</span>'],
+        ["Trì hoãn điều trị chờ đủ xét nghiệm ở bệnh nhân nghi ngờ cao huyết động không ổn",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ESC Guidelines for the management of aortic diseases 2024; ACC/AHA 2022 Aortic Disease Guideline"
+},
+{
+  spec:"tim_mach", id:"hcm", emoji:"🫀", short:"Bệnh cơ tim PĐ", title:"Bệnh cơ tim phì đại (Hypertrophic Cardiomyopathy - HCM)",
+  guidelines:["ACC/AHA HCM 2020/2024","ESC 2023"],
+  sections:{
+    dinh_nghia:`
+      <p>HCM là bệnh cơ tim di truyền thường gặp nhất (đột biến gen protein sarcomere), đặc trưng bởi phì đại thất trái không giải thích được bởi tải huyết động (THA, hẹp van ĐMC). Là nguyên nhân đột tử hàng đầu ở người trẻ/vận động viên.</p>
+      <p>Có thể kèm tắc nghẽn đường ra thất trái (HCM tắc nghẽn, ~2/3 trường hợp) do vận động bất thường của lá trước van hai lá (SAM) áp vào vách liên thất phì đại.</p>`,
+    chan_doan:`
+      <p>Siêu âm tim: độ dày vách thất trái ≥15mm (hoặc ≥13mm nếu có tiền sử gia đình/gen dương) không do nguyên nhân tải huyết động khác. Đo chênh áp đường ra thất trái lúc nghỉ và khi gắng sức/Valsalva (chênh áp có thể chỉ xuất hiện khi gắng sức — "tắc nghẽn ẩn").</p>
+      <div class="alert-box alert-danger">Đánh giá nguy cơ đột tử: tiền sử ngừng tim/nhịp nhanh thất kéo dài, tiền sử gia đình đột tử do HCM, ngất không giải thích được, độ dày vách ≥30mm, đáp ứng HA bất thường khi gắng sức, giãn nhĩ trái nặng, phì đại mỏm thất trái trên MRI — dùng thang điểm nguy cơ HCM-SCD (ESC) hỗ trợ quyết định đặt ICD phòng ngừa.</div>`,
+    dieu_tri:`
+<ul>
+        <li>HCM tắc nghẽn có triệu chứng: <b>chẹn beta</b> là đầu tay; <b>Mavacamten/Aficamten</b> (ức chế myosin) là nhóm thuốc mới hiệu quả giảm chênh áp và triệu chứng, được khuyến cáo khi chẹn beta/verapamil không đủ hiệu quả.</li>
+        <li>Verapamil/Disopyramide là lựa chọn thay thế/bổ sung khi chẹn beta không đủ hiệu quả hoặc không dung nạp.</li>
+        <li><b>Tránh thuốc giãn mạch mạnh và lợi tiểu liều cao</b> ở HCM tắc nghẽn — làm giảm tiền tải/hậu tải, tăng chênh áp đường ra.</li>
+        <li>Cắt vách liên thất qua phẫu thuật (myectomy) hoặc qua thông tim bằng cồn (alcohol septal ablation) cho triệu chứng nặng kháng thuốc.</li>
+        <li><b>Đặt ICD phòng ngừa nguyên phát</b> ở nhóm nguy cơ đột tử cao theo thang điểm; hạn chế vận động gắng sức thi đấu cường độ cao.</li>
+        <li>Tầm soát di truyền cho người thân thế hệ 1 (echo ± xét nghiệm gen) do tính di truyền trội.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Chẹn beta là điều trị đầu tay cho HCM tắc nghẽn có triệu chứng",'<span class="badge badge-I">I</span>'],
+        ["Mavacamten khi chẹn beta/verapamil không đủ kiểm soát triệu chứng",'<span class="badge badge-IIa">IIa</span>'],
+        ["Đặt ICD phòng ngừa ở nhóm nguy cơ đột tử cao",'<span class="badge badge-I">I</span>'],
+        ["Dùng lợi tiểu liều cao/giãn mạch mạnh thường quy ở HCM tắc nghẽn có triệu chứng",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACC/AHA/AATS/ACHA/ASE/HFSA/HRS/SCAI/SCCT/SCMR Guideline for HCM 2024; ESC Cardiomyopathies Guideline 2023"
+}
+,
+{
+  spec:"noi_tiet", id:"di", emoji:"💧", short:"ĐTĐ nhạt", title:"Đái tháo nhạt (Diabetes Insipidus)",
+  guidelines:["Endocrine Society"],
+  sections:{
+    dinh_nghia:`
+      <p>Đái tháo nhạt là tình trạng tiểu nhiều nhược trương do thiếu ADH (trung ương — tổn thương vùng dưới đồi/tuyến yên: chấn thương, u, phẫu thuật, viêm) hoặc thận không đáp ứng ADH (thận — di truyền, lithium, tăng Canxi máu, hạ Kali máu) — <b>khác hoàn toàn với đái tháo đường</b> (không liên quan glucose/insulin).</p>`,
+    chan_doan:`
+      <p>Tiểu nhiều (thường &gt;3L/ngày) + khát nhiều bù trừ, glucose máu bình thường (loại trừ ĐTĐ), áp lực thẩm thấu niệu thấp không tương xứng áp lực thẩm thấu máu.</p>
+      <div class="alert-box alert-warn">Nghiệm pháp nhịn nước (water deprivation test) hoặc đo Copeptin để phân biệt trung ương/thận/uống nhiều tâm lý (primary polydipsia) — cần thực hiện có giám sát y tế do nguy cơ mất nước nặng nếu nguyên nhân thực sự là ĐTĐ nhạt.</div>
+      <p>Đáp ứng với Desmopressin (giảm rõ lượng nước tiểu, tăng áp lực thẩm thấu niệu) gợi ý nguyên nhân trung ương; không đáp ứng gợi ý nguyên nhân thận.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>ĐTĐ nhạt trung ương:</b> <b>Desmopressin (DDAVP)</b> — uống, xịt mũi, hoặc tiêm dưới da — là điều trị đầu tay, đáp ứng rất tốt.</li>
+        <li><b>ĐTĐ nhạt do thận:</b> điều trị nguyên nhân nền (ngừng lithium nếu có thể, sửa tăng Canxi/hạ Kali); nếu không sửa được: lợi tiểu thiazide (nghịch lý làm giảm lượng nước tiểu qua cơ chế riêng) + hạn chế muối/protein khẩu phần; NSAID có thể hỗ trợ giảm thêm lượng nước tiểu ở trường hợp chọn lọc.</li>
+        <li>Theo dõi Natri máu sát khi bắt đầu Desmopressin — nguy cơ hạ Natri do giữ nước quá mức nếu không chỉnh liều phù hợp.</li>
+        <li>Đảm bảo tiếp cận nước tự do khi chưa kiểm soát — hạn chế nước sớm có thể gây mất nước nặng nhanh nếu bệnh chưa được điều trị.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Desmopressin là điều trị đầu tay cho ĐTĐ nhạt trung ương",'<span class="badge badge-I">I</span>'],
+        ["Theo dõi Natri máu định kỳ khi dùng Desmopressin",'<span class="badge badge-I">I</span>'],
+        ["Hạn chế nước nghiêm ngặt trước khi kiểm soát được bệnh",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Endocrine Society Clinical Practice Guidance: Diabetes Insipidus"
+},
+{
+  spec:"noi_tiet", id:"hypopituitarism", emoji:"🎯", short:"Suy tuyến yên", title:"Suy tuyến yên toàn bộ (Hypopituitarism)",
+  guidelines:["Endocrine Society 2016"],
+  sections:{
+    dinh_nghia:`
+      <p>Suy giảm một hoặc nhiều trục hormone tuyến yên (ACTH, TSH, gonadotropin LH/FSH, GH, ADH/prolactin), thường do u tuyến yên/vùng dưới đồi, phẫu thuật/xạ trị tuyến yên, chấn thương sọ não, xuất huyết sau sinh (hội chứng Sheehan), viêm tuyến yên tự miễn.</p>
+      <div class="subhead">Thứ tự mất trục thường gặp</div>
+      <p>GH thường mất sớm nhất, sau đó gonadotropin, rồi TSH, và ACTH thường mất sau cùng — nhưng thứ tự có thể thay đổi tùy nguyên nhân/tốc độ tổn thương.</p>`,
+    chan_doan:`
+      <p>Đánh giá từng trục: cortisol sáng sớm (± nghiệm pháp kích thích ACTH nếu ranh giới), TSH + FT4 (lưu ý TSH có thể "bình thường giả" trong suy tuyến yên vì thiếu kích thích trung ương, phải đánh giá cùng FT4), testosterone/estradiol + LH/FSH, IGF-1 ± nghiệm pháp kích thích GH.</p>
+      <div class="alert-box alert-danger">Suy ACTH cấp (thiếu cortisol) là <b>cấp cứu nội tiết</b> nếu không nhận biết khi có stress/nhiễm trùng/phẫu thuật — cần bù hydrocortisone TRƯỚC khi bù hormone giáp (bù giáp trước khi bù cortisol đủ có thể thúc đẩy cơn suy thượng thận cấp).</div>`,
+    dieu_tri:`
+<ul>
+        <li>Nguyên tắc thay thế: <b>luôn bù Cortisol (hydrocortisone) trước</b> nếu thiếu đồng thời ACTH và TSH, sau đó mới bù hormone giáp (levothyroxine) — tránh thúc đẩy suy thượng thận cấp.</li>
+        <li>Thiếu ACTH: hydrocortisone liều sinh lý chia 2–3 lần/ngày, tăng liều gấp 2–3 lần khi có bệnh cấp tính/stress ("sick day rules"), thẻ/vòng tay cảnh báo y tế.</li>
+        <li>Thiếu TSH: Levothyroxine chỉnh liều theo FT4 (KHÔNG dùng TSH để chỉnh liều vì trục đã mất — TSH không phản ánh đúng).</li>
+        <li>Thiếu Gonadotropin: thay thế testosterone (nam) hoặc estrogen/progestin (nữ) theo tuổi và mong muốn sinh sản; kích thích rụng trứng/sinh tinh riêng nếu cần sinh sản.</li>
+        <li>Thiếu GH ở người lớn: cân nhắc thay thế GH nếu triệu chứng ảnh hưởng chất lượng sống rõ, sau khi đã kiểm soát ổn các trục khác.</li>
+        <li>Thiếu ADH kèm theo: xử trí như đái tháo nhạt trung ương (Desmopressin).</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bù Cortisol trước khi bù hormone giáp khi thiếu đồng thời",'<span class="badge badge-I">I</span>'],
+        ["Tăng liều hydrocortisone khi có bệnh cấp tính/stress",'<span class="badge badge-I">I</span>'],
+        ["Dùng TSH để chỉnh liều Levothyroxine trong suy tuyến yên",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Endocrine Society Clinical Practice Guideline: Hormonal Replacement in Hypopituitarism 2016"
+}
+,
+{
+  spec:"ho_hap", id:"influenza", emoji:"🤒", short:"Cúm", title:"Cúm (Influenza)",
+  guidelines:["IDSA 2018/2024 update","CDC ACIP"],
+  sections:{
+    dinh_nghia:`
+      <p>Cúm mùa do virus Influenza A/B, lây qua giọt bắn, gây khởi phát cấp tính sốt cao/đau nhức người/ho khan/mệt lả — dễ nhầm cảm lạnh thông thường nhưng thường nặng hơn rõ rệt và khởi phát đột ngột hơn.</p>
+      <div class="subhead">Nhóm nguy cơ biến chứng nặng</div>
+      <p>Trẻ nhỏ, người ≥65 tuổi, thai phụ, bệnh nền mạn tính (phổi, tim, thận, gan, ĐTĐ, suy giảm miễn dịch), béo phì nặng.</p>`,
+    chan_doan:`
+      <p>Xét nghiệm nhanh kháng nguyên (RIDT) hoặc RT-PCR (nhạy hơn) từ dịch mũi họng — hữu ích nhất khi kết quả ảnh hưởng quyết định điều trị kháng virus hoặc cần phân biệt COVID-19/RSV trong dịch đa tác nhân.</p>
+      <div class="alert-box alert-warn">Nghĩ đến bội nhiễm vi khuẩn (viêm phổi thứ phát, thường do <i>S. pneumoniae</i> hoặc <i>S. aureus</i>) nếu sốt tái xuất hiện/nặng lên sau khi đã cải thiện ban đầu ("hai pha bệnh").</div>`,
+    dieu_tri:`
+<ul>
+        <li><b>Oseltamivir</b> (hoặc Baloxavir liều đơn) trong <b>48 giờ đầu khởi phát</b> cho hiệu quả tốt nhất — ưu tiên điều trị sớm ở nhóm nguy cơ cao/bệnh nặng cần nhập viện dù đã quá 48 giờ vẫn có lợi.</li>
+        <li>Điều trị triệu chứng: hạ sốt (paracetamol — tránh aspirin ở trẻ em/thanh thiếu niên do nguy cơ hội chứng Reye), nghỉ ngơi, bù nước.</li>
+        <li>Nhập viện khi: suy hô hấp, mất nước nặng, biến chứng viêm phổi, hoặc bệnh nền nặng mất bù.</li>
+        <li><b>Tiêm vaccine cúm hàng năm</b> là biện pháp phòng ngừa quan trọng nhất — đặc biệt ưu tiên nhóm nguy cơ cao, nhân viên y tế, và nên tiêm trước mùa cúm cao điểm.</li>
+        <li>Kháng sinh chỉ khi có bằng chứng/nghi ngờ mạnh bội nhiễm vi khuẩn — không dùng thường quy cho cúm đơn thuần.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Oseltamivir trong 48 giờ đầu ở nhóm nguy cơ cao/bệnh nặng",'<span class="badge badge-I">I</span>'],
+        ["Tiêm vaccine cúm hàng năm cho nhóm nguy cơ cao",'<span class="badge badge-I">I</span>'],
+        ["Kháng sinh thường quy cho cúm không biến chứng",'<span class="badge badge-III">III</span>'],
+        ["Aspirin hạ sốt ở trẻ em/thanh thiếu niên nghi cúm",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"IDSA Clinical Practice Guidelines: Seasonal Influenza 2018 + cập nhật; CDC/ACIP Influenza Vaccination Recommendations"
+},
+{
+  spec:"ho_hap", id:"lung_abscess", emoji:"🫧", short:"Áp xe phổi", title:"Áp xe phổi & Mủ màng phổi (Empyema)",
+  guidelines:["ATS/IDSA CAP 2019","BTS Pleural Guideline"],
+  sections:{
+    dinh_nghia:`
+      <p><b>Áp xe phổi</b>: hoại tử nhu mô phổi tạo hang chứa mủ, thường do hít sặc (vi khuẩn kỵ khí miệng-họng ở người rối loạn ý thức/nuốt), hoặc biến chứng viêm phổi hoại tử. <b>Mủ màng phổi (empyema)</b>: tràn dịch màng phổi nhiễm khuẩn có mủ thực sự, thường biến chứng từ viêm phổi cận phổi (parapneumonic effusion) tiến triển.</p>`,
+    chan_doan:`
+      <p>Áp xe phổi: CT ngực thấy hang có mức dịch-khí, thường ở phân thùy phụ thuộc trọng lực (thùy trên phải/dưới nếu do hít sặc khi nằm).</p>
+      <p>Mủ màng phổi: chọc dịch màng phổi thấy mủ đại thể, hoặc dịch có pH&lt;7.2, glucose thấp, LDH cao, nhuộm Gram/cấy dương — bất kỳ đặc điểm này đều là chỉ định dẫn lưu.</p>
+      <div class="alert-box alert-info">Luôn tìm yếu tố nguy cơ hít sặc (rối loạn ý thức, nghiện rượu, rối loạn nuốt, vệ sinh răng miệng kém) trong áp xe phổi để định hướng điều trị và phòng ngừa tái phát.</div>`,
+    dieu_tri:`
+<ul>
+        <li><b>Áp xe phổi:</b> kháng sinh phổ kỵ khí kéo dài (thường <b>Ampicillin-sulbactam</b> hoặc Clindamycin, hoặc Carbapenem nếu nặng/kháng thuốc) — thời gian điều trị kéo dài (thường 3–6 tuần hoặc đến khi hang teo nhỏ/khỏi trên hình ảnh học), phần lớn đáp ứng kháng sinh đơn thuần không cần dẫn lưu.</li>
+        <li>Dẫn lưu qua da hoặc phẫu thuật cho áp xe phổi lớn (&gt;6–8cm) không đáp ứng kháng sinh hoặc biến chứng (vỡ vào màng phổi, chảy máu).</li>
+        <li><b>Mủ màng phổi:</b> kháng sinh phổ rộng theo kinh nghiệm (phủ Gram dương/âm/kỵ khí) + <b>dẫn lưu màng phổi bắt buộc</b> khi có tiêu chuẩn dẫn lưu (mủ đại thể, pH thấp, vi khuẩn dương).</li>
+        <li>Tiêu sợi huyết trong màng phổi (tPA + DNase) khi dịch vách hóa/dẫn lưu không hiệu quả — giảm nhu cầu phẫu thuật.</li>
+        <li>Phẫu thuật bóc vỏ màng phổi (decortication qua VATS/mở ngực) khi thất bại điều trị nội khoa + dẫn lưu.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Kháng sinh phổ kỵ khí kéo dài là điều trị chính cho áp xe phổi",'<span class="badge badge-I">I</span>'],
+        ["Dẫn lưu màng phổi bắt buộc khi có tiêu chuẩn mủ màng phổi",'<span class="badge badge-I">I</span>'],
+        ["Dẫn lưu qua da/phẫu thuật thường quy cho mọi áp xe phổi bất kể kích thước",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ATS/IDSA Community-Acquired Pneumonia Guideline 2019; British Thoracic Society Pleural Disease Guideline"
+}
+,
+{
+  spec:"tieu_hoa", id:"dili", emoji:"💊", short:"Tổn thương gan/thuốc", title:"Tổn thương gan do thuốc (Drug-Induced Liver Injury - DILI)",
+  guidelines:["ACG 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>DILI là tổn thương gan do thuốc/thực phẩm chức năng/thảo dược, có thể theo kiểu hủy tế bào gan (tăng ALT chủ yếu), ứ mật (tăng ALP/Bilirubin chủ yếu), hoặc hỗn hợp. Thuốc thường gặp: paracetamol quá liều (kiểu hủy tế bào gan, có thể dự đoán theo liều), kháng sinh (amoxicillin-clavulanate — ứ mật, isoniazid, nitrofurantoin), NSAID, statin, thuốc chống lao, thực phẩm chức năng/thảo dược.</p>`,
+    chan_doan:`
+      <p>Chẩn đoán loại trừ — cần loại trừ viêm gan virus, bệnh gan tự miễn, bệnh gan do rượu/chuyển hóa, tắc mật cơ học (siêu âm) trước khi kết luận do thuốc.</p>
+      <p>Tính chỉ số R = (ALT/ULN)/(ALP/ULN) để phân loại kiểu tổn thương: R≥5 hủy tế bào gan, R≤2 ứ mật, 2&lt;R&lt;5 hỗn hợp — định hướng thuốc nghi ngờ và tiên lượng.</p>
+      <div class="alert-box alert-danger">Tiêu chuẩn Hy's Law (ALT/AST ≥3×ULN kèm Bilirubin ≥2×ULN, đã loại trừ tắc mật) gợi ý nguy cơ suy gan cấp cao — cần ngừng thuốc nghi ngờ ngay và theo dõi sát/chuyển chuyên khoa gan.</div>`,
+    dieu_tri:`
+<ul>
+        <li><b>Ngừng ngay thuốc nghi ngờ</b> — biện pháp quan trọng nhất, phần lớn hồi phục sau ngừng thuốc.</li>
+        <li><b>N-acetylcysteine</b> là thuốc giải độc đặc hiệu cho quá liều paracetamol — hiệu quả cao nhất khi dùng sớm, dùng theo phác đồ chuẩn/thang điểm dựa nồng độ paracetamol và thời gian sau uống.</li>
+        <li>Theo dõi chức năng gan định kỳ đến khi về bình thường hoặc ổn định; đa số DILI hồi phục hoàn toàn sau ngừng thuốc trong vài tuần-vài tháng.</li>
+        <li>Chuyển chuyên khoa gan/ghép gan khi có dấu hiệu suy gan cấp (rối loạn đông máu, bệnh não gan) — tiêu chuẩn Hy's Law dương tính là cảnh báo sớm quan trọng.</li>
+        <li>Ghi nhận rõ thuốc gây DILI vào hồ sơ, tránh tái sử dụng thuốc đó hoặc nhóm thuốc liên quan trong tương lai.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Ngừng ngay thuốc nghi ngờ khi có DILI",'<span class="badge badge-I">I</span>'],
+        ["N-acetylcysteine sớm cho quá liều paracetamol",'<span class="badge badge-I">I</span>'],
+        ["Tiếp tục thuốc nghi ngờ chờ theo dõi thêm khi đã đủ tiêu chuẩn Hy's Law",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"American College of Gastroenterology (ACG) Clinical Guideline: Idiosyncratic Drug-Induced Liver Injury 2021"
+},
+{
+  spec:"tieu_hoa", id:"achalasia", emoji:"🌀", short:"Achalasia", title:"Co thắt tâm vị (Achalasia)",
+  guidelines:["ACG 2020"],
+  sections:{
+    dinh_nghia:`
+      <p>Achalasia là rối loạn vận động thực quản nguyên phát do mất tế bào hạch thần kinh cơ ruột vùng thực quản, gây cơ thắt thực quản dưới không giãn đúng lúc và mất nhu động thân thực quản — thức ăn ứ đọng dần.</p>`,
+    chan_doan:`
+      <p>Triệu chứng: khó nuốt tiến triển với <b>cả thức ăn rắn và lỏng</b> (khác với hẹp cơ học thường chỉ khó với thức ăn rắn ban đầu), trào ngược thức ăn không tiêu, sụt cân, đau ngực sau xương ức.</p>
+      <p><b>Đo áp lực thực quản độ phân giải cao (HRM)</b> là tiêu chuẩn chẩn đoán — phân loại theo Chicago (type I, II, III) định hướng điều trị. X-quang thực quản cản quang có thể thấy hình "mỏ chim" (bird-beak) kinh điển. <b>Nội soi tiêu hóa trên là bắt buộc</b> trước chẩn đoán để loại trừ ung thư vùng tâm vị-thực quản gây "achalasia giả" (pseudoachalasia).</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Nong bóng qua nội soi (pneumatic dilation)</b> hoặc <b>cắt cơ Heller qua phẫu thuật/nội soi (POEM — per-oral endoscopic myotomy)</b> là điều trị chính, hiệu quả tương đương nhau ở trung tâm có kinh nghiệm — POEM ngày càng được ưu tiên do ít xâm lấn.</li>
+        <li>Thêm thủ thuật chống trào ngược (Dor/Toupet) sau Heller myotomy để giảm nguy cơ trào ngược acid sau mổ (POEM không kèm thủ thuật này nên cần theo dõi/điều trị trào ngược sau đó).</li>
+        <li>Thuốc (nitrat, chẹn kênh canxi trước ăn) hoặc tiêm Botulinum toxin qua nội soi chỉ là lựa chọn tạm thời/cho người không đủ điều kiện can thiệp — hiệu quả kém bền hơn.</li>
+        <li>Theo dõi lâu dài triệu chứng và nguy cơ ung thư biểu mô vảy thực quản tăng nhẹ ở achalasia lâu năm không điều trị hiệu quả (thực quản giãn to mạn tính).</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Nội soi tiêu hóa trên bắt buộc trước chẩn đoán để loại trừ pseudoachalasia",'<span class="badge badge-I">I</span>'],
+        ["Nong bóng hoặc Heller myotomy/POEM là điều trị chính",'<span class="badge badge-I">I</span>'],
+        ["Tiêm Botulinum toxin là điều trị dài hạn ưu tiên ở người trẻ đủ điều kiện phẫu thuật",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"American College of Gastroenterology (ACG) Clinical Guideline: Achalasia 2020"
+}
+,
+{
+  spec:"co_xuong_khop", id:"myositis", emoji:"💪", short:"Viêm đa cơ/DM", title:"Viêm đa cơ & Viêm da cơ (Polymyositis/Dermatomyositis)",
+  guidelines:["ACR/EULAR 2017 Classification"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhóm bệnh cơ viêm tự miễn, gây yếu cơ gốc chi đối xứng tiến triển (khó đứng lên từ ghế, khó leo cầu thang, khó giơ tay qua đầu). <b>Viêm da cơ (DM)</b> có thêm biểu hiện da đặc trưng: ban đỏ tím quanh mắt (heliotrope), sẩn Gottron (mặt duỗi khớp ngón/khuỷu/gối), dấu hiệu Shawl (ban vùng cổ-vai).</p>
+      <p>Cả hai đều tăng nguy cơ <b>bệnh phổi kẽ</b> và <b>ác tính kèm theo</b> (đặc biệt DM ở người lớn tuổi) — cần tầm soát chủ động.</p>`,
+    chan_doan:`
+      <p>CK (creatine kinase) tăng cao thường gặp; kháng thể đặc hiệu cơ viêm (anti-Jo-1, anti-Mi-2, anti-MDA5, anti-TIF1-gamma...) giúp phân loại thể bệnh và tiên lượng (anti-MDA5 liên quan bệnh phổi kẽ tiến triển nhanh nặng).</p>
+      <div class="alert-box alert-warn">Ở bệnh nhân DM mới chẩn đoán, đặc biệt người lớn tuổi hoặc có kháng thể anti-TIF1-gamma, cần <b>tầm soát ác tính</b> tích cực (khám toàn diện theo tuổi/giới, hình ảnh học phù hợp) vì tỷ lệ kèm ung thư tăng rõ, đặc biệt trong 1–3 năm quanh thời điểm chẩn đoán.</div>
+      <p>Điện cơ (EMG) và/hoặc sinh thiết cơ hỗ trợ xác định kiểu tổn thương viêm cơ khi chẩn đoán chưa rõ.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Glucocorticoid liều cao</b> là điều trị khởi đầu chuẩn, giảm dần theo đáp ứng CK/lực cơ.</li>
+        <li>Thêm thuốc ức chế miễn dịch tiết kiệm corticoid sớm (Methotrexate hoặc Azathioprine) — hầu hết cần phối hợp do khó duy trì lui bệnh với corticoid đơn độc.</li>
+        <li>IVIG hoặc Rituximab cho trường hợp kháng trị/nặng.</li>
+        <li>Bệnh phổi kẽ đi kèm (đặc biệt kiểu tiến triển nhanh với anti-MDA5) cần điều trị ức chế miễn dịch tích cực sớm, phối hợp chuyên khoa hô hấp.</li>
+        <li>Vật lý trị liệu duy trì sức cơ và chức năng vận động song hành với điều trị thuốc.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Glucocorticoid liều cao là điều trị khởi đầu",'<span class="badge badge-I">I</span>'],
+        ["Tầm soát ác tính ở bệnh nhân viêm da cơ mới chẩn đoán, đặc biệt người lớn tuổi",'<span class="badge badge-I">I</span>'],
+        ["Bỏ qua tầm soát bệnh phổi kẽ ở bệnh nhân có kháng thể anti-MDA5/anti-Jo-1",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACR/EULAR 2017 Classification Criteria for Idiopathic Inflammatory Myopathies"
+},
+{
+  spec:"co_xuong_khop", id:"carpal_tunnel", emoji:"✋", short:"HC ống cổ tay", title:"Hội chứng ống cổ tay (Carpal Tunnel Syndrome)",
+  guidelines:["AAOS Clinical Practice Guideline"],
+  sections:{
+    dinh_nghia:`
+      <p>Chèn ép thần kinh giữa (median nerve) khi đi qua ống cổ tay, gây dị cảm/đau/tê vùng chi phối thần kinh giữa (ngón cái, trỏ, giữa, và một phần ngón áp út) — bệnh chèn ép thần kinh ngoại biên thường gặp nhất.</p>
+      <p>Yếu tố nguy cơ: động tác lặp lại cổ tay (đánh máy, dây chuyền sản xuất), thai kỳ, suy giáp, ĐTĐ, viêm khớp dạng thấp, béo phì, lọc máu (bệnh lắng đọng amyloid liên quan lọc máu lâu năm).</p>`,
+    chan_doan:`
+      <p>Chủ yếu chẩn đoán lâm sàng: tê/dị cảm về đêm điển hình (thường làm bệnh nhân thức giấc, phải "vẩy tay" cho đỡ), test Phalen/Tinel dương tính hỗ trợ nhưng không hoàn toàn nhạy/đặc hiệu.</p>
+      <p>Điện cơ-dẫn truyền thần kinh (EMG/NCS) xác định chẩn đoán và mức độ nặng khi lâm sàng không điển hình, trước khi quyết định phẫu thuật, hoặc để loại trừ bệnh lý thần kinh khác (bệnh rễ cổ, bệnh đa thần kinh).</p>`,
+    dieu_tri:`
+<ul>
+        <li>Nhẹ-trung bình: <b>Nẹp cổ tay tư thế trung tính, đặc biệt ban đêm</b> — điều trị đầu tay đơn giản, hiệu quả tốt trong nhiều trường hợp.</li>
+        <li>Thay đổi hoạt động/tư thế công việc gây kích thích lặp lại; giảm cân nếu béo phì; điều trị bệnh nền (suy giáp, ĐTĐ) nếu có.</li>
+        <li>Tiêm Corticoid tại chỗ vào ống cổ tay giúp giảm triệu chứng tạm thời, đặc biệt hữu ích khi chờ hoặc trong lúc chưa quyết định phẫu thuật.</li>
+        <li><b>Phẫu thuật giải ép ống cổ tay</b> (mở hoặc qua nội soi) khi triệu chứng nặng/dai dẳng, có bằng chứng mất chức năng thần kinh trên EMG, hoặc thất bại điều trị bảo tồn — hiệu quả cao, phần lớn cải thiện rõ.</li>
+        <li>NSAID uống ít hiệu quả hơn các biện pháp trên, chỉ hỗ trợ giảm đau triệu chứng.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Nẹp cổ tay ban đêm là điều trị đầu tay cho bệnh nhẹ-trung bình",'<span class="badge badge-I">I</span>'],
+        ["Phẫu thuật giải ép khi có bằng chứng mất chức năng thần kinh trên EMG",'<span class="badge badge-I">I</span>'],
+        ["NSAID uống đơn độc là điều trị chính hiệu quả cao",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"American Academy of Orthopaedic Surgeons (AAOS) Clinical Practice Guideline on Carpal Tunnel Syndrome"
+}
+,
+{
+  spec:"than", id:"hrs", emoji:"🩸", short:"HC gan thận", title:"Hội chứng gan thận (Hepatorenal Syndrome - HRS)",
+  guidelines:["ICA/AASLD 2021 (định nghĩa mới HRS-AKI)"],
+  sections:{
+    dinh_nghia:`
+      <p>HRS là suy thận cấp chức năng ở bệnh nhân xơ gan mất bù/tăng áp lực tĩnh mạch cửa nặng, do co mạch thận thứ phát trên nền giãn mạch tạng nội (splanchnic) toàn thân — không có tổn thương cấu trúc thận thực sự, có thể hồi phục hoàn toàn nếu điều trị đúng và kịp/ghép gan.</p>
+      <p>Danh pháp mới: <b>HRS-AKI</b> (cấp, tương ứng HRS type 1 cũ) và <b>HRS-NAKI</b> (không đạt tiêu chuẩn AKI, tương ứng HRS type 2 cũ — thường kèm cổ trướng kháng trị).</p>`,
+    chan_doan:`
+      <p>Chẩn đoán loại trừ theo tiêu chuẩn ICA: xơ gan + cổ trướng, AKI theo tiêu chuẩn KDIGO, <b>không cải thiện creatinine sau ngừng lợi tiểu + bù Albumin (1g/kg, tối đa 100g/ngày, 2 ngày liên tiếp)</b>, không có sốc, không đang dùng thuốc độc thận, không có bệnh thận thực thể (protein niệu &lt;500mg/ngày, không tiểu máu, siêu âm thận bình thường).</p>
+      <div class="alert-box alert-info">Luôn loại trừ nhiễm trùng (đặc biệt viêm phúc mạc nhiễm khuẩn nguyên phát — SBP) trước khi kết luận HRS, vì nhiễm trùng là yếu tố khởi phát HRS thường gặp nhất và cần điều trị đồng thời.</div>`,
+    dieu_tri:`
+<ul>
+        <li><b>Ngừng lợi tiểu</b> và thử bù Albumin TM như bước chẩn đoán kiêm điều trị ban đầu.</li>
+        <li>Thuốc co mạch tạng: <b>Terlipressin + Albumin</b> là điều trị đầu tay hiệu quả nhất (nơi có sẵn); <b>Norepinephrine + Albumin</b> là thay thế hợp lý (đặc biệt tại ICU) khi không có terlipressin.</li>
+        <li>Tìm và điều trị triệt để yếu tố khởi phát (nhiễm trùng — đặc biệt SBP, xuất huyết tiêu hóa, chọc tháo dịch cổ trướng lượng lớn không bù đủ albumin).</li>
+        <li>TIPS (nối cửa chủ trong gan qua da) cân nhắc ở trường hợp chọn lọc không đáp ứng thuốc, chưa có chỉ định ghép gan cấp.</li>
+        <li><b>Ghép gan là điều trị triệt căn duy nhất</b> — HRS là chỉ định ưu tiên xem xét ghép gan cấp cứu/ưu tiên cao; lọc máu chỉ là cầu nối tạm thời chờ ghép hoặc hồi phục.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Terlipressin + Albumin là điều trị đầu tay cho HRS-AKI",'<span class="badge badge-I">I</span>'],
+        ["Loại trừ nhiễm trùng/SBP trước khi kết luận HRS",'<span class="badge badge-I">I</span>'],
+        ["Ghép gan là điều trị triệt căn nên được xem xét sớm",'<span class="badge badge-I">I</span>'],
+        ["Lọc máu dài hạn thay thế ghép gan ở bệnh nhân đủ điều kiện ghép",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"International Club of Ascites (ICA)/AASLD Practice Guidance: Hepatorenal Syndrome 2021"
+},
+{
+  spec:"than", id:"hypophosphatemia", emoji:"⬇", short:"Hạ Phosphate", title:"Hạ Phosphate máu (Hypophosphatemia)",
+  guidelines:["Thực hành điện giải lâm sàng"],
+  sections:{
+    dinh_nghia:`
+      <p>Phosphate huyết thanh &lt;2.5 mg/dL. Nguyên nhân: <b>hội chứng nuôi ăn lại (refeeding syndrome)</b> ở người suy dinh dưỡng nặng bắt đầu ăn/nuôi ăn tĩnh mạch trở lại (nguyên nhân quan trọng cần chủ động phòng ngừa), toan ceton do ĐTĐ đang điều trị insulin, nghiện rượu, cường cận giáp, thiếu Vitamin D nặng, dùng thuốc gắn phosphate/lợi tiểu kéo dài, dịch chuyển nội bào do kiềm hô hấp cấp.</p>`,
+    chan_doan:`
+      ${rt(["Mức độ","Biểu hiện điển hình"],[
+        ["Nhẹ (2.0–2.5 mg/dL)","Thường không triệu chứng"],
+        ["Trung bình (1.0–2.0 mg/dL)","Yếu cơ, mệt mỏi"],
+        ["Nặng (<1.0 mg/dL)","Yếu cơ hô hấp, rối loạn chức năng tim, tan máu, rối loạn tri giác"]
+      ])}
+      <div class="alert-box alert-danger">Ở bệnh nhân suy dinh dưỡng nặng/nghiện rượu bắt đầu nuôi ăn trở lại: chủ động kiểm tra Phosphate/Kali/Magie TRƯỚC và trong những ngày đầu nuôi ăn — hạ Phosphate nặng đột ngột trong hội chứng nuôi ăn lại có thể gây suy hô hấp/loạn nhịp tim đe dọa tính mạng.</div>`,
+    dieu_tri:`
+<ul>
+        <li>Nhẹ, không triệu chứng: bù <b>Phosphate đường uống</b>, theo dõi lại sau vài ngày.</li>
+        <li>Trung bình-nặng hoặc có triệu chứng: <b>Phosphate truyền tĩnh mạch</b> (Kali phosphate hoặc Natri phosphate tùy tình trạng Kali), tốc độ và liều theo protocol, theo dõi Canxi máu (nguy cơ hạ Canxi do lắng đọng phosphate-canxi khi bù nhanh) và chức năng thận.</li>
+        <li><b>Phòng ngừa hội chứng nuôi ăn lại:</b> bắt đầu nuôi ăn với tốc độ calo thấp, tăng dần chậm; bù trước/đồng thời Phosphate-Kali-Magie-Thiamine ở người nguy cơ cao trước khi tăng tốc độ nuôi ăn.</li>
+        <li>Điều trị nguyên nhân nền (kiểm soát ĐTĐ, bổ sung Vitamin D nếu thiếu, xem lại thuốc gắn phosphate không cần thiết).</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Chủ động bù Phosphate-Kali-Magie-Thiamine trước khi tăng tốc nuôi ăn ở người nguy cơ hội chứng nuôi ăn lại",'<span class="badge badge-I">I</span>'],
+        ["Truyền Phosphate TM nhanh không theo dõi Canxi máu",'<span class="badge badge-III">III</span>'],
+        ["Bắt đầu nuôi ăn calo cao ngay ở người suy dinh dưỡng nặng nguy cơ cao",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Nguyên tắc xử trí rối loạn điện giải và phòng ngừa hội chứng nuôi ăn lại theo thực hành hồi sức/dinh dưỡng hiện hành"
+},
+{
+  spec:"tim_mach", id:"anaphylaxis", emoji:"🐝", short:"Sốc phản vệ", title:"Sốc phản vệ (Anaphylaxis)",
+  guidelines:["WAO 2020","AAAAI/ACAAI 2020"],
+  sections:{
+    dinh_nghia:`
+      <p>Phản vệ là phản ứng dị ứng toàn thân cấp tính, đe dọa tính mạng, khởi phát nhanh sau tiếp xúc dị nguyên (thức ăn, thuốc, côn trùng đốt, latex...) qua trung gian giải phóng hàng loạt histamine/tryptase từ tế bào mast/basophil.</p>
+      <div class="subhead">Tiêu chuẩn chẩn đoán (có ≥1 trong 3 nhóm)</div>
+      <ul>
+        <li>Khởi phát cấp tính ở da/niêm (mề đay, phù môi-lưỡi) <b>kèm</b> suy hô hấp HOẶC tụt huyết áp/rối loạn cơ quan đích.</li>
+        <li>≥2 biểu hiện sau xuất hiện nhanh sau phơi nhiễm dị nguyên nghi ngờ: da/niêm, hô hấp, tụt HA, tiêu hóa (nôn/đau bụng quặn).</li>
+        <li>Tụt huyết áp sau phơi nhiễm dị nguyên ĐÃ BIẾT của bệnh nhân (dù không có biểu hiện da).</li>
+      </ul>`,
+    chan_doan:`
+      <p>Chẩn đoán chủ yếu dựa lâm sàng — <b>không chờ xét nghiệm để bắt đầu điều trị</b>. Tryptase huyết thanh (lấy trong 3 giờ đầu) có thể hỗ trợ xác nhận hồi cứu nhưng không cần thiết để quyết định xử trí cấp cứu.</p>
+      <div class="alert-box alert-danger">Phản vệ hai pha (biphasic reaction) có thể xảy ra sau 1–72 giờ (thường trong 8 giờ) dù đã xử trí ban đầu tốt — cần theo dõi tối thiểu 4–6 giờ (lâu hơn nếu phản ứng nặng/cần nhiều liều adrenaline) trước khi cho về.</div>`,
+    dieu_tri:`
+<ul>
+        <li><b>Adrenaline (Epinephrine) tiêm bắp mặt trước đùi là thuốc đầu tay, tiêm NGAY khi nghi ngờ</b> — không trì hoãn để chờ chẩn đoán chắc chắn hay xử trí thuốc khác trước; có thể lặp lại sau 5–15 phút nếu chưa cải thiện.</li>
+        <li>Đặt bệnh nhân nằm ngửa nâng chân (hoặc nghiêng trái nếu thai kỳ) — tránh đứng/ngồi dậy đột ngột (có thể gây "empty ventricle syndrome" tử vong dù đã dùng adrenaline).</li>
+        <li>Thở oxy, thiết lập đường truyền, bù dịch tinh thể nhanh nếu tụt huyết áp không đáp ứng adrenaline tiêm bắp.</li>
+        <li>Thuốc hàng hai (KHÔNG thay thế adrenaline): kháng Histamine H1 (giảm mề đay/ngứa), corticoid (có thể giảm nguy cơ pha 2 dù chứng cứ còn hạn chế), khí dung giãn phế quản nếu co thắt phế quản.</li>
+        <li>Phản vệ kháng trị/tụt HA dai dẳng: truyền Adrenaline tĩnh mạch liên tục tại đơn vị có theo dõi, glucagon TM nếu bệnh nhân đang dùng chẹn beta (giảm đáp ứng với adrenaline).</li>
+        <li>Kê đơn <b>bút tiêm Adrenaline tự động (auto-injector)</b> mang theo người + giáo dục sử dụng trước khi xuất viện; giới thiệu chuyên khoa dị ứng-miễn dịch để xác định dị nguyên và cân nhắc giải mẫn cảm.</li>
+      </ul>
+    <div class="subhead">💊 Liều Adrenaline</div>
+      ${rt(["Liều","Đường dùng"],[
+        ["Adrenaline 1:1000 (1mg/mL)","0.3–0.5mg (trẻ em 0.01mg/kg, tối đa 0.3mg)","Tiêm bắp mặt trước-ngoài đùi, lặp lại mỗi 5–15 phút nếu cần"],
+        ["Adrenaline truyền TM","Bắt đầu liều thấp, chỉnh theo đáp ứng, dưới giám sát ICU","Chỉ khi kháng trị với tiêm bắp lặp lại"]
+      ])}`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Tiêm Adrenaline bắp ngay khi nghi ngờ phản vệ, không trì hoãn",'<span class="badge badge-I">I</span>'],
+        ["Kê đơn bút tiêm Adrenaline tự động mang theo trước khi xuất viện",'<span class="badge badge-I">I</span>'],
+        ["Dùng kháng Histamine/corticoid thay thế Adrenaline làm thuốc đầu tay",'<span class="badge badge-III">III</span>'],
+        ["Cho về ngay sau xử trí ban đầu không theo dõi phản ứng 2 pha",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"World Allergy Organization (WAO) Anaphylaxis Guidance 2020; AAAAI/ACAAI Practice Parameter 2020"
+},
+{
+  spec:"tim_mach", id:"vt_vf", emoji:"⚡", short:"Nhịp nhanh thất/RT", title:"Nhịp nhanh thất & Rung thất (VT/VF)",
+  guidelines:["ACC/AHA/HRS Ventricular Arrhythmias 2017/2018"],
+  sections:{
+    dinh_nghia:`
+      <p><b>Nhịp nhanh thất (VT)</b>: ≥3 nhịp thất liên tiếp, tần số &gt;100/phút. <b>Bền bỉ</b> nếu kéo dài &gt;30 giây hoặc gây rối loạn huyết động cần can thiệp ngay. <b>Rung thất (VF)</b>: hoạt động điện thất hỗn loạn, không có cung lượng tim — nguyên nhân hàng đầu gây ngừng tim đột ngột.</p>
+      <p>Thường xảy ra trên nền bệnh tim thực thể (sẹo sau NMCT, bệnh cơ tim), nhưng có thể xảy ra trên tim về cấu trúc bình thường (VT vô căn từ đường ra thất phải, hội chứng QT dài/ngắn, Brugada, CPVT).</p>`,
+    chan_doan:`
+      <p>ECG: phức bộ QRS rộng, nhịp nhanh, đều (VT đơn dạng) hoặc hỗn loạn hoàn toàn (VF — không còn phức bộ QRS nhận diện được).</p>
+      <div class="alert-box alert-danger">VT/VF gây mất mạch/ngừng tuần hoàn = cấp cứu tối cấp, xử trí theo phác đồ ACLS ngay — khử rung ngay lập tức là ưu tiên số 1, không trì hoãn để làm thêm xét nghiệm.</div>
+      <p>Sau ổn định: tìm nguyên nhân nền (thiếu máu cơ tim, điện giải — đặc biệt Kali/Magie, QT kéo dài do thuốc, bệnh cơ tim cấu trúc qua siêu âm/MRI tim), khảo sát điện sinh lý nếu cần.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>VT/VF mất mạch:</b> Khử rung (defibrillation) ngay + CPR chất lượng cao + Adrenaline theo phác đồ ACLS; Amiodarone hoặc Lidocaine TM nếu VF/VT vô mạch kháng khử rung.</li>
+        <li><b>VT có mạch, huyết động không ổn:</b> Sốc điện chuyển nhịp đồng bộ (cardioversion) cấp cứu.</li>
+        <li><b>VT có mạch, huyết động ổn:</b> Amiodarone hoặc Procainamide TM để chuyển nhịp/kiểm soát; tìm và sửa nguyên nhân nền (thiếu máu cơ tim, điện giải).</li>
+        <li>Sau cấp cứu ổn định: <b>đặt ICD phòng ngừa thứ phát</b> ở người sống sót VT/VF không do nguyên nhân thoáng qua hoàn toàn hồi phục được (thiếu máu cơ tim cấp có tái thông kịp thời là ngoại lệ có thể không cần ICD).</li>
+        <li>Cắt đốt điện sinh lý qua catheter cho VT tái phát nhiều lần dù đã có ICD/thuốc chống loạn nhịp ("VT storm").</li>
+        <li>Điều trị bệnh nền (tối ưu suy tim, tái thông mạch vành) làm giảm nguy cơ tái phát dài hạn.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Khử rung ngay lập tức cho VT/VF mất mạch",'<span class="badge badge-I">I</span>'],
+        ["Đặt ICD phòng ngừa thứ phát sau VT/VF không do nguyên nhân thoáng qua",'<span class="badge badge-I">I</span>'],
+        ["Trì hoãn khử rung để hoàn tất xét nghiệm chẩn đoán ở bệnh nhân mất mạch",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACC/AHA/HRS Guideline for Management of Patients with Ventricular Arrhythmias and Prevention of SCD 2017/2018"
+}
+,
+{
+  spec:"noi_tiet", id:"thyroiditis", emoji:"🦋", short:"Viêm tuyến giáp", title:"Viêm tuyến giáp (Thyroiditis)",
+  guidelines:["ATA Thyroid Guidelines"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhóm bệnh viêm tuyến giáp không đồng nhất, thường trải qua 3 giai đoạn kinh điển: <b>cường giáp thoáng qua</b> (do phá hủy mô giáp giải phóng hormone dự trữ) → <b>suy giáp thoáng qua</b> → hồi phục bình giáp (đa số) hoặc suy giáp vĩnh viễn (một số trường hợp).</p>
+      ${rt(["Đặc điểm gợi ý"],[
+        ["Viêm giáp bán cấp (De Quervain)","Đau vùng cổ trước, sốt, thường sau nhiễm virus đường hô hấp trên; ESR/CRP tăng cao"],
+        ["Viêm giáp sau sinh (Postpartum)","Xuất hiện trong năm đầu sau sinh, KHÔNG đau, thường ở người có anti-TPO dương"],
+        ["Viêm giáp im lặng (Silent/Painless)","Giống sau sinh nhưng không liên quan thai kỳ, không đau"],
+        ["Viêm giáp Hashimoto","Tự miễn mạn tính, anti-TPO/anti-Tg dương cao, tiến triển dần đến suy giáp vĩnh viễn"]
+      ])}`,
+    chan_doan:`
+      <p>Phân biệt với Basedow (Graves) — nguyên nhân cường giáp thực sự do tăng tổng hợp hormone — là bước quan trọng nhất: <b>độ tập trung Iod phóng xạ (RAIU) thấp/không bắt trong viêm giáp giai đoạn cường giáp</b> (do phá hủy mô, không phải tăng tổng hợp), trong khi Basedow có RAIU tăng lan tỏa.</p>
+      <p>TSH-receptor antibody (TRAb) âm tính trong viêm giáp, dương tính trong Basedow. Viêm giáp bán cấp thường có ESR/CRP tăng rõ và siêu âm giáp giảm âm loang lổ đau khi ấn đầu dò.</p>`,
+    dieu_tri:`
+<ul>
+        <li>Giai đoạn cường giáp thoáng qua: <b>chẹn beta</b> điều trị triệu chứng (hồi hộp, run) — <b>KHÔNG dùng thuốc kháng giáp</b> (Methimazole/PTU) vì đây không phải tăng tổng hợp hormone, thuốc kháng giáp không có tác dụng và có thể gây suy giáp sớm không cần thiết.</li>
+        <li>Viêm giáp bán cấp có đau nhiều: NSAID là đầu tay; corticoid (Prednisone) cho trường hợp đau nặng không đáp ứng NSAID — đáp ứng rất tốt và nhanh.</li>
+        <li>Giai đoạn suy giáp thoáng qua: theo dõi TSH định kỳ; chỉ bắt đầu Levothyroxine nếu suy giáp có triệu chứng rõ hoặc TSH tăng cao kéo dài — nhiều trường hợp tự hồi phục không cần điều trị.</li>
+        <li>Viêm giáp Hashimoto tiến triển suy giáp vĩnh viễn: Levothyroxine thay thế lâu dài như suy giáp nguyên phát thông thường.</li>
+        <li>Viêm giáp sau sinh: tư vấn nguy cơ tái phát ở lần sinh sau và nguy cơ suy giáp vĩnh viễn dài hạn — cần theo dõi TSH định kỳ hàng năm.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Đo RAIU/TRAb để phân biệt viêm giáp với Basedow trước điều trị",'<span class="badge badge-I">I</span>'],
+        ["Dùng thuốc kháng giáp (Methimazole) cho giai đoạn cường giáp của viêm giáp",'<span class="badge badge-III">III</span>'],
+        ["NSAID/Corticoid cho viêm giáp bán cấp đau nhiều",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"American Thyroid Association (ATA) Guidelines for Thyroiditis Management"
+},
+{
+  spec:"noi_tiet", id:"male_hypogonadism", emoji:"♂", short:"Suy sinh dục nam", title:"Suy sinh dục nam (Male Hypogonadism)",
+  guidelines:["Endocrine Society 2018"],
+  sections:{
+    dinh_nghia:`
+      <p>Suy sinh dục nam là giảm testosterone kèm triệu chứng, do rối loạn tại tinh hoàn (nguyên phát — LH/FSH tăng) hoặc tại trục dưới đồi-tuyến yên (thứ phát — LH/FSH thấp/bình thường không tương xứng).</p>
+      <p>Triệu chứng: giảm ham muốn, rối loạn cương, mệt mỏi, giảm khối cơ, tăng mỡ, loãng xương, thiếu máu nhẹ, trầm cảm/khó tập trung — nhiều triệu chứng không đặc hiệu, dễ nhầm lão hóa/trầm cảm/rối loạn giấc ngủ.</p>`,
+    chan_doan:`
+      <p>Đo <b>Testosterone toàn phần buổi sáng</b> (7–10 giờ sáng, lúc nồng độ cao nhất) — cần <b>lặp lại xét nghiệm ≥2 lần</b> trước khi kết luận (dao động sinh học đáng kể) kèm có triệu chứng lâm sàng phù hợp.</p>
+      <div class="alert-box alert-info">Testosterone thấp giả có thể do béo phì (giảm SHBG), bệnh cấp tính, hoặc lấy máu không đúng giờ — không chẩn đoán/điều trị dựa 1 lần xét nghiệm đơn độc hoặc không có triệu chứng lâm sàng tương ứng.</div>
+      <p>Nếu Testosterone thấp xác nhận: đo LH/FSH để phân loại nguyên phát/thứ phát; nếu thứ phát, đo thêm Prolactin, sắt (huyết sắc tố), và xem xét MRI tuyến yên nếu nghi u/tổn thương trung ương.</p>`,
+    dieu_tri:`
+<ul>
+        <li>Chỉ điều trị thay thế Testosterone khi có <b>cả</b> triệu chứng lâm sàng RÕ <b>và</b> xét nghiệm xác nhận thấp lặp lại — không điều trị chỉ dựa vào xét nghiệm ở người không triệu chứng.</li>
+        <li>Đường dùng: gel/tiêm bắp/miếng dán testosterone — chọn theo sở thích bệnh nhân và khả năng theo dõi.</li>
+        <li><b>Chống chỉ định tương đối/cần cân nhắc kỹ:</b> ung thư tuyến tiền liệt chưa điều trị ổn, mong muốn có con trong thời gian gần (testosterone ngoại sinh ức chế trục, giảm sinh tinh) — cần tư vấn kỹ nếu còn nhu cầu sinh sản.</li>
+        <li>Theo dõi định kỳ: PSA và khám tuyến tiền liệt theo tuổi, hematocrit (nguy cơ đa hồng cầu thứ phát), triệu chứng, testosterone lại sau 3–6 tháng để chỉnh liều.</li>
+        <li>Suy sinh dục thứ phát: tìm và điều trị nguyên nhân nền (u tuyến yên, tăng Prolactin, béo phì nặng — giảm cân có thể cải thiện trục tự nhiên).</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Xác nhận Testosterone thấp bằng ≥2 lần đo buổi sáng trước điều trị",'<span class="badge badge-I">I</span>'],
+        ["Điều trị thay thế Testosterone ở người không triệu chứng chỉ vì xét nghiệm thấp",'<span class="badge badge-III">III</span>'],
+        ["Theo dõi PSA/Hematocrit định kỳ khi điều trị thay thế",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"Endocrine Society Clinical Practice Guideline: Testosterone Therapy in Men with Hypogonadism 2018"
+}
+,
+{
+  spec:"ho_hap", id:"pneumoconiosis", emoji:"⛏", short:"Bụi phổi", title:"Bệnh phổi nghề nghiệp (Pneumoconiosis)",
+  guidelines:["ATS Occupational Lung Disease"],
+  sections:{
+    dinh_nghia:`
+      <p>Nhóm bệnh phổi mạn tính do hít phải bụi khoáng/hữu cơ nghề nghiệp kéo dài, gây xơ hóa phổi tiến triển, không hồi phục. Thường gặp: <b>Bụi phổi Silic</b> (thợ mỏ, khai thác đá, cát/thạch anh — xây dựng, đúc kim loại), <b>Bụi phổi Amiăng (Asbestosis)</b> (xây dựng, đóng tàu — kèm tăng nguy cơ ung thư trung mô màng phổi/ung thư phổi), <b>Bụi phổi than (CWP)</b> (thợ mỏ than).</p>`,
+    chan_doan:`
+      <p>Tiền sử nghề nghiệp chi tiết (loại công việc, thời gian phơi nhiễm, có dùng bảo hộ hô hấp không) là chìa khóa chẩn đoán — thời gian ủ bệnh thường 10–20 năm sau phơi nhiễm.</p>
+      <p>X-quang/CT ngực: nốt nhỏ lan tỏa 2 phổi (silic/CWP thường ưu thế thùy trên), có thể thấy hạch rốn phổi vôi hóa dạng "vỏ trứng" (đặc trưng silic); asbestosis thường ưu thế đáy phổi kèm dày màng phổi/mảng vôi hóa màng phổi.</p>
+      <div class="alert-box alert-warn">Bụi phổi Silic làm <b>tăng nguy cơ lao phổi</b> rõ rệt — cần tầm soát lao tích cực ở người bụi phổi silic có triệu chứng hô hấp mới/sụt cân.</div>`,
+    dieu_tri:`
+<ul>
+        <li><b>Không có điều trị đặc hiệu hồi phục xơ hóa đã hình thành</b> — trọng tâm là ngừng phơi nhiễm thêm và điều trị hỗ trợ/biến chứng.</li>
+        <li>Loại bỏ khỏi môi trường phơi nhiễm ngay khi chẩn đoán — biện pháp quan trọng nhất để ngăn tiến triển thêm.</li>
+        <li>Tiêm phòng cúm/phế cầu, cai thuốc lá (hiệp đồng tăng nguy cơ tổn thương phổi và ung thư ở người phơi nhiễm amiăng).</li>
+        <li>Điều trị hỗ trợ như bệnh phổi kẽ/COPD khi có triệu chứng (giãn phế quản, oxy liệu pháp nếu giảm oxy máu, phục hồi chức năng hô hấp).</li>
+        <li>Tầm soát và điều trị lao nếu có bằng chứng đồng nhiễm (đặc biệt bụi phổi silic).</li>
+        <li>Asbestosis: theo dõi định kỳ tầm soát ung thư trung mô màng phổi/ung thư phổi ở người phơi nhiễm amiăng lâu năm.</li>
+        <li>Báo cáo bệnh nghề nghiệp theo quy định, tư vấn quyền lợi bảo hiểm/bồi thường nghề nghiệp.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Ngừng phơi nhiễm ngay khi chẩn đoán là biện pháp quan trọng nhất",'<span class="badge badge-I">I</span>'],
+        ["Tầm soát lao ở bệnh nhân bụi phổi silic có triệu chứng mới",'<span class="badge badge-I">I</span>'],
+        ["Kỳ vọng thuốc hồi phục xơ hóa phổi đã hình thành",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"American Thoracic Society (ATS) Statement on Occupational Lung Disease"
+},
+{
+  spec:"ho_hap", id:"chronic_cough", emoji:"🗣", short:"Ho mạn", title:"Ho mạn tính — Tiếp cận chẩn đoán",
+  guidelines:["CHEST Guideline 2020 (Chronic Cough)"],
+  sections:{
+    dinh_nghia:`
+      <p>Ho mạn tính = ho kéo dài <b>&gt;8 tuần</b> ở người lớn (phân biệt ho cấp &lt;3 tuần và ho bán cấp 3–8 tuần thường do hậu nhiễm virus tự giới hạn). Ba nguyên nhân chiếm phần lớn trường hợp ở người không hút thuốc, X-quang ngực bình thường: <b>hội chứng ho đường hô hấp trên (UACS/viêm mũi xoang chảy dịch sau)</b>, <b>hen phế quản/viêm phế quản tăng eosinophil</b>, và <b>GERD</b> — thường phối hợp nhiều nguyên nhân đồng thời.</p>`,
+    chan_doan:`
+      <p>Tiếp cận theo trình tự: khai thác kỹ tiền sử (hút thuốc, thuốc ƯCMC — nguyên nhân thường gặp cần loại trừ đầu tiên vì dễ xử lý), X-quang ngực loại trừ bệnh thực thể (u, lao, giãn phế quản, ILD).</p>
+      <div class="alert-box alert-danger">Cờ đỏ cần khảo sát thêm ngay (CT ngực/nội soi phế quản): ho ra máu, sụt cân, sốt kéo dài, khó thở tiến triển, tiền sử hút thuốc nhiều/tuổi cao (nghi ung thư phổi), nuốt sặc tái diễn.</div>
+      <p>Nếu không có cờ đỏ và X-quang bình thường: điều trị thử theo nguyên nhân nghi ngờ nhiều nhất theo tiền sử/triệu chứng đi kèm (nghẹt mũi/chảy dịch mũi sau → UACS; khò khè/tiền sử dị ứng → hen; ợ nóng/liên quan bữa ăn → GERD) thay vì làm toàn bộ xét nghiệm ngay từ đầu.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Ngừng thuốc ƯCMC</b> nếu đang dùng — ho do ƯCMC có thể xuất hiện bất kỳ lúc nào trong quá trình dùng thuốc, hết sau ngừng thuốc 1–4 tuần.</li>
+        <li>Nghi UACS: kháng Histamine thế hệ 1 + thuốc thông mũi, hoặc corticoid xịt mũi nếu viêm mũi dị ứng/viêm xoang mạn.</li>
+        <li>Nghi hen/viêm phế quản tăng eosinophil: điều trị thử corticoid hít ± giãn phế quản, đánh giá đáp ứng sau 2–4 tuần; đo chức năng hô hấp/FeNO nếu có sẵn hỗ trợ chẩn đoán.</li>
+        <li>Nghi GERD: điều trị thử ức chế bơm proton kèm thay đổi lối sống, đáp ứng có thể cần vài tuần-vài tháng mới rõ.</li>
+        <li>Không đáp ứng điều trị thử theo trình tự trên: chuyển khảo sát chuyên sâu (CT ngực độ phân giải cao, nội soi phế quản, đo pH thực quản, đánh giá tăng nhạy cảm phản xạ ho — "cough hypersensitivity syndrome").</li>
+        <li>Thuốc giảm ho trung ương (dextromethorphan, codeine) chỉ là điều trị triệu chứng tạm thời, không thay thế tìm và điều trị nguyên nhân nền.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Ngừng ƯCMC trước khi khảo sát sâu ho mạn ở người đang dùng thuốc này",'<span class="badge badge-I">I</span>'],
+        ["X-quang ngực là xét nghiệm đầu tay cho mọi ho mạn tính",'<span class="badge badge-I">I</span>'],
+        ["Làm toàn bộ xét nghiệm chuyên sâu ngay từ đầu thay vì điều trị thử theo trình tự",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"CHEST Expert Panel Report: Diagnosis and Management of Chronic Cough in Adults 2020"
+}
+,
+{
+  spec:"tieu_hoa", id:"aih", emoji:"🎗", short:"Viêm gan TM", title:"Viêm gan tự miễn (Autoimmune Hepatitis)",
+  guidelines:["AASLD 2019/2020"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm gan tự miễn là bệnh viêm gan mạn tính qua trung gian miễn dịch, chủ yếu gặp ở nữ, có thể khởi phát âm thầm (phát hiện qua men gan tăng tình cờ) hoặc như viêm gan cấp nặng/suy gan tối cấp. Không điều trị có thể tiến triển xơ gan.</p>`,
+    chan_doan:`
+      <p>Tăng ALT/AST kiểu hủy tế bào gan + tăng IgG/gammaglobulin máu + tự kháng thể dương (ANA và/hoặc anti-Smooth Muscle Antibody ở type 1; anti-LKM1 ở type 2 — hiếm gặp hơn, thường trẻ tuổi hơn).</p>
+      <div class="alert-box alert-info">Sinh thiết gan giúp xác định chẩn đoán (viêm hoại tử quanh khoảng cửa — "interface hepatitis" đặc trưng) và đánh giá mức độ xơ hóa — nên thực hiện trước điều trị nếu tình trạng bệnh nhân cho phép, trừ khi lâm sàng quá cấp cứu cần điều trị ngay.</div>
+      <p>Loại trừ viêm gan virus, bệnh gan do rượu/chuyển hóa, DILI, và các bệnh gan tự miễn khác (viêm đường mật xơ hóa nguyên phát, xơ gan mật nguyên phát — có thể có hội chứng chồng lấp).</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Corticoid (Prednisone) là điều trị khởi đầu chuẩn</b> — đáp ứng sinh hóa (bình thường hóa ALT/IgG) thường rõ trong vài tuần-vài tháng, là đặc điểm gợi ý chẩn đoán đúng.</li>
+        <li>Phối hợp <b>Azathioprine</b> sớm (thường sau vài tuần) để giảm liều/ngừng corticoid, duy trì lui bệnh lâu dài, giảm tác dụng phụ corticoid kéo dài.</li>
+        <li>Điều trị duy trì kéo dài, thường tối thiểu 2–3 năm và đạt lui bệnh sinh hóa-mô học ổn định trước khi cân nhắc ngừng thuốc — ngừng sớm có nguy cơ tái phát cao.</li>
+        <li>Trường hợp không dung nạp/kháng trị với phác đồ chuẩn: Mycophenolate mofetil hoặc thuốc ức chế miễn dịch khác (tacrolimus, cyclosporine) là lựa chọn thay thế.</li>
+        <li>Xơ gan mất bù/suy gan tối cấp không đáp ứng điều trị nội khoa: đánh giá ghép gan.</li>
+        <li>Theo dõi lâu dài men gan/IgG định kỳ ngay cả sau ngừng thuốc do nguy cơ tái phát.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Corticoid ± Azathioprine là điều trị khởi đầu chuẩn",'<span class="badge badge-I">I</span>'],
+        ["Sinh thiết gan trước điều trị khi tình trạng cho phép",'<span class="badge badge-I">I</span>'],
+        ["Ngừng thuốc sớm ngay khi men gan về bình thường lần đầu",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"AASLD Practice Guidance: Diagnosis and Management of Autoimmune Hepatitis 2019/2020"
+},
+{
+  spec:"tieu_hoa", id:"dyspepsia", emoji:"🍽", short:"Khó tiêu CN", title:"Khó tiêu chức năng (Functional Dyspepsia)",
+  guidelines:["ACG/CAG 2017","Rome IV Criteria"],
+  sections:{
+    dinh_nghia:`
+      <p>Khó tiêu chức năng là triệu chứng khó chịu vùng thượng vị mạn tính (đầy bụng sau ăn, no sớm, đau/nóng rát thượng vị) <b>không có tổn thương thực thể giải thích được</b> qua nội soi, theo tiêu chuẩn Rome IV — chia 2 thể: hội chứng khó chịu sau ăn (PDS) và hội chứng đau thượng vị (EPS), có thể chồng lấp.</p>`,
+    chan_doan:`
+      <p>Chẩn đoán loại trừ sau khi đã tầm soát nguyên nhân thực thể phù hợp lứa tuổi/yếu tố nguy cơ.</p>
+      <div class="alert-box alert-danger">Cờ đỏ cần nội soi tiêu hóa trên ngay: tuổi ≥60 mới khởi phát (hoặc ≥45–50 tùy dịch tễ ung thư dạ dày địa phương — cân nhắc ngưỡng thấp hơn ở Việt Nam), sụt cân không chủ ý, nuốt nghẹn/khó nuốt tiến triển, xuất huyết tiêu hóa/thiếu máu thiếu sắt, nôn dai dẳng, tiền sử gia đình ung thư dạ dày, khối sờ được/vàng da.</div>
+      <p>Không có cờ đỏ, tuổi trẻ: xét nghiệm/điều trị <i>H. pylori</i> ("test-and-treat") là bước đầu hợp lý ở vùng dịch tễ nhiễm cao trước khi nội soi.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Xét nghiệm và điều trị H. pylori nếu dương tính</b> — một số bệnh nhân cải thiện triệu chứng rõ sau tiệt trừ (khi đó gọi là "khó tiêu liên quan H. pylori" hơn là khó tiêu chức năng thực sự).</li>
+        <li><b>PPI</b> là điều trị đầu tay, đặc biệt hiệu quả hơn ở thể đau thượng vị (EPS).</li>
+        <li>Thuốc tăng nhu động (Prokinetic — domperidone, itopride) đặc biệt hữu ích ở thể khó chịu sau ăn (PDS — đầy bụng, no sớm).</li>
+        <li>Thuốc chống trầm cảm 3 vòng liều thấp (Amitriptyline) hoặc chất chủ vận thụ thể (Mirtazapine, Buspirone) cho trường hợp kháng trị với PPI/prokinetic — hiệu quả qua điều hòa cảm giác tạng.</li>
+        <li>Tránh yếu tố khởi phát (bữa ăn nhiều dầu mỡ, ăn quá no, rượu, một số NSAID); liệu pháp tâm lý (CBT) hỗ trợ ở trường hợp có yếu tố lo âu đi kèm rõ.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Nội soi tiêu hóa trên ngay khi có cờ đỏ, không điều trị thử trước",'<span class="badge badge-I">I</span>'],
+        ["Test-and-treat H. pylori trước nội soi ở người trẻ không cờ đỏ",'<span class="badge badge-IIa">IIa</span>'],
+        ["PPI là điều trị đầu tay cho thể đau thượng vị (EPS)",'<span class="badge badge-I">I</span>']
+      ])}`
+  },
+  source:"ACG and Canadian Association of Gastroenterology Clinical Guideline: Functional Dyspepsia 2017; Rome IV Criteria"
+}
+,
+{
+  spec:"co_xuong_khop", id:"shoulder_pain", emoji:"💪", short:"Đau vai", title:"Đau vai — Viêm gân chóp xoay & Viêm quanh khớp vai đông cứng",
+  guidelines:["AAOS/ACR Shoulder Pain Guideline"],
+  sections:{
+    dinh_nghia:`
+      <p><b>Bệnh lý gân chóp xoay (rotator cuff)</b>: từ viêm gân/chèn ép dưới mỏm cùng vai đến rách gân (bán phần/toàn phần), thường liên quan tuổi tác/vận động lặp lại tay cao qua đầu. <b>Viêm quanh khớp vai đông cứng (frozen shoulder/adhesive capsulitis)</b>: xơ hóa/dày bao khớp gây giảm cả vận động chủ động và bị động (khác với bệnh gân chỉ giảm vận động chủ động), thường qua 3 giai đoạn: đau tăng dần → cứng khớp → hồi phục dần, có thể kéo dài 1–3 năm; hay gặp hơn ở người ĐTĐ.</p>`,
+    chan_doan:`
+      <p>Khám phân biệt: giảm vận động <b>chủ động nhưng bị động còn tốt</b> → gợi ý bệnh gân/chèn ép; giảm <b>cả chủ động và bị động</b> tương đương → gợi ý đông cứng khớp vai.</p>
+      <p>Nghiệm pháp lâm sàng (Neer, Hawkins, empty can) hỗ trợ định hướng tổn thương gân. Siêu âm hoặc MRI khi nghi rách gân toàn phần/cần đánh giá trước phẫu thuật, hoặc triệu chứng không cải thiện sau điều trị bảo tồn đủ thời gian.</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Bệnh lý gân chóp xoay:</b> vật lý trị liệu (bài tập tăng cường/ổn định chóp xoay) là nền tảng điều trị; NSAID hỗ trợ giảm đau ngắn hạn; tiêm corticoid dưới mỏm cùng vai cho trường hợp đau nhiều cản trở tập vật lý trị liệu.</li>
+        <li>Rách gân toàn phần có triệu chứng, đặc biệt ở người còn hoạt động thể lực nhiều/thất bại điều trị bảo tồn: phẫu thuật khâu nối gân qua nội soi.</li>
+        <li><b>Đông cứng khớp vai:</b> vật lý trị liệu kéo giãn nhẹ nhàng + NSAID/giảm đau là nền tảng; tiêm corticoid nội khớp giúp giảm đau đặc biệt hiệu quả ở giai đoạn đau-viêm sớm.</li>
+        <li>Nong bao khớp bằng bơm dịch (hydrodilatation) hoặc thao tác nắn khớp dưới gây mê/nội soi cắt bao khớp cho trường hợp cứng khớp kéo dài không cải thiện với điều trị bảo tồn.</li>
+        <li>Kiểm soát đường huyết tốt ở người ĐTĐ có thể giúp cải thiện tiên lượng đông cứng khớp vai.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Vật lý trị liệu là điều trị nền tảng cho cả bệnh gân và đông cứng khớp vai",'<span class="badge badge-I">I</span>'],
+        ["Phẫu thuật ngay khi mới chẩn đoán rách gân bán phần không triệu chứng nặng",'<span class="badge badge-III">III</span>'],
+        ["Tiêm corticoid nội khớp giúp giảm đau giai đoạn sớm của đông cứng khớp vai",'<span class="badge badge-IIa">IIa</span>']
+      ])}`
+  },
+  source:"American Academy of Orthopaedic Surgeons (AAOS) Clinical Practice Guideline on Shoulder Pain"
+},
+{
+  spec:"co_xuong_khop", id:"reactive_arthritis", emoji:"🔗", short:"VK phản ứng", title:"Viêm khớp phản ứng (Reactive Arthritis)",
+  guidelines:["ACR Spondyloarthritis-related"],
+  sections:{
+    dinh_nghia:`
+      <p>Viêm khớp phản ứng là bệnh thuộc nhóm viêm khớp cột sống (spondyloarthritis), xảy ra sau nhiễm trùng đường tiêu hóa (<i>Salmonella, Shigella, Campylobacter, Yersinia</i>) hoặc đường tiết niệu-sinh dục (<i>Chlamydia trachomatis</i>) 1–4 tuần trước đó, thường liên quan HLA-B27.</p>
+      <p>Tam chứng kinh điển ("không thể nhìn, không thể tiểu, không thể trèo" — can't see, can't pee, can't climb): viêm khớp + viêm kết mạc/màng bồ đào + viêm niệu đạo — tuy chỉ gặp đầy đủ ở thiểu số trường hợp.</p>`,
+    chan_doan:`
+      <p>Viêm khớp thường không đối xứng, ưu tiên chi dưới, có thể kèm viêm điểm bám gân (đặc biệt gân Achilles), viêm ngón dạng "xúc xích" (dactylitis).</p>
+      <p>Không có xét nghiệm đặc hiệu chẩn đoán — dựa lâm sàng + tiền sử nhiễm trùng gần đây + loại trừ viêm khớp nhiễm khuẩn thực sự (chọc dịch khớp cấy âm tính, khác với viêm khớp phản ứng là viêm khớp "vô khuẩn" sau nhiễm trùng nơi khác).</p>
+      <div class="alert-box alert-warn">Luôn loại trừ viêm khớp nhiễm khuẩn cấp (septic arthritis) bằng chọc dịch khớp nếu khớp sưng nóng đỏ nhiều/sốt — đây là chẩn đoán KHÔNG được bỏ sót, khác hoàn toàn về xử trí so với viêm khớp phản ứng.</div>`,
+    dieu_tri:`
+<ul>
+        <li>NSAID là điều trị đầu tay cho viêm khớp và viêm điểm bám gân.</li>
+        <li>Tiêm corticoid nội khớp cho khớp viêm dai dẳng khu trú không đáp ứng NSAID.</li>
+        <li>Điều trị nhiễm trùng nền nếu còn đang hoạt động (kháng sinh cho Chlamydia đang nhiễm — bao gồm cả bạn tình để tránh tái nhiễm; nhiễm trùng tiêu hóa cấp thường đã tự hết khi khớp bắt đầu viêm).</li>
+        <li>Bệnh kéo dài/tái phát nhiều lần (viêm khớp phản ứng mạn): Sulfasalazine hoặc Methotrexate như điều trị nền DMARD tương tự các bệnh viêm khớp cột sống khác.</li>
+        <li>Đa số trường hợp tự giới hạn trong vài tuần-vài tháng; thiểu số tiến triển mạn tính cần điều trị duy trì kéo dài.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Loại trừ viêm khớp nhiễm khuẩn bằng chọc dịch khớp khi nghi ngờ",'<span class="badge badge-I">I</span>'],
+        ["NSAID là điều trị đầu tay",'<span class="badge badge-I">I</span>'],
+        ["Kháng sinh kéo dài điều trị bản thân viêm khớp phản ứng (không nhiễm trùng đang hoạt động)",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"ACR/Spondyloarthritis Research and Treatment Network guidance on Reactive Arthritis"
+}
+,
+{
+  spec:"than", id:"iga_nephropathy", emoji:"🩸", short:"Bệnh thận IgA", title:"Bệnh thận IgA (IgA Nephropathy)",
+  guidelines:["KDIGO Glomerular Diseases 2021"],
+  sections:{
+    dinh_nghia:`
+      <p>Bệnh thận IgA là bệnh cầu thận nguyên phát thường gặp nhất trên thế giới, do lắng đọng phức hợp miễn dịch IgA bất thường (galactose-thiếu hụt) tại mesangium cầu thận, gây viêm và tổn thương cầu thận tiến triển ở một tỷ lệ đáng kể bệnh nhân.</p>
+      <div class="subhead">Bệnh cảnh điển hình</div>
+      <p>Tiểu máu đại thể tái diễn theo đợt, thường xuất hiện 1–2 ngày SAU nhiễm trùng hô hấp trên ("synpharyngitic hematuria" — khác với viêm cầu thận sau liên cầu xuất hiện 1–3 tuần sau nhiễm trùng); hoặc phát hiện tình cờ qua tiểu máu vi thể/protein niệu không triệu chứng.</p>`,
+    chan_doan:`
+      <p><b>Sinh thiết thận là tiêu chuẩn chẩn đoán xác định</b> — thấy lắng đọng IgA nổi trội tại mesangium trên miễn dịch huỳnh quang. Đánh giá tiên lượng qua phân độ MEST-C (Oxford Classification): Mesangial hypercellularity, Endocapillary hypercellularity, Segmental sclerosis, Tubular atrophy/interstitial fibrosis, Crescents.</p>
+      <p>Yếu tố tiên lượng xấu: protein niệu kéo dài &gt;1g/ngày dù đã điều trị nội khoa tối ưu, THA không kiểm soát, giảm eGFR tại thời điểm chẩn đoán, tổn thương mạn tính rõ trên sinh thiết (xơ hóa/teo ống thận).</p>`,
+    dieu_tri:`
+<ul>
+        <li><b>Điều trị nội khoa tối ưu (nền tảng, ưu tiên hàng đầu):</b> ƯCMC/ARB liều tối ưu dung nạp được để giảm protein niệu và kiểm soát huyết áp — nên duy trì đủ thời gian (≥3–6 tháng) trước khi đánh giá cần thêm ức chế miễn dịch hay không.</li>
+        <li>SGLT2i (Dapagliflozin) có bằng chứng làm chậm tiến triển bệnh thận mạn ở bệnh thận IgA, khuyến cáo bổ sung vào điều trị nền tảng.</li>
+        <li>Corticoid toàn thân hoặc <b>Budesonide phóng thích tại hồi tràng (mới)</b> cân nhắc ở bệnh nhân protein niệu còn cao (&gt;1g/ngày) dù đã điều trị nội khoa tối ưu đủ thời gian và nguy cơ tiến triển còn cao — cần cân nhắc lợi ích/nguy cơ tác dụng phụ corticoid toàn thân.</li>
+        <li>Kiểm soát các yếu tố nguy cơ tim mạch-chuyển hóa đi kèm (lipid, cân nặng, hút thuốc) — bệnh thận IgA thường gặp ở người trẻ, cần chăm sóc dài hạn toàn diện.</li>
+        <li>Theo dõi định kỳ eGFR/protein niệu suốt đời do nguy cơ tiến triển đến bệnh thận giai đoạn cuối ở một tỷ lệ đáng kể bệnh nhân sau nhiều năm.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["ƯCMC/ARB liều tối ưu là điều trị nền tảng đầu tay",'<span class="badge badge-I">I</span>'],
+        ["SGLT2i bổ sung để làm chậm tiến triển bệnh thận",'<span class="badge badge-I">I</span>'],
+        ["Corticoid toàn thân thường quy ngay từ đầu chưa qua điều trị nội khoa tối ưu",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"KDIGO 2021 Clinical Practice Guideline for the Management of Glomerular Diseases — IgA Nephropathy"
+},
+{
+  spec:"than", id:"hypocalcemia", emoji:"⬇", short:"Hạ Canxi", title:"Hạ Canxi máu (Hypocalcemia)",
+  guidelines:["Thực hành điện giải lâm sàng"],
+  sections:{
+    dinh_nghia:`
+      <p>Canxi toàn phần &lt;8.5 mg/dL (nên hiệu chỉnh theo Albumin, hoặc đo Canxi ion hóa trực tiếp nếu có — chính xác hơn). Nguyên nhân: suy cận giáp (sau phẫu thuật tuyến giáp/cận giáp, tự miễn, di truyền), thiếu Vitamin D nặng, suy thận mạn (giảm hoạt hóa Vitamin D), hạ Magie nặng (ức chế tiết PTH), viêm tụy cấp, tiêu cơ vân, truyền máu lượng lớn (citrate gắn Canxi).</p>`,
+    chan_doan:`
+      <p>Triệu chứng: dị cảm quanh miệng/đầu ngón, chuột rút, dấu Chvostek (co giật cơ mặt khi gõ nhẹ trước tai) và Trousseau (co thắt cổ tay khi bơm hơi băng huyết áp) dương tính, co giật, kéo dài QT trên ECG (nguy cơ loạn nhịp).</p>
+      <div class="alert-box alert-warn">Luôn kiểm tra Magie khi hạ Canxi không rõ nguyên nhân hoặc kháng trị với bù Canxi thông thường — hạ Magie nặng gây ức chế tiết PTH, không sửa được Canxi nếu chưa bù đủ Magie trước/đồng thời.</div>
+      <p>Đo PTH giúp phân loại: PTH thấp/không tương xứng → suy cận giáp; PTH cao phù hợp đáp ứng → nguyên nhân khác (thiếu Vitamin D, suy thận, đề kháng PTH).</p>`,
+    dieu_tri:`
+<ul>
+        <li>Nặng/có triệu chứng (co giật, kéo dài QT, tetany): <b>Canxi gluconate truyền tĩnh mạch chậm</b> dưới theo dõi ECG liên tục — Canxi Clorua chỉ dùng qua đường trung tâm do gây hoại tử mô nếu thoát mạch.</li>
+        <li>Nhẹ-trung bình, không triệu chứng: bù <b>Canxi và Vitamin D (Calcitriol nếu suy cận giáp/suy thận nặng — cần dạng hoạt hóa)</b> đường uống.</li>
+        <li>Bù Magie đồng thời nếu thấp — bắt buộc để bù Canxi hiệu quả.</li>
+        <li>Suy cận giáp mạn: bổ sung Canxi + Calcitriol dài hạn, theo dõi Canxi/Phosphate máu và Canxi niệu 24h định kỳ (tránh tăng Canxi niệu gây sỏi thận/vôi hóa thận do điều trị quá mức).</li>
+        <li>Không truyền Canxi cùng đường truyền có Bicarbonate hoặc Phosphate (tạo kết tủa) — dùng đường truyền riêng.</li>
+      </ul>`,
+    khuyen_cao:`
+      ${rt(["Mức"],[
+        ["Bù Magie đồng thời khi hạ Canxi có kèm hạ Magie",'<span class="badge badge-I">I</span>'],
+        ["Canxi Gluconate TM chậm có theo dõi ECG cho hạ Canxi nặng có triệu chứng",'<span class="badge badge-I">I</span>'],
+        ["Bù Canxi quá mức không theo dõi Canxi niệu ở suy cận giáp mạn",'<span class="badge badge-III">III</span>']
+      ])}`
+  },
+  source:"Nguyên tắc xử trí rối loạn điện giải theo thực hành nội khoa/thận học hiện hành"
+}
+
 ];
 
 const sectionMeta = [
@@ -5814,8 +7287,8 @@ function aiWelcome(){
   if(!box || box.dataset.ready) return;
   box.dataset.ready = '1';
   aiAppend('bot',
-    '<b>AI tra cứu nhanh</b> — trả lời ngắn từ phác đồ/thang điểm trong app.<br>' +
-    'Ví dụ: <i>đợt cấp COPD</i> · <i>HAS-BLED</i> · <i>đích HA ESC</i>'
+    '<b>AI tra cứu nhanh</b> — nhập một loạt triệu chứng để gợi ý bệnh cảnh kèm hướng xử trí/liều tham khảo, hoặc hỏi thẳng tên bệnh/thuốc/thang điểm.<br>' +
+    'Ví dụ: <i>sốt, ho đàm, khó thở, đau ngực kiểu màng phổi</i> · <i>liều furosemide suy tim</i> · <i>CURB-65</i>'
   );
 }
 
@@ -5852,21 +7325,120 @@ function aiPickBullets(text, maxN){
   return out;
 }
 
+function aiSymptomHits(q){
+  const n = stripVN(q);
+  // map triệu chứng → id bệnh (cộng điểm) + nhãn diễn giải để hiện "vì sao khớp"
+  const MAP = [
+    {re:/dau nguc|chit ep nguc|non oat|kho tho khi gap|lan ra canh tay/, ids:['acs','ccs','pe','aortic'], w:40, label:'đau ngực kiểu tim'},
+    {re:/kho tho|thở nhanh|thở gắng/, ids:['hf','copd','asthma','pe','cap','acs'], w:25, label:'khó thở'},
+    {re:/phu chan|phù chân|phù phổi|ortopnea|khi nằm khó thở/, ids:['hf','ckd','cirrhosis'], w:35, label:'phù/khó thở khi nằm'},
+    {re:/ho ra mau|ho mau/, ids:['tb','cap','pe','bronchiectasis'], w:40, label:'ho ra máu'},
+    {re:/ho man|ho dai dang|ho khac dam/, ids:['copd','asthma','bronchiectasis','tb','cap'], w:30, label:'ho mạn/khạc đàm'},
+    {re:/wheeze|khoe|khan tieng phe quan/, ids:['asthma','copd','aco'], w:40, label:'khò khè'},
+    {re:/sot|sot cao|ret run/, ids:['cap','uti','ie','septic_arthritis','diverticulitis'], w:20, label:'sốt'},
+    {re:/dau bung|dau thuong vi|\boi\b|\bnon\b|buon non/, ids:['gerd','pud','pancreatitis','cholecystitis','gib'], w:28, label:'đau bụng/nôn'},
+    {re:/phan den|oi ra mau|dai mau|xuat huyet tieu hoa/, ids:['gib','pud','cirrhosis'], w:45, label:'xuất huyết tiêu hóa'},
+    {re:/di tieu buot|tieu nhieu lan|tieu ra mau|tieu đuc/, ids:['uti','kidney_stone','ckd'], w:35, label:'tiểu buốt/tiểu máu'},
+    {re:/tieu it|vo nieu|phu toan than/, ids:['aki','ckd','nephrotic'], w:40, label:'thiểu niệu/phù toàn thân'},
+    {re:/yeu liet|meo mieng|noi kho|dot quy/, ids:['acs'], w:15, label:'dấu thần kinh khu trú'},
+    {re:/dau dau|co cung|yeu chi/, ids:['cap','syncope'], w:15, label:'đau đầu/cổ cứng'},
+    {re:/dau khop|sung khop|cung khop sang/, ids:['gout','ra','oa','sle','septic_arthritis'], w:35, label:'đau/sưng khớp'},
+    {re:/dai thao|khat nhieu|tieu nhieu|sut can/, ids:['dm','gdm','dka_hhs'], w:35, label:'khát nhiều/tiểu nhiều'},
+    {re:/tho nhanh sau|hoi tho mui tao|mui ceton|lo mo.*dai thao|dai thao.*lo mo|buon non ket hop tieu duong/, ids:['dka_hhs','dm'], w:50, label:'nghi toan ceton/tăng ALTT'},
+    {re:/run tay|nhip tim nhanh|sut can|nong/, ids:['thyroid'], w:35, label:'run tay/sụt cân/hồi hộp'},
+    {re:/phu mi mat|met|lanh|tang can/, ids:['thyroid','hf'], w:25, label:'mệt/sợ lạnh/tăng cân'},
+    {re:/dau lung|dau cot song|cung cot song/, ids:['axspa','oa','kidney_stone'], w:30, label:'đau lưng/cột sống'},
+    {re:/ngat|xiu|mat tri giac/, ids:['syncope','brady','tachy','acs'], w:40, label:'ngất/xỉu'},
+    {re:/danh thung nguc|hoi hop|nhip nhanh/, ids:['af','tachy','acs','thyroid'], w:35, label:'đánh trống ngực/hồi hộp'},
+    {re:/phu 1 chan|dau bap chan|do nong chan/, ids:['pad','svt_superficial','pe'], w:40, label:'phù/đau 1 chân'},
+    {re:/vang da|vang mat|co trướng|bung to/, ids:['cirrhosis','viral_hepatitis','masld'], w:40, label:'vàng da/báng bụng'},
+    {re:/tieu dem|nhiem trung tai phat/, ids:['dm','ckd'], w:25, label:'tiểu đêm/nhiễm trùng tái phát'},
+    {re:/hen|cut con kho thở dem/, ids:['asthma','aco'], w:40, label:'cơn khó thở về đêm'},
+    {re:/copd|hut thuoc la lau nam/, ids:['copd','aco','lung_cancer'], w:35, label:'hút thuốc lâu năm'},
+    {re:/tut huyet ap.*chi lanh|soc sau nmct|chi lanh am.*thieu nieu/, ids:['cardiogenic_shock','acs'], w:45, label:'tụt HA + giảm tưới máu'},
+    {re:/tim bam sinh|tim tai tu nho|phau thuat tim tu nho/, ids:['achd'], w:45, label:'tiền sử tim bẩm sinh'},
+    {re:/roi loan kinh nguyet.*ram long|kinh thua.*ram long|kho co thai.*beo phi/, ids:['pcos'], w:35, label:'rối loạn kinh + rậm lông'},
+    {re:/ngu ngay|ngung tho khi ngu|buon ngu ban ngay qua muc/, ids:['osa'], w:40, label:'ngủ ngáy/buồn ngủ ngày'},
+    {re:/tieu chay man tinh.*sut can|day hoi sau an.*lua mi|thieu mau khong ro nguyen nhan.*tieu chay/, ids:['celiac'], w:35, label:'tiêu chảy mạn + sụt cân'},
+    {re:/tieu chay.*khang sinh|khang sinh.*tieu chay|tieu chay benh vien/, ids:['cdiff'], w:45, label:'tiêu chảy sau kháng sinh'},
+    {re:/dau dau moi.*nguoi lon tuoi|dau ham khi nhai|mo mat dot ngot.*nguoi gia/, ids:['gca','pmr'], w:45, label:'đau đầu mới + đau hàm khi nhai'},
+    {re:/kho mat kho mieng man tinh/, ids:['sjogren'], w:40, label:'khô mắt khô miệng'},
+    {re:/yeu co.*chuot rut|chuot rut.*loi tieu/, ids:['hypoK'], w:35, label:'yếu cơ/chuột rút'},
+    {re:/dau hong lung 2 ben|tien su gia dinh benh than/, ids:['adpkd'], w:40, label:'đau hông lưng 2 bên + tiền sử gia đình thận'},
+    {re:/dau nguc tang khi hit sau|dau nguc giam khi ngoi cui|tieng co mang ngoai tim/, ids:['pericarditis'], w:45, label:'đau ngực kiểu màng ngoài tim'},
+    {re:/tut huyet ap.*tinh mach co noi|mach nghich thuong|tam chung beck/, ids:['pericarditis','cardiogenic_shock'], w:45, label:'nghi chèn ép tim'},
+    {re:/huyet ap\s*(1[89]\d|2\d\d)|tang huyet ap.*(dau dau du doi|lu lan|mo mat|kho tho cap)|huyet ap rat cao/, ids:['htn_emergency'], w:45, label:'THA nặng + tổn thương cơ quan đích'},
+    {re:/ban tay to dan|ham nho ra|giay khong vua|nhan khong vua/, ids:['acromegaly'], w:40, label:'bàn tay/hàm to dần'},
+    {re:/tiet sua bat thuong|vo kinh.*tiet sua|giam ham muon.*roi loan kinh/, ids:['hyperprolactinemia','pcos'], w:35, label:'tiết sữa bất thường/vô kinh'},
+    {re:/ho keo dai.*hut thuoc|sut can.*hut thuoc lau nam|ho ra mau.*hut thuoc/, ids:['lung_cancer','tb','copd'], w:35, label:'ho/sụt cân ở người hút thuốc lâu năm'},
+    {re:/sot moi sau dat noi khi quan|dam mu tang.*tho may|viem phoi sau nhap vien/, ids:['hap_vap','cap'], w:40, label:'viêm phổi liên quan bệnh viện/thở máy'},
+    {re:/dau bung tai phat.*uong ruou|phan mo|kem hap thu.*ruou/, ids:['chronic_pancreatitis','pancreatitis'], w:35, label:'đau bụng tái phát + tiền sử rượu'},
+    {re:/mau trong phan|thay doi thoi quen di tieu tien|tien su gia dinh ung thu dai trang/, ids:['crc_screening','gib','ibd'], w:35, label:'thay đổi đại tiện/tiền sử gia đình UTĐTT'},
+    {re:/dau lan toa toan than|met moi keo dai.*dau nhieu noi|fibro fog/, ids:['fibromyalgia'], w:35, label:'đau lan tỏa toàn thân mạn tính'},
+    {re:/dau lung lan xuong chan|dau than kinh toa|te chan theo duong di than kinh/, ids:['low_back_pain'], w:40, label:'đau lưng lan kiểu rễ thần kinh'},
+    {re:/toan chuyen hoa.*khong ro nguyen nhan|nhiem toan tang clo/, ids:['rta','metabolic_acidosis'], w:30, label:'toan chuyển hóa AG bình thường'},
+    {re:/run co.*ha kali kho sua|co giat.*ha canxi kho sua|yeu co.*nghien ruou/, ids:['hypomagnesemia','hypoK'], w:35, label:'yếu cơ/co giật khó sửa bằng bù K/Ca'},
+    {re:/dau xe rach|dau di chuyen theo huong lan|chenh huyet ap 2 tay|dau ngực du doi kem tha nang/, ids:['aortic_dissection','aortic'], w:45, label:'đau kiểu xé rách di chuyển'},
+    {re:/ngat khi gang suc|tien su gia dinh dot tu|am thoi tam thu tang khi valsalva/, ids:['hcm','syncope'], w:40, label:'ngất gắng sức/tiền sử gia đình đột tử'},
+    {re:/tieu rat nhieu nuoc.*khong lien quan duong huyet|khat nhieu.*duong huyet binh thuong/, ids:['di','dm'], w:35, label:'tiểu nhiều nước bất thường không do đường huyết'},
+    {re:/met moi.*sau phau thuat tuyen yen|xuat huyet sau sinh|hoi chung sheehan|mat kinh sau sinh|suy tuyen yen/, ids:['hypopituitarism'], w:40, label:'mệt mỏi sau tổn thương tuyến yên'},
+    {re:/sot cao dot ngot.*dau nhuc toan than|dau nhuc co.*sot cao dot ngot/, ids:['influenza','cap'], w:35, label:'sốt cao đột ngột + đau nhức người'},
+    {re:/dam hoi thoi|dam thoi|sot keo dai.*hit sac|hit sac.*sot keo dai/, ids:['lung_abscess','cap'], w:40, label:'đàm hôi thối/tiền sử hít sặc'},
+    {re:/vang da sau dung thuoc|men gan tang sau uong thuoc|met moi vang da moi dung thuoc/, ids:['dili','viral_hepatitis'], w:40, label:'vàng da/men gan tăng sau dùng thuốc'},
+    {re:/kho nuot ca dac va long|nghen thuc an tien trien|trao nguoc thuc an khong tieu/, ids:['achalasia','gerd'], w:40, label:'khó nuốt cả rắn và lỏng'},
+    {re:/yeu co goc chi doi xung|kho dung len tu ghe|kho leo cau thang|ban do quanh mat/, ids:['myositis'], w:40, label:'yếu cơ gốc chi + ban da đặc trưng'},
+    {re:/te tay ban dem|di cam ngon cai tro giua|te ran ngon tay khi ngu/, ids:['carpal_tunnel'], w:40, label:'tê tay về đêm vùng thần kinh giữa'},
+    {re:/xo gan.*tieu it dan|co truong kem suy than|xo gan mat bu.*creatinine tang/, ids:['hrs','cirrhosis','aki'], w:40, label:'xơ gan mất bù + suy thận tiến triển'},
+    {re:/yeu co ho hap.*nuoi an lai|suy dinh duong nang.*bat dau an lai/, ids:['hypophosphatemia'], w:40, label:'nguy cơ hội chứng nuôi ăn lại'},
+    {re:/me day.*kho tho|phu moi luoi.*sau an|tut huyet ap.*sau tiem|sau con trung dot.*kho tho/, ids:['anaphylaxis','cardiogenic_shock'], w:50, label:'nghi phản vệ (mề đay + khó thở/tụt HA sau phơi nhiễm)'},
+    {re:/hoi hop du doi.*mat y thuc|ngung tim dot ngot|nhip nhanh phuc bo rong/, ids:['vt_vf','syncope','acls'], w:45, label:'nghi loạn nhịp thất nguy hiểm'},
+    {re:/dau co truoc keo dai.*sot|cuong giap thoang qua sau nhiem virus|dau vung co truoc/, ids:['thyroiditis','thyroid'], w:40, label:'đau vùng cổ trước + cường giáp thoáng qua'},
+    {re:/giam ham muon.*nam gioi|nam gioi.*giam ham muon|roi loan cuong duong.*met moi|met moi.*roi loan cuong duong/, ids:['male_hypogonadism'], w:35, label:'giảm ham muốn + mệt mỏi ở nam'},
+    {re:/\bham mo\b.*nam|bui cat.*lau nam|bui silic|amiang|tiep xuc bui.*lau nam|nghe nghiep.*bui/, ids:['pneumoconiosis','ild'], w:40, label:'tiếp xúc bụi nghề nghiệp lâu năm'},
+    {re:/ho keo dai tren 8 tuan|ho man tinh khong ro nguyen nhan/, ids:['chronic_cough','asthma','gerd'], w:35, label:'ho mạn tính >8 tuần'},
+    {re:/vang da.*tu mien|men gan tang.*phu nu tre|igg tang.*viem gan/, ids:['aih','viral_hepatitis'], w:35, label:'viêm gan nghi tự miễn'},
+    {re:/day bung sau an|no som|dau thuong vi khong lien quan noi soi|kho tieu man tinh/, ids:['dyspepsia','gerd','pud'], w:30, label:'khó tiêu chức năng'},
+    {re:/dau vai khi gio tay len cao|cung khop vai khong xoay duoc|dau vai dem khong ngu duoc/, ids:['shoulder_pain','oa'], w:40, label:'đau/cứng khớp vai'},
+    {re:/dau khop sau tieu chay|dau khop sau nhiem chlamydia|viem ket mac.*dau khop/, ids:['reactive_arthritis','septic_arthritis'], w:40, label:'viêm khớp sau nhiễm trùng tiêu hóa/sinh dục'},
+    {re:/tieu mau.*viem hong|tieu mau.*nhiem trung ho hap|tieu mau tai dien.*sau nhiem trung/, ids:['iga_nephropathy','gn'], w:40, label:'tiểu máu tái diễn sau viêm hô hấp'},
+    {re:/te quanh mieng.*chuot rut|dau hieu chvostek|co giat tay chan.*ha canxi/, ids:['hypocalcemia'], w:40, label:'dị cảm quanh miệng/chuột rút nghi hạ Canxi'}
+  ];
+  const scores = {}, labels = {};
+  MAP.forEach(row => {
+    if(row.re.test(n)){
+      row.ids.forEach(id => {
+        scores[id] = (scores[id]||0) + row.w;
+        if(!labels[id]) labels[id] = [];
+        if(row.label && labels[id].indexOf(row.label) === -1) labels[id].push(row.label);
+      });
+    }
+  });
+  return {scores, labels};
+}
+
 function aiRankItems(q){
   if(typeof scoreMatch !== 'function' || typeof stripVN !== 'function') return {diseases:[], scales:[]};
   const qn = stripVN(q);
+  const {scores: symScores, labels: symLabels} = aiSymptomHits(q);
   const dMatches = (typeof diseases !== 'undefined' ? diseases : []).map(d => {
-    const hay = [d.title, d.short, d.id, (d.guidelines||[]).join(' ')].join(' ');
+    const hay = [d.title, d.short, d.id, (d.guidelines||[]).join(' '),
+      // thêm plain text định nghĩa/chẩn đoán để khớp triệu chứng
+      aiPlain((d.sections||{}).dinh_nghia||'').slice(0,400),
+      aiPlain((d.sections||{}).chan_doan||'').slice(0,300)
+    ].join(' ');
     let sc = scoreMatch(hay, q, {short: d.short||d.id});
     const hayN = stripVN(hay);
-    // boost khớp bệnh rõ
     if(hayN.includes(qn)) sc += 30;
+    if(symScores[d.id]) sc += symScores[d.id];
     if((d.id==='htn'||d.short==='THA') && /huyet ap|tha\b|hypertension|htn/.test(qn)) sc += 50;
-    if((d.id==='hf') && /suy tim|heart failure|hfrEF|hfpEF/.test(qn)) sc += 50;
+    if((d.id==='hf') && /suy tim|heart failure|hfref|hfpef/.test(qn)) sc += 50;
     if((d.id==='copd') && /copd|phoi tac nghe/.test(qn)) sc += 50;
-    if((d.id==='acs') && /acs|nmct|stemi|nstemi|vanh cap/.test(qn)) sc += 50;
-    return {d, sc};
-  }).filter(x => x.sc >= 20).sort((a,b)=>b.sc-a.sc);
+    if((d.id==='acs') && /acs|nmct|stemi|nstemi|vanh cap|dau nguc/.test(qn)) sc += 50;
+    if((d.id==='asthma') && /\bhen\b|asthma/.test(qn)) sc += 45;
+    if((d.id==='dm') && /dai thao|duong huyet|diabetes/.test(qn)) sc += 45;
+    if((d.id==='pe') && /thuyen tac phoi|pe\b|kho tho cap/.test(qn)) sc += 45;
+    return {d, sc, matched: symLabels[d.id]||[]};
+  }).filter(x => x.sc >= 18).sort((a,b)=>b.sc-a.sc);
 
   let scales = [];
   try {
@@ -5877,43 +7449,92 @@ function aiRankItems(q){
     }).filter(x => x.sc >= 18).sort((a,b)=>b.sc-a.sc);
   } catch(e){}
 
-  // Prefer scale-only if query clearly about scores and scale score is high
-  return {diseases: dMatches.slice(0, 2), scales: scales.slice(0, 2)};
+  return {diseases: dMatches.slice(0, 5), scales: scales.slice(0, 2)};
 }
 
 function aiDetectIntent(q){
   const n = (typeof stripVN === 'function' ? stripVN(q) : q.toLowerCase());
-  const intent = {wantScale: false, wantDose: false, wantEmergency: false, wantDx: false, wantTx: false};
-  if(/thang diem|score|curb|grace|timi|gcs|sofa|wells|has.?bled|cha2|nihss|child.?pugh|findrisc|years/.test(n)) intent.wantScale = true;
-  if(/lieu|mg\b|mcg|uong|tiem|truyen/.test(n)) intent.wantDose = true;
-  if(/cap cuu|shock|ngung|sot cao|kho tho nang|dau nguc|tension|sốc/.test(n)) intent.wantEmergency = true;
-  if(/chan doan|tieu chuan|xet nghiem|khi nao nghi|phan biet/.test(n)) intent.wantDx = true;
+  const intent = {wantScale: false, wantDose: false, wantEmergency: false, wantDx: false, wantTx: false, wantSymptom: false};
+  if(/thang diem|score|curb|grace|timi|gcs|sofa|wells|has.?bled|cha2|nihss|child.?pugh|findrisc|years|dapt|precise/.test(n)) intent.wantScale = true;
+  if(/lieu|mg\b|mcg|uong|tiem|truyen|lieu dung|liều/.test(n)) intent.wantDose = true;
+  if(/cap cuu|shock|ngung|sot cao|kho tho nang|dau nguc|tension|sốc|ngat xiu/.test(n)) intent.wantEmergency = true;
+  if(/chan doan|tieu chuan|xet nghiem|khi nao nghi|phan biet|chan doan phan biet/.test(n)) intent.wantDx = true;
   if(/xu tri|dieu tri|phac do|thuoc|khang sinh|khang dong|muc tieu/.test(n)) intent.wantTx = true;
-  if(!intent.wantDx && !intent.wantTx && !intent.wantScale) intent.wantTx = true; // default: điều trị ngắn
+  // chuỗi triệu chứng: nhiều dấu phẩy / và / hoặc từ triệu chứng
+  const symWords = (n.match(/dau |kho tho|sot|ho |phu |non|oi |tieu |di tieu|ngat|wheeze|ho ra|vang da|yeu liet|sung khop|danh thung|hoi hop|ngu ngay|ram long|chuot rut|kho mat|kho mieng|tieu chay/g)||[]).length;
+  const listSep = (q.match(/[,+]|\bvà\b|\bva\b/gi)||[]).length;
+  if(symWords >= 2 || listSep >= 2 || /trieu chung|benh nhan co|bn co|goi y benh|chan doan phan biet|co the la/.test(n))
+    intent.wantSymptom = true;
+  if(!intent.wantDx && !intent.wantTx && !intent.wantScale && !intent.wantSymptom) intent.wantTx = true;
+  if(intent.wantSymptom) intent.wantDx = true;
   return intent;
 }
 
-function aiSummarizeDisease(d, intent){
+function aiExtractDoses(htmlSec){
+  const plain = aiPlain(htmlSec||'');
+  const lines = plain.split(/\n+/).map(l => l.trim()).filter(Boolean);
+  const doseRe = /(\d+([\.,]\d+)?\s*(mg|mcg|g|ui|đv|ml|viên|nhát)|\d+\s*mg\/kg|×\s*\d|x\s*\d+\/ngày|\/ngày|\/ngày)/i;
+  const out = [];
+  lines.forEach(l => {
+    if(doseRe.test(l) && l.length < 160) out.push(l);
+  });
+  // unique keep order
+  return [...new Set(out)].slice(0, 8);
+}
+
+function aiSummarizeDisease(d, intent, matched){
   const sec = d.sections || {};
   let focus = 'dieu_tri';
-  if(intent.wantDx) focus = 'chan_doan';
+  if(intent.wantDx || intent.wantSymptom) focus = 'chan_doan';
   else if(intent.wantScale) focus = 'dieu_tri';
   else if(intent.wantTx || intent.wantDose || intent.wantEmergency) focus = 'dieu_tri';
 
-  const labels = {dinh_nghia:'Định nghĩa', chan_doan:'Chẩn đoán', dieu_tri:'Điều trị', khuyen_cao:'Khuyến cáo'};
   const plain = aiPlain(sec[focus] || sec.dieu_tri || sec.dinh_nghia || '');
   const bullets = aiPickBullets(plain, intent.wantEmergency ? 4 : 5);
 
   let html = '<div style="font-size:13px;line-height:1.4">';
   html += '<b>' + aiEscape(d.emoji||'') + ' ' + aiEscape(d.title) + '</b>';
   html += ' <span style="font-size:11px;color:var(--text-secondary)">(' + aiEscape(d.short||'') + ')</span>';
-  if(d.guidelines && d.guidelines[0])
+  if(d.guidelines && d.guidelines.length)
     html += '<div style="font-size:11px;color:var(--text-secondary);margin:2px 0 6px">' + aiEscape(d.guidelines.slice(0,2).join(' · ')) + '</div>';
-  html += '<div style="font-weight:700;margin-bottom:4px">' + (labels[focus]||'Tóm tắt') + '</div>';
-  html += '<ul style="margin:0;padding-left:18px">';
-  bullets.forEach(b => { html += '<li style="margin-bottom:4px">' + aiEscape(b) + '</li>'; });
-  html += '</ul>';
-  html += '<div class="ai-actions"><button type="button" onclick="goSmartDisease(\'' + d.id + '\')">Mở phác đồ</button></div>';
+
+  if(matched && matched.length){
+    html += '<div style="font-size:11px;margin:2px 0 6px">🔎 Khớp triệu chứng: ' +
+      matched.map(m => '<span class="ai-chip" style="cursor:default;margin:2px 4px 0 0">' + aiEscape(m) + '</span>').join('') +
+      '</div>';
+  }
+
+  if(bullets.length){
+    html += '<div style="font-size:11px;font-weight:700;color:var(--text-secondary);margin-top:4px">' +
+      (focus==='chan_doan' ? 'Gợi ý chẩn đoán' : 'Xử trí') + '</div>';
+    html += '<ul style="margin:4px 0 0 16px;padding:0">';
+    bullets.forEach(b => { html += '<li style="margin-bottom:4px">' + aiEscape(b) + '</li>'; });
+    html += '</ul>';
+  } else if(plain){
+    html += '<p style="margin:6px 0">' + aiEscape(plain.slice(0, 280)) + (plain.length>280?'…':'') + '</p>';
+  }
+
+  // Khi hỏi theo triệu chứng, kèm thêm 2-3 gạch đầu dòng xử trí ban đầu (ngoài phần chẩn đoán ở trên)
+  if(intent.wantSymptom && focus === 'chan_doan'){
+    const txPlain = aiPlain(sec.dieu_tri || '');
+    const txBullets = aiPickBullets(txPlain, 3);
+    if(txBullets.length){
+      html += '<div style="font-size:11px;font-weight:700;color:var(--text-secondary);margin-top:8px">Hướng xử trí ban đầu</div>';
+      html += '<ul style="margin:4px 0 0 16px;padding:0">';
+      txBullets.forEach(b => { html += '<li style="margin-bottom:4px">' + aiEscape(b) + '</li>'; });
+      html += '</ul>';
+    }
+  }
+
+  if(intent.wantDose || intent.wantSymptom || intent.wantTx){
+    const doses = aiExtractDoses(sec.dieu_tri || '');
+    if(doses.length){
+      html += '<div style="margin-top:8px;padding:8px 10px;background:var(--tiffany-light);border-radius:10px">';
+      html += '<b style="font-size:12px">💊 Liều tham khảo trong app</b><ul style="margin:4px 0 0 16px;padding:0">';
+      doses.forEach(x => { html += '<li style="font-size:12px;margin-bottom:3px">' + aiEscape(x) + '</li>'; });
+      html += '</ul></div>';
+    }
+  }
   html += '</div>';
   return html;
 }
@@ -5926,24 +7547,49 @@ function aiAnswer(q){
 
   if(intent.wantScale){
     sHits = sHits.filter(x => x.sc >= 28).slice(0, 2);
-    dHits = dHits.filter(x => x.sc >= 45).slice(0, 1);
+    dHits = dHits.filter(x => x.sc >= 40).slice(0, 1);
+  } else if(intent.wantSymptom){
+    // chỉ giữ bệnh thực sự khớp ≥1 mẫu triệu chứng (tránh nhiễu do fuzzy-match chung chung)
+    const symOnly = dHits.filter(x => x.matched && x.matched.length);
+    dHits = (symOnly.length ? symOnly : dHits).filter(x => x.sc >= 20).slice(0, 5);
+    sHits = sHits.filter(x => x.sc >= 45).slice(0, 1);
   } else {
-    dHits = dHits.filter(x => x.sc >= 22).slice(0, 1);
+    dHits = dHits.filter(x => x.sc >= 20).slice(0, intent.wantDose ? 2 : 1);
     sHits = sHits.filter(x => x.sc >= 50).slice(0, 1);
   }
 
   if(!dHits.length && !sHits.length){
-    return 'Chưa khớp chắc trong sổ tay.<br>Thử: <b>THA</b>, <b>suy tim</b>, <b>COPD</b>, <b>GCS</b>, <b>HAS-BLED</b> — hoặc tab Phác đồ / Thang điểm.';
+    return 'Chưa khớp chắc trong sổ tay.<br>Thử mô tả: <b>đau ngực + khó thở</b>, <b>sốt + ho đàm</b>, hoặc tên bệnh/thuốc: <b>THA</b>, <b>COPD</b>, <b>liều furosemide</b>.';
   }
 
   let out = '';
   if(intent.wantEmergency)
-    out += '<div class="ai-em">🚨 Ưu tiên ABC / cấp cứu tại chỗ. Dưới đây là tóm tắt trong app.</div>';
+    out += '<div class="ai-em">🚨 Ưu tiên ABC / cấp cứu tại chỗ. Dưới đây chỉ là gợi ý từ sổ tay — không thay thế khám lâm sàng.</div>';
 
-  if(dHits.length){
+  if(intent.wantSymptom && dHits.length){
+    out += '<div style="font-size:12px;margin-bottom:8px"><b>Gợi ý bệnh cảnh</b> (xếp theo mức khớp triệu chứng trong app — cần khám & xét nghiệm để chốt):</div>';
+    const fullN = 3;
+    dHits.slice(0, fullN).forEach((x,i) => {
+      out += '<div style="margin-bottom:10px;padding:8px 10px;border:1px solid var(--border-color);border-radius:10px;background:var(--bg-card)">';
+      out += '<div style="font-size:11px;color:var(--text-secondary);margin-bottom:4px">#' + (i+1) + ' · điểm khớp ' + Math.round(x.sc) + '</div>';
+      out += aiSummarizeDisease(x.d, intent, x.matched);
+      out += '<div class="ai-actions"><button type="button" onclick="goSmartDisease(\'' + x.d.id + '\')">Mở phác đồ</button></div>';
+      out += '</div>';
+    });
+    if(dHits.length > fullN){
+      out += '<div style="margin-top:4px;font-size:12px"><b>Ít khớp hơn:</b> ';
+      out += dHits.slice(fullN).map(x => '<button type="button" class="ai-chip" onclick="goSmartDisease(\'' + x.d.id + '\')">' + aiEscape(x.d.short||x.d.title) + '</button>').join(' ');
+      out += '</div>';
+    }
+  } else if(dHits.length){
     const did = dHits[0].d.id;
-    out += aiSummarizeDisease(dHits[0].d, intent);
+    out += aiSummarizeDisease(dHits[0].d, Object.assign({}, intent, {wantDose: intent.wantDose || intent.wantTx}), dHits[0].matched);
     out += '<div class="ai-actions"><button type="button" onclick="goSmartDisease(\'' + did + '\')">Mở phác đồ</button></div>';
+    if(dHits.length > 1){
+      out += '<div style="margin-top:8px;font-size:12px"><b>Gần khớp khác:</b> ';
+      out += dHits.slice(1).map(x => '<button type="button" class="ai-chip" onclick="goSmartDisease(\'' + x.d.id + '\')">' + aiEscape(x.d.short||x.d.title) + '</button>').join(' ');
+      out += '</div>';
+    }
   }
 
   if(sHits.length){
@@ -5955,7 +7601,7 @@ function aiAnswer(q){
     out += '</div>';
   }
 
-  out += '<div class="ai-foot">Tóm tắt từ sổ tay — đối chiếu guideline gốc trước khi dùng.</div>';
+  out += '<div class="ai-foot">Gợi ý từ sổ tay nội bộ — đối chiếu guideline và lâm sàng thực tế trước khi dùng.</div>';
   return out;
 }
 
@@ -8867,6 +10513,65 @@ function calcScoreNow() {
 <div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
   <div class="cl-sheet" onclick="event.stopPropagation()">
     <h2>📝 Nhật ký cập nhật và bảo trì</h2>
+    <div class="cl-item"><div class="cl-date">2026-09-16 (5) — Bổ sung thêm 12 bệnh lý mới, 121 bệnh unique</div>
+      <ul>
+        <li>Tim mạch: + Sốc phản vệ (Anaphylaxis), Nhịp nhanh thất & Rung thất (VT/VF)</li>
+        <li>Nội tiết: + Viêm tuyến giáp (Thyroiditis), Suy sinh dục nam</li>
+        <li>Hô hấp: + Bệnh phổi nghề nghiệp (bụi phổi), Ho mạn tính — tiếp cận chẩn đoán</li>
+        <li>Tiêu hóa: + Viêm gan tự miễn, Khó tiêu chức năng</li>
+        <li>Cơ xương khớp: + Đau vai (gân chóp xoay & đông cứng khớp), Viêm khớp phản ứng</li>
+        <li>Thận: + Bệnh thận IgA, Hạ Canxi máu</li>
+        <li>Cập nhật bảng ánh xạ triệu chứng AI cho 12 bệnh mới; sửa 3 regex quá cứng nhắc không khớp câu tự nhiên (suy sinh dục nam, bụi phổi nghề nghiệp, bệnh thận IgA)</li>
+        <li>Audit: 121 bệnh unique, JS syntax OK, HTML cân bằng thẻ, test 12+ ca triệu chứng bằng Node xác nhận đúng hướng</li>
+      </ul>
+    </div>
+    <div class="cl-item"><div class="cl-date">2026-09-16 (4) — Bổ sung thêm 12 bệnh lý mới, 109 bệnh unique + sửa lỗi AI</div>
+      <ul>
+        <li>Tim mạch: + Bóc tách động mạch chủ cấp, Bệnh cơ tim phì đại (HCM)</li>
+        <li>Nội tiết: + Đái tháo nhạt, Suy tuyến yên toàn bộ</li>
+        <li>Hô hấp: + Cúm (Influenza), Áp xe phổi & Mủ màng phổi</li>
+        <li>Tiêu hóa: + Tổn thương gan do thuốc (DILI), Co thắt tâm vị (Achalasia)</li>
+        <li>Cơ xương khớp: + Viêm đa cơ/viêm da cơ, Hội chứng ống cổ tay</li>
+        <li>Thận: + Hội chứng gan thận (HRS), Hạ Phosphate máu</li>
+        <li>Cập nhật bảng ánh xạ triệu chứng AI cho 12 bệnh mới; sửa 2 regex quá cứng nhắc (suy tuyến yên, áp xe phổi) không khớp câu tự nhiên</li>
+        <li><b>Sửa lỗi nền quan trọng:</b> mẫu "oi"/"non" (nôn/ói) trong tab AI quá ngắn, vô tình khớp giữa các từ khác ("mỏi", "mọi"...) gây nhiễu kết quả từ trước — nay dùng ranh giới từ (word-boundary) chính xác</li>
+        <li>Audit: 109 bệnh unique, JS syntax OK, HTML cân bằng thẻ, test 16+ ca triệu chứng bằng Node xác nhận không còn nhiễu</li>
+      </ul>
+    </div>
+    <div class="cl-item"><div class="cl-date">2026-09-16 (3) — Bổ sung thêm 12 bệnh lý mới, 97 bệnh unique</div>
+      <ul>
+        <li>Tim mạch: + Viêm màng ngoài tim cấp & Chèn ép tim, Tăng huyết áp cấp cứu</li>
+        <li>Nội tiết: + Bệnh to đầu chi (Acromegaly), Tăng Prolactin máu</li>
+        <li>Hô hấp: + Ung thư phổi (tầm soát & tiếp cận), Viêm phổi bệnh viện/thở máy (HAP/VAP)</li>
+        <li>Tiêu hóa: + Viêm tụy mạn, Tầm soát ung thư đại trực tràng</li>
+        <li>Cơ xương khớp: + Fibromyalgia, Đau thắt lưng cơ học & thoát vị đĩa đệm</li>
+        <li>Thận: + Toan hóa ống thận (RTA), Hạ Magie máu</li>
+        <li>Cập nhật bảng ánh xạ triệu chứng tab AI cho 12 bệnh mới; sửa xong tham chiếu lung_cancer (nay đã có bệnh thật) và regex THA cấp cứu nhận số HA linh hoạt (180–299)</li>
+        <li>Audit: 97 bệnh unique, JS syntax OK, HTML cân bằng thẻ, đã test 12+ ca triệu chứng mẫu cho các bệnh mới bằng Node</li>
+      </ul>
+    </div>
+    <div class="cl-item"><div class="cl-date">2026-09-16 (2) — Tối ưu tab AI y khoa: gợi ý bệnh cảnh + liều tham khảo từ triệu chứng</div>
+      <ul>
+        <li>Sửa lỗi id sai trong bảng ánh xạ triệu chứng (dka → dka_hhs không tồn tại; bỏ lung_cancer không có trong app)</li>
+        <li>Bổ sung mẫu triệu chứng cho 12 bệnh mới thêm gần đây (sốc tim, ACHD, DKA/HHS, PCOS, OSA, giãn phế quản, Celiac, C. diff, GCA, Sjögren, hạ kali, ADPKD)</li>
+        <li>Hiện rõ "🔎 Khớp triệu chứng" cho từng bệnh gợi ý — giải thích vì sao AI chọn bệnh đó</li>
+        <li>Lọc kết quả gợi ý theo triệu chứng: chỉ giữ bệnh thực sự khớp ≥1 mẫu triệu chứng cụ thể, loại bỏ nhiễu từ so khớp chữ chung chung</li>
+        <li>Khi hỏi theo chuỗi triệu chứng: tự động kèm thêm "Hướng xử trí ban đầu" + khối 💊 liều tham khảo (trước đây chỉ hiện phần chẩn đoán)</li>
+        <li>Nhận diện tốt hơn chuỗi triệu chứng liệt kê bằng dấu phẩy/dấu "+"</li>
+        <li>Audit bằng Node: chạy thực tế 10+ ca triệu chứng mẫu, xác nhận không còn kết quả nhiễu, HTML cân bằng thẻ</li>
+      </ul>
+    </div>
+    <div class="cl-item"><div class="cl-date">2026-09-16 — Bổ sung 12 bệnh lý mới, 85 bệnh unique</div>
+      <ul>
+        <li>Tim mạch: + Sốc tim (phân độ SCAI A–E), Bệnh tim bẩm sinh ở người lớn (ACHD)</li>
+        <li>Nội tiết: + DKA/HHS (phác đồ dịch–insulin–kali), Hội chứng buồng trứng đa nang (PCOS)</li>
+        <li>Hô hấp: + Ngưng thở tắc nghẽn khi ngủ (OSA), Giãn phế quản</li>
+        <li>Tiêu hóa: + Bệnh Celiac, Viêm đại tràng do C. difficile</li>
+        <li>Cơ xương khớp: + Viêm động mạch tế bào khổng lồ (GCA), Hội chứng Sjögren</li>
+        <li>Thận: + Hạ kali máu, Bệnh thận đa nang di truyền trội (ADPKD)</li>
+        <li>Audit: 85 bệnh unique, JS syntax OK, HTML tag cân bằng, không phá cấu trúc search/content-visibility hiện có</li>
+      </ul>
+    </div>
     <div class="cl-item"><div class="cl-date">2026-09-04 — H. pylori ACG 2024; Sổ tay lâm sàng
       </div>
     </div>
@@ -8910,11 +10615,11 @@ function calcScoreNow() {
 <div id="viewAI">
   <div class="ai-disclaimer">⚠ <b>AI hỗ trợ tra cứu</b> dựa trên phác đồ &amp; thang điểm trong app — <b>không thay thế</b> khám lâm sàng, xét nghiệm hay quyết định của bác sĩ điều trị.</div>
   <div class="ai-suggest" id="aiSuggest">
-    <button type="button" onclick="aiAsk('Xử trí tăng huyết áp cấp cứu')">THA cấp cứu</button>
-    <button type="button" onclick="aiAsk('Khi nào dùng kháng đông rung nhĩ')">Kháng đông RN</button>
+    <button type="button" onclick="aiAsk('Đau ngực + khó thở + vã mồ hôi')">Đau ngực + khó thở</button>
+    <button type="button" onclick="aiAsk('Sốt + ho đàm + khó thở')">Sốt + ho đàm</button>
+    <button type="button" onclick="aiAsk('Liều furosemide suy tim')">Liều furosemide</button>
     <button type="button" onclick="aiAsk('Thang điểm CURB-65 viêm phổi')">CURB-65</button>
     <button type="button" onclick="aiAsk('Đợt cấp COPD điều trị')">Đợt cấp COPD</button>
-    <button type="button" onclick="aiAsk('Hạ natri máu có triệu chứng')">Hạ Na+</button>
   </div>
   <div class="ai-chat-wrap" id="aiChat"></div>
   <div class="ai-input-bar">
