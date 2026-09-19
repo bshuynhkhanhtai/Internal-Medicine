@@ -84,12 +84,12 @@
   .rtable-row{background:var(--bg-primary);border:1px solid var(--border-color);border-radius:10px;padding:8px 11px;width:100%;box-sizing:border-box;}
   .rtable-title{font-weight:800;font-size:12.8px;color:var(--tiffany-dark);margin-bottom:4px;line-height:1.35;}
   .rtable-row-simple{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
-  .rtable-row-simple .rtable-title{margin-bottom:0;flex:0 1 auto;max-width:42%;}
-  .rtable-value-simple{color:var(--text-primary);text-align:right;font-weight:600;font-size:12.3px;line-height:1.4;flex:1 1 auto;min-width:0;word-break:break-word;}
+  .rtable-row-simple .rtable-title{margin-bottom:0;flex:0 0 auto;max-width:42%;overflow-wrap:break-word;word-break:normal;hyphens:none;}
+  .rtable-value-simple{color:var(--text-primary);text-align:right;font-weight:600;font-size:12.3px;line-height:1.4;flex:1 1 auto;min-width:0;overflow-wrap:break-word;word-break:normal;}
   .rtable-cell{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;font-size:12.3px;padding:5px 0;border-top:1px dashed var(--border-color);line-height:1.4;}
   .rtable-row .rtable-cell:first-of-type{border-top:none;padding-top:0;}
-  .rtable-label{color:var(--text-secondary);font-weight:700;flex:0 1 46%;max-width:48%;min-width:0;white-space:normal;line-height:1.35;}
-  .rtable-value{color:var(--text-primary);text-align:right;font-weight:600;flex:1 1 50%;min-width:0;word-break:break-word;line-height:1.35;}
+  .rtable-label{color:var(--text-secondary);font-weight:700;flex:0 0 46%;max-width:48%;min-width:0;white-space:normal;line-height:1.35;overflow-wrap:break-word;word-break:normal;hyphens:none;}
+  .rtable-value{color:var(--text-primary);text-align:right;font-weight:600;flex:1 1 50%;min-width:0;overflow-wrap:break-word;word-break:normal;line-height:1.35;}
 
   /* Class khuyến cáo: Xanh = Nên | Vàng = Cân nhắc | Đỏ = Không */
   .badge{display:inline-block;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:6px;color:#fff;white-space:nowrap;letter-spacing:.02em;}
@@ -587,9 +587,12 @@
     border:1px solid var(--border-color);font-size:13px;line-height:1.45;}
   .ptp-result b{color:var(--tiffany-dark);}
 
-  /* Bảng không vỡ chữ trên iPhone */
-  .rtable-label,.rtable-value,.rtable-title,.rtable-value-simple{
-    overflow-wrap:anywhere;word-break:break-word;hyphens:auto;
+  /* Bảng không tràn ngang trên iPhone — chỉ ngắt ở ranh giới từ, không ngắt giữa từ ngắn */
+  .rtable-value,.rtable-value-simple{
+    overflow-wrap:break-word;word-break:normal;
+  }
+  .rtable-label,.rtable-title{
+    overflow-wrap:break-word;word-break:normal;hyphens:none;
   }
   .rtable-row{overflow:hidden;}
   .card-body-inner{overflow-x:hidden;}
@@ -2525,18 +2528,18 @@ ${rt(["Class"],[
       <p>Anti-TPO dương tính gợi ý Hashimoto. Siêu âm tuyến giáp khi có bướu/nhân giáp kèm theo.</p>
       <div class="alert-box alert-info">Ở phụ nữ có thai: ngưỡng TSH bình thường theo tam cá nguyệt thấp hơn người không mang thai — cần dùng ngưỡng riêng theo phòng xét nghiệm/quý thai kỳ, không áp ngưỡng chung.</div>`,
     dieu_tri:`
-<div class="subhead">Cường giáp</div>
+<div class="subhead">Cường giáp (Basedow/Graves)</div>
       <ul>
-        <li>Kiểm soát triệu chứng: <b>chẹn beta</b> (propranolol hoặc thuốc khác).</li>
-        <li>Thuốc kháng giáp: <b>methimazole</b> ưu tiên hầu hết trường hợp; <b>PTU</b> trong quý 1 thai kỳ hoặc bão giáp.</li>
+        <li>Kiểm soát triệu chứng: <b>Propranolol</b> 10–40 mg × 3–4 lần/ngày (hoặc chẹn beta khác) — giảm run, hồi hộp, không chờ bình giáp mới dùng.</li>
+        <li>Thuốc kháng giáp: <b>Methimazole</b> khởi đầu 10–20 mg/ngày (nhẹ–trung bình) hoặc 30–40 mg/ngày (nặng), uống 1 lần/ngày; giảm dần về liều duy trì 5–10 mg/ngày khi bình giáp; điều trị 12–18 tháng rồi cân nhắc ngưng nếu TRAb âm. <b>PTU</b> 100 mg mỗi 8 giờ (~300 mg/ngày) — chỉ dùng khi mang thai 3 tháng đầu hoặc bão giáp (nguy cơ độc gan cao hơn Methimazole khi dùng kéo dài).</li>
         <li>Điều trị dứt điểm: iod phóng xạ hoặc phẫu thuật khi Basedow tái phát, bướu lớn chèn ép, hoặc không dung nạp thuốc.</li>
-        <li>Bão giáp: cấp cứu ICU — kháng giáp, iod (sau khi đã cho kháng giáp), steroid, hỗ trợ tuần hoàn.</li>
+        <li>Bão giáp (cấp cứu ICU): <b>PTU</b> liều nạp 500–1000 mg rồi 250 mg mỗi 4 giờ (ưu tiên hơn Methimazole vì còn ức chế chuyển T4→T3) hoặc Methimazole 20 mg mỗi 4–6 giờ; cho <b>Iod</b> (Lugol/SSKI) sau liều kháng giáp đầu tiên ≥1 giờ; <b>Propranolol</b> 60–80 mg mỗi 4–6 giờ hoặc Esmolol truyền TM; <b>Hydrocortisone</b> 100 mg mỗi 8 giờ (ức chế chuyển đổi T4→T3 + hỗ trợ suy thượng thận tương đối).</li>
       </ul>
       <div class="subhead">Suy giáp</div>
       <ul>
-        <li><b>Levothyroxine</b> uống sáng lúc đói; liều theo cân nặng và tuổi.</li>
-        <li>Người già hoặc bệnh mạch vành: khởi liều thấp, tăng chậm.</li>
-        <li>Theo dõi TSH để chỉnh liều (thường 6–8 tuần sau mỗi lần đổi liều).</li>
+        <li><b>Levothyroxine</b> uống sáng lúc đói, cách xa thức ăn/canxi/sắt ≥4 giờ; liều đủ ước tính 1.6 mcg/kg/ngày (theo cân nặng lý tưởng) ở người &lt;50–60 tuổi không bệnh tim — có thể khởi đầu ngay liều đủ.</li>
+        <li>Người ≥50–60 tuổi hoặc có bệnh mạch vành: khởi liều thấp 25–50 mcg/ngày (nếu có bệnh tim thiếu máu cục bộ: 12.5–25 mcg/ngày), tăng 12.5–25 mcg mỗi 4–6 tuần theo đáp ứng — tránh thúc đẩy cơn đau thắt ngực.</li>
+        <li>Theo dõi TSH để chỉnh liều (thường 6–8 tuần sau mỗi lần đổi liều); mục tiêu TSH 0.4–4.0 mIU/L (thai kỳ: ngưỡng thấp hơn theo tam cá nguyệt).</li>
       </ul>
     
 <div class="subhead">🔗 Tương tác thuốc (tuyến giáp)</div>
@@ -3063,7 +3066,7 @@ ${rt(["Chi tiết"],[
 },
 {
   spec:"noi_tiet", id:"cushing", emoji:"🌙", short:"Cushing", title:"Hội chứng Cushing",
-  guidelines:["Endocrine Society 2015 (chẩn đoán)","Endocrine Society 2021 (điều trị)"],
+  guidelines:["Endocrine Society 2015 (chẩn đoán)","Endocrine Society 2015 (điều trị)","Endocrine Reviews 2026 (cập nhật thuốc nội khoa)"],
   sections:{
     dinh_nghia:`
       <p>Hội chứng Cushing là tình trạng dư thừa glucocorticoid mạn tính, biểu hiện bằng béo trung tâm, mặt tròn đỏ, rạn da tím, teo cơ-yếu cơ gốc chi, tăng huyết áp, rối loạn dung nạp glucose, loãng xương, dễ bầm tím.</p>
@@ -3085,17 +3088,32 @@ ${rt(["Chi tiết"],[
       <div class="alert-box alert-info">Luôn loại trừ giả-Cushing (trầm cảm nặng, nghiện rượu, béo phì nặng, đái tháo đường kiểm soát kém) có thể gây dương tính giả nhẹ trên test sàng lọc — cần lâm sàng điển hình + ít nhất 2 test dương tính đồng thuận.</div>`,
     dieu_tri:`
 ${rt(["Chi tiết"],[
-        ["Xác định","Cortisol tự do niệu / dexamethasone / cortisol nước bọt — ≥2 test"],
-        ["Nguyên nhân","ACTH độc lập vs phụ thuộc → MRI tuyến yên / CT thượng thận"],
-        ["Điều trị","Phẫu thuật nguyên nhân khi được; ức chế steroid / thay thế khi suy"],
-        ["Ngoại sinh","Giảm steroid iatrogenic từ từ"]
+        ["Đầu tay","Phẫu thuật cắt bỏ nguồn tiết ACTH/cortisol khi có thể (nội soi xoang bướm cắt u tuyến yên; cắt u/thượng thận nếu nguyên nhân thượng thận; cắt u lạc chỗ nếu xác định được)"],
+        ["Bắc cầu nội khoa","Ức chế tổng hợp steroid khi chờ phẫu thuật hoặc không phẫu thuật được"],
+        ["Kháng trị / tái phát","Thuốc hướng tuyến yên (bệnh Cushing) hoặc cắt thượng thận hai bên nếu thất bại các biện pháp khác"],
+        ["Ngoại sinh (do thuốc)","Giảm liều corticosteroid từ từ, không ngừng đột ngột"]
       ])}
     
-<div class="subhead">💊 Liều / điều trị chi tiết</div>
-      ${rt(["Chi tiết","Lưu ý"],[
-        ["Phẫu thuật","Điều trị nguyên nhân khi được","Yên / thượng thận"],
-        ["Ketoconazole / metyrapone…","Theo chuyên khoa nội tiết","Ức chế cortisol — theo dõi gan"],
-        ["<b>Hydrocortisone</b> thay thế","Sau mổ khi suy","Giáo dục stress dose"]
+<div class="subhead">💊 Ức chế tổng hợp steroid thượng thận (bắc cầu trước mổ / không mổ được)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Ketoconazole</b>","Khởi đầu 200–600 mg/ngày chia 2–3 lần; chỉnh liều theo UFC, tối đa 1200 mg/ngày","Khởi phát tác dụng nhanh; nguy cơ độc gan (hiếm nhưng có thể gây tử vong) — theo dõi men gan sát, đặc biệt tuần đầu; cần môi trường acid dạ dày để hấp thu, tránh phối hợp PPI/kháng H2; nhiều tương tác thuốc (CYP3A4)"],
+        ["<b>Metyrapone</b>","Khởi đầu 500 mg/ngày chia 3–4 lần; tối đa 6 g/ngày","Khởi phát nhanh; tích tụ tiền chất mineralocorticoid/androgen gây tăng huyết áp, hạ kali máu, rậm lông/mụn ở nữ; dùng cùng thức ăn"],
+        ["<b>Osilodrostat</b>","Khởi đầu 2 mg × 2 lần/ngày; chỉnh liều mỗi 2 tuần theo đáp ứng, tối đa 60 mg/ngày (một số trường hợp tới 80 mg/ngày)","Hiệu lực mạnh; theo dõi QTc và nguy cơ suy thượng thận cấp do ức chế cortisol quá mức; giảm liều khởi đầu nếu suy gan"],
+        ["<b>Mitotane</b>","Khởi đầu 500 mg/ngày, tăng dần tới 2–8 g/ngày","Khởi phát chậm (vài tuần–tháng); ưu tiên khi nguyên nhân là ung thư biểu mô vỏ thượng thận; gây quái thai — chống chỉ định thai kỳ; theo dõi nồng độ thuốc, LFT, cortisol-binding globulin"]
+      ])}
+<div class="subhead">💊 Thuốc hướng tuyến yên (bệnh Cushing kháng trị hoặc không mổ được)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Pasireotide</b> (tiêm dưới da)","0.6–0.9 mg × 2 lần/ngày","Hiệu quả tốt nhất khi UFC nền &lt;2 lần giới hạn trên; tăng đường huyết rất thường gặp — theo dõi glucose/HbA1c sát, có thể cần khởi động thuốc hạ đường huyết; theo dõi sỏi mật, QTc"],
+        ["<b>Cabergoline</b> (uống)","Khởi đầu 0.5–1 mg/tuần, tăng dần tối đa 7 mg/tuần","Lựa chọn đường uống, chi phí thấp hơn pasireotide; theo dõi bệnh van tim bằng siêu âm tim định kỳ nếu dùng liều cao kéo dài"]
+      ])}
+<div class="subhead">💊 Kháng thụ thể glucocorticoid (kiểm soát biến chứng chuyển hóa)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Mifepristone</b>","Khởi đầu 300 mg/ngày, tăng dần tối đa 1200 mg/ngày","Chỉ định chính: tăng đường huyết/ĐTĐ týp 2 liên quan Cushing không đáp ứng điều trị khác; KHÔNG dùng cortisol/UFC để theo dõi hiệu quả vì thuốc chẹn thụ thể chứ không hạ cortisol máu — theo dõi đáp ứng lâm sàng; gây sảy thai — chống chỉ định thai kỳ; nguy cơ hạ kali máu, dày nội mạc tử cung"]
+      ])}
+<div class="subhead">💊 Sau phẫu thuật / Ngoại sinh</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Hydrocortisone</b> thay thế sau mổ","15–25 mg/ngày chia 2–3 lần, giảm dần theo phục hồi trục hạ đồi-tuyến yên-thượng thận","Bắt buộc sau cắt u tuyến yên/thượng thận thành công do trục HPA bị ức chế; giáo dục kit cấp cứu và tăng liều khi bệnh/stress tương tự suy thượng thận"],
+        ["Ngoại sinh (do thuốc)","Giảm liều corticosteroid từ từ trong nhiều tuần đến tháng theo đáp ứng lâm sàng","Không ngừng đột ngột — nguy cơ suy thượng thận cấp do trục HPA bị ức chế kéo dài"]
       ])}
     `,
     khuyen_cao:`
@@ -3107,7 +3125,7 @@ ${rt(["Chi tiết"],[
         ["Chẩn đoán chỉ dựa 1 test sàng lọc dương tính đơn độc",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"Endocrine Society Clinical Practice Guideline 2015 (Diagnosis) & 2021 (Treatment) for Cushing's Syndrome"
+  source:"Nieman LK et al. Endocrine Society Clinical Practice Guideline, JCEM 2015 (Diagnosis: 100(3):1526; Treatment: 100(8):2807); Araujo-Castro M et al. Endocrine Reviews 2026 (liều thuốc nội khoa cập nhật)"
 },
 {
   spec:"noi_tiet", id:"addison", emoji:"🔻", short:"Suy TT", title:"Suy thượng thận",
@@ -3296,9 +3314,9 @@ ${rt(["Chi tiết"],[
     dieu_tri:`
 <ul>
         <li>Lối sống: nâng đầu giường, không ăn trong 2–3 giờ trước ngủ, giảm cân, hạn chế đồ kích thích (rượu, caffeine, đồ ăn giàu mỡ) nếu là trigger.</li>
-        <li><b>PPI</b> liều chuẩn 4–8 tuần khi triệu chứng điển hình hoặc đã có viêm thực quản.</li>
+        <li><b>PPI</b> liều chuẩn uống 30–60 phút trước bữa sáng, dùng 8 tuần: Omeprazole 20 mg/ngày, Esomeprazole 20–40 mg/ngày, Pantoprazole 40 mg/ngày, hoặc Lansoprazole 30 mg/ngày — dùng khi triệu chứng điển hình hoặc đã có viêm thực quản.</li>
         <li>Khi ổn: giảm còn liều thấp nhất vẫn kiểm soát — tránh PPI dài hạn không chỉ định.</li>
-        <li>Không đáp ứng: kiểm tra cách uống PPI (trước ăn), nội soi, cân nhắc pH-impedance / chuyên khoa.</li>
+        <li>Không đáp ứng đủ liều đơn (sau khi đã xác nhận uống đúng cách): tăng lên 2 lần/ngày (uống trước bữa sáng và bữa tối) — hiệu quả hơn gấp đôi liều 1 lần/ngày; nếu vẫn không đáp ứng: nội soi, cân nhắc pH-impedance / chuyên khoa.</li>
         <li>Phẫu thuật chống trào ngược: BN đã chứng minh trào ngược, hở hoành lớn, hoặc muốn ngừng PPI lâu dài.</li>
       </ul>
     
@@ -4653,16 +4671,17 @@ ${rt(["Chi tiết"],[
       <div class="alert-box alert-info"><b>Sinh thiết thận</b> là tiêu chuẩn chẩn đoán xác định type mô bệnh học, cần thiết ở hầu hết trường hợp hội chứng thận hư người lớn hoặc viêm thận cấp không rõ nguyên nhân, trừ khi lâm sàng đã rất điển hình (vd. bệnh thận đái tháo đường có bệnh võng mạc kèm theo, không cần sinh thiết thường quy).</div>`,
     dieu_tri:`
 ${rt(["Chi tiết"],[
-        ["Hỗ trợ","HA (ACEi/ARB), phù, lipid, biến chứng ure"],
+        ["Hỗ trợ"," HA (ACEi/ARB), phù, lipid, biến chứng ure"],
         ["Đặc hiệu","Theo sinh thiết (IgA, membranous, MCD, RPGN…) — ức chế miễn dịch / <b>rituximab</b>"],
         ["RPGN / nặng","Điều trị cấp tại trung tâm thận; plasma exchange chọn lọc"]
       ])}
     
-<div class="subhead">💊 Liều / điều trị chi tiết</div>
-      ${rt(["Chi tiết","Lưu ý"],[
-        ["ACEi/ARB","Liều tối ưu albumin","Hỗ trợ mọi GN protein niệu"],
-        ["Steroid / CTX / MMF / RTX","Theo type sinh thiết","Chuyên khoa thận"],
-        ["Lợi tiểu","Theo phù","Tránh giảm tưới máu quá"]
+<div class="subhead">💊 Phác đồ đặc hiệu theo type mô bệnh học thường gặp</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Bệnh cầu thận thay đổi tối thiểu (MCD)</b>","Prednisone 1 mg/kg/ngày (tối đa 80 mg/ngày) × 4–16 tuần rồi giảm dần","Đáp ứng steroid rất tốt (&gt;80%); tái phát thường xuyên cân nhắc Cyclophosphamide/Rituximab"],
+        ["<b>Bệnh thận IgA</b> (protein niệu dai dẳng &gt;1g/ngày dù đã tối ưu ACEi/ARB ≥90 ngày)","Corticosteroid (Methylprednisolone/Prednisone) theo phác đồ giảm liều 6 tháng, cân nhắc Budesonide phóng thích hồi tràng 16mg/ngày","KDIGO 2021: chỉ thêm ức chế miễn dịch khi đã tối ưu điều trị hỗ trợ; không dùng thường quy nếu protein niệu thấp"],
+        ["<b>Bệnh thận màng (Membranous)</b> nguy cơ trung bình-cao","Rituximab 1g TM × 2 liều cách nhau 2 tuần (hoặc 375mg/m² × 4 tuần liên tiếp), thay thế cho phác đồ Ponticelli (Steroid luân phiên + Cyclophosphamide)","Theo dõi anti-PLA2R để đánh giá đáp ứng miễn dịch học"],
+        ["<b>RPGN/Viêm mạch ANCA</b>","Methylprednisolone TM 500–1000mg/ngày × 3 ngày rồi Prednisone uống + Cyclophosphamide hoặc Rituximab","Plasma exchange nếu xuất huyết phế nang hoặc Creatinine tăng nhanh; hội chẩn thận học khẩn"]
       ])}
     `,
     khuyen_cao:`
@@ -5546,9 +5565,9 @@ ${rt(["Hướng xử trí"],[
     dieu_tri:`
 <ul>
         <li>Ngừng kháng sinh gây bệnh nếu có thể; tránh thuốc giảm nhu động ruột.</li>
-        <li>Đợt đầu không nặng/nặng: <b>Fidaxomicin</b> được ưu tiên hơn <b>vancomycin</b> (giảm tái phát) — <b>vancomycin</b> uống là lựa chọn thay thế hợp lý; <b>metronidazole</b> chỉ dùng khi không có 2 thuốc trên và bệnh không nặng.</li>
-        <li>Tối cấp: <b>Vancomycin uống/qua sonde ± thụt hậu môn</b> phối hợp <b>Metronidazole TM</b>; hội chẩn ngoại khoa sớm nếu nghi phình đại tràng nhiễm độc/thủng.</li>
-        <li>Tái phát lần 1: fidaxomicin hoặc <b>vancomycin</b> liều giảm dần (taper/pulse); từ tái phát lần 2: cân nhắc ghép vi sinh phân (FMT) hoặc bezlotoxumab kèm kháng sinh chuẩn ở nhóm nguy cơ tái phát cao.</li>
+        <li>Đợt đầu không nặng/nặng: <b>Fidaxomicin</b> 200 mg × 2 lần/ngày × 10 ngày được ưu tiên hơn <b>Vancomycin</b> (giảm tái phát) — <b>Vancomycin</b> uống 125 mg × 4 lần/ngày × 10 ngày là lựa chọn thay thế hợp lý; <b>Metronidazole</b> 500 mg × 3 lần/ngày × 10 ngày chỉ dùng khi không có 2 thuốc trên và bệnh không nặng.</li>
+        <li>Tối cấp: <b>Vancomycin</b> 500 mg × 4 lần/ngày uống/qua sonde ± thụt hậu môn (500 mg pha trong 100 mL NaCl 0.9% mỗi 6 giờ nếu liệt ruột) phối hợp <b>Metronidazole</b> 500 mg TM mỗi 8 giờ; hội chẩn ngoại khoa sớm nếu nghi phình đại tràng nhiễm độc/thủng.</li>
+        <li>Tái phát lần 1: Fidaxomicin (chuẩn hoặc phác đồ kéo dài-ngắt quãng: 200mg × 2 lần/ngày × 5 ngày rồi cách ngày trong 20 ngày) hoặc <b>Vancomycin</b> liều giảm dần (taper/pulse); từ tái phát lần 2: cân nhắc ghép vi sinh phân (FMT) hoặc Bezlotoxumab 10 mg/kg truyền TM liều duy nhất kèm kháng sinh chuẩn ở nhóm nguy cơ tái phát cao.</li>
       </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -5814,10 +5833,12 @@ ${rt(["Hướng xử trí"],[
       <p>MRI tuyến yên nếu đã loại trừ nguyên nhân thứ phát và prolactin tăng có ý nghĩa.</p>`,
     dieu_tri:`
 <ul>
-        <li><b>Đồng vận Dopamin (<b>Cabergoline</b> ưu tiên hơn Bromocriptine</b> — hiệu quả cao hơn, ít tác dụng phụ hơn) là điều trị đầu tay cho prolactinoma — thu nhỏ u và bình thường hóa prolactin ở đa số trường hợp.</li>
+        <li><b>Đồng vận Dopamin</b> là điều trị đầu tay cho prolactinoma — thu nhỏ u và bình thường hóa prolactin ở đa số trường hợp:
+          <br>• <b>Cabergoline</b> (ưu tiên — hiệu quả cao hơn, ít tác dụng phụ hơn Bromocriptine): khởi đầu 0.25 mg × 2 lần/tuần, tăng dần mỗi 4 tuần theo prolactin; liều thường dùng 0.5–1 mg/tuần (tối đa 2 mg/tuần theo FDA; một số trường hợp kháng trị cần tới 3–11 mg/tuần dưới giám sát chuyên khoa).
+          <br>• <b>Bromocriptine</b> (thay thế, ưu tiên khi cần mang thai gần — nhiều dữ liệu an toàn hơn): khởi đầu 1.25 mg/ngày uống cùng bữa tối, tăng dần 1.25 mg mỗi tuần đến 2.5 mg × 2–3 lần/ngày (5–7.5 mg/ngày); một số cần tới 20–30 mg/ngày.</li>
         <li>Ngừng/đổi thuốc gây tăng prolactin nếu do thuốc (phối hợp bác sĩ tâm thần nếu là thuốc chống loạn thần, không tự ý ngừng).</li>
         <li>Phẫu thuật chỉ dành cho trường hợp kháng thuốc, không dung nạp thuốc, hoặc u chèn ép thị giác không đáp ứng nhanh với thuốc.</li>
-        <li>Theo dõi prolactin định kỳ, MRI lại nếu triệu chứng mới hoặc prolactin tăng trở lại; cân nhắc ngừng thuốc thử sau ≥2 năm điều trị nếu u đã thu nhỏ rõ và prolactin về bình thường lâu dài.</li>
+        <li>Theo dõi prolactin mỗi 1–2 tháng lúc đầu rồi mỗi 3–6 tháng trong 1–2 năm đầu; siêu âm tim nếu liều Cabergoline &gt;2 mg/tuần kéo dài (nguy cơ bệnh van tim); cân nhắc ngừng thuốc thử sau ≥2 năm điều trị nếu u đã thu nhỏ rõ và prolactin về bình thường lâu dài.</li>
       </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -6017,9 +6038,9 @@ ${rt(["Hướng xử trí"],[
       <p>RTA type 4 thường gặp nhất trên lâm sàng — hay gặp ở bệnh thận đái tháo đường, dùng ức chế men chuyển/ARB/lợi tiểu giữ kali, kèm tăng Kali máu không tương xứng mức độ suy thận.</p>`,
     dieu_tri:`
 <ul>
-        <li><b>Type 1 (xa):</b> bù kiềm bằng Natri bicarbonate hoặc Kali citrate (ưu tiên nếu đồng thời hạ Kali — vừa bù kiềm vừa bù Kali, giảm nguy cơ sỏi thận); theo dõi phòng ngừa sỏi thận/vôi hóa thận (biến chứng đặc trưng).</li>
-        <li><b>Type 2 (gần):</b> cần liều bicarbonate cao hơn nhiều (thận mất nhiều qua nước tiểu khi bù), thường kèm hội chứng Fanconi (mất glucose/phosphate/acid amin niệu) — tìm và xử trí nguyên nhân nền.</li>
-        <li><b>Type 4:</b> điều trị nhắm nguyên nhân nền + hạn chế Kali khẩu phần, lợi tiểu quai/thiazide hỗ trợ thải Kali, <b>fludrocortisone</b> nếu thực sự thiếu Aldosterone (thận trọng ở người THA/suy tim); xem lại và ngưng thuốc giữ Kali nếu có thể (ƯCMC/ARB/lợi tiểu giữ Kali).</li>
+        <li><b>Type 1 (xa):</b> bù kiềm bằng Natri bicarbonate hoặc Kali citrate 1–2 mEq/kg/ngày chia liều (trẻ em cần liều cao hơn nhiều, 4–14 mEq/kg/ngày, do nhu cầu tăng trưởng) — ưu tiên Kali citrate nếu đồng thời hạ Kali (vừa bù kiềm vừa bù Kali, giảm nguy cơ sỏi thận); theo dõi phòng ngừa sỏi thận/vôi hóa thận (biến chứng đặc trưng).</li>
+        <li><b>Type 2 (gần):</b> cần liều bicarbonate/citrate cao hơn nhiều, 10–15 mEq/kg/ngày (thận mất nhiều qua nước tiểu khi bù), thường kèm hội chứng Fanconi (mất glucose/phosphate/acid amin niệu) — tìm và xử trí nguyên nhân nền; lợi tiểu thiazide liều thấp có thể hỗ trợ giảm lượng bicarbonate cần bù.</li>
+        <li><b>Type 4:</b> điều trị nhắm nguyên nhân nền + hạn chế Kali khẩu phần, lợi tiểu quai/thiazide hỗ trợ thải Kali, <b>fludrocortisone</b> 0.1–0.2 mg/ngày nếu thực sự thiếu Aldosterone (thận trọng ở người THA/suy tim); xem lại và ngưng thuốc giữ Kali nếu có thể (ƯCMC/ARB/lợi tiểu giữ Kali).</li>
         <li>Theo dõi lâu dài chức năng thận, điện giải, và ở trẻ em — tăng trưởng (RTA gây chậm tăng trưởng nếu không kiểm soát).</li>
       </ul>`,
     khuyen_cao:`
@@ -6043,11 +6064,11 @@ ${rt(["Hướng xử trí"],[
       <p>Magie niệu 24h hoặc phân suất bài xuất Magie (FEMg) giúp phân biệt mất qua thận (FEMg &gt;2%) với mất ngoài thận (FEMg thấp, thận đáp ứng giữ Magie phù hợp).</p>`,
     dieu_tri:`
 <ul>
-        <li>Nhẹ-không triệu chứng: bù <b>Magie oxide/gluconate đường uống</b>, chia liều nhỏ (hấp thu kém, dễ gây tiêu chảy liều cao).</li>
-        <li>Nặng/có triệu chứng (loạn nhịp, co giật): <b>Magie sulfat truyền tĩnh mạch</b>, theo dõi phản xạ gân xương và chức năng thận trong khi truyền (nguy cơ tích lũy gây độc nếu suy thận).</li>
+        <li>Nhẹ-không triệu chứng: bù <b>Magie oxide/gluconate đường uống</b> 240–400 mg nguyên tố/ngày (10–24 mmol/ngày) chia liều nhỏ (hấp thu kém, dễ gây tiêu chảy liều cao).</li>
+        <li>Nặng/có triệu chứng (loạn nhịp, co giật): <b>Magie sulfat</b> 2–4 g truyền tĩnh mạch trong 5–10 phút (có thể lặp lại tới tổng 10 g/6 giờ nếu còn co giật), sau đó duy trì 4–5 g truyền trong 24 giờ hoặc 1–2.5 g mỗi 12 giờ trong vài ngày để bù đủ lượng thiếu hụt — theo dõi phản xạ gân xương và chức năng thận trong khi truyền (nguy cơ tích lũy gây độc nếu suy thận).</li>
         <li>Luôn kiểm tra và bù đồng thời Kali/Canxi nếu thấp kèm theo.</li>
         <li>Xử trí nguyên nhân nền (xem lại PPI kéo dài không cần thiết, điều chỉnh liều lợi tiểu, kiểm soát tiêu chảy).</li>
-        <li>Thận trọng liều ở bệnh nhân suy thận — nguy cơ tăng Magie máu gây ức chế hô hấp/tim mạch nếu bù quá mức.</li>
+        <li>Thận trọng liều ở bệnh nhân suy thận — giảm liều 25–50% và theo dõi sát; nguy cơ tăng Magie máu gây ức chế hô hấp/tim mạch nếu bù quá mức.</li>
       </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -6132,9 +6153,9 @@ ${rt(["Hướng xử trí"],[
       <p>Đáp ứng với <b>Desmopressin</b> (giảm rõ lượng nước tiểu, tăng áp lực thẩm thấu niệu) gợi ý nguyên nhân trung ương; không đáp ứng gợi ý nguyên nhân thận.</p>`,
     dieu_tri:`
 <ul>
-        <li><b>ĐTĐ nhạt trung ương:</b> <b>Desmopressin (DDAVP)</b> — uống, xịt mũi, hoặc tiêm dưới da — là điều trị đầu tay, đáp ứng rất tốt.</li>
-        <li><b>ĐTĐ nhạt do thận:</b> điều trị nguyên nhân nền (ngừng lithium nếu có thể, sửa tăng Canxi/hạ Kali); nếu không sửa được: lợi tiểu thiazide (nghịch lý làm giảm lượng nước tiểu qua cơ chế riêng) + hạn chế muối/protein khẩu phần; <b>NSAID</b> có thể hỗ trợ giảm thêm lượng nước tiểu ở trường hợp chọn lọc.</li>
-        <li>Theo dõi Natri máu sát khi bắt đầu <b>Desmopressin</b> — nguy cơ hạ Natri do giữ nước quá mức nếu không chỉnh liều phù hợp.</li>
+        <li><b>ĐTĐ nhạt trung ương:</b> <b>Desmopressin (DDAVP)</b> là điều trị đầu tay, đáp ứng rất tốt — uống 100–200 mcg × 2–3 lần/ngày (khởi đầu 0.1 mg mỗi 8 giờ, chỉnh theo lượng nước tiểu/Natri máu); hoặc xịt mũi 10–20 mcg × 1–2 lần/ngày; hoặc tiêm dưới da/TM 0.5–1 mcg × 1–2 lần/ngày (cấp cứu/hậu phẫu, không uống được).</li>
+        <li><b>ĐTĐ nhạt do thận:</b> điều trị nguyên nhân nền (ngừng lithium nếu có thể, sửa tăng Canxi/hạ Kali); nếu không sửa được: lợi tiểu thiazide liều thấp (vd. Hydrochlorothiazide 25 mg/ngày — nghịch lý làm giảm lượng nước tiểu qua cơ chế riêng) + hạn chế muối/protein khẩu phần; <b>NSAID</b> (vd. Indomethacin) có thể hỗ trợ giảm thêm lượng nước tiểu ở trường hợp chọn lọc.</li>
+        <li>Theo dõi Natri máu sát khi bắt đầu <b>Desmopressin</b> — nguy cơ hạ Natri do giữ nước quá mức nếu không chỉnh liều phù hợp; kiểm tra Na+ sau 3–5 ngày đầu điều trị.</li>
         <li>Đảm bảo tiếp cận nước tự do khi chưa kiểm soát — hạn chế nước sớm có thể gây mất nước nặng nhanh nếu bệnh chưa được điều trị.</li>
       </ul>`,
     khuyen_cao:`
@@ -6354,8 +6375,8 @@ ${rt(["Hướng xử trí"],[
       <div class="alert-box alert-info">Luôn loại trừ nhiễm trùng (đặc biệt viêm phúc mạc nhiễm khuẩn nguyên phát — SBP) trước khi kết luận HRS, vì nhiễm trùng là yếu tố khởi phát HRS thường gặp nhất và cần điều trị đồng thời.</div>`,
     dieu_tri:`
 <ul>
-        <li><b>Ngừng lợi tiểu</b> và thử bù Albumin TM như bước chẩn đoán kiêm điều trị ban đầu.</li>
-        <li>Thuốc co mạch tạng: <b>Terlipressin + Albumin</b> là điều trị đầu tay hiệu quả nhất (nơi có sẵn); <b>Norepinephrine + Albumin</b> là thay thế hợp lý (đặc biệt tại ICU) khi không có terlipressin.</li>
+        <li><b>Ngừng lợi tiểu</b> và thử bù Albumin TM (1 g/kg/ngày, tối đa 100 g/ngày, trong 2 ngày liên tiếp) như bước chẩn đoán kiêm điều trị ban đầu.</li>
+        <li>Thuốc co mạch tạng: <b>Terlipressin</b> 1 mg TM mỗi 4–6 giờ (hoặc truyền liên tục 2–12 mg/24 giờ), tăng dần nếu Creatinine không giảm ≥25% sau 2–3 ngày, phối hợp <b>Albumin</b> 20–40 g/ngày duy trì — là điều trị đầu tay hiệu quả nhất (nơi có sẵn); nếu không có Terlipressin: <b>Norepinephrine</b> truyền TM 0.5–3 mg/giờ (khởi đầu 0.5mg/h, tăng dần theo huyết áp trung bình) + Albumin (ICU), hoặc <b>Midodrine</b> 5–15 mg uống × 3 lần/ngày + <b>Octreotide</b> 100–200 mcg tiêm dưới da × 3 lần/ngày (hoặc truyền TM 50 mcg/giờ) + Albumin khi không có 2 lựa chọn trên (hiệu quả thấp hơn).</li>
         <li>Tìm và điều trị triệt để yếu tố khởi phát (nhiễm trùng — đặc biệt SBP, xuất huyết tiêu hóa, chọc tháo dịch cổ trướng lượng lớn không bù đủ albumin).</li>
         <li>TIPS (nối cửa chủ trong gan qua da) cân nhắc ở trường hợp chọn lọc không đáp ứng thuốc, chưa có chỉ định ghép gan cấp.</li>
         <li><b>Ghép gan là điều trị triệt căn duy nhất</b> — HRS là chỉ định ưu tiên xem xét ghép gan cấp cứu/ưu tiên cao; lọc máu chỉ là cầu nối tạm thời chờ ghép hoặc hồi phục.</li>
@@ -6385,8 +6406,8 @@ ${rt(["Hướng xử trí"],[
       <div class="alert-box alert-danger">Ở bệnh nhân suy dinh dưỡng nặng/nghiện rượu bắt đầu nuôi ăn trở lại: chủ động kiểm tra Phosphate/Kali/Magie TRƯỚC và trong những ngày đầu nuôi ăn — hạ Phosphate nặng đột ngột trong hội chứng nuôi ăn lại có thể gây suy hô hấp/loạn nhịp tim đe dọa tính mạng.</div>`,
     dieu_tri:`
 <ul>
-        <li>Nhẹ, không triệu chứng: bù <b>Phosphate đường uống</b>, theo dõi lại sau vài ngày.</li>
-        <li>Trung bình-nặng hoặc có triệu chứng: <b>Phosphate truyền tĩnh mạch</b> (Kali phosphate hoặc Natri phosphate tùy tình trạng Kali), tốc độ và liều theo protocol, theo dõi Canxi máu (nguy cơ hạ Canxi do lắng đọng phosphate-canxi khi bù nhanh) và chức năng thận.</li>
+        <li>Nhẹ, không triệu chứng: bù <b>Phosphate đường uống</b> — Kali/Natri phosphate hoặc sữa/sản phẩm giàu phosphate, theo dõi lại sau vài ngày.</li>
+        <li>Trung bình-nặng hoặc có triệu chứng (Phosphate &lt;1 mg/dL): <b>Phosphate truyền tĩnh mạch</b> 0.3 mmol/kg trong 6–24 giờ (mức trung bình) hoặc 0.6 mmol/kg trong 6–24 giờ (mức nặng) — dùng Kali phosphate hoặc Natri phosphate tùy tình trạng Kali đi kèm, không quá 7 mg/kg (~500 mg cho người 70kg) trong 6 giờ trừ khi theo dõi sát; theo dõi Canxi máu (nguy cơ hạ Canxi do lắng đọng phosphate-canxi khi bù nhanh) và chức năng thận.</li>
         <li><b>Phòng ngừa hội chứng nuôi ăn lại:</b> bắt đầu nuôi ăn với tốc độ calo thấp, tăng dần chậm; bù trước/đồng thời Phosphate-Kali-Magie-Thiamine ở người nguy cơ cao trước khi tăng tốc độ nuôi ăn.</li>
         <li>Điều trị nguyên nhân nền (kiểm soát ĐTĐ, bổ sung Vitamin D nếu thiếu, xem lại thuốc gắn phosphate không cần thiết).</li>
       </ul>`,
@@ -6470,10 +6491,10 @@ ${rt(["Hướng xử trí"],[
       <p>TSH-receptor antibody (TRAb) âm tính trong viêm giáp, dương tính trong Basedow. Viêm giáp bán cấp thường có ESR/CRP tăng rõ và siêu âm giáp giảm âm loang lổ đau khi ấn đầu dò.</p>`,
     dieu_tri:`
 <ul>
-        <li>Giai đoạn cường giáp thoáng qua: <b>chẹn beta</b> điều trị triệu chứng (hồi hộp, run) — <b>KHÔNG dùng thuốc kháng giáp</b> (<b>Methimazole</b>/PTU) vì đây không phải tăng tổng hợp hormone, thuốc kháng giáp không có tác dụng và có thể gây suy giáp sớm không cần thiết.</li>
-        <li>Viêm giáp bán cấp có đau nhiều: <b>NSAID</b> là đầu tay; corticoid (<b>Prednisone</b>) cho trường hợp đau nặng không đáp ứng <b>NSAID</b> — đáp ứng rất tốt và nhanh.</li>
-        <li>Giai đoạn suy giáp thoáng qua: theo dõi TSH định kỳ; chỉ bắt đầu <b>Levothyroxine</b> nếu suy giáp có triệu chứng rõ hoặc TSH tăng cao kéo dài — nhiều trường hợp tự hồi phục không cần điều trị.</li>
-        <li>Viêm giáp Hashimoto tiến triển suy giáp vĩnh viễn: <b>Levothyroxine</b> thay thế lâu dài như suy giáp nguyên phát thông thường.</li>
+        <li>Giai đoạn cường giáp thoáng qua: <b>Propranolol</b> 10–20 mg × 3 lần/ngày điều trị triệu chứng (hồi hộp, run) — <b>KHÔNG dùng thuốc kháng giáp</b> (<b>Methimazole</b>/PTU) vì đây không phải tăng tổng hợp hormone, thuốc kháng giáp không có tác dụng và có thể gây suy giáp sớm không cần thiết.</li>
+        <li>Viêm giáp bán cấp có đau nhiều: <b>NSAID</b> (vd. Ibuprofen 400–600 mg × 3 lần/ngày) là đầu tay; nếu đau vừa–nặng hoặc không đáp ứng NSAID sau vài ngày: <b>Prednisolone</b> khởi đầu 15–40 mg/ngày (đáp ứng thường rất nhanh trong vài ngày), giảm dần 5 mg mỗi 1–2 tuần trong 4–6 tuần theo triệu chứng/CRP — tránh ngừng đột ngột.</li>
+        <li>Giai đoạn suy giáp thoáng qua: theo dõi TSH định kỳ; chỉ bắt đầu <b>Levothyroxine</b> (liều tương tự suy giáp nguyên phát, thường thấp hơn vì là tạm thời) nếu suy giáp có triệu chứng rõ hoặc TSH tăng cao kéo dài — nhiều trường hợp tự hồi phục không cần điều trị; thử ngừng sau 6–12 tháng để đánh giá hồi phục.</li>
+        <li>Viêm giáp Hashimoto tiến triển suy giáp vĩnh viễn: <b>Levothyroxine</b> thay thế lâu dài như suy giáp nguyên phát thông thường (xem mục Suy giáp — Cường giáp & Suy giáp).</li>
         <li>Viêm giáp sau sinh: tư vấn nguy cơ tái phát ở lần sinh sau và nguy cơ suy giáp vĩnh viễn dài hạn — cần theo dõi TSH định kỳ hàng năm.</li>
       </ul>`,
     khuyen_cao:`
@@ -6498,10 +6519,13 @@ ${rt(["Hướng xử trí"],[
       <p>Nếu Testosterone thấp xác nhận: đo LH/FSH để phân loại nguyên phát/thứ phát; nếu thứ phát, đo thêm Prolactin, sắt (huyết sắc tố), và xem xét MRI tuyến yên nếu nghi u/tổn thương trung ương.</p>`,
     dieu_tri:`
 <ul>
-        <li>Chỉ điều trị thay thế Testosterone khi có <b>cả</b> triệu chứng lâm sàng RÕ <b>và</b> xét nghiệm xác nhận thấp lặp lại — không điều trị chỉ dựa vào xét nghiệm ở người không triệu chứng.</li>
-        <li>Đường dùng: gel/tiêm bắp/miếng dán testosterone — chọn theo sở thích bệnh nhân và khả năng theo dõi.</li>
+        <li>Chỉ điều trị thay thế Testosterone khi có <b>cả</b> triệu chứng lâm sàng RÕ <b>và</b> xét nghiệm xác nhận Testosterone toàn phần &lt;300 ng/dL (~10.4 nmol/L) lặp lại ≥2 lần buổi sáng — không điều trị chỉ dựa vào xét nghiệm ở người không triệu chứng.</li>
+        <li>Đường dùng — chọn theo sở thích bệnh nhân và khả năng theo dõi:
+          <br>• <b>Testosterone enanthate/cypionate</b> tiêm bắp: 75–100 mg mỗi tuần, hoặc 150–200 mg mỗi 2 tuần (khoảng liều chung 50–400 mg mỗi 2–4 tuần).
+          <br>• <b>Gel testosterone</b> 1–1.62%: khởi đầu 1 gói/liều bơm chứa ~50 mg/ngày bôi vai/bụng buổi sáng, chỉnh liều theo nồng độ đích.
+          <br>• Mục tiêu: đưa Testosterone về khoảng giữa giá trị bình thường (giữa chu kỳ tiêm/liều duy trì).</li>
         <li><b>Chống chỉ định tương đối/cần cân nhắc kỹ:</b> ung thư tuyến tiền liệt chưa điều trị ổn, mong muốn có con trong thời gian gần (testosterone ngoại sinh ức chế trục, giảm sinh tinh) — cần tư vấn kỹ nếu còn nhu cầu sinh sản.</li>
-        <li>Theo dõi định kỳ: PSA và khám tuyến tiền liệt theo tuổi, hematocrit (nguy cơ đa hồng cầu thứ phát), triệu chứng, testosterone lại sau 3–6 tháng để chỉnh liều.</li>
+        <li>Theo dõi định kỳ: PSA và khám tuyến tiền liệt theo tuổi, hematocrit trước điều trị rồi lại ở tháng 3–6 và mỗi năm (nguy cơ đa hồng cầu thứ phát — ngừng/giảm liều nếu Hct &gt;54%), triệu chứng, đo lại testosterone sau 3–6 tháng để chỉnh liều.</li>
         <li>Suy sinh dục thứ phát: tìm và điều trị nguyên nhân nền (u tuyến yên, tăng Prolactin, béo phì nặng — giảm cân có thể cải thiện trục tự nhiên).</li>
       </ul>`,
     khuyen_cao:`
@@ -6584,10 +6608,10 @@ ${rt(["Hướng xử trí"],[
       <p>Loại trừ viêm gan virus, bệnh gan do rượu/chuyển hóa, DILI, và các bệnh gan tự miễn khác (viêm đường mật xơ hóa nguyên phát, xơ gan mật nguyên phát — có thể có hội chứng chồng lấp).</p>`,
     dieu_tri:`
 <ul>
-        <li><b>Corticoid (<b>Prednisone</b>) là điều trị khởi đầu chuẩn</b> — đáp ứng sinh hóa (bình thường hóa ALT/IgG) thường rõ trong vài tuần-vài tháng, là đặc điểm gợi ý chẩn đoán đúng.</li>
-        <li>Phối hợp <b>Azathioprine</b> sớm (thường sau vài tuần) để giảm liều/ngừng corticoid, duy trì lui bệnh lâu dài, giảm tác dụng phụ corticoid kéo dài.</li>
+        <li><b>Corticoid (<b>Prednisone</b>) là điều trị khởi đầu chuẩn</b> — đơn trị 40–60 mg/ngày, hoặc phối hợp liều thấp hơn 20–30 mg/ngày cùng Azathioprine ngay từ đầu; đáp ứng sinh hóa (bình thường hóa ALT/IgG) thường rõ trong vài tuần-vài tháng, là đặc điểm gợi ý chẩn đoán đúng.</li>
+        <li>Phối hợp <b>Azathioprine</b> 50 mg/ngày (hoặc 1–2 mg/kg/ngày), thêm sau khi vàng da cải thiện và đã kiểm tra hoạt độ TPMT (tránh độc tủy nặng nếu thiếu men) — giúp giảm liều/ngừng corticoid, duy trì lui bệnh lâu dài, giảm tác dụng phụ corticoid kéo dài. Sau đáp ứng, giảm dần Prednisone qua 6–8 tuần về liều duy trì 5–10 mg/ngày hoặc ngừng nếu dung nạp Azathioprine tốt.</li>
         <li>Điều trị duy trì kéo dài, thường tối thiểu 2–3 năm và đạt lui bệnh sinh hóa-mô học ổn định trước khi cân nhắc ngừng thuốc — ngừng sớm có nguy cơ tái phát cao.</li>
-        <li>Trường hợp không dung nạp/kháng trị với phác đồ chuẩn: Mycophenolate mofetil hoặc thuốc ức chế miễn dịch khác (tacrolimus, cyclosporine) là lựa chọn thay thế.</li>
+        <li>Trường hợp không dung nạp/kháng trị với phác đồ chuẩn: Mycophenolate mofetil (liều đích 1.5–2 g/ngày) hoặc thuốc ức chế miễn dịch khác (tacrolimus, cyclosporine) là lựa chọn thay thế.</li>
         <li>Xơ gan mất bù/suy gan tối cấp không đáp ứng điều trị nội khoa: đánh giá ghép gan.</li>
         <li>Theo dõi lâu dài men gan/IgG định kỳ ngay cả sau ngừng thuốc do nguy cơ tái phát.</li>
       </ul>`,
@@ -6613,9 +6637,9 @@ ${rt(["Hướng xử trí"],[
     dieu_tri:`
 <ul>
         <li><b>Xét nghiệm và điều trị H. pylori nếu dương tính</b> — một số bệnh nhân cải thiện triệu chứng rõ sau tiệt trừ (khi đó gọi là "khó tiêu liên quan H. pylori" hơn là khó tiêu chức năng thực sự).</li>
-        <li><b>PPI</b> là điều trị đầu tay, đặc biệt hiệu quả hơn ở thể đau thượng vị (EPS).</li>
-        <li>Thuốc tăng nhu động (Prokinetic — domperidone, itopride) đặc biệt hữu ích ở thể khó chịu sau ăn (PDS — đầy bụng, no sớm).</li>
-        <li>Thuốc chống trầm cảm 3 vòng liều thấp (Amitriptyline) hoặc chất chủ vận thụ thể (Mirtazapine, Buspirone) cho trường hợp kháng trị với PPI/prokinetic — hiệu quả qua điều hòa cảm giác tạng.</li>
+        <li><b>PPI</b> liều chuẩn 1 lần/ngày (Omeprazole 20 mg, Esomeprazole 20–40 mg) trong 4–8 tuần là điều trị đầu tay, đặc biệt hiệu quả hơn ở thể đau thượng vị (EPS).</li>
+        <li>Thuốc tăng nhu động (Prokinetic — Domperidone 10 mg × 3 lần/ngày trước ăn, hoặc Itopride 50 mg × 3 lần/ngày) đặc biệt hữu ích ở thể khó chịu sau ăn (PDS — đầy bụng, no sớm).</li>
+        <li>Thuốc chống trầm cảm 3 vòng liều thấp (Amitriptyline khởi đầu 10 mg buổi tối, tăng dần tới 25–50 mg nếu dung nạp) cho trường hợp kháng trị với PPI/prokinetic — hiệu quả qua điều hòa cảm giác tạng; cân nhắc Mirtazapine 15 mg buổi tối nếu kèm sụt cân/lo âu.</li>
         <li>Tránh yếu tố khởi phát (bữa ăn nhiều dầu mỡ, ăn quá no, rượu, một số <b>NSAID</b>); liệu pháp tâm lý (CBT) hỗ trợ ở trường hợp có yếu tố lo âu đi kèm rõ.</li>
       </ul>`,
     khuyen_cao:`
@@ -6733,10 +6757,10 @@ ${rt(["Hướng xử trí"],[
       <p>Đo PTH giúp phân loại: PTH thấp/không tương xứng → suy cận giáp; PTH cao phù hợp đáp ứng → nguyên nhân khác (thiếu Vitamin D, suy thận, đề kháng PTH).</p>`,
     dieu_tri:`
 <ul>
-        <li>Nặng/có triệu chứng (co giật, kéo dài QT, tetany): <b>Canxi gluconate truyền tĩnh mạch chậm</b> dưới theo dõi ECG liên tục — Canxi Clorua chỉ dùng qua đường trung tâm do gây hoại tử mô nếu thoát mạch.</li>
-        <li>Nhẹ-trung bình, không triệu chứng: bù <b>Canxi và Vitamin D (Calcitriol nếu suy cận giáp/suy thận nặng — cần dạng hoạt hóa)</b> đường uống.</li>
+        <li>Nặng/có triệu chứng (co giật, kéo dài QT, tetany): <b>Canxi gluconate</b> 1–2 g (10–20 mL dung dịch 10%) pha loãng truyền tĩnh mạch chậm trong 10–20 phút dưới theo dõi ECG liên tục, có thể lặp lại nếu còn triệu chứng; sau đó truyền duy trì 10 ống Canxi gluconate 10% pha trong 1L Dextrose 5%, tốc độ 30–100 mL/giờ — Canxi Clorua chỉ dùng qua đường trung tâm do gây hoại tử mô nếu thoát mạch.</li>
+        <li>Nhẹ-trung bình, không triệu chứng: bù <b>Canxi nguyên tố</b> 1–2 g/ngày chia liều đường uống, kèm <b>Vitamin D</b> (Calcitriol 0.25–0.5 mcg × 2 lần/ngày nếu suy cận giáp/suy thận nặng — cần dạng hoạt hóa).</li>
         <li>Bù Magie đồng thời nếu thấp — bắt buộc để bù Canxi hiệu quả.</li>
-        <li>Suy cận giáp mạn: bổ sung Canxi + Calcitriol dài hạn, theo dõi Canxi/Phosphate máu và Canxi niệu 24h định kỳ (tránh tăng Canxi niệu gây sỏi thận/vôi hóa thận do điều trị quá mức).</li>
+        <li>Suy cận giáp mạn: bổ sung Canxi 1–3 g/ngày + Calcitriol 0.25–1 mcg/ngày dài hạn, theo dõi Canxi/Phosphate máu và Canxi niệu 24h định kỳ (tránh tăng Canxi niệu gây sỏi thận/vôi hóa thận do điều trị quá mức).</li>
         <li>Không truyền Canxi cùng đường truyền có Bicarbonate hoặc Phosphate (tạo kết tủa) — dùng đường truyền riêng.</li>
       </ul>`,
     khuyen_cao:`
