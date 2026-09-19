@@ -600,6 +600,58 @@
 
   .ai-chip{display:inline-block;margin:3px 4px 0 0;padding:5px 10px;border-radius:14px;border:1px solid var(--border-color);
     background:var(--tiffany-light);color:var(--tiffany-dark);font-size:12px;font-weight:700;cursor:pointer;}
+
+  /* ===== Tối ưu 2026.09.18b: hiệu năng + UX ===== */
+  .disease-toc{
+    display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;
+  }
+  .disease-toc button{
+    font-size:11.5px;font-weight:700;padding:7px 11px;min-height:36px;
+    border-radius:12px;border:1px solid var(--border-color);
+    background:var(--bg-card);color:var(--tiffany-dark);cursor:pointer;
+  }
+  .disease-toc button:active{background:var(--tiffany-light);}
+  .copy-dose-btn{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:11px;font-weight:700;padding:5px 10px;margin:6px 0 8px;
+    border-radius:8px;border:1px solid var(--tiffany-main);
+    background:var(--tiffany-light);color:var(--tiffany-dark);cursor:pointer;
+  }
+  .copy-dose-btn:active{opacity:.85;}
+  .copy-dose-btn.copied{background:var(--success);color:#fff;border-color:var(--success);}
+  .card-body-inner .subhead:has(+ .rtable),
+  .card-body-inner .subhead{
+    scroll-margin-top: calc(var(--app-header-h, 72px) + 100px);
+  }
+  /* Accordion hint */
+  .card-head{user-select:none;-webkit-user-select:none;}
+  .card-head:focus-visible{outline:2px solid var(--tiffany-main);outline-offset:2px;}
+  /* content-visibility broader */
+  .d-tab, .sp-tab, .s-pill, .score-chip, .criterion-group{
+    content-visibility:auto;contain-intrinsic-size:auto 48px;
+  }
+  #scalesList .scale-card{
+    content-visibility:auto;contain-intrinsic-size:auto 72px;
+  }
+  .card.open .card-body-inner{
+    content-visibility:visible;
+  }
+  /* Toast copy */
+  #appToast{
+    position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));
+    transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;
+    z-index:200;background:#0f172a;color:#fff;font-size:13px;font-weight:700;
+    padding:10px 16px;border-radius:12px;transition:opacity .2s, transform .2s;
+    max-width:90vw;text-align:center;
+  }
+  #appToast.show{opacity:.95;transform:translateX(-50%) translateY(0);}
+  @media print{
+    .card{break-inside:avoid;}
+    .card .card-body{max-height:none!important;display:block!important;}
+    .card.open .card-body, .card .card-body{max-height:none!important;overflow:visible!important;}
+    .disease-toc, .copy-dose-btn{display:none!important;}
+  }
+
 </style>
 </head>
 <body>
@@ -609,7 +661,7 @@
     <div>
       <h1>📘 Sổ tay lâm sàng</h1>
       <div class="sub">Phác đồ điều trị · Thang điểm · ESC/AHA/ADA/GINA/GOLD/ACG</div>
-      <div class="ver-badge">Bản 2026.09.18 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
+      <div class="ver-badge">Bản 2026.09.18b · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
       <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇ Cài app</button>
@@ -626,7 +678,7 @@
   <div class="search-wrap" id="globalSearchWrap" style="padding:8px 0 4px;position:relative;">
     <input id="quickSearch" type="search" placeholder="Tìm thông minh: THA, COPD, GCS, HAS-BLED, suy tim…"
       style="width:100%;padding:8px 10px;border-radius:9px;border:none;background:rgba(255,255,255,.96);color:#0f172a;font-size:13px;outline:none;box-sizing:border-box;"
-      oninput="onGlobalSearch(this.value)" onfocus="onGlobalSearch(this.value)"
+      oninput="onGlobalSearchDebounced(this.value)" onfocus="onGlobalSearch(this.value)"
       onkeydown="handleSmartSearchKey(event)">
     <div id="smartSearchDrop" class="smart-search-drop"></div>
     <div id="headerAbcBar" class="header-abc-bar" style="display:none;"></div>
@@ -644,7 +696,7 @@
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
   <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px calc(72px + env(safe-area-inset-bottom,0px));">
-    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.09.18
+    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.09.18b
   </footer>
 </div>
 
@@ -6746,16 +6798,112 @@ function renderSectionNav(){
 
 function scrollToSection(key, elem){
   document.querySelectorAll('.s-pill').forEach(p=>p.classList.remove('active'));
-  elem.classList.add('active');
-  const card = document.getElementById('card_'+key);
-  if(card){
-    if(!card.classList.contains('open')) toggleCard(card);
-    card.scrollIntoView({behavior:'smooth', block:'start'});
+  if(elem) elem.classList.add('active');
+  if(typeof jumpDiseaseSection === 'function') jumpDiseaseSection(key);
+  else {
+    const card = document.getElementById('card_'+key);
+    if(card){
+      if(!card.classList.contains('open')) toggleCard(card);
+      card.scrollIntoView({behavior:'smooth', block:'start'});
+    }
   }
 }
 
+
+/* ===== UX helpers 2026.09.18b ===== */
+function showAppToast(msg){
+  let el = document.getElementById('appToast');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'appToast';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(showAppToast._t);
+  showAppToast._t = setTimeout(function(){ el.classList.remove('show'); }, 1800);
+}
+function copyTextToClipboard(text){
+  text = (text || '').replace(/\s+\n/g, '\n').trim();
+  if(!text) return;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      showAppToast('Đã sao chép liều / nội dung');
+    }).catch(function(){ fallbackCopy(text); });
+  } else fallbackCopy(text);
+}
+function fallbackCopy(text){
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); showAppToast('Đã sao chép'); } catch(e){ showAppToast('Không sao chép được'); }
+  document.body.removeChild(ta);
+}
+function copyDoseBlock(btn){
+  let table = btn.nextElementSibling;
+  while(table && !(table.classList && table.classList.contains('rtable'))) table = table.nextElementSibling;
+  if(!table && btn.parentElement) table = btn.parentElement.querySelector('.rtable');
+  const text = table ? table.innerText : (btn.parentElement ? btn.parentElement.innerText : '');
+  copyTextToClipboard(text);
+  btn.classList.add('copied');
+  const old = btn.textContent;
+  btn.textContent = '✓ Đã chép';
+  setTimeout(function(){ btn.classList.remove('copied'); btn.textContent = old; }, 1500);
+}
+function enhanceDoseCopyButtons(){
+  const container = document.getElementById('mainContainer');
+  if(!container) return;
+  container.querySelectorAll('.card-body-inner .subhead').forEach(function(sh){
+    const label = (sh.textContent || '');
+    if(label.indexOf('Liều') === -1 && label.indexOf('💊') === -1 && label.indexOf('liều') === -1) return;
+    if(sh.dataset.copyReady) return;
+    let el = sh.nextElementSibling;
+    while(el && el.classList && el.classList.contains('copy-dose-btn')) el = el.nextElementSibling;
+    if(!el || !el.classList || !el.classList.contains('rtable')) return;
+    sh.dataset.copyReady = '1';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-dose-btn';
+    btn.textContent = '📋 Sao chép bảng liều';
+    btn.setAttribute('aria-label', 'Sao chép bảng liều');
+    btn.onclick = function(e){ e.stopPropagation(); copyDoseBlock(btn); };
+    sh.insertAdjacentElement('afterend', btn);
+  });
+}
+function jumpDiseaseSection(key){
+  const card = document.getElementById('card_' + key);
+  if(!card) return;
+  document.querySelectorAll('.s-pill').forEach(function(p){
+    const on = p.getAttribute('onclick') || '';
+    p.classList.toggle('active', on.indexOf("'" + key + "'") >= 0 || on.indexOf('"' + key + '"') >= 0);
+  });
+  document.querySelectorAll('#mainContainer .card').forEach(function(c){
+    const open = (c === card);
+    c.classList.toggle('open', open);
+    const head = c.querySelector('.card-head');
+    if(head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  card.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
 function toggleCard(card){
-  card.classList.toggle('open');
+  const willOpen = !card.classList.contains('open');
+  // Accordion: chỉ một card mở trong phác đồ (không xóa nội dung — chỉ ẩn/hiện)
+  if(willOpen){
+    const root = document.getElementById('mainContainer');
+    if(root){
+      root.querySelectorAll('.card.open').forEach(function(c){
+        if(c !== card){
+          c.classList.remove('open');
+          const h = c.querySelector('.card-head');
+          if(h) h.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  }
+  card.classList.toggle('open', willOpen);
+  const head = card.querySelector('.card-head');
+  if(head) head.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
 }
 
 function selectDisease(id){
@@ -6770,10 +6918,15 @@ function renderDiseaseContent(){
   const container = document.getElementById('mainContainer');
   if(!d || !container){ if(container) container.innerHTML = '<p class="empty-hint">Không tìm thấy phác đồ.</p>'; return; }
 
+  const toc = sectionMeta.map(s =>
+    `<button type="button" onclick="jumpDiseaseSection('${s.key}')">${s.icon} ${s.label}</button>`
+  ).join('');
+
   let html = `
     <div class="disease-header">
       <h2>${d.emoji} ${d.title}</h2>
       <div>${d.guidelines.map(g=>`<span class="guideline-tag">${g}</span>`).join('')}</div>
+      <div class="disease-toc" role="navigation" aria-label="Mục lục phác đồ">${toc}</div>
     </div>
   `;
 
@@ -6786,11 +6939,14 @@ function renderDiseaseContent(){
           <span><span class="badge badge-III">III</span> Không / có hại</span>
         </div>`
       : '';
+    const isOpen = idx === 0;
     html += `
-      <div class="card ${idx===0?'open':''}" id="card_${s.key}">
-        <div class="card-head" onclick="toggleCard(this.parentElement)">
+      <div class="card ${isOpen?'open':''}" id="card_${s.key}">
+        <div class="card-head" role="button" tabindex="0" aria-expanded="${isOpen?'true':'false'}"
+          onclick="toggleCard(this.parentElement)"
+          onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCard(this.parentElement);}">
           <div class="card-head-title"><span class="ic">${s.icon}</span>${s.label}</div>
-          <div class="chevron">▼</div>
+          <div class="chevron" aria-hidden="true">▼</div>
         </div>
         <div class="card-body"><div class="card-body-inner">${legend}${d.sections[s.key]||''}</div></div>
       </div>
@@ -6800,6 +6956,7 @@ function renderDiseaseContent(){
   html += `<div class="source-note">📚 Nguồn: ${d.source}</div>`;
 
   container.innerHTML = html;
+  if(typeof enhanceDoseCopyButtons === 'function') setTimeout(enhanceDoseCopyButtons, 0);
 }
 
 function toggleTheme(){
@@ -7573,7 +7730,8 @@ function enhanceScaleCardsWithFav(){
 
 // PWA: icon cuốn sổ tra cứu + manifest
 (function setupManifest(){
-if (!CanvasRenderingContext2D.prototype.roundRect) {
+try {
+if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D.prototype.roundRect) {
   CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
     if(typeof r==='number') r={tl:r,tr:r,br:r,bl:r};
     this.moveTo(x+r.tl,y); this.lineTo(x+w-r.tr,y); this.quadraticCurveTo(x+w,y,x+w,y+r.tr);
@@ -7665,13 +7823,16 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
   } catch (e) {
     console.warn('PWA icon', e);
   }
+} catch (e) {
+  console.warn('PWA setup', e);
+}
 })();
 
 // Lightweight service worker for offline shell (same page)
 if('serviceWorker' in navigator){
   try {
     const swCode = `
-      const CACHE = 'ykhoa-v1';
+      const CACHE = 'ykhoa-v20260918b';
       self.addEventListener('install', e => { self.skipWaiting(); });
       self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
       self.addEventListener('fetch', e => {
@@ -7815,6 +7976,7 @@ function updateAppHeaderOffsets(){
 }
 
 window.__mainTab = window.__mainTab || 'phacdo';
+const onGlobalSearchDebounced = debounce(function(q){ onGlobalSearch(q); }, 120);
 function onGlobalSearch(q){
   const tab = window.__mainTab || 'phacdo';
   q = (q == null) ? '' : String(q);
@@ -9418,45 +9580,51 @@ function __buildScalesData(){
       {
         id: "meld",
         title: "MELD Score (Model for End-Stage Liver Disease)",
-        subtitle: "Đánh giá mức độ nặng bệnh gan giai đoạn cuối và ưu tiên ghép gan.",
+        subtitle: "Đánh giá mức độ nặng bệnh gan giai đoạn cuối và ưu tiên ghép gan — công thức UNOS/OPTN MELD(i), nhập trực tiếp trị số xét nghiệm.",
         category: "tieu_hoa",
         categoryName: "Tiêu hóa / Gan",
-        source: "Malinchoc M et al. Hepatology 2000 / UNOS / MDCalc",
+        source: "Kamath PS et al. Hepatology 2001; UNOS/OPTN MELD(i) Policy; MDCalc",
         criteria: [
           {
-            name: "Bilirubin máu",
-            detail: "Nồng độ Bilirubin toàn phần (mg/dL)",
-            options: [
-              { text: "< 1.0 mg/dL (1 điểm)", score: 1 },
-              { text: "1.0 - 2.0 mg/dL (5 điểm)", score: 5 },
-              { text: "2.1 - 5.0 mg/dL (10 điểm)", score: 10 },
-              { text: "> 5.0 mg/dL (18 điểm)", score: 18 }
-            ]
+            name: "1. Bilirubin toàn phần (mg/dL)",
+            detail: "Giá trị < 1.0 được tính là 1.0 theo quy ước UNOS",
+            type: "number", key: "bili", min: 0.1, max: 50, step: 0.1, placeholder: "vd. 2.3"
           },
           {
-            name: "Creatinine máu",
-            detail: "Đánh giá chức năng thận",
-            options: [
-              { text: "< 1.0 mg/dL (1 điểm)", score: 1 },
-              { text: "1.0 - 2.0 mg/dL (6 điểm)", score: 6 },
-              { text: "2.1 - 3.0 mg/dL (11 điểm)", score: 11 },
-              { text: "> 3.0 mg/dL (hoặc đang lọc máu) (15 điểm)", score: 15 }
-            ]
+            name: "2. INR",
+            detail: "Giá trị < 1.0 được tính là 1.0 theo quy ước UNOS",
+            type: "number", key: "inr", min: 0.5, max: 20, step: 0.1, placeholder: "vd. 1.6"
           },
           {
-            name: "Chỉ số đông máu (INR)",
-            detail: "Tỷ lệ thời gian Prothrombin",
+            name: "3. Creatinine máu (mg/dL)",
+            detail: "Giá trị < 1.0 tính là 1.0; > 4.0 tính là 4.0",
+            type: "number", key: "creat", min: 0.1, max: 15, step: 0.1, placeholder: "vd. 1.8"
+          },
+          {
+            name: "4. Đã lọc máu ≥ 2 lần trong 7 ngày qua (hoặc CVVHD ≥ 24h)",
+            detail: "Nếu có, Creatinine tự động tính = 4.0 mg/dL theo quy ước UNOS, bất kể giá trị đo được",
             options: [
-              { text: "INR < 1.5 (2 điểm)", score: 2 },
-              { text: "INR 1.5 - 2.5 (8 điểm)", score: 8 },
-              { text: "INR > 2.5 (14 điểm)", score: 14 }
+              { text: "Không", score: 0 },
+              { text: "Có", score: 1 }
             ]
           }
         ],
         evaluate: function(total) {
+          if (total === null || isNaN(total)) return { text: "Nhập đủ Bilirubin, INR và Creatinine (mg/dL) để tính điểm.", color: "var(--text-secondary)" };
           if (total < 10) return { text: "Điểm MELD thấp (" + total + " điểm): Tỷ lệ tử vong trong 3 tháng < 2%.", color: "var(--success)" };
           if (total <= 19) return { text: "Điểm MELD trung bình (" + total + " điểm): Tỷ lệ tử vong 3 tháng ~6-20%. Theo dõi sát.", color: "var(--warning)" };
-          return { text: "Điểm MELD cao (" + total + " điểm): Nguy cơ tử vong 3 tháng rất cao (> 50%)! Đưa vào danh sách ghép gan ưu tiên.", color: "var(--danger)" };
+          if (total <= 29) return { text: "Điểm MELD cao (" + total + " điểm): Tỷ lệ tử vong 3 tháng ~20-50%. Ưu tiên đánh giá ghép gan.", color: "var(--danger)" };
+          return { text: "Điểm MELD rất cao (" + total + " điểm): Nguy cơ tử vong 3 tháng > 50%! Ưu tiên ghép gan khẩn cấp.", color: "var(--danger)" };
+        },
+        computeMeld: function(vals) {
+          let bili = vals.bili, inr = vals.inr, creat = vals.creat, dialysis = vals.dialysis;
+          if ([bili, inr, creat].some(v => v === null || v === undefined || isNaN(v))) return null;
+          bili = Math.max(1.0, bili);
+          inr = Math.max(1.0, inr);
+          creat = dialysis ? 4.0 : Math.max(1.0, Math.min(4.0, creat));
+          let raw = 9.57 * Math.log(creat) + 3.78 * Math.log(bili) + 11.2 * Math.log(inr) + 6.43;
+          raw = Math.round(raw);
+          return Math.max(6, Math.min(40, raw));
         }
       },
       {
@@ -11040,6 +11208,30 @@ function calcScoreNow() {
     return;
   }
 
+  // MELD: công thức UNOS/OPTN MELD(i) — Bilirubin, INR, Creatinine + lọc máu
+  if (currentScale.id === 'meld' && typeof currentScale.computeMeld === 'function') {
+    const vals = { bili:null, inr:null, creat:null, dialysis:0 };
+    document.querySelectorAll('#modalScaleBody .criterion-num').forEach(inp => {
+      const k = inp.getAttribute('data-key');
+      if(!k) return;
+      const v = parseFloat(inp.value);
+      if (!isNaN(v)) vals[k] = v;
+    });
+    const dsel = document.querySelector('#modalScaleBody .criterion-val');
+    if (dsel) vals.dialysis = parseFloat(dsel.value) ? 1 : 0;
+    const score = currentScale.computeMeld(vals);
+    if (score === null) {
+      numEl.innerText = '—';
+      const ev = currentScale.evaluate(null);
+      el.innerText = ev.text; el.style.color = ev.color;
+      return;
+    }
+    numEl.innerText = score;
+    const ev = currentScale.evaluate(score);
+    el.innerText = ev.text; el.style.color = ev.color;
+    return;
+  }
+
   // ARC-HBR: major / minor riêng
   if (currentScale.id === 'arc_hbr' && typeof currentScale.evaluateArc === 'function') {
     const groups = document.querySelectorAll('#modalScaleBody .criterion-group');
@@ -11067,6 +11259,27 @@ function calcScoreNow() {
   el.innerText = ev.text;
   el.style.color = ev.color;
 }
+
+
+/* Self-test nhẹ: mở với ?selftest=1 — không ảnh hưởng dùng thường */
+(function(){
+  try {
+    if(!/[?&]selftest=1/.test(location.search || '')) return;
+    const report = [];
+    const n = (typeof diseases !== 'undefined' && diseases) ? diseases.length : 0;
+    report.push('diseases=' + n);
+    const holes = (typeof diseases !== 'undefined') ? diseases.filter(d => !d || !d.id).length : -1;
+    report.push('holes=' + holes);
+    const ids = {};
+    let dup = 0;
+    (diseases || []).forEach(d => { if(!d||!d.id) return; if(ids[d.id]) dup++; ids[d.id]=1; });
+    report.push('dupIds=' + dup);
+    report.push('hasDebounce=' + (typeof debounce === 'function'));
+    report.push('hasJump=' + (typeof jumpDiseaseSection === 'function'));
+    console.warn('[selftest]', report.join(' | '));
+    showAppToast && showAppToast('Selftest: ' + report.join(' · '));
+  } catch(e){ console.warn('[selftest] fail', e); }
+})();
 
 </script>
 
@@ -11127,6 +11340,13 @@ function calcScoreNow() {
 <div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
   <div class="cl-sheet" onclick="event.stopPropagation()">
     <h2>📝 Nhật ký cập nhật và bảo trì</h2>
+    <div class="cl-item"><div class="cl-date">2026-09-18b — Tối ưu hiệu năng + UX + mã (không cắt nội dung)</div>
+      <ul>
+        <li>Hiệu năng: debounce tìm kiếm 120ms; content-visibility rộng hơn; SW cache <code>ykhoa-v20260918b</code></li>
+        <li>UX: mục lục trong phác đồ; accordion một card; nút sao chép bảng liều; aria-expanded; toast</li>
+        <li>Mã: gỡ CSS smart-search-drop trùng; helper debounce/copy/jump dùng chung</li>
+      </ul>
+    </div>
     <div class="cl-item"><div class="cl-date">2026-09-18 — Hợp nhất: giữ checklist trọng số + một mục nhịp nhanh</div>
       <ul>
         <li>Gốc: bản 121 bệnh (checklist Duke/IE, anaphylaxis, axSpA, SLE/Sjögren, PCOS…)</li>
