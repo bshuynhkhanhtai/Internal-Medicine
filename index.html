@@ -951,6 +951,7 @@ const scoreInterp = {
   das28ra: (t) => t<3 ? `Kiểm soát tốt — hoạt động bệnh thấp/lui bệnh` : t<5 ? `Hoạt động bệnh trung bình — cân nhắc tối ưu/leo thang điều trị` : `Hoạt động bệnh cao — cần leo thang điều trị theo treat-to-target`,
   findrisc: (t) => t<7 ? `Nguy cơ thấp — ước tính ~1% sẽ mắc ĐTĐ type 2 trong 10 năm` : t<=11 ? `Nguy cơ hơi tăng — ước tính ~4% trong 10 năm` : t<=14 ? `Nguy cơ trung bình — ước tính ~17% trong 10 năm, nên xét nghiệm glucose/HbA1c` : t<=20 ? `⚠ Nguy cơ cao — ước tính ~33% trong 10 năm, khuyến cáo xét nghiệm glucose/HbA1c và tư vấn thay đổi lối sống` : `⚠ Nguy cơ rất cao — ước tính ~50% trong 10 năm, cần xét nghiệm glucose/HbA1c ngay`,
   gbs: (t) => t===0 ? `Nguy cơ rất thấp — có thể cân nhắc điều trị ngoại trú, không cần nội soi cấp cứu` : t<=5 ? `Nguy cơ thấp-trung bình — cân nhắc nhập viện theo dõi, nội soi trong vòng 24h` : `⚠ Nguy cơ cao — cần nhập viện, hồi sức tích cực, nội soi sớm trong vòng 24h (càng sớm càng tốt nếu huyết động không ổn)`,
+  oakland: (t) => t<=8 ? `Nguy cơ biến chứng nghiêm trọng trong 28 ngày thấp (1–5%) — có thể xuất viện an toàn, theo dõi/nội soi ngoại trú (ACG 2023)` : `⚠ Oakland &gt;8 — nguy cơ tăng, cân nhắc nhập viện theo dõi/nội soi; kết hợp đánh giá lâm sàng`,
   rockallpre: (t) => t===0 ? `Nguy cơ tử vong/tái xuất huyết rất thấp (điểm trước nội soi)` : t<=2 ? `Nguy cơ thấp (điểm trước nội soi)` : `Nguy cơ cao (điểm trước nội soi) — cần đánh giá khẩn, tính lại điểm đầy đủ sau nội soi`,
   rockallfull: (t) => t<=2 ? `Nguy cơ thấp — tử vong &lt;5%, có thể cân nhắc xuất viện sớm nếu ổn định` : t<=5 ? `Nguy cơ trung bình — tử vong ~5-15%, cần theo dõi sát tại bệnh viện` : `⚠ Nguy cơ cao — tử vong &gt;15-40% tùy điểm, cần hồi sức tích cực/ICU và theo dõi sát nguy cơ tái xuất huyết`,
   kocher: (t) => t===0 ? `Nguy cơ nhiễm trùng khớp rất thấp (&lt;3%)` : t===1 ? `Nguy cơ thấp (~3%) — theo dõi sát, cân nhắc chọc dò nếu nghi ngờ lâm sàng cao` : t===2 ? `Nguy cơ trung bình (~40%) — cân nhắc chọc dò dịch khớp` : t===3 ? `⚠ Nguy cơ cao (~93%) — khuyến cáo chọc dò dịch khớp khẩn cấp` : `⚠ Nguy cơ rất cao (&gt;99%) — xử trí như viêm khớp nhiễm trùng cho đến khi loại trừ`,
@@ -1789,9 +1790,10 @@ ${rt(["Chi tiết"],[
       <ol>
         <li><b>Statin</b> cường độ phù hợp nguy cơ. Cường độ cao: <b>atorvastatin</b> 40–80 mg, <b>rosuvastatin</b> 20–40 mg.</li>
         <li>Chưa đạt đích → thêm <b>ezetimibe</b> 10 mg.</li>
-        <li>Vẫn cao / không dung nạp statin → <b>PCSK9i</b> (<b>alirocumab</b>, <b>evolocumab</b>) hoặc <b>inclisiran</b>.</li>
+        <li>Vẫn cao / không dung nạp statin → <b>PCSK9i</b> (<b>alirocumab</b>, <b>evolocumab</b>) hoặc <b>inclisiran</b> (thay thế PCSK9i, tiêm 2 lần/năm sau liều nạp); hoặc <b>Bempedoic acid</b> 180mg uống 1 lần/ngày — theo guideline 2026 ACC/AHA, nay là lựa chọn không-statin hàng đầu (bằng chứng CLEAR Outcomes giảm biến cố tim mạch), đặc biệt hữu ích khi không dung nạp statin (không gây đau cơ do chỉ hoạt hóa ở gan, không ở cơ) — có thể phối hợp cùng ezetimibe/PCSK9i.</li>
         <li>TG rất cao: kiểm soát ĐTĐ, rượu, chế độ ăn; fibrate/icosapent theo chỉ định CV.</li>
       </ol>
+      <div class="alert-box alert-info"><b>Cập nhật 2026 ACC/AHA:</b> khuyến cáo <b>xét nghiệm Lp(a) cho MỌI người trưởng thành ít nhất 1 lần</b> (không chỉ chọn lọc) — ngưỡng nguy cơ đáng kể ~125 nmol/L (50 mg/dL), nguy cơ cao rõ rệt ~250 nmol/L (100 mg/dL). Bổ sung đích <b>non-HDL-C</b> song song LDL-C: &lt;85 mg/dL (rất cao), &lt;100 mg/dL (cao), &lt;130 mg/dL (trung bình).</div>
       <ul>
         <li>Không ngừng statin chỉ vì ALT tăng nhẹ (&lt;3× ULN) không triệu chứng.</li>
         <li>Đau cơ: kiểm tra CK, tương tác (macrolide, azole…); có thể đổi statin / giảm liều / dùng cách ngày.</li>
@@ -1804,6 +1806,7 @@ ${rt(["Chi tiết"],[
         ["<b>Rosuvastatin</b>","5–10 mg (TB); 20–40 mg (cao)","Giảm liều suy thận nặng"],
         ["<b>Simvastatin</b>","20–40 mg tối","Tương tác mạnh — tránh &gt;40 mg"],
         ["<b>Ezetimibe</b>","10 mg ×1/ngày","Thêm khi chưa đạt LDL đích"],
+        ["<b>Bempedoic acid</b>","180 mg ×1/ngày","Không statin, không đau cơ; phối hợp được với statin/ezetimibe/PCSK9i"],
         ["<b>Fenofibrate</b>","145 mg ×1 (hoặc theo chế phẩm)","TG rất cao; thận trọng statin + fibrate"]
       ])}
     
@@ -1813,7 +1816,8 @@ ${rt(["Chi tiết"],[
         ["Statin + <b>gemfibrozil</b>","Tiêu cơ — tránh; <b>fenofibrate</b> thận trọng hơn"],
         ["Statin + <b>amiodarone</b> / <b>verapamil</b>","Giới hạn liều <b>simvastatin</b> theo nhãn"],
         ["Statin + rifampin","Giảm hiệu quả statin — theo dõi LDL"],
-        ["Cholestyramine","Giảm hấp thu thuốc khác — cách giờ uống"]
+        ["Cholestyramine","Giảm hấp thu thuốc khác — cách giờ uống"],
+        ["<b>Bempedoic acid</b> + Pravastatin/Simvastatin","Giới hạn Pravastatin ≤40mg, Simvastatin ≤20mg khi phối hợp"]
       ])}
     `,
     khuyen_cao:`
@@ -2122,7 +2126,7 @@ ${rt(["Class"],[
       ${rt(["Liều thường dùng","Lưu ý"],[
         ["<b>Bisoprolol</b>","1.25–10 mg/ngày","Triệu chứng tắc nghẽn HCM"],
         ["<b>Verapamil</b>","120–480 mg/ngày chia liều","Khi không dung nạp beta-blocker"],
-        ["Mavacamten","Theo chuyên khoa / nhãn","CYP2C19; theo dõi EF"],
+        ["Mavacamten","Khởi đầu 5mg/ngày, chỉnh liều mỗi 4 tuần theo EF/triệu chứng/nồng độ thuốc (tối đa 15mg/ngày)","Chất nền CYP2C19 — tương tác nhiều thuốc; theo dõi EF định kỳ (REMS), ngừng nếu EF<50%"],
         ["Thuốc HF","Như phác đồ suy tim","Khi EF giảm / DCM"]
       ])}
     `,
@@ -2428,6 +2432,8 @@ ${rt(["Chi tiết"],[
         ["<b>Dapagliflozin</b>","10 mg ×1","HF/CKD/ĐTĐ theo chỉ định"],
         ["<b>Semaglutide</b> (tiêm)","0.25 mg/tuần → 0.5 → 1 mg (hoặc cao hơn theo nhãn)","Buồn nôn khi tăng liều; CĐ MEN2/MTC"],
         ["<b>Liraglutide</b>","0.6 → 1.2 → 1.8 mg/ngày","CV benefit"],
+        ["<b>Tirzepatide</b> (GIP/GLP-1 kép)","2.5 mg/tuần → tăng mỗi 4 tuần → tối đa 15 mg/tuần","Giảm cân/HbA1c mạnh hơn GLP-1 đơn thuần; buồn nôn khi tăng liều nhanh"],
+        ["<b>Finerenone</b> (MRA không steroid)","10–20 mg/ngày theo eGFR","ĐTĐ+CKD có albumin niệu; theo dõi Kali máu, chống chỉ định eGFR&lt;25"],
         ["<b>Insulin</b> glargine","Khởi ~10 ĐV/ngày hoặc 0.1–0.2 ĐV/kg","Chỉnh theo ĐH đói"],
         ["<b>Insulin</b> nhanh (bữa ăn)","Theo carb/ĐH","Giáo dục hạ ĐH"]
       ])}
@@ -3211,7 +3217,7 @@ ${rt(["Chi tiết"],[
         ["NaCl 0.9%","1–2 L rồi duy trì theo tưới máu","Nặng / triệu chứng"],
         ["Calcitonin","4–8 IU/kg SC q12h ngắn ngày","Tác dụng nhanh, ngắn"],
         ["Zoledronate","4 mg IV (theo eGFR)","Hạ Ca kéo dài"],
-        ["Denosumab","Theo chỉ định","Khi bisphosphonate CĐ"]
+        ["Denosumab","120 mg SC ngày 1, 8, 15, 29 rồi mỗi 4 tuần (tăng Ca do ác tính)","Khi Bisphosphonate chống chỉ định (suy thận nặng) hoặc thất bại; theo dõi hạ Canxi máu sau tiêm"]
       ])}
     `,
     khuyen_cao:`
@@ -3404,7 +3410,7 @@ ${rt(["Chi tiết"],[
 },
 {
   spec:"tieu_hoa", id:"gib", emoji:"🩸", short:"XHTH", title:"Xuất huyết tiêu hóa",
-  guidelines:["ACG 2021 (XHTH trên không do giãn TM)","Baveno VII 2022 (XHTH do giãn TM)","ACG 2016 (XHTH dưới)"],
+  guidelines:["ACG 2021 (XHTH trên không do giãn TM)","Baveno VII 2022 (XHTH do giãn TM)","ACG 2023 (XHTH dưới — cập nhật)"],
   sections:{
     dinh_nghia:`
       <p>Xuất huyết tiêu hóa (XHTH) phân loại theo vị trí giải phẫu tương đối với góc Treitz:</p>
@@ -3442,7 +3448,19 @@ ${rt(["Chi tiết"],[
         {label:"Chẩn đoán qua nội soi", options:[{text:"Mallory-Weiss/không thấy tổn thương/không dấu hiệu chảy máu (0 điểm)",pts:0},{text:"Chẩn đoán khác (loét, viêm trợt...) (1đ)",pts:1},{text:"Ung thư đường tiêu hóa trên (2đ)",pts:2}]},
         {label:"Dấu hiệu chảy máu gần đây trên nội soi", options:[{text:"Không có/chỉ có chấm đen đáy ổ loét (0 điểm)",pts:0},{text:"Máu trong lòng ống tiêu hóa/cục máu đông bám/mạch máu lộ hoặc đang chảy (2đ)",pts:2}]}
       ])}
-      <p>Nội soi tiêu hóa trên trong vòng <b>24 giờ</b> ở hầu hết trường hợp XHTH trên; <b>trong 12 giờ</b> nếu huyết động không ổn/nghi xuất huyết do giãn tĩnh mạch. XHTH dưới ổn định: nội soi đại tràng có chuẩn bị trong vòng 24–48h.</p>`,
+      <div class="subhead">🧮 Thang điểm Oakland — phân tầng nguy cơ XHTH DƯỚI (xuất viện an toàn)</div>
+      <p>Công cụ tương ứng GBS nhưng dành riêng cho XHTH dưới — dùng tại thời điểm tiếp nhận để xác định bệnh nhân nguy cơ thấp có thể xuất viện, theo dõi ngoại trú (ACG 2023).</p>
+      ${scr("oakland","Thang điểm Oakland (XHTH dưới)",[
+        {label:"Tuổi", options:[{text:"&lt;40 (0 điểm)",pts:0},{text:"40–69 (1đ)",pts:1},{text:"≥70 (2đ)",pts:2}]},
+        {label:"Giới tính", options:[{text:"Nữ (0 điểm)",pts:0},{text:"Nam (1đ)",pts:1}]},
+        {label:"Tiền sử nhập viện vì XHTH dưới trước đây", options:[{text:"Không (0 điểm)",pts:0},{text:"Có (1đ)",pts:1}]},
+        {label:"Thăm trực tràng", options:[{text:"Không có máu (0 điểm)",pts:0},{text:"Có máu (1đ)",pts:1}]},
+        {label:"Mạch (lần/phút)", options:[{text:"&lt;70 (0 điểm)",pts:0},{text:"70–89 (1đ)",pts:1},{text:"90–109 (2đ)",pts:2},{text:"≥110 (3đ)",pts:3}]},
+        {label:"Huyết áp tâm thu (mmHg)", options:[{text:"≥160 (0 điểm)",pts:0},{text:"130–159 (2đ)",pts:2},{text:"120–129 (3đ)",pts:3},{text:"90–119 (4đ)",pts:4},{text:"50–89 (5đ)",pts:5}]},
+        {label:"Hemoglobin (g/dL)", options:[{text:"≥16.0 (0 điểm)",pts:0},{text:"13.0–15.9 (4đ)",pts:4},{text:"11.0–12.9 (8đ)",pts:8},{text:"9.0–10.9 (13đ)",pts:13},{text:"7.0–8.9 (17đ)",pts:17},{text:"3.6–6.9 (22đ)",pts:22}]}
+      ])}
+      <div class="alert-box alert-info"><b>Oakland ≤8</b>: nguy cơ biến chứng nghiêm trọng (tái xuất huyết, cần truyền máu/can thiệp, tử vong) trong 28 ngày rất thấp (1–5%) — có thể xuất viện an toàn, theo dõi ngoại trú theo ACG 2023. Thang điểm hỗ trợ chứ không thay thế đánh giá lâm sàng.</div>
+      <p>Nội soi tiêu hóa trên trong vòng <b>24 giờ</b> ở hầu hết trường hợp XHTH trên; <b>trong 12 giờ</b> nếu huyết động không ổn/nghi xuất huyết do giãn tĩnh mạch. XHTH dưới ổn định huyết động: nội soi đại tràng KHÔNG cần cấp cứu — thực hiện trong vòng <b>24–14 ngày</b> đều cho kết cục tương đương (không cải thiện tái xuất huyết/tử vong khi làm sớm hơn 24h so với muộn hơn tới 14 ngày, miễn huyết động ổn); có thể bỏ qua nội soi lại nếu đã có nội soi đại tràng chất lượng tốt trong 12 tháng qua chỉ thấy túi thừa, không tân sinh. XHTH dưới huyết động KHÔNG ổn/chảy máu đang hoạt động rõ trên lâm sàng: <b>CT mạch máu (CTA) là xét nghiệm chẩn đoán hình ảnh ĐẦU TIÊN</b> (không phải nội soi) — nếu CTA phát hiện thoát mạch, chuyển ngay chụp mạch số hóa xóa nền (DSA) can thiệp tắc mạch trong vòng 90 phút (tỷ lệ cầm máu ~98%).</p>`,
     dieu_tri:`
       <div class="subhead">Hồi sức ban đầu (mọi trường hợp XHTH cấp)</div>
       <ul>
@@ -3460,7 +3478,11 @@ ${rt(["Chi tiết"],[
       <div class="subhead">XHTH do giãn tĩnh mạch thực quản-dạ dày (xơ gan)</div>
       <p>Xem chi tiết đầy đủ tại bài <b>"Xơ gan & Biến chứng"</b> — tóm tắt: kháng sinh dự phòng (<b>ceftriaxone</b>) + thuốc vận mạch tạng (terlipressin/octreotide) ngay khi nhập viện + nội soi cấp cứu trong 12h để thắt vòng cao su/chích xơ.</p>
       <div class="subhead">XHTH dưới</div>
-      <p>Đa số tự cầm; ổn định huyết động → nội soi đại tràng có chuẩn bị ruột trong 24–48h; can thiệp cầm máu qua nội soi (kẹp clip, tiêm, đốt) nếu xác định được nguồn chảy máu đang hoạt động; chụp mạch số hóa xóa nền (DSA) can thiệp tắc mạch hoặc phẫu thuật nếu nội soi thất bại/không xác định được nguồn chảy máu và huyết động không ổn.</p>
+      <p>Đa số (~80–85%) tự cầm máu tự nhiên. <b>Phân tầng nguy cơ bằng thang điểm Oakland</b> (xem mục chẩn đoán) ngay khi tiếp nhận — Oakland ≤8 có thể xuất viện, chẩn đoán ngoại trú.</p>
+      <p><b>Huyết động ổn định:</b> nội soi đại tràng có chuẩn bị ruột — KHÔNG cần làm cấp cứu trong 24h, thực hiện trong vòng 24 giờ đến 14 ngày cho kết cục tương đương nhau (ACG 2023); can thiệp cầm máu qua nội soi (kẹp clip, tiêm, đốt) nếu xác định được nguồn chảy máu đang hoạt động.</p>
+      <p><b>Huyết động không ổn/chảy máu ồ ạt đang tiếp diễn:</b> <b>CT mạch máu (CTA) là xét nghiệm hình ảnh học ĐẦU TIÊN</b> (ưu tiên trước nội soi) để định vị nguồn chảy máu — nếu dương tính (thấy thoát mạch), chuyển ngay chụp mạch số hóa xóa nền (DSA) can thiệp tắc mạch chọn lọc (lý tưởng trong 90 phút sau CTA dương tính); phẫu thuật nếu can thiệp mạch thất bại/không khả thi và huyết động vẫn không ổn.</p>
+      <p><b>Kháng đông:</b> ở bệnh nhân đang dùng kháng vitamin K (warfarin) hoặc DOAC có XHTH đe dọa tính mạng, cân nhắc dùng thuốc trung hòa/đảo ngược (Vitamin K + phức hợp prothrombin cô đặc cho warfarin; Andexanet alfa/Idarucizumab tùy loại DOAC nếu có sẵn) — cân bằng với nguy cơ huyết khối nền; XHTH nhẹ, Oakland thấp có thể tiếp tục kháng đông không cần ngừng.</p>
+      <p>Nguyên nhân thường gặp cần xử trí riêng: túi thừa đại tràng (thường tự cầm, kẹp clip nếu xác định được mạch máu lộ), loạn sản mạch máu/angiodysplasia (đốt điện/argon plasma), chảy máu sau cắt polyp (kẹp clip/tiêm adrenaline), trĩ (thường tự giới hạn, điều trị tại chỗ), viêm đại tràng do xạ trị (argon plasma).</p>
       <div class="subhead">💊 Liều dùng cụ thể</div>
       ${rt(["Liều dùng","Lưu ý"],[
         ["<b>Pantoprazole</b>/Esomeprazole (PPI TM trước nội soi)","80mg TM bolus → truyền 8mg/giờ × 72 giờ (hoặc 40mg TM×2 lần/ngày nếu không có bơm tiêm truyền liên tục)","chuyển uống sau khi ổn định lâm sàng và ngưng truyền TM"],
@@ -3474,6 +3496,9 @@ ${rt(["Chi tiết"],[
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Glasgow-Blatchford=0: có thể điều trị ngoại trú, không cần nhập viện/nội soi cấp cứu",'<span class="badge badge-I">I</span>'],
+        ["Oakland ≤8: có thể xuất viện an toàn ở XHTH dưới, theo dõi ngoại trú",'<span class="badge badge-IIa">IIa</span>'],
+        ["CTA là xét nghiệm hình ảnh đầu tiên khi XHTH dưới huyết động không ổn/chảy máu ồ ạt",'<span class="badge badge-I">I</span>'],
+        ["Nội soi đại tràng cấp cứu trong 24h thường quy cho mọi XHTH dưới ổn định (thay vì trong 24h–14 ngày)",'<span class="badge badge-III">III</span>'],
         ["PPI liều cao TM trước nội soi ở XHTH trên nghi do loét",'<span class="badge badge-I">I</span>'],
         ["Nội soi trong 24h (12h nếu nghi giãn TM/huyết động không ổn)",'<span class="badge badge-I">I</span>'],
         ["Chiến lược truyền máu hạn chế (ngưỡng Hb&lt;7g/dL) ở đa số bệnh nhân",'<span class="badge badge-I">I</span>'],
@@ -3481,7 +3506,7 @@ ${rt(["Chi tiết"],[
         ["Nội soi cấp cứu ngay lập tức (&lt;6h) thường quy cho mọi XHTH trên ổn định huyết động",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"ACG Clinical Guideline: Upper GI and Ulcer Bleeding 2021; Baveno VII Consensus on Portal Hypertension 2022; ACG Clinical Guideline: Acute Lower GI Bleeding 2016"
+  source:"ACG Clinical Guideline: Upper GI and Ulcer Bleeding 2021; Baveno VII Consensus on Portal Hypertension 2022; Kherad O et al. Management of Patients With Acute Lower Gastrointestinal Bleeding: An Updated ACG Guideline, Am J Gastroenterol 2023"
 },
 {
   spec:"tieu_hoa", id:"pud", emoji:"🩹", short:"Loét DD-TT", title:"Loét dạ dày-tá tràng & H. pylori",
@@ -3634,7 +3659,7 @@ ${rt(["Class"],[
 },
 {
   spec:"tieu_hoa", id:"ibd", emoji:"🔥", short:"IBD", title:"Viêm ruột mạn (Crohn/Viêm loét ĐT)",
-  guidelines:["ACG UC/Crohn","AGA","ECCO 2024 (tham chiếu)","Tóm tắt pocket"],
+  guidelines:["ACG 2025 (UC — cập nhật)","ACG 2025 (Crohn — cập nhật)","ECCO 2024/2025 (tham chiếu)","Tóm tắt pocket"],
   sections:{
     dinh_nghia:`
       <p>Bệnh viêm ruột mạn (IBD) gồm 2 thể chính, tiến triển từng đợt-thuyên giảm mạn tính do rối loạn đáp ứng miễn dịch niêm mạc ruột:</p>
@@ -3645,20 +3670,30 @@ ${rt(["Class"],[
     chan_doan:`
       <p>Nội soi đại-trực tràng kèm sinh thiết là tiêu chuẩn chẩn đoán: UC cho hình ảnh viêm liên tục từ trực tràng; Crohn cho tổn thương dạng vệt, loét sâu, hình ảnh "đá lát" (cobblestoning). <b>Calprotectin phân</b> tăng cao hỗ trợ chẩn đoán và theo dõi đáp ứng điều trị không xâm lấn. Cộng hưởng từ ruột non (MR enterography) đánh giá tổn thương ruột non/xuyên thành/biến chứng (hẹp, rò) trong Crohn. Luôn loại trừ viêm đại tràng nhiễm trùng (cấy phân, độc tố C. difficile) trước khi bắt đầu ức chế miễn dịch.</p>`,
     dieu_tri:`
-      <div class="subhead">Viêm loét đại tràng (UC) — nhẹ đến trung bình</div>
+      <div class="subhead">Bước 1</div>
       <ul>
-        <li><b>Bước 1:</b> 5-ASA (mesalamine) uống ± dạng đặt trực tràng/thụt — điều trị đầu tay cho cảm ứng lẫn duy trì lui bệnh</li>
+        <li><b>Bước 1:</b> 5-ASA (mesalamine) uống ± dạng đặt trực tràng/thụt — điều trị đầu tay cho cảm ứng lẫn duy trì lui bệnh; viêm trực tràng đơn thuần nhẹ-trung bình có thể dùng <b>Tacrolimus dạng đặt/thoa tại chỗ</b> nếu không đáp ứng 5-ASA (khuyến cáo mới ACG 2025)</li>
         <li><b>Bước 2</b> (không đáp ứng 5-ASA): corticosteroid đường uống để cảm ứng lui bệnh (<b>không dùng duy trì dài hạn</b>) + bắt đầu cân nhắc bước 3 song song nếu phụ thuộc/kháng steroid</li>
       </ul>
       <div class="subhead">UC trung bình-nặng hoặc phụ thuộc/kháng corticosteroid</div>
-      <p>Sinh học/thuốc nhắm đích: <b>anti-TNF</b> (<b>infliximab</b>, <b>adalimumab</b>), <b>vedolizumab</b> (chọn lọc ruột), <b>ustekinumab</b>, hoặc <b>tofacitinib/upadacitinib</b> (JAK inhibitor) — lựa chọn theo đặc điểm bệnh nhân, bệnh đồng mắc, nguy cơ nhiễm trùng/huyết khối.</p>
+      <p>Nhiều nhóm sinh học/thuốc nhắm đích hiện có, không còn phân cấp bắt buộc theo thứ tự — chọn theo đặc điểm bệnh nhân, bệnh đồng mắc, nguy cơ nhiễm trùng/huyết khối/tim mạch, và mức độ hiệu quả mong muốn:</p>
+      <ul>
+        <li><b>Anti-TNF:</b> infliximab, adalimumab, golimumab (có dạng <b>infliximab tiêm dưới da</b> để duy trì sau cảm ứng TM — mới)</li>
+        <li><b>Kháng IL-23 (p19)</b> — hiệu quả cao, hồ sơ an toàn tốt: <b>risankizumab</b>, <b>mirikizumab</b>, <b>guselkumab</b> (ACG 2025 khuyến cáo mạnh cho cả cảm ứng lẫn duy trì)</li>
+        <li><b>Kháng IL-12/23:</b> ustekinumab</li>
+        <li><b>Chọn lọc ruột (anti-integrin):</b> vedolizumab (có dạng tiêm dưới da duy trì)</li>
+        <li><b>Điều hòa thụ thể S1P (uống, không cần cảm ứng TM):</b> <b>ozanimod</b>, <b>etrasimod</b> — lựa chọn tiện lợi tuyến đầu cho bệnh nhân ưu tiên đường uống</li>
+        <li><b>JAK inhibitor:</b> tofacitinib, <b>upadacitinib</b> — hiệu quả cao trong các thử nghiệm so sánh gián tiếp, cân nhắc cảnh báo hộp đen tim mạch/huyết khối/ung thư ở người ≥50 tuổi nguy cơ tim mạch</li>
+      </ul>
+      <div class="alert-box alert-info"><b>ACG 2025:</b> Ở bệnh nhân đã thất bại anti-TNF trước đó, ưu tiên <b>risankizumab hơn ustekinumab</b> nếu cả hai đều là lựa chọn khả thi (hiệu quả tốt hơn trong nhóm đã thất bại anti-TNF).</div>
       <div class="subhead">UC nặng/bùng phát cấp cần nhập viện</div>
       <p>Corticosteroid tiêm tĩnh mạch liều cao → nếu không đáp ứng sau 3 ngày: "cứu vãn" bằng <b>infliximab</b> hoặc <b>cyclosporine</b> TM → phẫu thuật cắt đại tràng nếu vẫn kháng trị hoặc biến chứng nặng (phình đại tràng nhiễm độc, thủng).</p>
       <div class="subhead">Bệnh Crohn</div>
       <ul>
         <li>5-ASA hiệu quả hạn chế trong Crohn (khác UC) — không phải lựa chọn đầu tay chính</li>
-        <li>Corticosteroid cảm ứng lui bệnh cho đợt cấp nhẹ-trung bình, không dùng duy trì</li>
-        <li><b>Chiến lược "top-down" sớm bằng sinh học (anti-TNF)</b> được khuyến cáo ở bệnh nhân nguy cơ cao (tổn thương xuyên thành sâu, bệnh quanh hậu môn, khởi phát trẻ, cần corticosteroid sớm) thay vì chờ thất bại điều trị bước thang truyền thống — cải thiện kết cục dài hạn, giảm biến chứng/phẫu thuật</li>
+        <li>Corticosteroid cảm ứng lui bệnh cho đợt cấp nhẹ-trung bình (khuyến cáo giảm liều nhanh trong ≤3 tháng, không dùng duy trì) — chuyển nhanh sang thuốc tiết kiệm steroid</li>
+        <li><b>ACG 2025: chuyển dịch lớn khỏi chiến lược "step-up" truyền thống</b> — khuyến cáo KHÔNG bắt buộc chờ thất bại điều trị quy ước trước khi bắt đầu liệu pháp nâng cao (sinh học/JAK); <b>chiến lược "top-down" sớm</b> đặc biệt ưu tiên ở bệnh nhân nguy cơ cao (tổn thương xuyên thành sâu, bệnh quanh hậu môn, khởi phát trẻ, cần corticosteroid sớm) — cải thiện kết cục dài hạn, giảm biến chứng/phẫu thuật</li>
+        <li>Lựa chọn sinh học/JAK cho Crohn trung bình-nặng: <b>anti-TNF</b> (nền tảng, có dạng infliximab TDD duy trì mới), <b>vedolizumab</b> (TM cảm ứng, TM hoặc TDD duy trì), <b>ustekinumab</b>, <b>risankizumab</b> (ưu tiên hơn ustekinumab nếu đã thất bại anti-TNF), <b>mirikizumab</b>, <b>guselkumab</b>, hoặc <b>upadacitinib</b> (hiệu quả cả ở bệnh nhân đã thất bại anti-TNF)</li>
         <li>Thuốc điều hòa miễn dịch (azathioprine, 6-mercaptopurine, <b>methotrexate</b>) dùng phối hợp với sinh học (tăng hiệu quả, giảm kháng thể kháng thuốc) hoặc đơn trị duy trì sau cảm ứng bằng corticosteroid</li>
       </ul>
       <div class="subhead">Vai trò phẫu thuật</div>
@@ -3668,10 +3703,16 @@ ${rt(["Class"],[
       ${rt(["Liều dùng","Lưu ý"],[
         ["Mesalamine (UC)","2.4–4.8g/ngày uống ± 1g thụt/đặt tối","liều cao hơn cho bệnh lan rộng; kết hợp uống+tại chỗ hiệu quả hơn đơn trị"],
         ["<b>Prednisone</b> (cảm ứng)","40–60mg/ngày → giảm dần trong 8–12 tuần","không duy trì dài hạn; bổ sung canxi-vitamin D, tầm soát loãng xương nếu dùng lặp lại"],
-        ["<b>Infliximab</b> (anti-TNF)","5mg/kg TM tuần 0,2,6 → mỗi 8 tuần duy trì","phối hợp azathioprine giảm kháng thể kháng thuốc; theo dõi phản ứng truyền"],
+        ["<b>Infliximab</b> (anti-TNF)","5mg/kg TM tuần 0,2,6 → mỗi 8 tuần duy trì (hoặc chuyển TDD duy trì sau cảm ứng)","phối hợp azathioprine giảm kháng thể kháng thuốc; theo dõi phản ứng truyền"],
         ["<b>Adalimumab</b> (anti-TNF)","160mg→80mg→40mg TDD mỗi 2 tuần","có thể tự tiêm tại nhà"],
+        ["<b>Risankizumab</b> (kháng IL-23)","UC: 1200mg TM tuần 0,4,8 → 180 hoặc 360mg TDD mỗi 8 tuần. Crohn: 600mg TM tuần 0,4,8 → liều duy trì TDD tương tự","ưu tiên hơn ustekinumab nếu đã thất bại anti-TNF"],
+        ["<b>Mirikizumab</b> (kháng IL-23, UC)","300mg TM mỗi 4 tuần ×3 liều (cảm ứng) → 200mg TDD mỗi 4 tuần (duy trì)","tái cảm ứng TM nếu mất đáp ứng khi duy trì"],
+        ["<b>Guselkumab</b> (kháng IL-23)","200mg TM tuần 0,4,8 (cảm ứng) → 100mg TDD mỗi 8 tuần hoặc 200mg TDD mỗi 4 tuần (duy trì)","UC và Crohn"],
+        ["<b>Upadacitinib</b> (JAK inhibitor)","Cảm ứng 45mg uống/ngày ×8–12 tuần → duy trì 15–30mg/ngày","hiệu quả cả khi đã thất bại anti-TNF; cảnh báo hộp đen tim mạch/huyết khối"],
+        ["<b>Ozanimod</b> (S1P modulator, UC)","Chuẩn độ 7 ngày (0.23mg→0.46mg→0.92mg) rồi duy trì 0.92mg/ngày uống","cần ECG/nhãn khoa trước dùng; kiểm tra chức năng gan"],
+        ["<b>Etrasimod</b> (S1P modulator, UC)","2mg uống 1 lần/ngày, không cần chuẩn độ","đơn giản hơn ozanimod; theo dõi nhịp tim liều đầu nếu nguy cơ tim mạch"],
         ["Azathioprine (điều hòa miễn dịch)","2–2.5mg/kg/ngày","kiểm tra hoạt độ TPMT/NUDT15 trước dùng nếu có thể; theo dõi công thức máu định kỳ"],
-        ["Vedolizumab (chọn lọc ruột)","300mg TM tuần 0,2,6 → mỗi 8 tuần","hồ sơ an toàn nhiễm trùng toàn thân thấp hơn anti-TNF do tác dụng chọn lọc ruột"]
+        ["Vedolizumab (chọn lọc ruột)","300mg TM tuần 0,2,6 → mỗi 8 tuần (hoặc chuyển TDD duy trì)","hồ sơ an toàn nhiễm trùng toàn thân thấp hơn anti-TNF do tác dụng chọn lọc ruột"]
       ])}
       <div class="age-tag">Người cao tuổi/thai kỳ</div>
       <p>Người cao tuổi khởi phát IBD: ưu tiên vedolizumab/thuốc chọn lọc ruột nếu có thể do ít ảnh hưởng miễn dịch toàn thân hơn; anti-TNF và hầu hết sinh học tương đối an toàn trong thai kỳ (tiếp tục điều trị duy trì bệnh ổn định thường an toàn hơn để bệnh bùng phát) — cần hội chẩn chuyên khoa để cá thể hóa thời điểm liều cuối trước sinh.</p>
@@ -3680,13 +3721,14 @@ ${rt(["Class"],[
     khuyen_cao:`
       ${rt(["Mức"],[
         ["5-ASA là điều trị đầu tay cảm ứng và duy trì UC nhẹ-trung bình",'<span class="badge badge-I">I</span>'],
-        ["Sinh học sớm (top-down) cho Crohn nguy cơ cao thay vì chờ thất bại điều trị bước thang",'<span class="badge badge-IIa">IIa</span>'],
+        ["Không bắt buộc chờ thất bại điều trị quy ước trước khi bắt đầu liệu pháp nâng cao (sinh học/JAK) ở Crohn nguy cơ cao",'<span class="badge badge-IIa">IIa</span>'],
+        ["Risankizumab ưu tiên hơn ustekinumab ở bệnh nhân đã thất bại anti-TNF",'<span class="badge badge-IIa">IIa</span>'],
         ["Corticosteroid TM + cứu vãn <b>infliximab</b>/cyclosporine cho UC nặng không đáp ứng sau 3 ngày",'<span class="badge badge-I">I</span>'],
         ["Phối hợp thuốc điều hòa miễn dịch với anti-TNF để giảm kháng thể kháng thuốc",'<span class="badge badge-IIa">IIa</span>'],
         ["Corticosteroid duy trì dài hạn để kiểm soát bệnh",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"ACG Clinical Guideline: Ulcerative Colitis in Adults 2019; ACG Clinical Guideline: Crohn's Disease in Adults 2018; AGA Clinical Practice Guidelines on Pharmacologic Management 2021"
+  source:"ACG Clinical Guideline Update: Ulcerative Colitis in Adults 2025; ACG Clinical Guideline Update: Crohn's Disease in Adults 2025; AGA Living Guideline on Pharmacologic Management of UC 2024"
 },
 {
   spec:"tieu_hoa", id:"cirrhosis", emoji:"🫘", short:"Xơ gan", title:"Xơ gan & Biến chứng",
@@ -5729,10 +5771,17 @@ ${rt(["Hướng xử trí"],[
 },
 {
   spec:"tim_mach", id:"pericarditis", emoji:"🫧", short:"VMNT/CET", title:"Viêm màng ngoài tim cấp & Chèn ép tim",
-  guidelines:["ESC Pericardial Diseases 2015"],
+  guidelines:["ESC 2025 (Myocarditis & Pericarditis)","ACC 2025 Concise Clinical Guidance (Pericarditis)"],
   sections:{
     dinh_nghia:`
       <p>Viêm màng ngoài tim cấp là viêm lớp màng bao quanh tim, thường vô căn/do virus ở nước phát triển, do lao ở vùng dịch tễ lao cao. Tràn dịch màng ngoài tim lượng nhiều/tích tụ nhanh có thể gây <b>chèn ép tim cấp</b> — cấp cứu tim mạch thực sự.</p>
+      <div class="subhead">Phân loại theo thời gian (ACC 2025)</div>
+      ${rt(["Định nghĩa"],[
+        ["Cấp tính (acute)","Đợt viêm mới, &lt;6 tuần"],
+        ["Dai dẳng (incessant)","Kéo dài &gt;4–6 tuần nhưng &lt;3 tháng, không có giai đoạn hết triệu chứng hoàn toàn"],
+        ["Tái phát (recurrent)","Đợt mới sau khi đã hết triệu chứng hoàn toàn ≥4–6 tuần"],
+        ["Mạn tính (chronic)","Kéo dài &gt;3 tháng"]
+      ])}
       <div class="subhead">Chẩn đoán viêm màng ngoài tim cấp (≥2/4 tiêu chuẩn)</div>
       <ul>
         <li>Đau ngực kiểu màng ngoài tim (tăng khi hít sâu/nằm ngửa, giảm khi ngồi cúi ra trước).</li>
@@ -5742,30 +5791,35 @@ ${rt(["Hướng xử trí"],[
       </ul>`,
     chan_doan:`
       <p>Siêu âm tim là công cụ đầu tay đánh giá lượng dịch và dấu hiệu huyết động (xẹp nhĩ/thất phải thì tâm trương, thay đổi hô hấp dòng chảy qua van hai lá/ba lá).</p>
-      <div class="alert-box alert-danger">Tam chứng Beck (tụt huyết áp, tĩnh mạch cổ nổi, tiếng tim mờ) + mạch nghịch thường (pulsus paradoxus) gợi ý <b>chèn ép tim</b> — cần chọc dẫn lưu màng ngoài tim cấp cứu, không chờ hoàn tất xét nghiệm.</div>
-      <p>Tìm nguyên nhân: troponin/CRP, tầm soát lao nếu dịch tễ, tế bào học dịch màng tim nếu nghi ác tính, ANA nếu nghi bệnh mô liên kết.</p>`,
+      <div class="alert-box alert-danger">Tam chứng Beck (tụt huyết áp, tĩnh mạch cổ nổi, tiếng tim mờ) + mạch nghịch thường (pulsus paradoxus) gợi ý <b>chèn ép tim</b> — cần chọc dẫn lưu màng ngoài tim cấp cứu, không chờ hoàn tất xét nghiệm. ACC 2025: chèn ép tim nay được nhìn nhận là <b>quá trình động</b> phụ thuộc tốc độ tích dịch hơn là chỉ dựa ngưỡng thể tích tuyệt đối — kết hợp lâm sàng + hình ảnh học.</div>
+      <p>Tìm nguyên nhân: troponin/CRP, tầm soát lao nếu dịch tễ, tế bào học dịch màng tim nếu nghi ác tính, ANA nếu nghi bệnh mô liên kết. CT/CMR tim mạch không khuyến cáo thường quy cho mọi trường hợp — chỉ định chọn lọc khi cần đánh giá thêm nguyên nhân/mức độ viêm hoặc chuẩn bị can thiệp.</p>`,
     dieu_tri:`
 <ul>
-        <li>Viêm màng ngoài tim cấp không biến chứng: <b>NSAID liều cao</b> (ibuprofen hoặc <b>aspirin</b> nếu sau NMCT) + <b>colchicine</b> phối hợp ngay từ đầu — giảm tái phát rõ rệt so với <b>NSAID</b> đơn độc.</li>
-        <li>Hạn chế gắng sức thể lực đến khi hết triệu chứng và CRP về bình thường (thường ≥1 tháng, vận động viên cần lâu hơn).</li>
-        <li><b>Tránh corticoid toàn thân ở tuyến đầu</b> (trừ khi có chống chỉ định <b>NSAID</b>, bệnh mô liên kết, hoặc viêm màng ngoài tim do ure huyết) — corticoid sớm làm tăng nguy cơ tái phát.</li>
+        <li>Viêm màng ngoài tim cấp không biến chứng: <b>NSAID liều cao</b> (ibuprofen hoặc <b>aspirin</b> nếu sau NMCT/đang dùng kháng kết tập tiểu cầu) <b>+ colchicine phối hợp ngay từ đầu</b> (khuyến cáo mạnh I-A) — giảm tái phát rõ rệt so với NSAID đơn độc; kèm PPI bảo vệ dạ dày khi dùng NSAID/aspirin liều cao.</li>
+        <li>Hạn chế gắng sức thể lực đến khi hết triệu chứng và CRP về bình thường (thường ≥1 tháng, vận động viên cần lâu hơn — tới khi hết viêm hoàn toàn trên xét nghiệm/hình ảnh).</li>
+        <li><b>Tránh corticoid toàn thân ở tuyến đầu</b> (trừ khi có chống chỉ định NSAID, bệnh mô liên kết, viêm màng ngoài tim do ure huyết, hoặc thai kỳ) — corticoid sớm làm tăng nguy cơ tái phát; nếu cần dùng, ưu tiên liều thấp-trung bình và luôn phối hợp colchicine.</li>
         <li>Chèn ép tim: <b>chọc dẫn lưu màng ngoài tim</b> (dưới hướng dẫn siêu âm) cấp cứu; bù dịch thận trọng trong lúc chờ dẫn lưu để duy trì tiền tải.</li>
-        <li>Tái phát nhiều lần/kháng trị: cân nhắc <b>anakinra</b> (kháng IL-1) hoặc cắt màng ngoài tim ở trường hợp chọn lọc.</li>
+        <li><b>Tái phát/dai dẳng sau thất bại NSAID+colchicine (± corticosteroid):</b> <b>thuốc kháng IL-1</b> (anakinra hoặc rilonacept) — ACC 2025 khuyến cáo mạnh, xem là bước tiến quan trọng nhất so với guideline cũ, đặc biệt ở kiểu hình viêm rõ (CRP tăng/bắt thuốc trên CMR); cắt màng ngoài tim ở trường hợp thực sự kháng trị mọi biện pháp nội khoa.</li>
       </ul>
-    <div class="subhead">💊 Liều tham khảo</div>
+    <div class="subhead">💊 Liều tham khảo (ACC 2025)</div>
       ${rt(["Liều","Thời gian"],[
-        ["Ibuprofen","600mg ×3/ngày","1–2 tuần, giảm liều dần"],
-        ["<b>Colchicine</b>","0.5mg ×1–2/ngày (giảm nửa liều nếu <70kg)","3 tháng — giảm tái phát"],
-        ["<b>Aspirin</b> (nếu sau NMCT)","750–1000mg ×3/ngày","1–2 tuần"]
+        ["<b>Aspirin</b> (ưu tiên nếu kèm bệnh mạch vành)","500–1000mg ×3/ngày","Vài tuần (cấp) đến vài tháng (tái phát) — giảm liều dần hàng tuần"],
+        ["Ibuprofen","600–800mg ×3/ngày","Tương tự Aspirin — giảm liều dần hàng tuần"],
+        ["Indomethacin","25–50mg ×3/ngày","Tương tự — theo dõi chức năng thận"],
+        ["<b>Colchicine</b>","0.6mg ×2/ngày (0.6mg ×1/ngày nếu &lt;70kg hoặc suy gan/thận nặng)","<b>3 tháng</b> nếu đợt đầu, <b>6–12 tháng</b> nếu tái phát — là thuốc ngừng SAU CÙNG khi các thuốc khác đã ngừng"],
+        ["Prednisone (chỉ khi thất bại/chống chỉ định NSAID)","0.2–0.5mg/kg/ngày","Vài tuần rồi giảm liều rất chậm qua nhiều tháng — luôn phối hợp colchicine"],
+        ["<b>Anakinra</b> (kháng IL-1, tái phát kháng trị)","1–2mg/kg/ngày (tối đa 100mg/ngày) tiêm dưới da","≥12 tháng — bước tiến chính của guideline 2025"]
       ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["<b>NSAID</b> + <b>Colchicine</b> phối hợp ngay từ đầu cho viêm màng ngoài tim cấp",'<span class="badge badge-I">I</span>'],
         ["Chọc dẫn lưu màng ngoài tim cấp cứu khi có chèn ép tim",'<span class="badge badge-I">I</span>'],
+        ["Kháng IL-1 (anakinra/rilonacept) khi tái phát/dai dẳng sau thất bại điều trị bước 1",'<span class="badge badge-I">I</span>'],
+        ["CT tim mạch thường quy để đánh giá mọi trường hợp viêm màng ngoài tim",'<span class="badge badge-III">III</span>'],
         ["Corticoid toàn thân là điều trị đầu tay thường quy",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"ESC Guidelines for the diagnosis and management of pericardial diseases 2015"
+  source:"ESC Guidelines for the Management of Myocarditis and Pericarditis 2025; 2025 ACC Concise Clinical Guidance: Diagnosis and Management of Pericarditis"
 },
 {
   spec:"tim_mach", id:"htn_emergency", emoji:"🆘", short:"THA cấp cứu", title:"Tăng huyết áp cấp cứu (Hypertensive Emergency)",
@@ -5835,7 +5889,7 @@ ${rt(["Hướng xử trí"],[
 },
 {
   spec:"noi_tiet", id:"hyperprolactinemia", emoji:"🎗", short:"Tăng Prolactin", title:"Tăng Prolactin máu (Hyperprolactinemia)",
-  guidelines:["Endocrine Society 2011"],
+  guidelines:["Endocrine Society 2011","Pituitary Society International Consensus 2023"],
   sections:{
     dinh_nghia:`
       <p>Tăng Prolactin máu có thể do u tuyến yên tiết prolactin (prolactinoma — nguyên nhân u tuyến yên thường gặp nhất), thuốc (thuốc chống loạn thần, chống nôn nhóm đối kháng dopamin), suy giáp nguyên phát, suy thận, thai kỳ/cho con bú (sinh lý), hoặc chèn ép cuống tuyến yên bởi u không tiết.</p>
@@ -6435,7 +6489,7 @@ ${rt(["Hướng xử trí"],[
 },
 {
   spec:"tim_mach", id:"anaphylaxis", emoji:"🐝", short:"Sốc phản vệ", title:"Sốc phản vệ (Anaphylaxis)",
-  guidelines:["WAO 2020","AAAAI/ACAAI 2020"],
+  guidelines:["AAAAI/ACAAI Practice Parameter Update 2024","WAO 2020"],
   sections:{
     dinh_nghia:`
       <p>Phản vệ là phản ứng dị ứng toàn thân cấp tính, đe dọa tính mạng, khởi phát nhanh sau tiếp xúc dị nguyên (thức ăn, thuốc, côn trùng đốt, latex...) qua trung gian giải phóng hàng loạt histamine/tryptase từ tế bào mast/basophil.</p>`,
@@ -6462,7 +6516,7 @@ ${rt(["Hướng xử trí"],[
         <button type="button" class="dx-check-reset" onclick="resetDxAnaphylaxis()">↺ Đặt lại</button>
       </div>
       <p>Chẩn đoán chủ yếu dựa lâm sàng — <b>không chờ xét nghiệm để bắt đầu điều trị</b>. Tryptase huyết thanh (lấy trong 3 giờ đầu) có thể hỗ trợ xác nhận hồi cứu nhưng không cần thiết để quyết định xử trí cấp cứu.</p>
-      <div class="alert-box alert-danger">Phản vệ hai pha (biphasic reaction) có thể xảy ra sau 1–72 giờ (thường trong 8 giờ) dù đã xử trí ban đầu tốt — cần theo dõi tối thiểu 4–6 giờ (lâu hơn nếu phản ứng nặng/cần nhiều liều <b>adrenaline</b>) trước khi cho về.</div>`,
+      <div class="alert-box alert-danger">Phản vệ hai pha (biphasic reaction) có thể xảy ra sau 1–72 giờ (thường trong 8 giờ) dù đã xử trí ban đầu tốt. <b>Cập nhật 2024:</b> KHÔNG còn áp dụng thời gian theo dõi cố định cho mọi bệnh nhân — phân tầng theo yếu tố nguy cơ phản ứng 2 pha: phản ứng ban đầu nặng, cần nhiều liều adrenaline, hiệu áp rộng lúc vào, không rõ dị nguyên, biểu hiện da rõ. Có yếu tố nguy cơ → theo dõi ≥6 giờ (có thể lâu hơn/nhập viện); KHÔNG có yếu tố nguy cơ, đáp ứng tốt với 1 liều adrenaline, triệu chứng hết hoàn toàn → có thể xuất viện sớm hơn, không bắt buộc theo dõi kéo dài. KHÔNG khuyến cáo dùng kháng Histamine/corticoid thường quy chỉ để phòng ngừa phản ứng 2 pha (bằng chứng yếu).</div>`,
     dieu_tri:`
 <ul>
         <li><b>Adrenaline (<b>Epinephrine</b>) tiêm bắp mặt trước đùi là thuốc đầu tay, tiêm NGAY khi nghi ngờ</b> — không trì hoãn để chờ chẩn đoán chắc chắn hay xử trí thuốc khác trước; có thể lặp lại sau 5–15 phút nếu chưa cải thiện.</li>
@@ -6470,7 +6524,8 @@ ${rt(["Hướng xử trí"],[
         <li>Thở oxy, thiết lập đường truyền, bù dịch tinh thể nhanh nếu tụt huyết áp không đáp ứng <b>adrenaline</b> tiêm bắp.</li>
         <li>Thuốc hàng hai (KHÔNG thay thế <b>adrenaline</b>): kháng Histamine H1 (giảm mề đay/ngứa), corticoid (có thể giảm nguy cơ pha 2 dù chứng cứ còn hạn chế), khí dung giãn phế quản nếu co thắt phế quản.</li>
         <li>Phản vệ kháng trị/tụt HA dai dẳng: truyền <b>Adrenaline</b> tĩnh mạch liên tục tại đơn vị có theo dõi, glucagon TM nếu bệnh nhân đang dùng chẹn beta (giảm đáp ứng với <b>adrenaline</b>).</li>
-        <li>Kê đơn <b>bút tiêm <b>Adrenaline</b> tự động (auto-injector)</b> mang theo người + giáo dục sử dụng trước khi xuất viện; giới thiệu chuyên khoa dị ứng-miễn dịch để xác định dị nguyên và cân nhắc giải mẫn cảm.</li>
+        <li>Kê đơn <b>bút tiêm Adrenaline tự động (auto-injector)</b> mang theo người + giáo dục sử dụng trước khi xuất viện — hoặc <b>Neffy (adrenaline dạng xịt mũi, không cần kim tiêm)</b> nếu có sẵn, lựa chọn thay thế cho người sợ kim tiêm; giới thiệu chuyên khoa dị ứng-miễn dịch để xác định dị nguyên và cân nhắc giải mẫn cảm.</li>
+        <li><b>Cập nhật 2024:</b> KHÔNG bắt buộc mọi bệnh nhân đã tiêm adrenaline phải đến/nhập cấp cứu theo dõi — nếu đã tiêm adrenaline kịp thời, phản ứng không nặng, triệu chứng hết hoàn toàn và bệnh nhân ổn định, có thể không cần theo dõi tại cơ sở y tế kéo dài; quyết định dựa đáp ứng lâm sàng thực tế hơn là thủ tục cứng nhắc.</li>
       </ul>
     <div class="subhead">💊 Liều <b>Adrenaline</b></div>
       ${rt(["Liều","Đường dùng"],[
@@ -6485,7 +6540,7 @@ ${rt(["Hướng xử trí"],[
         ["Cho về ngay sau xử trí ban đầu không theo dõi phản ứng 2 pha",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"World Allergy Organization (WAO) Anaphylaxis Guidance 2020; AAAAI/ACAAI Practice Parameter 2020"
+  source:"Shaker MS et al. Anaphylaxis — A 2023 Practice Parameter Update, Systematic Review, and GRADE Analysis (AAAAI/ACAAI), J Allergy Clin Immunol 2024; World Allergy Organization (WAO) Anaphylaxis Guidance 2020"
 },
 {
   spec:"noi_tiet", id:"thyroiditis", emoji:"🦋", short:"Viêm tuyến giáp", title:"Viêm tuyến giáp (Thyroiditis)",
