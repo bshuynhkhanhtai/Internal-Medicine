@@ -2059,10 +2059,11 @@ ${rt(["Class"],[
     
 <div class="subhead">💊 Liều dùng chi tiết</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
-        ["Esmolol / <b>labetalol</b> IV","Theo protocol kiểm soát mạch & HA","Bóc tách cấp — đích theo ICU"],
-        ["Nicardipine / nitroprusside IV","Truyền chỉnh HA","Sau khi đã chẹn beta"],
+        ["Esmolol IV","Liều nạp 500 mcg/kg trong 1 phút, sau đó truyền 50–200 mcg/kg/phút","Bóc tách cấp — đích nhịp tim &lt;60/phút trước"],
+        ["<b>Labetalol</b> IV","Bolus 20mg, lặp lại 20–80mg mỗi 10 phút (tối đa 300mg) hoặc truyền 0.5–2mg/phút","Thay thế Esmolol — chẹn cả alpha/beta"],
+        ["Nicardipine IV","Khởi đầu 5mg/giờ, tăng 2.5mg/giờ mỗi 5–15 phút, tối đa 15mg/giờ","CHỈ thêm sau khi đã chẹn beta đủ — tránh phản xạ nhịp nhanh"],
         ["<b>Bisoprolol</b> uống","2.5–10 mg/ngày","Giãn ĐMC mạn / Marfan"],
-        ["<b>Losartan</b> / irbesartan","Liều THA đích","Marfan — giảm tốc độ giãn"]
+        ["<b>Losartan</b> / irbesartan","Liều THA đích (Losartan 50–100mg/ngày)","Marfan — giảm tốc độ giãn"]
       ])}
     `,
     khuyen_cao:`
@@ -2245,6 +2246,15 @@ ${rt(["Class"],[
         <li>Chỉnh theo kháng sinh đồ khi có kết quả (liên cầu, tụ cầu, enterococcus…).</li>
         <li>Thời gian thường <b>2–6 tuần</b> đường tĩnh mạch, tùy vi khuẩn và biến chứng.</li>
       </ul>
+    
+<div class="subhead">💊 Phác đồ kháng sinh theo tác nhân thường gặp (van tự nhiên)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["Thực nghiệm ban đầu (chưa rõ tác nhân)","<b>Ampicillin-sulbactam</b> 3g TM mỗi 6h + <b>Gentamicin</b> 3mg/kg/ngày chia liều, hoặc <b>Vancomycin</b> 15–20mg/kg TM mỗi 8–12h + <b>Ceftriaxone</b> 2g/ngày","Điều chỉnh ngay khi có kết quả cấy máu/kháng sinh đồ"],
+        ["<i>Streptococcus</i> nhạy Penicillin","Penicillin G 12–18 triệu đơn vị/ngày truyền liên tục hoặc chia liều, hoặc Ceftriaxone 2g/ngày × 4 tuần","Có thể rút ngắn còn 2 tuần nếu phối hợp Gentamicin và không biến chứng"],
+        ["<i>Staphylococcus aureus</i> nhạy Methicillin (MSSA)","Nafcillin/Oxacillin 2g TM mỗi 4h × 4–6 tuần","Cefazolin 2g mỗi 8h là thay thế nếu dị ứng Penicillin nhẹ"],
+        ["MRSA","Vancomycin 15–20mg/kg TM mỗi 8–12h (đích đáy 15–20mg/L) hoặc Daptomycin 8–10mg/kg/ngày × 6 tuần","Daptomycin liều cao hơn liều thông thường do IE"],
+        ["<i>Enterococcus</i>","Ampicillin 2g TM mỗi 4h + Ceftriaxone 2g mỗi 12h (phối hợp beta-lactam kép) × 6 tuần, hoặc Ampicillin + Gentamicin nếu nhạy","Phối hợp kép tránh độc thận từ Gentamicin kéo dài"]
+      ])}
 
       <div class="subhead">Khi nào mổ</div>
       <ul>
@@ -2298,7 +2308,7 @@ ${rt(["Chi tiết"],[
     
 <div class="subhead">💊 Liều dùng chi tiết</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
-        ["Ibuprofen / <b>aspirin</b> (màng ngoài tim)","Đủ liều kháng viêm","+ bảo vệ dạ dày"],
+        ["Ibuprofen / <b>aspirin</b> (màng ngoài tim)","Ibuprofen 600mg × 3 lần/ngày, hoặc Aspirin 750–1000mg × 3 lần/ngày, giảm dần qua 1–2 tuần","+ bảo vệ dạ dày (PPI); duy trì 1–2 tuần rồi giảm dần theo triệu chứng/CRP"],
         ["<b>Colchicine</b>","0.5 mg ×1–2/ngày","Viêm màng ngoài tim — giảm tái phát"],
         ["Thuốc HF","Như HFrEF khi EF giảm","Tránh gắng sức"]
       ])}
@@ -3283,7 +3293,7 @@ ${rt(["Chi tiết"],[
 <div class="subhead">💊 Liều dùng chi tiết</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
         ["Doxazosin","2–8 mg/ngày (tăng dần)","Chẹn alpha trước mổ"],
-        ["Phenoxybenzamine","Theo chuyên khoa","Chẹn alpha không chọn lọc"],
+        ["Phenoxybenzamine","Khởi đầu 10 mg ×2/ngày, tăng dần mỗi vài ngày đến 20–40 mg × 2–3 lần/ngày (theo đáp ứng HA/triệu chứng)","Chẹn alpha không chọn lọc — đầu tay kinh điển trước mổ, cần ≥7–14 ngày để đủ tác dụng"],
         ["Beta-blocker","Chỉ sau khi đã chẹn alpha","Tránh beta đơn độc"],
         ["Nicardipine IV…","Kiểm soát HA cấp","Theo ICU"]
       ])}
@@ -3774,14 +3784,15 @@ ${rt(["Class"],[
         ["Statin","An toàn trong MASLD/MASH không xơ nặng mất bù — dùng khi có chỉ định CV"],
         ["Xơ / portal HTN","Theo xơ gan: varicose, HCC surveillance"]
       ])}
-      <div class="alert-box alert-info"><b>2024:</b> Không dùng vitamin E thường quy cho mọi BN. Thuốc mới antifibrotic theo phê duyệt địa phương / chuyên khoa gan.</div>
+      <div class="alert-box alert-info"><b>Cập nhật 2024–2025:</b> Resmetirom (3/2024) và Semaglutide/Wegovy (8/2025) là 2 thuốc đầu tiên được FDA phê duyệt <b>đặc hiệu cho MASH</b> (không chỉ dùng ngoài nhãn cho ĐTĐ/béo phì như trước) — chỉ định cho MASH kèm xơ hóa F2–F3 đã sinh thiết xác nhận, không dùng đồng thời cả 2 thuốc.</div>
     
 <div class="subhead">💊 Liều / điều trị chi tiết</div>
       ${rt(["Chi tiết","Lưu ý"],[
-        ["<b>Semaglutide</b> / <b>GLP-1</b>","Theo liều ĐTĐ/béo phì","Giảm cân + chuyển hóa"],
-        ["Pioglitazone","15–30 mg/ngày chọn lọc","MASH — phù, xương"],
+        ["<b>Resmetirom</b> (Rezdiffra — thuốc MASH đặc hiệu đầu tiên)","80mg/ngày nếu &lt;100kg, 100mg/ngày nếu ≥100kg, uống 1 lần/ngày","MASH F2-F3 đã sinh thiết; theo dõi TSH, LFT; giảm liều nếu dùng cùng ức chế CYP2C8 trung bình; ngừng nếu mất bù gan"],
+        ["<b>Semaglutide</b> (Wegovy — GLP-1, MASH F2-F3)","Chuẩn độ: 0.25mg→0.5mg→1mg→1.7mg→2.4mg tiêm dưới da/tuần (mỗi bước cách nhau 4 tuần)","Hiệu quả MASH resolution cao nhất trong các thuốc hiện có; tác dụng phụ tiêu hóa (buồn nôn, tiêu chảy)"],
+        ["Pioglitazone","15–30 mg/ngày chọn lọc","MASH không xơ nặng — phù, tăng cân, giảm mật độ xương"],
         ["Statin","Theo nguy cơ CV","An toàn ở MASLD không mất bù"],
-        ["Vitamin E","Không thường quy mọi BN","Chọn lọc theo chuyên khoa"]
+        ["Vitamin E","Không thường quy mọi BN","Chọn lọc theo chuyên khoa, chỉ ở người không ĐTĐ/không xơ gan"]
       ])}
     `,
     khuyen_cao:`
@@ -3922,9 +3933,10 @@ ${rt(["Chi tiết"],[
       <p>Siêu âm vai/hông hỗ trợ chẩn đoán. PET-CT hoặc MRI khi nghi GCA hoặc không điển hình.</p>`,
     dieu_tri:`
 ${rt(["Chi tiết"],[
-        ["Steroid","<b>Prednisolone</b> thấp–TB (thường 12.5–25 mg) — đáp ứng nhanh gợi ý PMR"],
-        ["Giảm liều","Chậm; nhiều tháng; bổ sung Ca/vitamin D, bảo vệ xương"],
-        ["TCZ","Tocilizumab khi tái phát / không dung nạp steroid (theo chỉ định)"],
+        ["Steroid","<b>Prednisolone</b> 15–25 mg/ngày khởi đầu — giảm về 10 mg/ngày trong 1–2 tháng, mục tiêu ngừng hẳn trong ≤1 năm; đáp ứng nhanh (thường trong vài ngày) gợi ý PMR"],
+        ["Giảm liều","Chậm, cá thể hóa qua nhiều tháng; bổ sung Ca/vitamin D, bảo vệ xương"],
+        ["Tái phát","Tăng lại về ít nhất liều hiệu quả cuối cùng rồi giảm chậm lại"],
+        ["TCZ","Tocilizumab 162mg tiêm dưới da/tuần — cân nhắc ngay từ đầu ở PMR mới khởi phát hoặc khi tái phát/không dung nạp steroid (EULAR 2025/2026)"],
         ["Sàng lọc GCA","Nhức đầu, rối loạn thị giác, đau thái dương — cấp cứu mắt"]
       ])}
     `,
@@ -4233,10 +4245,10 @@ ${rt(["Chi tiết"],[
     
 <div class="subhead">💊 Liều dùng chi tiết</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
-        ["<b>Vancomycin</b>","Theo cân nặng & mức đáy","Phủ MRSA"],
-        ["Cefazolin / oxacillin","Theo nhãn khi MSSA","Sau kháng sinh đồ"],
-        ["<b>Ceftriaxone</b>","2 g IV/ngày","Khi nghi lậu / trực khuẩn"],
-        ["Thời gian","Thường 2–4 tuần (khớp nhân tạo dài hơn)","+ dẫn lưu"]
+        ["<b>Vancomycin</b>","15–20 mg/kg TM mỗi 8–12 giờ (mục tiêu đáy 15–20 mg/L; cân nhắc liều nạp 25–30 mg/kg nếu nặng)","Phủ MRSA — đầu tay khi nghi Gram dương/không rõ tác nhân"],
+        ["Cefazolin / Oxacillin","Cefazolin 2g TM mỗi 8h / Oxacillin 2g TM mỗi 4–6h","Chuyển sang khi xác định MSSA qua kháng sinh đồ"],
+        ["<b>Ceftriaxone</b>","1–2 g IV/ngày","Khi nghi lậu cầu hoặc trực khuẩn Gram âm"],
+        ["Thời gian","Thường TM 1–2 tuần rồi chuyển uống đủ tổng 4–6 tuần (khớp nhân tạo dài hơn, 6 tuần–3 tháng)","+ dẫn lưu/chọc hút lặp lại"]
       ])}
     `,
     khuyen_cao:`
@@ -4375,10 +4387,11 @@ ${rt(["Class"],[
 
       <div class="subhead">Thuốc</div>
       <ul>
-        <li><b>Bisphosphonate</b> (alendronate uống, zoledronate truyền…): hàng đầu nhiều BN. Chú ý viêm thực quản (uống đúng cách), xương hàm hiếm, gãy xương đùi atypical khi dùng rất dài.</li>
-        <li><b>Denosumab:</b> tiêm dưới da 6 tháng/lần — <b>không được trễ liều</b> vì nguy cơ mất xương dội ngược.</li>
-        <li><b>Thuốc đồng hóa</b> (teriparatide, romosozumab): khi nguy cơ gãy rất cao hoặc thất bại thuốc chống hủy xương.</li>
-        <li>Sau 3–5 năm bisphosphonate ở BN nguy cơ thấp có thể xem xét “drug holiday” theo chuyên khoa.</li>
+        <li><b>Bisphosphonate</b> — hàng đầu nhiều BN: Alendronate 70 mg uống/tuần (hoặc 10 mg/ngày), Risedronate 35 mg/tuần, hoặc Zoledronic acid 5 mg truyền TM mỗi 12 tháng (kiểm tra CrCl &gt;35 mL/phút trước truyền). Chú ý viêm thực quản (uống đúng cách — ngồi/đứng thẳng, nhiều nước, chờ ≥30 phút mới ăn), hoại tử xương hàm hiếm, gãy xương đùi atypical khi dùng rất dài (thường sau 5 năm).</li>
+        <li><b>Denosumab:</b> 60 mg tiêm dưới da mỗi 6 tháng — <b>không được trễ liều</b> (không quá vài tuần) vì nguy cơ mất xương dội ngược/gãy xẹp đốt sống nhiều tầng khi ngừng đột ngột; nếu ngừng, cần chuyển ngay sang bisphosphonate.</li>
+        <li><b>Thuốc đồng hóa</b> (Teriparatide 20 mcg tiêm dưới da/ngày tối đa 2 năm, hoặc Romosozumab 210 mg tiêm dưới da/tháng tối đa 12 tháng): khi nguy cơ gãy rất cao hoặc thất bại thuốc chống hủy xương — luôn nối tiếp bằng bisphosphonate/denosumab sau khi ngừng để duy trì hiệu quả.</li>
+        <li>Bổ sung Vitamin D3 1000–2000 IU/ngày và Canxi tổng 1200 mg/ngày (kể cả khẩu phần) ở phụ nữ ≥50 tuổi.</li>
+        <li>Sau 3–5 năm bisphosphonate uống (hoặc 3 năm Zoledronic acid TM) ở BN nguy cơ thấp có thể xem xét "drug holiday" theo chuyên khoa.</li>
       </ul>
       <p>Chỉ định điều trị: T-score ≤ −2.5, hoặc đã gãy xương mỏng, hoặc FRAX cao theo ngưỡng địa phương.</p>
     `,
@@ -4638,7 +4651,7 @@ ${rt(["Chi tiết"],[
     
 <div class="subhead">💊 Liều dùng chi tiết</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
-        ["Ibuprofen / ketorolac","Theo nhãn giảm đau","Ưu tiên nếu thận cho phép"],
+        ["Ibuprofen / Ketorolac","Ibuprofen 400–600mg mỗi 6–8h uống, hoặc Ketorolac 30mg TM/TB mỗi 6h (tối đa 5 ngày)","Ưu tiên nếu thận cho phép — hiệu quả giảm đau tương đương/hơn opioid trong cơn đau quặn thận"],
         ["Paracetamol ± opioid","Khi không dùng <b>NSAID</b>","Đau cấp"],
         ["Tamsulosin","0.4 mg/ngày","Sỏi niệu quản chọn lọc"],
         ["Potassium citrate","Theo pH nước tiểu","Sỏi uric / hypocitraturia"]
@@ -4805,8 +4818,8 @@ ${rt(["Chi tiết"],[
     
 <div class="subhead">💊 Liều dùng chi tiết</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
-        ["Ibuprofen / <b>NSAID</b>","Theo nhãn vài ngày","SVT nông đoạn ngắn"],
-        ["Fondaparinux / <b>LMWH</b> / <b>rivaroxaban</b>","Theo độ dài đoạn / nguy cơ","Khi gần hệ sâu"],
+        ["Ibuprofen / <b>NSAID</b>","Ibuprofen 400mg × 3 lần/ngày × 8–12 ngày","SVT nông đoạn ngắn"],
+        ["Fondaparinux / <b>LMWH</b> / <b>rivaroxaban</b>","Fondaparinux 2.5mg tiêm dưới da/ngày × 45 ngày (chuẩn), hoặc Rivaroxaban 10mg/ngày × 45 ngày","SVT đoạn ≥5cm hoặc gần ≤3cm chỗ nối tĩnh mạch sâu — liều dự phòng, không phải liều điều trị DVT đầy đủ"],
         ["Paracetamol","Khi không dùng <b>NSAID</b>","Giảm đau"]
       ])}
     `,
@@ -5145,7 +5158,7 @@ ${rt(["Xử trí"],[
       ${rt(["Liều thường dùng","Lưu ý"],[
         ["<b>Methotrexate</b>","15–25 mg/tuần","Viêm khớp ngoại biên"],
         ["<b>NSAID</b>","Đủ liều ngắn–TB ngày","Triệu chứng"],
-        ["Anti-TNF / IL-17…","Theo chuyên khoa","Sinh học"]
+        ["<b>Adalimumab</b> (đại diện anti-TNF)","40 mg tiêm dưới da mỗi 2 tuần","Sàng lọc lao/viêm gan B-C trước dùng; các anti-TNF/IL-17/IL-23 khác liều theo nhãn riêng"]
       ])}
     `,
     khuyen_cao:`
@@ -5336,7 +5349,7 @@ ${rt(["Hướng xử trí"],[
       <div class="alert-box alert-warn">Mọi bệnh nhân ACHD trung bình–phức tạp nên được theo dõi định kỳ tại trung tâm ACHD chuyên sâu, đặc biệt trước mang thai, phẫu thuật ngoài tim, hoặc khi xuất hiện triệu chứng mới (khó thở, tím tăng, loạn nhịp).</div>`,
     dieu_tri:`
 <ul>
-        <li>Kháng sinh dự phòng viêm nội tâm mạc chỉ ở nhóm nguy cơ cao (van nhân tạo, TBS tím chưa sửa/mới sửa &lt;6 tháng có vật liệu tồn lưu, tiền sử viêm nội tâm mạc) trước thủ thuật răng miệng nguy cơ.</li>
+        <li>Kháng sinh dự phòng viêm nội tâm mạc chỉ ở nhóm nguy cơ cao (van nhân tạo, TBS tím chưa sửa/mới sửa &lt;6 tháng có vật liệu tồn lưu, tiền sử viêm nội tâm mạc) trước thủ thuật răng miệng nguy cơ — <b>Amoxicillin</b> 2g uống liều duy nhất 30–60 phút trước thủ thuật (Clindamycin 600mg nếu dị ứng Penicillin).</li>
         <li>Loạn nhịp nhĩ (cuồng nhĩ trong Fontan, rung nhĩ) rất thường gặp — cần chiến lược kiểm soát nhịp/tần số riêng biệt do giải phẫu bất thường; cắt đốt qua catheter khi khả thi.</li>
         <li>Đánh giá nguy cơ thai kỳ theo phân loại <b>mWHO</b> (I–IV) trước khi mang thai — nhóm IV (Eisenmenger, Fontan biến chứng, tâm thất hệ thống suy nặng) chống chỉ định mang thai.</li>
         <li>Bệnh nhân tuần hoàn Fontan/tím tái: theo dõi chức năng gan, huyết khối (thường cần kháng đông dự phòng), tránh mất nước.</li>
@@ -5593,10 +5606,10 @@ ${rt(["Hướng xử trí"],[
     dieu_tri:`
 <ul>
         <li><b>Bắt đầu glucocorticoid liều cao NGAY khi nghi ngờ GCA</b> trên lâm sàng — không chờ sinh thiết hoặc chẩn đoán hình ảnh xác nhận.</li>
-        <li>Có triệu chứng thị giác đe dọa mất thị lực: <b>Methylprednisolone TM</b> liều cao 3 ngày trước khi chuyển uống.</li>
-        <li>Không có triệu chứng thị giác: <b>Prednisone</b> uống liều cao khởi đầu, giảm dần theo đáp ứng lâm sàng/CRP trong nhiều tháng.</li>
-        <li><b>Tocilizumab</b> (kháng thụ thể IL-6) phối hợp corticoid giúp giảm liều corticoid tích lũy và giảm tái phát (thử nghiệm GiACTA) — cân nhắc ở bệnh nhân nguy cơ tái phát cao hoặc cần giảm corticoid nhanh.</li>
-        <li>Aspirin liều thấp thường được thêm để giảm nguy cơ biến chứng thiếu máu cục bộ trừ khi chống chỉ định.</li>
+        <li>Có triệu chứng thị giác đe dọa mất thị lực: <b>Methylprednisolone TM</b> 500–1000 mg/ngày × 3 ngày trước khi chuyển uống Prednisone 1mg/kg/ngày.</li>
+        <li>Không có triệu chứng thị giác: <b>Prednisone</b> uống 40–60 mg/ngày khởi đầu, giảm dần về 15–20 mg/ngày trong 2–3 tháng theo đáp ứng lâm sàng/CRP, mục tiêu ngừng hẳn trong 12–18 tháng.</li>
+        <li><b>Tocilizumab</b> (kháng thụ thể IL-6) 162 mg tiêm dưới da mỗi tuần phối hợp corticoid giúp giảm liều corticoid tích lũy và giảm tái phát (thử nghiệm GiACTA) — cân nhắc ở bệnh nhân nguy cơ tái phát cao, bệnh mới khởi phát hoặc cần giảm corticoid nhanh (khuyến cáo EULAR 2025/2026).</li>
+        <li>Aspirin liều thấp (81–100 mg/ngày) thường được thêm để giảm nguy cơ biến chứng thiếu máu cục bộ trừ khi chống chỉ định.</li>
         <li>Theo dõi định kỳ hình ảnh học động mạch chủ (siêu âm/CT) tìm phình/tách động mạch chủ về sau — biến chứng muộn quan trọng.</li>
       </ul>`,
     khuyen_cao:`
@@ -5634,8 +5647,8 @@ ${rt(["Hướng xử trí"],[
     dieu_tri:`
 <ul>
         <li>Khô mắt: nước mắt nhân tạo, cyclosporine/lifitegrast nhãn khi nặng; khô miệng: nước bọt nhân tạo, kẹo không đường kích thích tiết nước bọt.</li>
-        <li><b>Pilocarpine hoặc cevimeline</b> uống khi còn mô tuyến hoạt động — kích thích tiết nước bọt/nước mắt toàn thân.</li>
-        <li><b>Hydroxychloroquine</b> cho triệu chứng khớp và mệt mỏi, bệnh nhẹ-trung bình.</li>
+        <li><b>Pilocarpine</b> 5 mg × 3–4 lần/ngày uống (hoặc <b>Cevimeline</b> 30 mg × 3 lần/ngày) khi còn mô tuyến hoạt động — kích thích tiết nước bọt/nước mắt toàn thân; thận trọng ở hen/COPD/bệnh tim mạch không ổn định.</li>
+        <li><b>Hydroxychloroquine</b> 200–400 mg/ngày cho triệu chứng khớp và mệt mỏi, bệnh nhẹ-trung bình — khám mắt định kỳ tầm soát độc võng mạc khi dùng kéo dài.</li>
         <li>Corticoid/thuốc ức chế miễn dịch (<b>rituximab</b> cân nhắc) cho biểu hiện toàn thân nặng (viêm mạch, bệnh phổi kẽ tiến triển, viêm thận).</li>
         <li>Theo dõi định kỳ tìm dấu hiệu gợi ý lymphoma (sưng tuyến mang tai dai dẳng, hạch to, giảm bổ thể, cryoglobulin, gammaglobulin đơn dòng).</li>
       </ul>`,
@@ -5700,7 +5713,7 @@ ${rt(["Hướng xử trí"],[
     dieu_tri:`
 <ul>
         <li>Kiểm soát huyết áp chặt (mục tiêu &lt;110/75mmHg ở người trẻ chức năng thận còn tốt, theo nghiên cứu HALT-PKD) làm chậm tăng thể tích thận.</li>
-        <li><b>Tolvaptan</b> (kháng thụ thể <b>vasopressin</b> V2) cho nhóm tiến triển nhanh (Mayo 1C-1E hoặc giảm eGFR nhanh) — làm chậm giảm GFR; cần theo dõi men gan định kỳ do nguy cơ độc gan và theo dõi natri máu do nguy cơ tăng Na.</li>
+        <li><b>Tolvaptan</b> (kháng thụ thể <b>vasopressin</b> V2) cho nhóm tiến triển nhanh (Mayo 1C-1E hoặc giảm eGFR nhanh) — khởi đầu 45mg buổi sáng/15mg buổi chiều, chỉnh liều tăng dần mỗi tuần theo dung nạp tới 60mg/30mg rồi 90mg/30mg (liều tối đa) — làm chậm giảm GFR; cần theo dõi men gan hàng tháng trong 18 tháng đầu (nguy cơ độc gan, có thể nặng) và theo dõi natri máu do nguy cơ tăng Na/mất nước (khát nhiều, tiểu nhiều là tác dụng phụ cơ chế, không phải dấu hiệu cần ngừng thuốc).</li>
         <li>Uống nhiều nước để ức chế <b>vasopressin</b> nội sinh (vai trò còn đang nghiên cứu, hợp lý về sinh lý).</li>
         <li>Xử trí biến chứng: đau/xuất huyết nang, sỏi thận, nhiễm trùng nang/đường tiết niệu tái phát.</li>
         <li>Tư vấn di truyền cho người thân, lập kế hoạch điều trị thay thế thận khi tiến triển đến giai đoạn cuối.</li>
@@ -5889,8 +5902,8 @@ ${rt(["Hướng xử trí"],[
       <div class="alert-box alert-info">Đánh giá yếu tố nguy cơ vi khuẩn đa kháng thuốc (MDR): dùng kháng sinh tĩnh mạch trong 90 ngày qua, sốc nhiễm khuẩn lúc chẩn đoán VAP, ARDS trước VAP, nằm viện ≥5 ngày trước khi khởi phát, lọc máu cấp trước khởi phát VAP — quyết định phổ kháng sinh kinh nghiệm ban đầu.</div>`,
     dieu_tri:`
 <ul>
-        <li>Kháng sinh kinh nghiệm ban đầu <b>phổ rộng, dựa theo dịch tễ kháng thuốc tại chỗ</b> — không có yếu tố nguy cơ MDR: kháng sinh phổ hẹp hơn nhắm Gram âm thường gặp + tụ cầu nhạy methicillin.</li>
-        <li>Có yếu tố nguy cơ MDR hoặc sốc nhiễm khuẩn: phối hợp <b>2 thuốc phủ Gram âm</b> (VD beta-lactam kháng Pseudomonas + fluoroquinolone/aminoglycoside) <b>+ Vancomycin hoặc Linezolid</b> nếu nguy cơ MRSA cao.</li>
+        <li>Không yếu tố nguy cơ MDR, không nguy cơ tử vong cao: <b>Piperacillin-tazobactam</b> 4.5g TM mỗi 6 giờ, hoặc <b>Cefepime</b> 2g TM mỗi 8 giờ, hoặc <b>Levofloxacin</b> 750mg TM/ngày, hoặc <b>Meropenem</b> 1g TM mỗi 8 giờ (đơn trị — đã phủ MSSA và Gram âm thường gặp).</li>
+        <li>Có yếu tố nguy cơ MRSA (dùng KS tĩnh mạch 90 ngày qua, hoặc tỷ lệ MRSA tại đơn vị &gt;10–20%) hoặc sốc nhiễm khuẩn/nguy cơ tử vong cao: phối hợp <b>2 thuốc phủ Gram âm khác nhóm</b> (VD Piperacillin-tazobactam hoặc Cefepime + Levofloxacin/Ciprofloxacin 400mg TM mỗi 8h hoặc Amikacin 15–20mg/kg TM/ngày) <b>+ Vancomycin</b> 15mg/kg TM mỗi 8–12 giờ (liều nạp 25–30mg/kg nếu bệnh nặng, mục tiêu đáy 15–20mg/L) <b>hoặc Linezolid</b> 600mg TM mỗi 12 giờ nếu nguy cơ MRSA cao.</li>
         <li>Xuống thang kháng sinh dựa trên kết quả cấy và đáp ứng lâm sàng sau 48–72 giờ — nguyên tắc quan trọng để giảm kháng thuốc.</li>
         <li>Thời gian điều trị chuẩn: <b>7 ngày</b> cho đa số trường hợp (kể cả do trực khuẩn Gram âm không lên men như <i>Pseudomonas</i>), trừ khi đáp ứng chậm/biến chứng.</li>
         <li>Phòng ngừa VAP: nâng đầu giường 30–45°, vệ sinh răng miệng, đánh giá cai máy thở hàng ngày, hạn chế an thần không cần thiết.</li>
@@ -5980,7 +5993,7 @@ ${rt(["Hướng xử trí"],[
 <ul>
         <li><b>Vận động thể lực đều đặn</b> (aerobic cường độ nhẹ-vừa) là can thiệp có bằng chứng mạnh nhất — nên là nền tảng điều trị dù bệnh nhân thường ngại vận động vì đau.</li>
         <li>Liệu pháp nhận thức-hành vi (CBT), giáo dục bệnh nhân, vệ sinh giấc ngủ.</li>
-        <li>Thuốc có bằng chứng: <b>Duloxetine/Milnacipran</b> (SNRI), <b>Pregabalin</b>, hoặc <b>Amitriptyline liều thấp</b> — chọn theo triệu chứng nổi trội (trầm cảm/lo âu đi kèm → SNRI; rối loạn giấc ngủ nổi trội → amitriptyline/pregabalin buổi tối).</li>
+        <li>Thuốc có bằng chứng: <b>Duloxetine</b> khởi đầu 30 mg/ngày, tăng lên 60 mg/ngày sau 1 tuần (liều khuyến cáo FDA cho fibromyalgia — tăng &gt;60mg ít thêm lợi ích rõ); <b>Milnacipran</b> hoặc <b>Pregabalin</b> khởi đầu 75 mg × 2 lần/ngày, tăng dần đến 150–225 mg × 2 lần/ngày theo dung nạp (tối đa 450mg/ngày); hoặc <b>Amitriptyline liều thấp</b> 10–25 mg buổi tối — chọn theo triệu chứng nổi trội (trầm cảm/lo âu đi kèm → SNRI; rối loạn giấc ngủ nổi trội → amitriptyline/pregabalin buổi tối).</li>
         <li><b>Tránh Opioid</b> — không hiệu quả trong fibromyalgia và tăng nguy cơ lệ thuộc/tác dụng phụ.</li>
         <li>NSAID/corticoid thường không hiệu quả do đây không phải bệnh viêm — cần giải thích rõ cho bệnh nhân để tránh lạm dụng.</li>
       </ul>`,
@@ -6097,7 +6110,7 @@ ${rt(["Hướng xử trí"],[
     dieu_tri:`
 <ul>
         <li><b>Type A:</b> hội chẩn phẫu thuật tim cấp cứu ngay khi xác định — trì hoãn làm tăng tử vong rõ rệt theo từng giờ.</li>
-        <li>Trong khi chờ mổ/mọi trường hợp: hạ nhanh HA tâm thu &lt;120mmHg và nhịp tim &lt;60/phút — <b>chẹn beta TM trước</b> (esmolol/labetalol), thêm giãn mạch (nitroprusside) nếu chưa đạt đích — không dùng giãn mạch đơn độc trước chẹn beta (gây phản xạ tăng nhịp/tăng sức căng thành ĐMC).</li>
+        <li>Trong khi chờ mổ/mọi trường hợp: hạ nhanh HA tâm thu &lt;120mmHg và nhịp tim &lt;60/phút — <b>chẹn beta TM trước</b> (Esmolol liều nạp 500mcg/kg rồi truyền 50–200mcg/kg/phút, hoặc Labetalol bolus 20mg lặp lại mỗi 10 phút hoặc truyền 0.5–2mg/phút), thêm giãn mạch (Nicardipine truyền khởi đầu 5mg/giờ tăng dần tới tối đa 15mg/giờ, hoặc Nitroprusside 0.3–10 mcg/kg/phút) nếu chưa đạt đích — không dùng giãn mạch đơn độc trước chẹn beta (gây phản xạ tăng nhịp/tăng sức căng thành ĐMC).</li>
         <li>Giảm đau tích cực (thường cần opioid) — đau không kiểm soát tự làm tăng HA/nhịp tim.</li>
         <li><b>Type B không biến chứng:</b> điều trị nội khoa (kiểm soát HA/nhịp như trên) + theo dõi hình ảnh định kỳ; can thiệp nội mạch (TEVAR) khi có biến chứng (thiếu máu cơ quan, vỡ dọa vỡ, đau/THA kháng trị, giãn nhanh).</li>
         <li>Theo dõi lâu dài bằng hình ảnh học định kỳ (CT/MRI) suốt đời do nguy cơ giãn/tái phát.</li>
@@ -6210,7 +6223,7 @@ ${rt(["Hướng xử trí"],[
       <div class="alert-box alert-warn">Nghĩ đến bội nhiễm vi khuẩn (viêm phổi thứ phát, thường do <i>S. pneumoniae</i> hoặc <i>S. aureus</i>) nếu sốt tái xuất hiện/nặng lên sau khi đã cải thiện ban đầu ("hai pha bệnh").</div>`,
     dieu_tri:`
 <ul>
-        <li><b>Oseltamivir</b> (hoặc Baloxavir liều đơn) trong <b>48 giờ đầu khởi phát</b> cho hiệu quả tốt nhất — ưu tiên điều trị sớm ở nhóm nguy cơ cao/bệnh nặng cần nhập viện dù đã quá 48 giờ vẫn có lợi.</li>
+        <li><b>Oseltamivir</b> 75 mg × 2 lần/ngày × 5 ngày (chỉnh liều theo độ thanh thải Creatinine nếu suy thận: CrCl 30–60 giảm còn 30mg×2 lần/ngày, CrCl &lt;30 còn 30mg×1 lần/ngày) — hoặc <b>Baloxavir</b> liều đơn duy nhất theo cân nặng (40mg nếu &lt;80kg, 80mg nếu ≥80kg) trong <b>48 giờ đầu khởi phát</b> cho hiệu quả tốt nhất — ưu tiên điều trị sớm ở nhóm nguy cơ cao/bệnh nặng cần nhập viện dù đã quá 48 giờ vẫn có lợi.</li>
         <li>Điều trị triệu chứng: hạ sốt (paracetamol — tránh <b>aspirin</b> ở trẻ em/thanh thiếu niên do nguy cơ hội chứng Reye), nghỉ ngơi, bù nước.</li>
         <li>Nhập viện khi: suy hô hấp, mất nước nặng, biến chứng viêm phổi, hoặc bệnh nền nặng mất bù.</li>
         <li><b>Tiêm vaccine cúm hàng năm</b> là biện pháp phòng ngừa quan trọng nhất — đặc biệt ưu tiên nhóm nguy cơ cao, nhân viên y tế, và nên tiêm trước mùa cúm cao điểm.</li>
@@ -6238,7 +6251,7 @@ ${rt(["Hướng xử trí"],[
       <div class="alert-box alert-info">Luôn tìm yếu tố nguy cơ hít sặc (rối loạn ý thức, nghiện rượu, rối loạn nuốt, vệ sinh răng miệng kém) trong áp xe phổi để định hướng điều trị và phòng ngừa tái phát.</div>`,
     dieu_tri:`
 <ul>
-        <li><b>Áp xe phổi:</b> kháng sinh phổ kỵ khí kéo dài (thường <b>Ampicillin-sulbactam</b> hoặc Clindamycin, hoặc Carbapenem nếu nặng/kháng thuốc) — thời gian điều trị kéo dài (thường 3–6 tuần hoặc đến khi hang teo nhỏ/khỏi trên hình ảnh học), phần lớn đáp ứng kháng sinh đơn thuần không cần dẫn lưu.</li>
+        <li><b>Áp xe phổi:</b> kháng sinh phổ kỵ khí kéo dài — <b>Ampicillin-sulbactam</b> 3g TM mỗi 6 giờ (đầu tay), hoặc <b>Clindamycin</b> 600mg TM mỗi 8 giờ (thay thế), hoặc <b>Carbapenem</b> (Meropenem 1g TM mỗi 8 giờ) nếu nặng/nghi kháng thuốc — chuyển sang đường uống (Amoxicillin-clavulanate) khi cải thiện lâm sàng; thời gian điều trị kéo dài (thường 3–6 tuần hoặc đến khi hang teo nhỏ/khỏi trên hình ảnh học), phần lớn đáp ứng kháng sinh đơn thuần không cần dẫn lưu.</li>
         <li>Dẫn lưu qua da hoặc phẫu thuật cho áp xe phổi lớn (&gt;6–8cm) không đáp ứng kháng sinh hoặc biến chứng (vỡ vào màng phổi, chảy máu).</li>
         <li><b>Mủ màng phổi:</b> kháng sinh phổ rộng theo kinh nghiệm (phủ Gram dương/âm/kỵ khí) + <b>dẫn lưu màng phổi bắt buộc</b> khi có tiêu chuẩn dẫn lưu (mủ đại thể, pH thấp, vi khuẩn dương).</li>
         <li>Tiêu sợi huyết trong màng phổi (tPA + DNase) khi dịch vách hóa/dẫn lưu không hiệu quả — giảm nhu cầu phẫu thuật.</li>
@@ -6267,7 +6280,7 @@ ${rt(["Hướng xử trí"],[
     dieu_tri:`
 <ul>
         <li><b>Ngừng ngay thuốc nghi ngờ</b> — biện pháp quan trọng nhất, phần lớn hồi phục sau ngừng thuốc.</li>
-        <li><b>N-acetylcysteine</b> là thuốc giải độc đặc hiệu cho quá liều paracetamol — hiệu quả cao nhất khi dùng sớm, dùng theo phác đồ chuẩn/thang điểm dựa nồng độ paracetamol và thời gian sau uống.</li>
+        <li><b>N-acetylcysteine</b> là thuốc giải độc đặc hiệu cho quá liều paracetamol — hiệu quả cao nhất khi dùng sớm (lý tưởng &lt;8 giờ sau uống). Phác đồ TM chuẩn (21 giờ): liều nạp 150 mg/kg pha trong Dextrose 5% truyền trong 1 giờ, sau đó 50 mg/kg truyền trong 4 giờ, tiếp theo 100 mg/kg truyền trong 16 giờ — quyết định điều trị dựa nồng độ paracetamol máu đối chiếu đồ thị Rumack-Matthew (từ giờ thứ 4 sau uống) hoặc điều trị theo kinh nghiệm nếu không rõ thời điểm/liều uống.</li>
         <li>Theo dõi chức năng gan định kỳ đến khi về bình thường hoặc ổn định; đa số DILI hồi phục hoàn toàn sau ngừng thuốc trong vài tuần-vài tháng.</li>
         <li>Chuyển chuyên khoa gan/ghép gan khi có dấu hiệu suy gan cấp (rối loạn đông máu, bệnh não gan) — tiêu chuẩn Hy's Law dương tính là cảnh báo sớm quan trọng.</li>
         <li>Ghi nhận rõ thuốc gây DILI vào hồ sơ, tránh tái sử dụng thuốc đó hoặc nhóm thuốc liên quan trong tương lai.</li>
@@ -6294,7 +6307,7 @@ ${rt(["Hướng xử trí"],[
 <ul>
         <li><b>Nong bóng qua nội soi (pneumatic dilation)</b> hoặc <b>cắt cơ Heller qua phẫu thuật/nội soi (POEM — per-oral endoscopic myotomy)</b> là điều trị chính, hiệu quả tương đương nhau ở trung tâm có kinh nghiệm — POEM ngày càng được ưu tiên do ít xâm lấn.</li>
         <li>Thêm thủ thuật chống trào ngược (Dor/Toupet) sau Heller myotomy để giảm nguy cơ trào ngược acid sau mổ (POEM không kèm thủ thuật này nên cần theo dõi/điều trị trào ngược sau đó).</li>
-        <li>Thuốc (nitrat, chẹn kênh canxi trước ăn) hoặc tiêm Botulinum toxin qua nội soi chỉ là lựa chọn tạm thời/cho người không đủ điều kiện can thiệp — hiệu quả kém bền hơn.</li>
+        <li>Thuốc (Nifedipine 10–20mg ngậm dưới lưỡi hoặc Isosorbide dinitrate 5mg ngậm dưới lưỡi, uống 10–15 phút trước ăn) hoặc tiêm Botulinum toxin 100 đơn vị qua nội soi (chia nhiều điểm quanh cơ thắt thực quản dưới) chỉ là lựa chọn tạm thời/cho người không đủ điều kiện can thiệp — hiệu quả kém bền hơn (Botulinum thường cần lặp lại sau 6–12 tháng).</li>
         <li>Theo dõi lâu dài triệu chứng và nguy cơ ung thư biểu mô vảy thực quản tăng nhẹ ở achalasia lâu năm không điều trị hiệu quả (thực quản giãn to mạn tính).</li>
       </ul>`,
     khuyen_cao:`
@@ -6701,10 +6714,10 @@ ${rt(["Hướng xử trí"],[
       <div class="alert-box alert-warn">Luôn loại trừ viêm khớp nhiễm khuẩn cấp (septic arthritis) bằng chọc dịch khớp nếu khớp sưng nóng đỏ nhiều/sốt — đây là chẩn đoán KHÔNG được bỏ sót, khác hoàn toàn về xử trí so với viêm khớp phản ứng.</div>`,
     dieu_tri:`
 <ul>
-        <li>NSAID là điều trị đầu tay cho viêm khớp và viêm điểm bám gân.</li>
+        <li><b>NSAID</b> liều đầy đủ (VD Indomethacin 50mg × 3 lần/ngày hoặc Naproxen 500mg × 2 lần/ngày) là điều trị đầu tay cho viêm khớp và viêm điểm bám gân.</li>
         <li>Tiêm corticoid nội khớp cho khớp viêm dai dẳng khu trú không đáp ứng <b>NSAID</b>.</li>
-        <li>Điều trị nhiễm trùng nền nếu còn đang hoạt động (kháng sinh cho Chlamydia đang nhiễm — bao gồm cả bạn tình để tránh tái nhiễm; nhiễm trùng tiêu hóa cấp thường đã tự hết khi khớp bắt đầu viêm).</li>
-        <li>Bệnh kéo dài/tái phát nhiều lần (viêm khớp phản ứng mạn): <b>Sulfasalazine</b> hoặc <b>Methotrexate</b> như điều trị nền DMARD tương tự các bệnh viêm khớp cột sống khác.</li>
+        <li>Điều trị nhiễm trùng nền nếu còn đang hoạt động: <b>Chlamydia trachomatis</b> — Azithromycin 1g uống liều duy nhất hoặc Doxycycline 100mg × 2 lần/ngày × 7 ngày (bao gồm cả bạn tình để tránh tái nhiễm); nhiễm trùng tiêu hóa cấp thường đã tự hết khi khớp bắt đầu viêm, không cần kháng sinh thêm.</li>
+        <li>Bệnh kéo dài/tái phát nhiều lần (viêm khớp phản ứng mạn): <b>Sulfasalazine</b> 2–3 g/ngày chia liều hoặc <b>Methotrexate</b> 15–25 mg/tuần như điều trị nền DMARD tương tự các bệnh viêm khớp cột sống khác.</li>
         <li>Đa số trường hợp tự giới hạn trong vài tuần-vài tháng; thiểu số tiến triển mạn tính cần điều trị duy trì kéo dài.</li>
       </ul>`,
     khuyen_cao:`
@@ -6731,8 +6744,8 @@ ${rt(["Hướng xử trí"],[
     dieu_tri:`
 <ul>
         <li><b>Điều trị nội khoa tối ưu (nền tảng, ưu tiên hàng đầu):</b> ƯCMC/ARB liều tối ưu dung nạp được để giảm protein niệu và kiểm soát huyết áp — nên duy trì đủ thời gian (≥3–6 tháng) trước khi đánh giá cần thêm ức chế miễn dịch hay không.</li>
-        <li>SGLT2i (<b>Dapagliflozin</b>) có bằng chứng làm chậm tiến triển bệnh thận mạn ở bệnh thận IgA, khuyến cáo bổ sung vào điều trị nền tảng.</li>
-        <li>Corticoid toàn thân hoặc <b>Budesonide phóng thích tại hồi tràng (mới)</b> cân nhắc ở bệnh nhân protein niệu còn cao (&gt;1g/ngày) dù đã điều trị nội khoa tối ưu đủ thời gian và nguy cơ tiến triển còn cao — cần cân nhắc lợi ích/nguy cơ tác dụng phụ corticoid toàn thân.</li>
+        <li><b>SGLT2i</b> (<b>Dapagliflozin</b> 10mg uống 1 lần/ngày) có bằng chứng làm chậm tiến triển bệnh thận mạn ở bệnh thận IgA, khuyến cáo bổ sung vào điều trị nền tảng.</li>
+        <li>Corticoid toàn thân (Methylprednisolone/Prednisone liều trung bình, phác đồ giảm liều qua 6 tháng) hoặc <b>Budesonide phóng thích tại hồi tràng (mới)</b> 16mg/ngày × 9 tháng cân nhắc ở bệnh nhân protein niệu còn cao (&gt;1g/ngày) dù đã điều trị nội khoa tối ưu đủ thời gian và nguy cơ tiến triển còn cao — cần cân nhắc lợi ích/nguy cơ tác dụng phụ corticoid toàn thân.</li>
         <li>Kiểm soát các yếu tố nguy cơ tim mạch-chuyển hóa đi kèm (lipid, cân nặng, hút thuốc) — bệnh thận IgA thường gặp ở người trẻ, cần chăm sóc dài hạn toàn diện.</li>
         <li>Theo dõi định kỳ eGFR/protein niệu suốt đời do nguy cơ tiến triển đến bệnh thận giai đoạn cuối ở một tỷ lệ đáng kể bệnh nhân sau nhiều năm.</li>
       </ul>`,
