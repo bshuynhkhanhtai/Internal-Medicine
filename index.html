@@ -2786,7 +2786,7 @@ ${rt(["Chi tiết"],[
         ["Clarithromycin","500 mg ×2/ngày","Tương tác CYP3A4"],
         ["<b>Ceftriaxone</b>","1–2 g IV ×1/ngày","Nội trú"],
         ["<b>Levofloxacin</b>","750 mg ×1/ngày","FQ — QT, gân, kháng địa phương"],
-        ["<b>Vancomycin</b>","Theo cân nặng & mức đáy","Khi phủ MRSA"],
+        ["<b>Vancomycin</b>","15–20 mg/kg TM mỗi 8–12 giờ (đích đáy 15–20 mg/L)","Khi phủ MRSA"],
         ["Thời gian","Thường 5–7 ngày khi ổn định lâm sàng","Kéo dài nếu biến chứng"]
       ])}
     
@@ -2926,7 +2926,7 @@ ${rt(["Chi tiết"],[
       ${rt(["Liều thường dùng","Lưu ý"],[
         ["Nintedanib","150 mg ×2/ngày","IPF; giảm 100 mg ×2 nếu không dung nạp"],
         ["Pirfenidone","Theo tăng liều đến 801 mg ×3/ngày","Uống với thức ăn; ánh nắng"],
-        ["<b>Prednisolone</b> (đợt cấp)","Theo chuyên khoa","Không routinely dài hạn IPF"]
+        ["<b>Prednisolone</b> (đợt cấp)","0.5–1 mg/kg/ngày, giảm dần theo đáp ứng","Không dùng corticoid duy trì dài hạn thường quy cho IPF ổn định"]
       ])}
     `,
     khuyen_cao:`
@@ -2965,13 +2965,14 @@ ${rt(["Chi tiết"],[
         <li>Phân tầng nguy cơ (WHO-FC, NT-proBNP, test gắng sức, huyết động) lúc chẩn đoán và theo dõi.</li>
         <li>Chuyển / hội chẩn <b>trung tâm PAH</b> sớm.</li>
       </ul>
-      <div class="subhead">Thuốc đặc hiệu theo đường</div>
+      <div class="subhead">Thuốc đặc hiệu theo đường (3 con đường kinh điển)</div>
       ${rt(["Ví dụ"],[
         ["ERA","Bosentan, ambrisentan, macitentan"],
         ["PDE5i / sGC","Sildenafil, tadalafil; riociguat (CTEPH/chọn lọc)"],
         ["Prostacyclin / agonist","Epoprostenol, treprostinil, selexipag…"],
         ["Chiến lược","Nguy cơ thấp–TB: phối hợp uống sớm; nguy cơ cao: cân nhắc prostacyclin TM/duới da"]
       ])}
+      <div class="alert-box alert-info"><b>Con đường thứ 4 (mới — 2024):</b> <b>Sotatercept</b> (kháng thụ thể Activin, ActRIIA-Fc) — cơ chế hoàn toàn khác 3 nhóm kinh điển trên (điều hòa cân bằng tín hiệu tăng sinh/chống tăng sinh mạch máu phổi), thêm vào điều trị nền PAH nhóm 1 WHO-FC II-III đã ổn định trên điều trị chuẩn (thử nghiệm STELLAR) — cải thiện 6MWT, giảm nguy cơ biến cố nặng lên/nhập viện.</div>
       <p>Hỗ trợ: lợi tiểu nếu suy tim phải, O₂ khi thiếu oxy, chống đông chọn lọc (chỉ định riêng). Tránh ngừng đột ngột thuốc PAH.</p>
     
 <div class="subhead">💊 Liều dùng chi tiết (chuyên khoa PAH)</div>
@@ -2981,7 +2982,8 @@ ${rt(["Chi tiết"],[
         ["Ambrisentan","5–10 mg ×1/ngày","ERA — theo dõi men gan"],
         ["Bosentan","62.5→125 mg ×2/ngày","ERA — tương tác, gan"],
         ["Macitentan","10 mg ×1/ngày","ERA"],
-        ["Selexipag","Tăng dần theo nhãn","Prostacyclin đường uống"]
+        ["Selexipag","Khởi đầu 200mcg ×2/ngày, tăng 200mcg mỗi tuần theo dung nạp đến tối đa 1600mcg ×2/ngày","Prostacyclin đường uống — đau đầu/tiêu chảy khi tăng liều, chuẩn độ chậm cải thiện dung nạp"],
+        ["<b>Sotatercept</b> (Winrevair)","45mg hoặc 60mg (theo cân nặng) tiêm dưới da mỗi 3 tuần","Theo dõi Hemoglobin/tiểu cầu trước mỗi liều (5 liều đầu) — nguy cơ tăng Hb/đa hồng cầu và giảm tiểu cầu; phối hợp thêm vào điều trị nền, không thay thế 3 nhóm kinh điển"]
       ])}
     `,
     khuyen_cao:`
@@ -3772,8 +3774,10 @@ ${rt(["Class"],[
         ["Propranolol","20–40 mg ×2 — chỉnh theo mạch","Dự phòng giãn TM"],
         ["<b>Spironolactone</b>","50–100 mg → đến 200–400 mg","Cổ trướng"],
         ["<b>Furosemide</b>","40 mg (tỷ lệ ~100:40 với spiro)","Kèm <b>spironolactone</b>"],
-        ["Terlipressin","Theo protocol XHTH","+ KS + nội soi"],
-        ["<b>Ceftriaxone</b> / norfloxacin","Theo SBP / dự phòng","Protocol viện"],
+        ["Terlipressin","2 mg TM mỗi 4 giờ (giảm còn 1mg mỗi 4h sau khi kiểm soát chảy máu), duy trì 2–5 ngày","+ KS dự phòng + nội soi sớm trong XHTH do giãn TM"],
+        ["<b>Ceftriaxone</b> (điều trị SBP)","2 g TM mỗi 24 giờ × 5–7 ngày","+ Albumin 1.5g/kg ngày 1, 1g/kg ngày 3 nếu Creatinine≥1mg/dL/Bilirubin≥4mg/dL (giảm nguy cơ HRS)"],
+        ["Norfloxacin (dự phòng SBP)","400 mg/ngày dài hạn","Dự phòng thứ phát sau SBP, hoặc tiên phát nếu protein dịch cổ trướng thấp + Child-Pugh nặng"],
+        ["<b>Ceftriaxone</b> (dự phòng SBP quanh XHTH)","1 g TM/ngày × 7 ngày","Ưu tiên hơn Norfloxacin trong bối cảnh xuất huyết tiêu hóa cấp (Baveno VII)"],
         ["<b>Lactulose</b>","30–45 mL rồi chỉnh số lần phân","Bệnh não gan"]
       ])}
     
@@ -3880,7 +3884,9 @@ ${rt(["Chi tiết"],[
         ["PEG (macrogol)","17 g trong nước ×1–2/ngày","Hàng đầu"],
         ["<b>Lactulose</b>","15–30 mL ×1–2/ngày","Đầy hơi"],
         ["Bisacodyl","5–10 mg uống hoặc 10 mg đặt","Ngắn hạn"],
-        ["Senna","Theo chế phẩm buổi tối","Ngắn hạn"]
+        ["Senna","8.6–17.2 mg (1–2 viên) buổi tối","Ngắn hạn"],
+        ["Linaclotide (kháng trị)","145–290mcg × 1 lần/ngày lúc đói","Bí đại tràng mạn không đáp ứng PEG"],
+        ["Prucalopride (kháng trị)","2mg × 1 lần/ngày (1mg nếu ≥65 tuổi hoặc CrCl thấp)","Chủ vận 5-HT4, tăng nhu động đại tràng"]
       ])}
     `,
     khuyen_cao:`
@@ -3944,6 +3950,13 @@ ${rt(["Chi tiết"],[
         ["csDMARD","MTX/SSZ chủ yếu khi viêm khớp ngoại biên — ít hiệu quả trên trục thuần"]
       ])}
       <p>Theo dõi BASDAI/ASDAS, CRP; sàng lọc lao/HBV trước biologic.</p>
+    <div class="subhead">💊 Liều sinh học (khi thất bại NSAID, ASDAS≥2.1)</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Adalimumab</b> (anti-TNF)","40mg TDD mỗi 2 tuần","Cũng hiệu quả trên viêm màng bồ đào kèm theo"],
+        ["Etanercept (anti-TNF)","50mg TDD mỗi tuần","Hiệu quả thấp hơn trên viêm ruột/màng bồ đào so với Adalimumab"],
+        ["Secukinumab (kháng IL-17A)","150mg TDD tuần 0,1,2,3 rồi mỗi tháng (300mg nếu bệnh nặng/kèm vảy nến)","Thận trọng nếu có bệnh viêm ruột đồng mắc (có thể làm nặng thêm)"],
+        ["Certolizumab (anti-TNF)","400mg TDD tuần 0,2,4 rồi 200mg mỗi 2 tuần","An toàn trong thai kỳ (không qua nhau thai)"]
+      ])}
     `,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -4189,7 +4202,9 @@ ${rt(["Class"],[
         ["<b>Hydroxychloroquine</b>","200–400 mg/ngày (≤5 mg/kg)","Hầu hết BN; khám mắt"],
         ["<b>Prednisolone</b>","Liều thấp nhất kiểm soát","Giảm nhanh khi ổn"],
         ["Mycophenolate","1–1.5 g ×2/ngày (theo chỉ định)","Lupus thận…"],
-        ["Azathioprine","1–2.5 mg/kg/ngày","Duy trì; TPMT"]
+        ["Azathioprine","1–2.5 mg/kg/ngày","Duy trì; TPMT"],
+        ["<b>Belimumab</b> (sinh học)","10mg/kg TM mỗi 4 tuần (sau liều nạp ngày 0,14,28), hoặc 200mg TDD hàng tuần","Khi còn hoạt động dù điều trị chuẩn — kể cả lupus thận phối hợp"],
+        ["<b>Anifrolumab</b> (sinh học)","300mg TM mỗi 4 tuần","Kháng thụ thể interferon type I; ưu tiên khi hoạt động da/khớp nổi trội"]
       ])}
     `,
     khuyen_cao:`
@@ -4237,11 +4252,12 @@ ${rt(["Chi tiết"],[
     
 <div class="subhead">💊 Liều dùng chi tiết</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
-        ["<b>Nifedipine</b> / <b>amlodipine</b>","Theo liều Raynaud","Giữ ấm tay chân"],
+        ["<b>Nifedipine</b> (Raynaud)","Khởi đầu 10mg ×3/ngày (dạng phóng thích chậm 30mg ×1/ngày), tăng dần tối đa 60-90mg/ngày","Giữ ấm tay chân; tụt huyết áp/đau đầu khi tăng liều"],
         ["Sildenafil","25–100 mg/ngày chia liều","Raynaud nặng / PAH"],
-        ["Mycophenolate","Theo ILD","Chuyên khoa"],
+        ["Mycophenolate (ILD)","Khởi đầu 500mg ×2/ngày, tăng dần đến 1–1.5g ×2/ngày","Đầu tay cho SSc-ILD; theo dõi công thức máu"],
+        ["<b>Tocilizumab</b> (ILD tiến triển)","162mg TDD mỗi tuần","Thay thế/phối hợp khi Mycophenolate không đủ — làm chậm giảm FVC"],
         ["Nintedanib","150 mg ×2","ILD xơ cứng bì"],
-        ["ACEi (SRC)","Captopril/enalapril tăng nhanh","Cấp cứu thận"]
+        ["ACEi (SRC)","Captopril 6.25-12.5mg mỗi 4-8h, tăng nhanh theo đáp ứng HA tới tối đa 150-450mg/ngày chia liều","Cấp cứu thận — không ngừng dù Creatinine tăng"]
       ])}
     `,
     khuyen_cao:`
@@ -4348,7 +4364,7 @@ ${rt(["Chi tiết"],[
       <ul>
         <li><b>Methotrexate</b> là nền tảng ở hầu hết BN (kèm acid folic). Theo dõi công thức máu, men gan.</li>
         <li>Corticosteroid liều thấp <b>ngắn ngày</b> như cầu nối khi khởi trị hoặc đợt bùng — không duy trì dài hạn.</li>
-        <li>Khi csDMARD không đủ: thêm hoặc chuyển <b>biologic / tsDMARD</b> (anti-TNF, IL-6, JAK inhibitor…).</li>
+        <li>Khi csDMARD không đủ: thêm hoặc chuyển <b>biologic / tsDMARD</b> — anti-TNF (adalimumab, etanercept), kháng IL-6 (tocilizumab, sarilumab), kháng CD20 (rituximab), hoặc JAK inhibitor (tofacitinib, upadacitinib, baricitinib).</li>
         <li>Trước ức chế miễn dịch mạnh: sàng lọc lao, HBV/HCV; cập nhật vaccine.</li>
       </ul>
     
@@ -4357,7 +4373,10 @@ ${rt(["Chi tiết"],[
         ["<b>Methotrexate</b>","10–15 mg/tuần → đến 20–25 mg/tuần","+ acid folic 5 mg/tuần"],
         ["<b>Prednisolone</b> cầu nối","≤10 mg/ngày ngắn","Không duy trì dài"],
         ["<b>Sulfasalazine</b>","500 mg → 1 g ×2/ngày","csDMARD"],
-        ["<b>Leflunomide</b>","10–20 mg/ngày","Theo dõi gan"]
+        ["<b>Leflunomide</b>","10–20 mg/ngày","Theo dõi gan"],
+        ["<b>Adalimumab</b> (anti-TNF)","40mg TDD mỗi 2 tuần","Sàng lọc lao/viêm gan B-C trước dùng"],
+        ["<b>Tocilizumab</b> (kháng IL-6)","162mg TDD mỗi tuần (hoặc 4-8mg/kg TM mỗi 4 tuần)","Theo dõi lipid máu, men gan, bạch cầu hạt"],
+        ["<b>Upadacitinib</b> (JAK inhibitor)","15mg uống mỗi ngày","Cảnh báo hộp đen tim mạch/huyết khối ở người ≥50 tuổi nguy cơ tim mạch"]
       ])}
     
 <div class="subhead">🔗 Tương tác thuốc (RA)</div>
@@ -4779,7 +4798,9 @@ ${rt(["Bước"],[
         ["<b>Insulin</b> regular","10 ĐV + glucose 25–50 g IV","Hạ K⁺ trong 15–30 phút"],
         ["<b>Salbutamol</b> khí dung","10–20 mg","Hỗ trợ dời K⁺"],
         ["<b>Furosemide</b>","40–80 mg IV nếu còn nước tiểu","Thải K⁺"],
-        ["Patiromer / SPS / zirconium","Theo nhãn sẵn có","Thải K⁺ đường tiêu hóa"]
+        ["Patiromer","8.4g uống 1 lần/ngày khởi đầu, chỉnh mỗi tuần tới tối đa 25.2g/ngày","Cách xa các thuốc uống khác ≥3 giờ (hấp phụ)"],
+        ["Sodium zirconium cyclosilicate (SZC)","10g ×3 lần/ngày × 48 giờ đầu, sau đó duy trì 5–10g/ngày","Khởi phát nhanh hơn Patiromer (trong vài giờ)"],
+        ["Kayexalate (SPS)","15–30g uống, hoặc thụt giữ","Nguy cơ hoại tử ruột hiếm gặp — thận trọng sau phẫu thuật/liệt ruột"]
       ])}
     
 <div class="subhead">🔗 Thuốc làm tăng kali (tránh chồng)</div>
@@ -4828,7 +4849,7 @@ ${rt(["Chi tiết"],[
       ${rt(["Liều thường dùng","Lưu ý"],[
         ["NaCl 3%","Bolus 100–150 mL/10–20 phút khi co giật/hôn mê (protocol)","Tránh chỉnh quá nhanh"],
         ["NaCl 0.9%","Thiếu thể tích giảm Na","Theo nguyên nhân"],
-        ["Tolvaptan","Theo chuyên khoa SIADH","Theo dõi Na sát"],
+        ["Tolvaptan","Khởi đầu 15mg/ngày (nội trú), chỉnh liều sau ≥24h tới tối đa 60mg/ngày theo đáp ứng Na","SIADH kháng trị với hạn chế dịch; PHẢI khởi động nội trú, ngừng hạn chế dịch trong 24h đầu — nguy cơ chỉnh Na quá nhanh"],
         ["Hạn chế dịch","SIADH nhẹ","+ bỏ thuốc gây SIADH"]
       ])}
     `,
@@ -4996,7 +5017,7 @@ ${rt(["Phác đồ (tóm tắt)"],[
       ${rt(["Liều (mg/kg hoặc cố định)","Lưu ý"],[
         ["Isoniazid (H)","5 mg/kg (thường 300 mg)","+ pyridoxine 25–50 mg khi nguy cơ"],
         ["Rifampin (R)","10 mg/kg (thường 600 mg)","Tương tác nhiều thuốc"],
-        ["Pyrazinamide (Z)","25 mg/kg","Giai đoạn tấn"],
+        ["Pyrazinamide (Z)","25 mg/kg","Chỉ dùng 2 tháng đầu (giai đoạn tấn công) — theo dõi acid uric/gan"],
         ["Ethambutol (E)","15–20 mg/kg","Theo dõi thị lực"],
         ["Thời gian","2 tháng HRZE + 4 tháng HR","Hoặc phác đồ rút gọn WHO khi đủ ĐK"]
       ])}
@@ -5135,7 +5156,8 @@ ${rt(["Điều trị"],[
         ["<b>Tenofovir</b> TDF","300 mg ×1/ngày","HBV; theo dõi thận, xương"],
         ["<b>Tenofovir</b> TAF","25 mg ×1/ngày","Ít ảnh hưởng thận hơn TDF"],
         ["<b>Entecavir</b>","0.5 mg ×1 (1 mg nếu kháng lamivudine)","HBV; đói"],
-        ["<b>Sofosbuvir</b>-based / GLE/PIB","Theo phác đồ DAA 8–12 tuần","HCV — chuyên khoa"]
+        ["<b>Glecaprevir/Pibrentasvir</b> (Mavyret)","300mg/120mg (3 viên) uống 1 lần/ngày × 8 tuần (không xơ gan) hoặc 12 tuần (xơ gan còn bù)","Phổ genotype 1-6; uống cùng thức ăn"],
+        ["<b>Sofosbuvir/Velpatasvir</b> (Epclusa)","400mg/100mg × 1 viên/ngày × 12 tuần","Phổ genotype 1-6; thêm Ribavirin nếu xơ gan mất bù"]
       ])}
     `,
     khuyen_cao:`
@@ -5164,9 +5186,9 @@ ${rt(["Xử trí"],[
     
 <div class="subhead">💊 Liều dùng chi tiết</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
-        ["<b>Amoxicillin</b>-<b>clavulanate</b>","Uống theo nhãn × 4–7 ngày","Ngoại trú chọn lọc"],
-        ["<b>Ciprofloxacin</b> + <b>metronidazole</b>","500 mg ×2 + 500 mg ×3","Thay thế"],
-        ["<b>Ceftriaxone</b> + metro IV","Khi nhập viện","Theo mức độ"]
+        ["<b>Amoxicillin</b>-<b>clavulanate</b>","875/125mg × 2 lần/ngày × 4–7 ngày","Ngoại trú chọn lọc"],
+        ["<b>Ciprofloxacin</b> + <b>metronidazole</b>","500 mg ×2/ngày + 500 mg ×3/ngày × 4–7 ngày","Thay thế nếu dị ứng Penicillin"],
+        ["<b>Ceftriaxone</b> + Metronidazole TM","Ceftriaxone 1–2g/ngày + Metronidazole 500mg ×3/ngày","Khi nhập viện — chuyển uống khi cải thiện"]
       ])}
     `,
     khuyen_cao:`
@@ -5230,10 +5252,10 @@ ${rt(["Điều trị"],[
     
 <div class="subhead">💊 Liều dùng chi tiết</div>
       ${rt(["Liều thường dùng","Lưu ý"],[
-        ["<b>Rituximab</b>","Theo protocol cảm ứng (vd. 375 mg/m² ×4 hoặc 1 g ×2)","Ưu tiên nhiều BN"],
-        ["Cyclophosphamide","Theo protocol IV/uống","Thay RTX"],
-        ["<b>Prednisolone</b>","Giảm liều sớm theo phác đồ hiện đại","Tránh steroid cao kéo dài"],
-        ["TMP-SMX dự phòng PCP","Theo nguy cơ","Khi ức chế MH mạnh"]
+        ["<b>Rituximab</b>","375 mg/m² TM hàng tuần ×4 liều, hoặc 1g TM ×2 liều cách nhau 2 tuần","Ưu tiên nhiều BN — đặc biệt tái phát, phụ nữ tuổi sinh sản, GPA"],
+        ["Cyclophosphamide","TM: 15mg/kg (tối đa 1.2g) mỗi 2-3 tuần ×3-6 tháng; hoặc uống 2mg/kg/ngày","Thay RTX; theo dõi công thức máu, bảo tồn sinh sản trước dùng"],
+        ["<b>Prednisolone</b> (phác đồ giảm liều nhanh PEXIVAS)","50mg/ngày → giảm còn 5mg/ngày vào tuần 25","Giảm liều nhanh hơn nhiều so với phác đồ cũ — giảm biến cố nhiễm trùng mà hiệu quả tương đương"],
+        ["TMP-SMX dự phòng PCP","800/160mg (liều kép) × 3 lần/tuần, hoặc 400/80mg hàng ngày","Bắt buộc khi ức chế miễn dịch mạnh (Rituximab/Cyclophosphamide + steroid)"]
       ])}
     `,
     khuyen_cao:`
@@ -5272,7 +5294,7 @@ ${rt(["Điều trị"],[
         ["Finerenone","10–20 mg ×1 theo eGFR/K⁺","ĐTĐ + albumin niệu"],
         ["<b>Ramipril</b>","2.5→10 mg","Tối ưu liều"],
         ["<b>Losartan</b>","50→100 mg","Thay ACEi nếu ho"],
-        ["<b>Semaglutide</b>","Theo tăng liều tuần","Lợi ích thận–tim"]
+        ["<b>Semaglutide</b> (SC)","Khởi đầu 0.25mg/tuần ×4 tuần → 0.5mg/tuần → tăng dần mỗi ≥4 tuần tới tối đa 2mg/tuần","Lợi ích thận–tim đã chứng minh (FLOW trial) độc lập với hạ đường huyết"]
       ])}
     
 <div class="subhead">🔗 Tương tác thuốc (DKD)</div>
@@ -5312,7 +5334,7 @@ ${rt(["Hướng xử trí"],[
 <div class="subhead">💊 Liều / xử trí chi tiết</div>
       ${rt(["Chi tiết","Lưu ý"],[
         ["NaHCO₃ uống","0.5–1 mEq/kg/ngày chia liều (CKD mạn)","Khi HCO₃ thấp theo KDIGO"],
-        ["NaHCO₃ IV","Chọn lọc toan nặng / ngộ độc","Không routinely mọi lactic"],
+        ["NaHCO₃ IV","1–2 mEq/kg bolus (tình huống nặng đe dọa tính mạng), hoặc truyền pha loãng chỉnh theo pH đích &gt;7.15-7.20","Chọn lọc toan nặng (pH&lt;7.1-7.2)/ngộ độc — không dùng thường quy cho toan lactic đơn thuần do sốc/giảm tưới máu (ưu tiên điều trị nguyên nhân)"],
         ["<b>Insulin</b> + dịch (DKA)","Theo protocol ĐTĐ","Bù K⁺"]
       ])}
     `,
@@ -5545,7 +5567,7 @@ ${rt(["Hướng xử trí"],[
 },
 {
   spec:"ho_hap", id:"bronchiectasis", emoji:"🌳", short:"Giãn PQ", title:"Giãn phế quản (Bronchiectasis)",
-  guidelines:["ERS Guideline 2017"],
+  guidelines:["ERS Guideline 2025 (cập nhật)"],
   sections:{
     dinh_nghia:`
       <p>Giãn phế quản là tình trạng giãn không hồi phục của đường thở do vòng xoắn viêm-nhiễm trùng mạn tính, gây khạc đàm mạn tính và các đợt cấp tái diễn.</p>
@@ -5553,24 +5575,35 @@ ${rt(["Hướng xử trí"],[
       <p>Hậu nhiễm (lao, viêm phổi nặng), xơ nang (CF), suy giảm miễn dịch (thiếu gammaglobulin), rối loạn chức năng lông chuyển tiên phát, ABPA (dị ứng phế nang phổi do Aspergillus), bệnh mô liên kết, vô căn (~40% trường hợp).</p>`,
     chan_doan:`
       <p><b>CT ngực độ phân giải cao (HRCT)</b> là tiêu chuẩn chẩn đoán: đường thở giãn, mất thuôn nhọn, dấu "vòng nhẫn" (đường kính phế quản > động mạch đi kèm).</p>
-      <p>Tìm nguyên nhân nền: công thức máu + globulin miễn dịch, test mồ hôi/gen CF nếu nghi ngờ, IgE + IgE đặc hiệu Aspergillus (ABPA), cấy đàm định kỳ tìm vi khuẩn thường trú (đặc biệt <i>Pseudomonas aeruginosa</i>).</p>`,
+      <p>Tìm nguyên nhân nền: công thức máu + globulin miễn dịch, test mồ hôi/gen CF nếu nghi ngờ, IgE + IgE đặc hiệu Aspergillus (ABPA), cấy đàm định kỳ tìm vi khuẩn thường trú (đặc biệt <i>Pseudomonas aeruginosa</i>).</p>
+      <div class="alert-box alert-info"><b>ERS 2025:</b> Xét nghiệm tìm <b>Mycobacteria không lao (NTM)</b> nay khuyến cáo cho <b>TẤT CẢ</b> bệnh nhân giãn phế quản (trước đây 2017 chỉ chọn lọc theo đặc điểm lâm sàng) — bắt buộc loại trừ NTM trước khi bắt đầu macrolide dài hạn.</div>`,
     dieu_tri:`
 <ul>
-        <li>Vật lý trị liệu hô hấp làm sạch đường thở hằng ngày (kỹ thuật ho có kiểm soát, thiết bị dao động áp lực dương) — nền tảng điều trị dài hạn.</li>
+        <li>Vật lý trị liệu hô hấp làm sạch đường thở hằng ngày (kỹ thuật ho có kiểm soát, thiết bị dao động áp lực dương) — nền tảng điều trị dài hạn, khuyến cáo mạnh cho hầu hết bệnh nhân; phục hồi chức năng hô hấp (pulmonary rehabilitation) khuyến cáo mạnh nếu giảm khả năng gắng sức.</li>
         <li>Điều trị nguyên nhân nền nếu xác định được (ví dụ corticoid + kháng nấm cho ABPA).</li>
         <li>Kháng sinh đợt cấp theo kết quả cấy đàm/kinh nghiệm, đủ liệu trình (thường 14 ngày).</li>
-        <li>Macrolide dài hạn (<b>azithromycin</b>) giảm số đợt cấp ở người có ≥3 đợt cấp/năm — cần loại trừ lao/NTM trước khi bắt đầu.</li>
-        <li>Kháng sinh khí dung (tobramycin, colistin) khi nhiễm <i>Pseudomonas</i> mạn tính gây đợt cấp thường xuyên.</li>
-        <li>Không dùng corticoid hít thường quy trừ khi có hen/COPD chồng lấp thật sự.</li>
-      </ul>`,
+        <li><b>Nguy cơ đợt cấp cao</b> (≥2 đợt cấp/năm, HOẶC ≥1 đợt cấp nặng, HOẶC 1 đợt cấp kèm triệu chứng hàng ngày nặng — <b>định nghĩa mới ERS 2025</b>, không còn cứng nhắc "≥3 đợt/năm" như 2017): cần điều trị dài hạn phòng ngừa — đã loại trừ NTM trước khi bắt đầu.</li>
+        <li><b>Nhiễm Pseudomonas mạn tính + nguy cơ cao:</b> <b>ERS 2025 — kháng sinh khí dung nay NGANG HÀNG macrolide dài hạn làm lựa chọn đầu tay</b> (khuyến cáo mạnh cả hai, khác với 2017 chỉ ưu tiên khí dung trước); có thể phối hợp cả hai nếu vẫn còn đợt cấp thường xuyên dù đã dùng một loại.</li>
+        <li><b>Không nhiễm Pseudomonas + nguy cơ cao:</b> Macrolide dài hạn (<b>azithromycin</b>) là lựa chọn đầu tay.</li>
+        <li>Không dùng corticoid hít thường quy trừ khi có hen/COPD chồng lấp thật sự (khuyến cáo phản đối rõ trong ERS 2025); không dùng kháng sinh uống dài hạn không phải macrolide thường quy.</li>
+      </ul>
+    <div class="subhead">💊 Liều macrolide/kháng sinh khí dung dài hạn</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Azithromycin</b>","250mg/ngày, hoặc 500mg (hoặc 250mg) × 3 lần/tuần","Kiểm tra ECG/QTc và chức năng gan trước dùng; theo dõi thính lực nếu dùng kéo dài"],
+        ["Erythromycin (thay thế)","400mg × 2 lần/ngày","Khi không dung nạp Azithromycin"],
+        ["Tobramycin khí dung","Theo chu kỳ on/off 28 ngày (tùy chế phẩm)","Nhiễm Pseudomonas mạn tính; test liều đầu có giám sát (nguy cơ co thắt phế quản)"],
+        ["Colistin khí dung","Theo chu kỳ, tùy chế phẩm","Thay thế Tobramycin"]
+      ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Vật lý trị liệu làm sạch đường thở hằng ngày",'<span class="badge badge-I">I</span>'],
-        ["Macrolide dài hạn khi ≥3 đợt cấp/năm (đã loại trừ NTM)",'<span class="badge badge-I">I</span>'],
+        ["Xét nghiệm NTM cho mọi bệnh nhân giãn phế quản (ERS 2025)",'<span class="badge badge-I">I</span>'],
+        ["Macrolide dài hạn khi nguy cơ đợt cấp cao (đã loại trừ NTM)",'<span class="badge badge-I">I</span>'],
+        ["Kháng sinh khí dung dài hạn khi Pseudomonas mạn tính + nguy cơ cao (ngang hàng macrolide — ERS 2025)",'<span class="badge badge-I">I</span>'],
         ["Corticoid hít thường quy khi không có hen/COPD chồng lấp",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"European Respiratory Society (ERS) Guidelines for the management of adult bronchiectasis 2017"
+  source:"Chalmers JD, Haworth CS, Flume P, et al. European Respiratory Society clinical practice guideline for the management of adult bronchiectasis, Eur Respir J 2025"
 }
 ,
 {
@@ -5637,7 +5670,7 @@ ${rt(["Hướng xử trí"],[
 ,
 {
   spec:"co_xuong_khop", id:"gca", emoji:"👁", short:"GCA", title:"Viêm động mạch tế bào khổng lồ (Giant Cell Arteritis)",
-  guidelines:["EULAR 2018 + cập nhật 2023","ACR/VF 2021"],
+  guidelines:["EULAR 2018 + cập nhật 2025/2026","ACR/VF 2021"],
   sections:{
     dinh_nghia:`
       <p>GCA là viêm mạch máu lớn thường gặp nhất ở người ≥50 tuổi, ưu tiên các nhánh sọ của động mạch cảnh (động mạch thái dương) nhưng có thể ảnh hưởng động mạch lớn khác (chủ, dưới đòn — "large-vessel GCA"). Khoảng 40–50% bệnh nhân PMR có kèm GCA.</p>`,
@@ -5986,7 +6019,7 @@ ${rt(["Hướng xử trí"],[
 <ul>
         <li><b>Ngừng rượu và thuốc lá tuyệt đối</b> — can thiệp quan trọng nhất làm chậm tiến triển và giảm đau.</li>
         <li>Kiểm soát đau theo bậc thang: giảm đau không opioid trước, cân nhắc thuốc hỗ trợ (pregabalin), hạn chế tối đa opioid kéo dài do nguy cơ lệ thuộc; chuyển can thiệp (nội soi lấy sỏi/đặt stent ống tụy, ESWL, phẫu thuật) nếu đau kháng trị có tắc nghẽn ống tụy rõ.</li>
-        <li><b>Bổ sung men tụy</b> (pancrelipase) uống cùng bữa ăn khi có suy tụy ngoại tiết (sụt cân, phân mỡ, elastase phân thấp) — cải thiện hấp thu và dinh dưỡng.</li>
+        <li><b>Bổ sung men tụy</b> (pancrelipase) 25,000–50,000 đơn vị lipase/bữa ăn chính (nửa liều cho bữa ăn nhẹ), uống ngay đầu/giữa bữa ăn, có thể tăng tới 75,000–80,000 đơn vị/bữa nếu vẫn còn phân mỡ — khi có suy tụy ngoại tiết (sụt cân, phân mỡ, elastase phân thấp) — cải thiện hấp thu và dinh dưỡng; phối hợp PPI nếu đáp ứng kém (acid dạ dày bất hoạt enzyme).</li>
         <li>Bổ sung vitamin tan trong dầu (A, D, E, K) nếu kém hấp thu kéo dài.</li>
         <li>Tầm soát và điều trị ĐTĐ thứ phát (type 3c) — kiểm soát đường huyết có thể cần <b>insulin</b> sớm hơn ĐTĐ type 2 thông thường.</li>
         <li>Theo dõi nguy cơ ung thư tụy tăng nhẹ ở viêm tụy mạn lâu năm, đặc biệt thể di truyền.</li>
@@ -6392,7 +6425,15 @@ ${rt(["Hướng xử trí"],[
         <li>IVIG hoặc <b>Rituximab</b> cho trường hợp kháng trị/nặng.</li>
         <li>Bệnh phổi kẽ đi kèm (đặc biệt kiểu tiến triển nhanh với anti-MDA5) cần điều trị ức chế miễn dịch tích cực sớm, phối hợp chuyên khoa hô hấp.</li>
         <li>Vật lý trị liệu duy trì sức cơ và chức năng vận động song hành với điều trị thuốc.</li>
-      </ul>`,
+      </ul>
+    <div class="subhead">💊 Liều dùng chi tiết</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Prednisone</b> khởi đầu","1 mg/kg/ngày (tối đa 80mg/ngày), duy trì 4-6 tuần rồi giảm dần qua nhiều tháng","Bệnh nặng/phổi kẽ tiến triển nhanh: Methylprednisolone TM 500-1000mg×3 ngày trước khi chuyển uống"],
+        ["<b>Methotrexate</b>","15–25 mg/tuần (uống hoặc tiêm)","Phối hợp sớm cùng corticoid, kèm acid folic"],
+        ["Azathioprine","2–3 mg/kg/ngày","Thay thế MTX, đặc biệt khi có bệnh phổi kẽ"],
+        ["IVIG","2 g/kg chia truyền qua 2–5 ngày, lặp lại mỗi 4 tuần","Kháng trị/nặng, đặc biệt DM da nặng hoặc khó nuốt"],
+        ["<b>Rituximab</b>","1g TM ×2 liều cách nhau 2 tuần, hoặc 375mg/m² hàng tuần ×4 liều","Kháng trị với corticoid + 1 thuốc ức chế miễn dịch khác"]
+      ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Glucocorticoid liều cao là điều trị khởi đầu",'<span class="badge badge-I">I</span>'],
