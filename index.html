@@ -664,7 +664,7 @@
     <div>
       <h1>📘 Sổ tay lâm sàng</h1>
       <div class="sub">Phác đồ điều trị · Thang điểm · ESC/AHA/ADA/GINA/GOLD/ACG</div>
-      <div class="ver-badge">Bản 2026.09.18b · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
+      <div class="ver-badge">Bản 2026.09.22 · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
       <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇ Cài app</button>
@@ -699,7 +699,7 @@
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
   <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px calc(72px + env(safe-area-inset-bottom,0px));">
-    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.09.18b
+    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.09.22
   </footer>
 </div>
 
@@ -3358,11 +3358,19 @@ ${rt(["Chi tiết"],[
 },
 {
   spec:"tieu_hoa", id:"pancreatitis", emoji:"🔶", short:"VT cấp", title:"Viêm tụy cấp",
-  guidelines:["ACG 2024","IAP/APA 2013 (còn tham chiếu)"],
+  guidelines:["ACG 2024","Revised Atlanta 2012","IAP/APA 2013 (tham chiếu)"],
   sections:{
     dinh_nghia:`
       <p>Viêm tụy cấp được chẩn đoán khi có <b>≥2/3 tiêu chí</b>: (1) đau bụng điển hình (thượng vị, lan sau lưng), (2) lipase hoặc amylase máu ≥3 lần giới hạn trên bình thường, (3) hình ảnh học (CT/MRI/siêu âm) phù hợp viêm tụy cấp.</p>
-      <p>Nguyên nhân thường gặp nhất: <b>sỏi mật</b> (~40%) và <b>rượu</b> (~30%); các nguyên nhân khác: tăng triglyceride máu nặng (&gt;1000mg/dL), thuốc, sau ERCP, tăng canxi máu, u tụy, tự miễn.</p>`,
+      <p>Nguyên nhân thường gặp nhất: <b>sỏi mật</b> (~40%) và <b>rượu</b> (~30%); các nguyên nhân khác: tăng triglyceride máu nặng (&gt;1000 mg/dL), thuốc, sau ERCP, tăng canxi máu, u tụy, tự miễn.</p>
+      <div class="subhead">Phân độ nặng — Revised Atlanta Classification</div>
+      ${rt(["Định nghĩa"],[
+        ["Nhẹ (Mild)","Không suy cơ quan, không biến chứng tại chỗ — thường hồi phục trong vài ngày"],
+        ["Trung bình (Moderately severe)","Suy cơ quan thoáng qua (&lt;48 giờ) và/hoặc biến chứng tại chỗ / ngoài tụy"],
+        ["Nặng (Severe)","Suy cơ quan kéo dài ≥48 giờ (hô hấp, tim mạch, thận theo tiêu chuẩn Marshall cải tiến)"]
+      ])}
+      <p><b>Suy cơ quan (Marshall ≥2 điểm ở 1 hệ):</b> hô hấp (PaO₂/FiO₂), thận (creatinine), tim mạch (huyết áp / cần vận mạch). Phân độ quyết định nơi theo dõi (thường / HSTC) và mức độ tích cực bù dịch–hỗ trợ.</p>
+    `,
     chan_doan:`
       <div class="alert-box alert-info">Không cần cả amylase và lipase cùng lúc — <b>lipase đặc hiệu hơn amylase</b> và tăng kéo dài hơn, là xét nghiệm ưu tiên. Mức độ tăng men tụy <b>không tương quan</b> với độ nặng bệnh — không dùng để tiên lượng hay theo dõi đáp ứng điều trị.</div>
       <div class="subhead">🧮 Thang điểm BISAP — tiên lượng độ nặng sớm (trong 24h đầu)</div>
@@ -3374,42 +3382,97 @@ ${rt(["Chi tiết"],[
         {label:"Tuổi &gt;60",pts:1},
         {label:"Tràn dịch màng phổi trên hình ảnh học",pts:1}
       ])}
-      <p>BISAP ≥3: nguy cơ tử vong và biến chứng nặng tăng đáng kể (nguy cơ tử vong có thể lên đến ~15-20% ở điểm cao) — cân nhắc theo dõi sát/ICU sớm.</p>
-      <p>Hình ảnh học: siêu âm bụng thường quy tìm sỏi mật ở mọi bệnh nhân; CT bụng có cản quang <b>không cần thiết thường quy lúc nhập viện</b> trừ khi chẩn đoán không chắc chắn — chỉ định CT khi triệu chứng không cải thiện sau 48-72h để đánh giá biến chứng (hoại tử, nang giả tụy, ổ dịch).</p>`,
+      <p>BISAP ≥3: nguy cơ tử vong và biến chứng nặng tăng đáng kể — cân nhắc theo dõi sát/ICU sớm. BISAP 0–2: tiên lượng thuận lợi hơn, vẫn đánh giá lại liên tục trong 48h đầu.</p>
+      <div class="subhead">Hình ảnh học</div>
+      <p>Siêu âm bụng thường quy tìm sỏi mật ở mọi bệnh nhân. CT bụng có cản quang <b>không cần thiết thường quy lúc nhập viện</b> trừ khi chẩn đoán không chắc chắn — chỉ định CT khi triệu chứng không cải thiện sau 48–72h để đánh giá biến chứng (hoại tử, nang giả tụy, ổ dịch).</p>
+      <div class="score-link-row">
+        <button type="button" class="score-link-btn" onclick="goSmartScale('bisap')">🧮 BISAP</button>
+        <button type="button" class="score-link-btn" onclick="goSmartScale('ranson')">🧮 Ranson</button>
+      </div>
+    `,
     dieu_tri:`
-      <div class="subhead">Nền tảng — mọi mức độ nặng</div>
-      <ul>
-        <li><b>Bù dịch tinh thể sớm và đầy đủ</b> trong 24h đầu — dịch Ringer lactate được ưu tiên hơn NaCl 0.9% (ít gây toan chuyển hóa tăng clo hơn); theo dõi đáp ứng qua nước tiểu, không bù dịch quá mức gây hội chứng khoang bụng/phù phổi</li>
-        <li><b>Cho ăn sớm qua đường miệng</b> ngay khi dung nạp được (thường trong 24h đầu nếu không buồn nôn/nôn/đau nhiều) — ACG 2024 khuyến cáo mạnh việc cho ăn sớm thay vì nhịn ăn kéo dài như quan niệm cũ, giúp giảm biến chứng nhiễm trùng và rút ngắn thời gian nằm viện</li>
-        <li>Giảm đau đầy đủ (opioid nếu cần, không còn khuyến cáo tránh <b>morphine</b> như quan niệm cũ về co thắt Oddi)</li>
-      </ul>
-      <div class="subhead">Viêm tụy cấp do sỏi mật</div>
-      <p><b>Cắt túi mật nội soi trong cùng đợt nhập viện</b> (viêm tụy nhẹ) sau khi triệu chứng cải thiện — trì hoãn cắt túi mật làm tăng đáng kể nguy cơ tái phát viêm tụy/biến chứng đường mật trước lần phẫu thuật theo lịch hẹn. ERCP cấp cứu chỉ định khi kèm viêm đường mật cấp hoặc tắc mật kéo dài rõ ràng.</p>
-      <div class="subhead">Kháng sinh</div>
-      <div class="alert-box alert-warn"><b>Không dùng kháng sinh dự phòng thường quy</b> cho viêm tụy cấp hoại tử vô trùng — chỉ dùng khi có bằng chứng/nghi ngờ nhiễm trùng thật sự (hoại tử nhiễm trùng xác nhận qua chọc hút/cấy, hoặc nhiễm trùng ngoài tụy đi kèm như viêm đường mật).</div>
-      <div class="subhead">Biến chứng tại chỗ (hoại tử, nang giả tụy, ổ dịch)</div>
-      <p>Hoại tử nhiễm trùng có triệu chứng: can thiệp dẫn lưu (ưu tiên nội soi qua thành dạ dày hoặc qua da) theo chiến lược "step-up" tối thiểu xâm lấn trước khi cân nhắc phẫu thuật mở — trì hoãn can thiệp đến khi hoại tử "khu trú hóa" (thường sau 4 tuần) nếu tình trạng lâm sàng cho phép.</p>
-      <div class="subhead">💊 Liều dùng cụ thể</div>
-      ${rt(["Liều dùng","Lưu ý"],[
-        ["Ringer lactate (bù dịch 24h đầu)","5-10mL/kg/giờ ban đầu, điều chỉnh theo đáp ứng lâm sàng/nước tiểu","theo dõi sát ở người cao tuổi/suy tim tránh quá tải dịch"],
-        ["<b>Morphine</b>/Fentanyl (giảm đau)","theo bậc thang giảm đau, chuẩn độ theo đáp ứng","không còn chống chỉ định <b>morphine</b> do lo ngại co thắt Oddi như quan niệm cũ"],
-        ["<b>Meropenem</b> (chỉ khi xác định/nghi hoại tử nhiễm trùng)","1g × 3 lần/ngày TM","không dùng dự phòng thường quy khi chưa có bằng chứng nhiễm trùng"],
-        ["<b>Insulin</b> (nếu do tăng triglyceride nặng)","truyền TM liên tục theo phác đồ hạ triglyceride cấp","kèm/thay thế plasmapheresis nếu triglyceride rất cao (&gt;1000mg/dL) kèm viêm tụy nặng"]
+      <div class="subhead">🅰 Phân tầng xử trí theo mức độ nặng</div>
+      ${rt(["Hướng xử trí chính"],[
+        ["Nhẹ","Khoa nội/ngoại thường; bù dịch có kiểm soát; giảm đau; ăn sớm đường miệng khi dung nạp; tìm nguyên nhân (sỏi → cắt túi mật cùng đợt nếu ổn)"],
+        ["Trung bình","Theo dõi sát / HSTC phụ nếu suy cơ quan thoáng qua; bù dịch chuẩn độ kỹ; nuôi dưỡng sớm (miệng hoặc sonde); CT nếu không cải thiện sau 48–72h"],
+        ["Nặng","Ưu tiên ICU; hỗ trợ hô hấp/vận mạch/thận theo protocol; bù dịch tránh quá tải; team đa chuyên khoa (ICU–tiêu hóa–can thiệp); kháng sinh chỉ khi nhiễm trùng thật"]
       ])}
-      <div class="age-tag">Người cao tuổi</div>
-      <p>Ngưỡng nghi ngờ biến chứng nên thấp hơn (triệu chứng có thể kín đáo); thận trọng tốc độ bù dịch ở người suy tim/bệnh thận mạn — theo dõi sát hơn dấu hiệu quá tải dịch.</p>`,
+
+      <div class="subhead">🅱 Bù dịch — liều cụ thể & cách chỉnh (ACG 2024 / thực hành)</div>
+      <div class="alert-box alert-info"><b>Ưu tiên Ringer lactate (RL)</b> hơn NaCl 0,9% trong 24h đầu (ít toan tăng clo hơn). Mục tiêu: tưới máu đầy đủ, <b>không</b> bù “ào ạt” cố định gây quá tải / ACS khoang bụng.</div>
+      ${rt(["Chi tiết thực hành"],[
+        ["Dịch khởi đầu (người lớn, không sốc)","<b>RL 5–10 mL/kg/giờ</b> trong vài giờ đầu (thường bắt đầu ~5–10 mL/kg/h, nhiều phác đồ thực hành quanh <b>250–500 mL/giờ</b> ở người ~60–70 kg tùy tình trạng)"],
+        ["Đánh giá lại","Mỗi <b>4–6 giờ</b> trong 24–48h đầu: lâm sàng, nước tiểu, BUN/hematocrit, SpO₂, ran phổi, tĩnh mạch cổ"],
+        ["Đáp ứng tốt","Nước tiểu ≥0,5 mL/kg/giờ; BUN/Hct giảm dần về hướng bình thường; mạch/HA ổn → <b>giảm tốc độ</b> (vd. xuống 2–3 mL/kg/h rồi duy trì/chuyển duy trì)"],
+        ["Chưa đáp ứng / vẫn thiếu dịch","Tăng nhẹ tốc độ hoặc bolus nhỏ RL (vd. 250–500 mL) rồi đánh giá lại — tránh “open-ended” không giới hạn"],
+        ["Quá tải / nguy cơ cao","Khó thở, SpO₂↓, ran phổi, CVP cao, vô niệu do sung huyết → <b>ngừng/giảm mạnh</b> dịch, cân nhắc lợi tiểu nếu sung huyết rõ, hỗ trợ hô hấp"],
+        ["Người cao tuổi / HF / CKD / ARDS","Khởi đầu thấp hơn (gần <b>5 mL/kg/h</b>), bolus thận trọng, theo dõi sát — ưu tiên đích tưới máu hơn “đạt đủ lít”"]
+      ])}
+      <p style="font-size:12px;color:var(--text-secondary)">Tổng dịch 24h đầu thường dao động rộng (thường khoảng vài lít ở người lớn) — <b>cá thể hóa</b>, không áp một con số cố định cho mọi BN. Ghi tốc độ mL/h và giờ đánh giá lại trên tờ lệnh.</p>
+
+      <div class="subhead">🅲 Giảm đau — liều tham khảo</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Paracetamol</b>","500–1000 mg uống/TM mỗi 6–8h (tối đa 3–4 g/ngày)","Nền tảng; giảm nếu suy gan nặng"],
+        ["<b>Morphine</b>","TM: 2–4 mg mỗi 5–15 phút chuẩn độ; hoặc 0,05–0,1 mg/kg; PCA theo protocol viện","Không còn cấm vì “co thắt Oddi” như quan niệm cũ"],
+        ["<b>Fentanyl</b>","TM: 25–50 µg mỗi vài phút chuẩn độ (hoặc theo protocol ICU)","Ưu tiên khi huyết động không ổn / suy thận (ít tích lũy hơn morphine)"],
+        ["<b>Hydromorphone</b>","TM: 0,2–0,5 mg mỗi 5–15 phút chuẩn độ","Thay thế opioid mạnh theo sẵn có"],
+        ["Chống nôn <b>ondansetron</b>","4–8 mg TM/uống mỗi 8h","Hỗ trợ cho phép ăn sớm"]
+      ])}
+
+      <div class="subhead">🅳 Nuôi dưỡng</div>
+      <ul>
+        <li><b>Nhẹ–trung bình:</b> cho ăn đường miệng sớm (thường trong 24h) khi không nôn nhiều / đau không kiểm soát — chế độ nhẹ, tăng dần.</li>
+        <li>Không dung nạp miệng: nuôi dưỡng <b>sonde hỗng tràng / dạ dày</b> sớm hơn nhịn + TPN.</li>
+        <li><b>TPN</b> dự trữ khi không thể nuôi đường tiêu hóa.</li>
+        <li><b>Không</b> nhịn ăn kéo dài chỉ để chờ men tụy về bình thường (Class III).</li>
+      </ul>
+
+      <div class="subhead">🅴 Kháng sinh & nhiễm trùng — chỉ khi có chỉ định</div>
+      <div class="alert-box alert-warn"><b>Không</b> kháng sinh dự phòng thường quy cho hoại tử vô trùng. Chỉ dùng khi nghi/xác định <b>hoại tử nhiễm trùng</b>, nhiễm trùng ngoài tụy (vd. viêm đường mật), hoặc nhiễm khuẩn huyết.</div>
+      ${rt(["Liều thường dùng","Lưu ý"],[
+        ["<b>Meropenem</b>","1 g TM mỗi 8 giờ (eGFR bình thường)","Thấm mô tụy tốt; chỉnh liều suy thận"],
+        ["<b>Imipenem/cilastatin</b>","500 mg – 1 g TM mỗi 6–8 giờ (theo nhãn)","Thay thế carbapenem"],
+        ["<b>Piperacillin/tazobactam</b>","4,5 g TM mỗi 6–8 giờ","Phác đồ thay thế theo antibiogram"],
+        ["Cấy / chọc hút","Trước kháng sinh nếu được và an toàn","Định hướng de-escalation"]
+      ])}
+
+      <div class="subhead">🅵 Nguyên nhân đặc hiệu</div>
+      ${rt(["Xử trí"],[
+        ["Sỏi mật — nhẹ","Cắt túi mật <b>cùng đợt nhập viện</b> khi ổn định (ACG)"],
+        ["Sỏi + ứ mật / viêm đường mật","ERCP lấy sỏi kịp thời + kháng sinh"],
+        ["Triglyceride &gt;1000 mg/dL","Nhịn đường miệng tạm; <b>insulin</b> truyền TM (thường 0,05–0,1 ĐV/kg/h) + dextrose giữ đường huyết an toàn; cân nhắc lọc huyết tương nếu rất nặng / không đáp ứng"],
+        ["Tăng Ca²⁺","Bù dịch + điều trị nguyên nhân tăng canxi"],
+        ["Rượu","Ngưng rượu; dự phòng cai rượu (benzodiazepine theo CIWA) nếu cần"]
+      ])}
+
+      <div class="subhead">🅶 Biến chứng tại chỗ</div>
+      <p>Hoại tử nhiễm trùng có triệu chứng: dẫn lưu theo chiến lược <b>step-up</b> (nội soi xuyên thành / qua da trước phẫu thuật mở). Trì hoãn can thiệp đến khi ổ hoại tử “khu trú” (thường ≥4 tuần) nếu lâm sàng cho phép.</p>
+
+      <div class="subhead">💊 Tóm tắt liều hay dùng tại giường</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Ringer lactate</b>","5–10 mL/kg/h → chỉnh 4–6h/lần","Đích: nước tiểu ≥0,5 mL/kg/h; tránh quá tải"],
+        ["<b>Morphine</b> TM","2–4 mg chuẩn độ","Hoặc PCA"],
+        ["<b>Fentanyl</b> TM","25–50 µg chuẩn độ","Huyết động kém / suy thận"],
+        ["<b>Meropenem</b>","1 g × 3/ngày TM","Chỉ khi nhiễm trùng thật"],
+        ["<b>Insulin</b> TM (HTG)","0,05–0,1 ĐV/kg/h + dextrose","Theo dõi đường huyết / K⁺ sát"]
+      ])}
+
+      <div class="age-tag">Người cao tuổi / suy tim / CKD</div>
+      <p>Khởi đầu dịch thấp hơn, đánh giá quá tải sớm; ngưỡng nghi biến chứng và chuyển HSTC thấp hơn vì triệu chứng có thể kín đáo.</p>
+    `,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Lipase là xét nghiệm men tụy ưu tiên hơn amylase",'<span class="badge badge-I">I</span>'],
-        ["Bù dịch Ringer lactate sớm trong 24h đầu",'<span class="badge badge-I">I</span>'],
+        ["Bù dịch Ringer lactate sớm, chỉnh theo đáp ứng (không bù cố định quá mức)",'<span class="badge badge-I">I</span>'],
         ["Cho ăn sớm qua đường miệng ngay khi dung nạp được",'<span class="badge badge-I">I</span>'],
         ["Cắt túi mật cùng đợt nhập viện cho viêm tụy do sỏi mật mức độ nhẹ",'<span class="badge badge-I">I</span>'],
         ["Kháng sinh dự phòng thường quy cho hoại tử tụy vô trùng",'<span class="badge badge-III">III</span>'],
         ["Nhịn ăn kéo dài thường quy chờ men tụy về bình thường",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"ACG Clinical Guideline: Management of Acute Pancreatitis 2024; IAP/APA Evidence-Based Guidelines for Acute Pancreatitis 2013"
+  source:"ACG Clinical Guideline: Management of Acute Pancreatitis 2024; Revised Atlanta Classification 2012; IAP/APA Evidence-Based Guidelines for Acute Pancreatitis 2013"
 },
+
 {
   spec:"tieu_hoa", id:"gib", emoji:"🩸", short:"XHTH", title:"Xuất huyết tiêu hóa",
   guidelines:["ACG 2021 (XHTH trên không do giãn TM)","Baveno VII 2022 (XHTH do giãn TM)","ACG 2023 (XHTH dưới — cập nhật)"],
@@ -11473,6 +11536,13 @@ function calcScoreNow() {
 <div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
   <div class="cl-sheet" onclick="event.stopPropagation()">
     <h2>📝 Nhật ký cập nhật và bảo trì</h2>
+    <div class="cl-item"><div class="cl-date">2026-09-22 — Viêm tụy cấp: phân độ nặng + liều dịch/thuốc chi tiết</div>
+      <ul>
+        <li>Revised Atlanta: nhẹ / trung bình / nặng + hướng xử trí theo tầng</li>
+        <li>Bù dịch RL: 5–10 mL/kg/h, đánh giá lại 4–6h, đích nước tiểu, tránh quá tải</li>
+        <li>Liều morphine/fentanyl, meropenem, insulin (HTG); nút BISAP/Ranson</li>
+      </ul>
+    </div>
     <div class="cl-item"><div class="cl-date">2026-09-18b — Tối ưu hiệu năng + UX + mã (không cắt nội dung)</div>
       <ul>
         <li>Hiệu năng: debounce tìm kiếm 120ms; content-visibility rộng hơn; SW cache <code>ykhoa-v20260918b</code></li>
