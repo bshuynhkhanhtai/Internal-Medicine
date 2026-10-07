@@ -667,6 +667,77 @@
   .merge-part{border-top:2px dashed var(--border-color);padding-top:10px;margin-top:14px;}
   .merge-part:first-child{border-top:none;padding-top:0;margin-top:0;}
   .merge-part-title{font-weight:800;color:var(--tiffany-dark);font-size:14px;margin-bottom:8px;background:var(--tiffany-light);padding:7px 10px;border-radius:8px;}
+
+  /* ===== Mục gộp: tổng quan + thu gọn từng thể (2026.10.06k) ===== */
+  .merge-overview{border:1px solid var(--border-color);border-radius:12px;background:var(--bg-card);padding:8px;margin:2px 0 14px;display:flex;flex-direction:column;gap:6px;}
+  .mo-title{font-size:12px;font-weight:800;color:var(--text-secondary);padding:2px 4px;}
+  .mo-row{display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--bg-primary);border:1px solid var(--border-color);border-radius:10px;padding:8px 10px;cursor:pointer;color:var(--text-primary);font:inherit;}
+  .mo-row:hover,.mo-row.active{border-color:var(--tiffany-main);background:var(--tiffany-light);}
+  .mo-name{font-weight:800;font-size:13px;color:var(--tiffany-dark);}
+  .mo-desc{font-size:12px;line-height:1.45;color:var(--text-secondary);}
+  .merge-part-title{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;user-select:none;position:relative;}
+  .mp-caret{font-size:12px;opacity:.7;transition:transform .2s;}
+  .merge-part.collapsed .mp-caret{transform:rotate(-90deg);}
+  .merge-part.collapsed > :not(.merge-part-title){display:none !important;}
+  #tocParts{display:none;}
+  .layout-toggle-btn{font-weight:700;}
+  @media (max-width:520px){ .layout-toggle-btn{display:none;} }
+
+  /* ===== GIAO DIỆN DESKTOP (html.layout-desktop) ===== */
+  html.layout-desktop{ --side-w: clamp(230px, 20vw, 300px); --toc-w: clamp(200px, 16vw, 250px); }
+  html.layout-desktop header{display:grid;grid-template-columns:minmax(260px,auto) minmax(300px,380px) minmax(280px,1fr);align-items:center;column-gap:18px;padding-left:20px;padding-right:20px;padding-bottom:8px;transform:none !important;}
+  html.layout-desktop header .top-bar{margin-bottom:0;}
+  html.layout-desktop header .sub{-webkit-line-clamp:2;}
+  html.layout-desktop #mainTabBar button{min-height:36px !important;font-size:12.5px !important;}
+  html.layout-desktop #globalSearchWrap{padding:0 !important;}
+  html.layout-desktop #quickSearch{padding:10px 12px !important;font-size:14px !important;}
+  html.layout-desktop body.chrome-hidden header, html.layout-desktop header{box-shadow:0 2px 8px rgba(0,0,0,.12);}
+  /* Sidebar trái: chuyên khoa + danh sách bệnh */
+  html.layout-desktop .specialty-tabs-wrapper{left:0 !important;right:auto !important;width:var(--side-w) !important;transform:none !important;opacity:1 !important;pointer-events:auto !important;}
+  html.layout-desktop .specialty-tabs{flex-wrap:wrap !important;overflow:visible !important;padding:10px !important;gap:6px !important;}
+  html.layout-desktop .sp-tab{flex:1 1 calc(50% - 6px);justify-content:flex-start;}
+  html.layout-desktop .disease-tabs-wrapper{left:0 !important;right:auto !important;width:var(--side-w) !important;bottom:0 !important;overflow-y:auto !important;border-bottom:none !important;border-right:1px solid var(--border-color);transform:none !important;opacity:1 !important;pointer-events:auto !important;}
+  html.layout-desktop .disease-tabs{flex-direction:column !important;flex-wrap:nowrap !important;overflow:visible !important;gap:4px !important;padding:8px 8px 40px !important;}
+  html.layout-desktop .d-tab{flex-direction:row !important;justify-content:flex-start !important;gap:8px;white-space:normal !important;text-align:left;padding:9px 10px !important;width:100%;min-width:0 !important;font-size:12.5px !important;line-height:1.3;}
+  html.layout-desktop .d-tab .emoji{margin:0 !important;font-size:15px;}
+  html.layout-desktop .d-tab:hover{border-color:var(--tiffany-main);}
+  /* Cột phải: mục lục */
+  html.layout-desktop .section-nav{top:var(--app-header-h,72px) !important;left:auto !important;right:0 !important;width:var(--toc-w) !important;bottom:0 !important;flex-direction:column !important;flex-wrap:nowrap !important;overflow-y:auto !important;gap:6px !important;padding:14px 12px 40px !important;border-bottom:none !important;border-left:1px solid var(--border-color);background:var(--bg-primary) !important;transform:none !important;opacity:1 !important;pointer-events:auto !important;}
+  html.layout-desktop .section-nav::before{content:"Mục lục phác đồ";font-size:11px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;}
+  html.layout-desktop .s-pill{text-align:left;padding:8px 10px !important;font-size:12.5px !important;}
+  html.layout-desktop #tocParts{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+  html.layout-desktop .toc-tools{display:flex;flex-wrap:wrap;gap:6px;}
+  html.layout-desktop .toc-tools .s-pill{flex:1 1 auto;text-align:center;font-size:11.5px !important;}
+  html.layout-desktop .toc-label{font-size:11px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px;margin-top:6px;}
+  html.layout-desktop .toc-part-list{display:flex;flex-direction:column;gap:5px;}
+  html.layout-desktop .toc-part-list .merge-chip{text-align:left;border-radius:10px;white-space:normal;line-height:1.3;}
+  /* Nội dung giữa */
+  html.layout-desktop #viewPhacDo{padding-top:calc(var(--app-header-h,72px) + 10px) !important;padding-left:var(--side-w);padding-right:var(--toc-w);}
+  html.layout-desktop .container{max-width:1040px;padding:16px 28px 60px;}
+  html.layout-desktop .card{scroll-margin-top:calc(var(--app-header-h,72px) + 14px);}
+  html.layout-desktop .card-body-inner{font-size:14.5px;line-height:1.66;padding:0 20px 20px;}
+  html.layout-desktop .disease-header h2{font-size:22px;}
+  html.layout-desktop .disease-header > .merge-chips{display:none;}
+  html.layout-desktop .disease-header > .disease-toc{display:none;}
+  html.layout-desktop .merge-overview{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));}
+  html.layout-desktop .merge-overview .mo-title{grid-column:1/-1;}
+  /* Bảng dạng lưới thật trên desktop */
+  html.layout-desktop .rtable-row:not(.rtable-row-simple){display:grid;grid-template-columns:minmax(170px,26%) repeat(auto-fit,minmax(0,1fr));grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);column-gap:14px;align-items:start;}
+  html.layout-desktop .rtable-row:not(.rtable-row-simple) .rtable-title{margin-bottom:0;}
+  html.layout-desktop .rtable-cell{flex-direction:column;justify-content:flex-start;gap:2px;border-top:none !important;padding:0 !important;}
+  html.layout-desktop .rtable-label{max-width:none;flex:none;font-size:11px;text-transform:none;}
+  html.layout-desktop .rtable-value{text-align:left !important;}
+  html.layout-desktop .rtable-row-simple .rtable-title{max-width:30%;flex:0 0 30%;}
+  html.layout-desktop .rtable-value-simple{text-align:left;}
+  html.layout-desktop footer{padding-bottom:20px !important;}
+  /* Thang điểm & AI trên desktop */
+  html.layout-desktop #scalesList{display:grid !important;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px !important;max-width:1400px;margin:0 auto;padding-left:24px !important;padding-right:24px !important;}
+  html.layout-desktop #scalesList .abc-group-header{grid-column:1/-1;}
+  html.layout-desktop #scoreStickyBar > *{max-width:1400px;margin-left:auto;margin-right:auto;}
+  html.layout-desktop #modalScaleBody, html.layout-desktop .calc-modal-score{max-width:820px;width:100%;margin-left:auto;margin-right:auto;}
+  html.layout-desktop .ai-chat-wrap, html.layout-desktop .ai-suggest, html.layout-desktop .ai-disclaimer{max-width:980px;width:100%;margin-left:auto;margin-right:auto;}
+  html.layout-desktop .ai-input-bar{padding-left:max(12px, calc((100vw - 980px)/2));padding-right:max(12px, calc((100vw - 980px)/2));}
+  html.layout-desktop #backToTop{right:calc(var(--toc-w) + 16px);}
 </style>
 </head>
 <body>
@@ -676,10 +747,11 @@
     <div>
       <h1>📘 Sổ tay lâm sàng</h1>
       <div class="sub">Phác đồ điều trị · Thang điểm · ESC/AHA/ADA/GINA/GOLD/ACG</div>
-      <div class="ver-badge">Bản 2026.10.06j · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
+      <div class="ver-badge">Bản 2026.10.06k · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
       <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇ Cài app</button>
+      <button class="theme-toggle-btn layout-toggle-btn" id="layoutBtn" type="button" onclick="toggleLayout()" title="Chuyển giao diện Desktop / Mobile">🖥 Desktop</button>
       <button class="theme-toggle-btn" onclick="toggleTheme()">
         <span id="themeIcon">☀</span><span id="themeText">Sáng</span>
       </button>
@@ -9841,24 +9913,24 @@ ${rt(["Hướng xử trí"],[
    ========================================================= */
 const DISEASE_MERGE = [
   // Tim mạch
-  {id:"htn", spec:"tim_mach", emoji:"🩸", short:"THA", title:"Tăng huyết áp (nguyên phát, kháng trị, cấp cứu, thai kỳ, do mạch thận)", members:["htn","htn_emergency","htn_pregnancy","renovascular","resistant_htn"]},
+  {id:"htn", spec:"tim_mach", emoji:"🩸", short:"THA", title:"Tăng huyết áp (nguyên phát, kháng trị, cấp cứu, thai kỳ, do mạch thận)", members:["htn","resistant_htn","htn_emergency","htn_pregnancy","renovascular"]},
   {id:"acs", spec:"tim_mach", emoji:"🫀", short:"HCVC", title:"Hội chứng vành cấp & MINOCA", members:["acs","minoca"]},
-  {id:"tachy", spec:"tim_mach", emoji:"⚡", short:"Nhịp nhanh", title:"Rối loạn nhịp nhanh & Bệnh kênh ion (QT dài, Brugada)", members:["tachy","channelopathy"]},
+  {id:"tachy", spec:"tim_mach", emoji:"⚡", short:"Rối loạn nhịp", title:"Rối loạn nhịp tim (nhịp nhanh, nhịp chậm, bệnh kênh ion)", members:["tachy","brady","channelopathy"]},
   {id:"cardiomyopathy", spec:"tim_mach", emoji:"💗", short:"Bệnh cơ tim", title:"Bệnh cơ tim (giãn, phì đại, nhiễm bột, chu sinh)", members:["cardiomyopathy","hcm","cardiac_amyloid","ppcm"]},
   {id:"myocarditis", spec:"tim_mach", emoji:"🔥", short:"Viêm cơ tim/MNT", title:"Viêm cơ tim, Viêm màng ngoài tim & Chèn ép tim", members:["myocarditis","pericarditis"]},
   {id:"aortic", spec:"tim_mach", emoji:"🧬", short:"Bệnh ĐMC", title:"Bệnh động mạch chủ (Phình & Bóc tách)", members:["aortic","aortic_dissection"]},
-  {id:"vte", spec:"tim_mach", emoji:"🦵", short:"Huyết khối TM", title:"Huyết khối tĩnh mạch (Thuyên tắc phổi, DVT, Tĩnh mạch nông)", members:["pe","dvt","svt_superficial"]},
+  {id:"vte", spec:"tim_mach", emoji:"🦵", short:"Huyết khối TM", title:"Huyết khối tĩnh mạch (Thuyên tắc phổi, DVT, Tĩnh mạch nông)", members:["dvt","pe","svt_superficial"]},
   {id:"lipid", spec:"tim_mach", emoji:"🧈", short:"Lipid", title:"Rối loạn lipid máu & Tăng triglyceride nặng", members:["lipid","severe_htg"]},
   // Nội tiết
   {id:"dm", spec:"noi_tiet", emoji:"🍬", short:"ĐTĐ", title:"Đái tháo đường (típ 2, típ 1, thai kỳ, do glucocorticoid/thuốc)", members:["dm","t1d","gdm","steroid_hyperglycemia"]},
   {id:"dka_hhs", spec:"noi_tiet", emoji:"🚨", short:"Cấp cứu ĐTĐ", title:"Cấp cứu đường huyết (DKA/HHS & Hạ đường huyết)", members:["dka_hhs","hypoglycemia"]},
-  {id:"thyroid", spec:"noi_tiet", emoji:"🦋", short:"Tuyến giáp", title:"Bệnh lý tuyến giáp (cường/suy giáp, viêm giáp, nhân giáp, cấp cứu, thai kỳ, do thuốc)", members:["thyroid","thyroiditis","thyroid_nodule","thyroid_emergency","thyroid_pregnancy","drug_thyroid"]},
+  {id:"thyroid", spec:"noi_tiet", emoji:"🦋", short:"Tuyến giáp", title:"Bệnh lý tuyến giáp (cường/suy giáp, viêm giáp, nhân giáp, cấp cứu, thai kỳ, do thuốc)", members:["thyroid","thyroiditis","thyroid_emergency","thyroid_nodule","thyroid_pregnancy","drug_thyroid"]},
   {id:"adrenal", spec:"noi_tiet", emoji:"🫘", short:"Thượng thận", title:"Bệnh lý tuyến thượng thận (Cushing, Suy TT, Cường aldosterone, U tủy, U tình cờ, CAH)", members:["cushing","addison","aldo","pheo","adrenal_incidentaloma","nccah"]},
   {id:"pituitary", spec:"noi_tiet", emoji:"🧠", short:"Tuyến yên", title:"Bệnh lý tuyến yên (To đầu chi, Tăng prolactin, Suy tuyến yên, Đái tháo nhạt)", members:["acromegaly","hyperprolactinemia","hypopituitarism","di"]},
-  {id:"calcium", spec:"noi_tiet", emoji:"🦴", short:"Canxi–Cận giáp", title:"Rối loạn canxi máu & Tuyến cận giáp", members:["hyperCa","hyperPTH","hypocalcemia"]},
+  {id:"calcium", spec:"noi_tiet", emoji:"🦴", short:"Ca–Cận giáp–Vit D", title:"Rối loạn canxi máu, tuyến cận giáp & vitamin D", members:["hyperCa","hyperPTH","hypocalcemia","vitd"]},
   // Hô hấp
   {id:"copd", spec:"ho_hap", emoji:"🫁", short:"COPD", title:"Bệnh phổi tắc nghẽn mạn tính & Chồng lấp hen–COPD", members:["copd","aco"]},
-  {id:"cap", spec:"ho_hap", emoji:"🦠", short:"VPCĐ", title:"Viêm phổi cộng đồng (bao gồm Mycoplasma & viêm phổi hít)", members:["cap","mycoplasma","aspiration"]},
+  {id:"cap", spec:"ho_hap", emoji:"🦠", short:"VPCĐ", title:"Viêm phổi cộng đồng (Mycoplasma, viêm phổi hít, áp xe phổi)", members:["cap","mycoplasma","aspiration","lung_abscess"]},
   {id:"resp_virus", spec:"ho_hap", emoji:"🤧", short:"Cúm/COVID", title:"Nhiễm virus hô hấp (Cúm & COVID-19)", members:["influenza","covid19"]},
   {id:"tb", spec:"ho_hap", emoji:"🧫", short:"Lao/NTM", title:"Lao phổi & Bệnh phổi do NTM", members:["tb","ntm"]},
   {id:"ild", spec:"ho_hap", emoji:"🫁", short:"Bệnh phổi kẽ", title:"Bệnh phổi kẽ (IPF, do bệnh tự miễn, nghề nghiệp, do thuốc)", members:["ild","ctd_ild","pneumoconiosis","drug_ild"]},
@@ -9871,6 +9943,9 @@ const DISEASE_MERGE = [
   {id:"sle", spec:"co_xuong_khop", emoji:"🦋", short:"Lupus/APS", title:"Lupus ban đỏ hệ thống, Viêm thận lupus & Hội chứng kháng phospholipid", members:["sle","lupus_nephritis","aps"]},
   {id:"septic_arthritis", spec:"co_xuong_khop", emoji:"🦠", short:"VK nhiễm trùng", title:"Viêm khớp do nhiễm trùng (vi khuẩn & virus)", members:["septic_arthritis","viral_arthritis"]},
   {id:"myositis", spec:"co_xuong_khop", emoji:"💪", short:"Bệnh cơ", title:"Bệnh cơ viêm tự miễn & Bệnh cơ do statin", members:["myositis","statin_myopathy"]},
+  {id:"cough", spec:"ho_hap", emoji:"😷", short:"Ho cấp/mạn", title:"Ho cấp (Viêm phế quản cấp) & Ho mạn tính", members:["bronchitis","chronic_cough"]},
+  {id:"masld", spec:"tieu_hoa", emoji:"🫃", short:"Gan nhiễm mỡ", title:"Bệnh gan nhiễm mỡ (MASLD & Bệnh gan do rượu)", members:["masld","ald"]},
+  {id:"aih", spec:"tieu_hoa", emoji:"🧬", short:"Gan tự miễn", title:"Bệnh gan tự miễn (Viêm gan tự miễn, PBC, PSC)", members:["aih","pbc"]},
   // Tiêu hóa
   {id:"gerd", spec:"tieu_hoa", emoji:"🔥", short:"Thực quản", title:"Bệnh thực quản (GERD, EoE, Co thắt tâm vị)", members:["gerd","eoe","achalasia"]},
   {id:"dyspepsia", spec:"tieu_hoa", emoji:"🫃", short:"Khó tiêu/Liệt DD", title:"Khó tiêu chức năng & Liệt dạ dày", members:["dyspepsia","gastroparesis"]},
@@ -9897,6 +9972,23 @@ const DISEASE_MERGE = [
   {id:"metabolic_acidosis", spec:"than", emoji:"🧪", short:"Toan–Kiềm", title:"Rối loạn toan–kiềm (Toan CH, RTA, Kiềm CH, Toan/Kiềm hô hấp)", members:["metabolic_acidosis","rta","metabolic_alkalosis","resp_acid_base"]}
 ];
 const DISEASE_ALIAS = {};
+function mergeSummary(html){
+  const t = String(html || "").replace(/<(style|script)[^>]*>[\s\S]*?<\/\1>/gi, " ").replace(/<div class="(subhead|rtable-caption)[^"]*">[\s\S]*?<\/div>/g, " ").replace(/<[^>]+>/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+  if (!t) return "";
+  let cut = t.slice(0, 170);
+  const dot = cut.search(/[.;](\s|$)/);
+  if (dot > 60) cut = cut.slice(0, dot + 1); else if (t.length > 170) cut = cut.replace(/\s+\S*$/, "") + "…";
+  return cut.replace(/</g, "&lt;");
+}
+function mergeOverview(parts){
+  return '<div class="merge-overview"><div class="mo-title">🧭 Tổng quan nhóm — bấm một thể để xem riêng</div>' +
+    parts.map(p => '<button type="button" class="mo-row" onclick="pickMergePart(\'' + p.id + '\')"><span class="mo-name">' + p.emoji + " " + p.title + '</span><span class="mo-desc">' + mergeSummary(p.sections && p.sections.dinh_nghia) + '</span></button>').join("") +
+    "</div>";
+}
+function pickMergePart(pid){
+  const b = document.querySelector('#mainContainer .merge-chip[data-part="' + pid + '"]');
+  if (typeof filterMergePart === "function") filterMergePart(pid, b);
+}
 (function mergeDiseases(){
   const KEYS = ["dinh_nghia","chan_doan","dieu_tri","khuyen_cao"];
   DISEASE_MERGE.forEach(g => {
@@ -9911,9 +10003,9 @@ const DISEASE_ALIAS = {};
       mergedFrom: parts.map(p => ({id: p.id, short: p.short, title: p.title, emoji: p.emoji}))
     };
     KEYS.forEach(k => {
-      merged.sections[k] = parts.map(p =>
+      merged.sections[k] = (k === "dinh_nghia" ? mergeOverview(parts) : "") + parts.map(p =>
         '<div class="merge-part" data-part="' + p.id + '">' +
-        '<div class="merge-part-title">' + p.emoji + " " + p.title + "</div>" +
+        '<div class="merge-part-title" role="button" tabindex="0" title="Bấm để thu gọn/mở phần này" onclick="this.parentElement.classList.toggle(\'collapsed\')">' + p.emoji + " " + p.title + '<span class="mp-caret" aria-hidden="true">▾</span></div>' +
         (p.sections && p.sections[k] ? p.sections[k] : '<p class="empty-hint">—</p>') +
         "</div>").join("");
     });
@@ -9938,7 +10030,8 @@ function filterMergePart(pid, btn){
   document.querySelectorAll("#mainContainer .merge-part").forEach(el => {
     el.style.display = (!pid || el.getAttribute("data-part") === pid) ? "" : "none";
   });
-  document.querySelectorAll("#mainContainer .merge-chip").forEach(b => b.classList.toggle("active", b === btn));
+  document.querySelectorAll("#mainContainer .merge-chip, #tocParts .merge-chip").forEach(b => b.classList.toggle("active", (b.getAttribute("data-part") || "") === (pid || "")));
+  document.querySelectorAll("#mainContainer .merge-overview .mo-row").forEach(r => r.classList.toggle("active", !!pid && (r.getAttribute("onclick") || "").indexOf("'" + pid + "'") >= 0));
   window.__mergePart = pid || "";
 }
 
@@ -10079,8 +10172,8 @@ function jumpDiseaseSection(key){
 
 function toggleCard(card){
   const willOpen = !card.classList.contains('open');
-  // Accordion: chỉ một card mở trong phác đồ (không xóa nội dung — chỉ ẩn/hiện)
-  if(willOpen){
+  // Accordion: chỉ một card mở trong phác đồ (mobile); desktop cho mở nhiều thẻ
+  if(willOpen && !document.documentElement.classList.contains('layout-desktop')){
     const root = document.getElementById('mainContainer');
     if(root){
       root.querySelectorAll('.card.open').forEach(function(c){
@@ -11027,7 +11120,7 @@ if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D
 if('serviceWorker' in navigator){
   try {
     const swCode = `
-      const CACHE = 'ykhoa-v20261006j';
+      const CACHE = 'ykhoa-v20261006k';
       self.addEventListener('install', e => { self.skipWaiting(); });
       self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
       self.addEventListener('fetch', e => {
@@ -11082,7 +11175,79 @@ const _renderDiseaseContentOrig = renderDiseaseContent;
 renderDiseaseContent = function(){
   _renderDiseaseContentOrig.apply(this, arguments);
   setTimeout(enhanceDiseaseHeaderFav, 0);
+  setTimeout(function(){ if(typeof afterDiseaseRenderLayout === 'function') afterDiseaseRenderLayout(); }, 0);
 };
+
+/* ===== Giao diện Desktop / Mobile (2026.10.06k) ===== */
+const LS_LAYOUT = 'ykhoa_layout_mode';
+function isDesktopLayout(){ return document.documentElement.classList.contains('layout-desktop'); }
+function getSavedLayout(){ try { return localStorage.getItem(LS_LAYOUT) || 'auto'; } catch(e){ return 'auto'; } }
+function applyLayout(mode){
+  const de = mode === 'desktop' || (mode !== 'mobile' && window.innerWidth >= 1100);
+  const was = isDesktopLayout();
+  document.documentElement.classList.toggle('layout-desktop', de);
+  const btn = document.getElementById('layoutBtn');
+  if(btn){ btn.textContent = de ? '📱 Mobile' : '🖥 Desktop'; btn.title = de ? 'Chuyển sang giao diện điện thoại' : 'Chuyển sang giao diện máy tính (3 cột)'; }
+  if(de) document.body.classList.remove('chrome-hidden');
+  if(typeof updateAppHeaderOffsets === 'function'){ updateAppHeaderOffsets(); setTimeout(updateAppHeaderOffsets, 60); setTimeout(updateAppHeaderOffsets, 300); }
+  if(was !== de) afterDiseaseRenderLayout(true);
+}
+function toggleLayout(){
+  const m = isDesktopLayout() ? 'mobile' : 'desktop';
+  try { localStorage.setItem(LS_LAYOUT, m); } catch(e){}
+  applyLayout(m);
+  if(typeof showToast === 'function') showToast(m === 'desktop' ? 'Đã chuyển giao diện Desktop' : 'Đã chuyển giao diện Mobile');
+}
+function setAllCards(open){
+  document.querySelectorAll('#mainContainer .card').forEach(c => {
+    c.classList.toggle('open', open);
+    const h = c.querySelector('.card-head'); if(h) h.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+}
+function afterDiseaseRenderLayout(layoutChanged){
+  const de = isDesktopLayout();
+  if(de) setAllCards(true);
+  else if(layoutChanged){ setAllCards(false); const f = document.querySelector('#mainContainer .card'); if(f){ f.classList.add('open'); } }
+  const nav = document.getElementById('sectionNav');
+  if(!nav) return;
+  let box = document.getElementById('tocParts');
+  if(!box){ box = document.createElement('div'); box.id = 'tocParts'; nav.appendChild(box); }
+  const d = (typeof diseases !== 'undefined') ? diseases.find(x => x.id === activeDiseaseId) : null;
+  let h = '<div class="toc-tools"><button type="button" class="s-pill" onclick="setAllCards(true)">⇕ Mở tất cả</button><button type="button" class="s-pill" onclick="setAllCards(false)">⇵ Thu gọn</button><button type="button" class="s-pill" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">↑ Đầu trang</button></div>';
+  if(d && d.mergedFrom){
+    const cur = layoutChanged ? (window.__mergePart || '') : '';
+    h += '<div class="toc-label">Thể bệnh</div><div class="toc-part-list">' +
+      '<button type="button" class="merge-chip' + (cur ? '' : ' active') + '" data-part="" onclick="filterMergePart(\'\', this)">Tất cả</button>' +
+      d.mergedFrom.map(p => '<button type="button" class="merge-chip' + (cur === p.id ? ' active' : '') + '" data-part="' + p.id + '" onclick="filterMergePart(\'' + p.id + '\', this)">' + p.emoji + ' ' + p.title + '</button>').join('') + '</div>';
+  }
+  box.innerHTML = h;
+  if(!layoutChanged) window.__mergePart = '';
+}
+(function initScrollSpy(){
+  let tk = false;
+  window.addEventListener('scroll', function(){
+    if(tk || !isDesktopLayout()) return; tk = true;
+    requestAnimationFrame(function(){
+      tk = false;
+      const top = (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--app-header-h')) || 72) + 40;
+      let cur = null;
+      document.querySelectorAll('#mainContainer .card').forEach(c => { if(c.getBoundingClientRect().top <= top) cur = c.id; });
+      if(!cur){ const f = document.querySelector('#mainContainer .card'); cur = f && f.id; }
+      if(!cur) return;
+      const key = cur.replace('card_','');
+      document.querySelectorAll('#sectionNav .s-pill[onclick*="scrollToSection"]').forEach(p => p.classList.toggle('active', (p.getAttribute('onclick')||'').indexOf("'" + key + "'") >= 0));
+    });
+  }, {passive:true});
+})();
+(function initLayout(){
+  applyLayout(getSavedLayout());
+  let t = null;
+  window.addEventListener('resize', function(){
+    clearTimeout(t);
+    t = setTimeout(function(){ if(getSavedLayout() === 'auto') applyLayout('auto'); else if(typeof updateAppHeaderOffsets === 'function') updateAppHeaderOffsets(); }, 180);
+  });
+})();
+
 
 
 /* PWA install guide */
@@ -11687,6 +11852,7 @@ function aiSend(){
   const MIN_TOGGLE_MS = 220;
 
   function setChromeHidden(on){
+    if(document.documentElement.classList.contains('layout-desktop')) on = false;
     if(hidden === on) return;
     const now = performance.now();
     if(on === hidden) return;
@@ -15493,6 +15659,13 @@ function calcScoreNow() {
 <div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
   <div class="cl-sheet" onclick="event.stopPropagation()">
     <h2>📝 Nhật ký cập nhật và bảo trì</h2>
+    <div class="cl-item"><div class="cl-date">2026-10-06k — Rà soát mục gộp, tối ưu giao diện, thêm chế độ Desktop</div>
+      <ul>
+        <li><b>Chế độ Desktop</b> (nút 🖥/📱 trên đầu trang; tự bật khi màn hình ≥1100px, nhớ lựa chọn): 3 cột — trái chuyên khoa + danh sách bệnh, giữa nội dung (mở sẵn mọi thẻ, chữ lớn hơn), phải mục lục + thể bệnh + Mở/Thu tất cả; bảng hiển thị dạng lưới; thang điểm dạng lưới nhiều cột; header 1 hàng; không ẩn thanh điều hướng khi cuộn</li>
+        <li><b>Mục gộp</b>: thêm khung «Tổng quan nhóm» đầu thẻ Định nghĩa (tóm tắt từng thể, bấm để lọc); bấm tiêu đề từng thể để thu gọn/mở; chip thể bệnh đồng bộ giữa đầu trang và mục lục</li>
+        <li><b>Rà soát nhóm</b>: Rối loạn nhịp gộp thêm Nhịp chậm; VPCĐ thêm Áp xe phổi; Ca–cận giáp thêm Vitamin D; nhóm mới Ho cấp & mạn, Gan nhiễm mỡ (MASLD + rượu), Gan tự miễn (AIH + PBC/PSC); sắp xếp lại thứ tự thể (Tuyến giáp, Huyết khối TM)</li>
+      </ul>
+    </div>
     <div class="cl-item"><div class="cl-date">2026-10-06j — +12 thể bệnh nội khoa (191 phác đồ, 107 mục), gộp thêm 6 nhóm, +2 thang điểm (72)</div>
       <ul>
         <li>Thêm vào nhóm sẵn có: THA kháng trị (spironolactone, aprocitentan, baxdrostat FDA 05/2026, RDN) → THA; Tăng sản thượng thận bẩm sinh/NCCAH (crinecerfont) → Thượng thận; Tăng đường huyết do glucocorticoid → ĐTĐ; Viêm phổi hít → VPCĐ; Bệnh phổi do thuốc (ICI, amiodarone, MTX) → Bệnh phổi kẽ; Kiềm chuyển hóa + Toan/Kiềm hô hấp → Rối loạn toan–kiềm</li>
