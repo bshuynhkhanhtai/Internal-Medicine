@@ -738,6 +738,71 @@
   html.layout-desktop .ai-chat-wrap, html.layout-desktop .ai-suggest, html.layout-desktop .ai-disclaimer{max-width:980px;width:100%;margin-left:auto;margin-right:auto;}
   html.layout-desktop .ai-input-bar{padding-left:max(12px, calc((100vw - 980px)/2));padding-right:max(12px, calc((100vw - 980px)/2));}
   html.layout-desktop #backToTop{right:calc(var(--toc-w) + 16px);}
+
+  /* ===== Tab Y-site ===== */
+  #viewYsite{padding-top:calc(var(--app-header-h,120px) + 8px);}
+  .ys-wrap{max-width:980px;margin:0 auto;padding:6px 14px calc(90px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px;}
+  .ys-head h2{font-size:17px;color:var(--tiffany-dark);margin-bottom:6px;}
+  .ys-head p{font-size:13px;line-height:1.5;margin-bottom:8px;}
+  .ys-head .alert-box{font-size:12.3px;}
+  .ys-presets-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+  .ys-mini{font-size:11.5px;font-weight:700;color:var(--text-secondary);}
+  #ysPresets{display:flex;flex-wrap:wrap;gap:6px;}
+  .ys-preset{border:1px dashed var(--tiffany-main);background:var(--bg-card);color:var(--tiffany-dark);border-radius:14px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer;}
+  .ys-selected{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:34px;padding:8px;border:1px solid var(--border-color);border-radius:12px;background:var(--bg-card);}
+  .ys-hint{font-size:12.5px;color:var(--text-secondary);}
+  .ys-sel{display:inline-flex;align-items:center;gap:4px;background:var(--tiffany-main);color:#fff;border-radius:14px;padding:4px 4px 4px 10px;font-size:12.5px;font-weight:700;}
+  .ys-sel button{border:none;background:rgba(255,255,255,.25);color:#fff;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:14px;line-height:1;}
+  .ys-clear{border:none;background:none;color:var(--danger);font-weight:700;font-size:12px;cursor:pointer;margin-left:auto;}
+  .ys-picker-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;}
+  .ys-picker-head input{flex:1 1 220px;padding:8px 10px;border-radius:10px;border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);font-size:13px;}
+  .ys-group{margin-bottom:10px;}
+  .ys-group-title{font-size:11.5px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;}
+  .ys-chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .ys-chip{border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);border-radius:14px;padding:6px 11px;font-size:12.5px;font-weight:600;cursor:pointer;min-height:32px;}
+  .ys-chip.on{background:var(--tiffany-main);border-color:var(--tiffany-main);color:#fff;}
+  .ys-dot{display:inline-block;width:15px;height:15px;line-height:15px;text-align:center;border-radius:50%;background:var(--warning);color:#000;font-size:10px;font-weight:900;margin-left:2px;}
+  .ys-verdict{border-radius:12px;padding:10px 12px;font-weight:700;font-size:13.5px;line-height:1.45;}
+  .ys-I{background:rgba(220,38,38,.12);color:var(--danger);}
+  .ys-V{background:rgba(234,179,8,.16);color:#a16207;}
+  .ys-U{background:rgba(100,116,139,.14);color:var(--text-secondary);}
+  .ys-C{background:rgba(22,163,74,.12);color:var(--success);}
+  [data-theme="dark"] .ys-V{color:var(--warning);}
+  .ys-matrix-wrap{overflow-x:auto;margin-top:10px;border:1px solid var(--border-color);border-radius:12px;background:var(--bg-card);}
+  .ys-matrix{border-collapse:collapse;font-size:12px;min-width:100%;}
+  .ys-matrix th,.ys-matrix td{border:1px solid var(--border-color);padding:6px;text-align:center;}
+  .ys-matrix thead th{vertical-align:bottom;height:110px;}
+  .ys-matrix thead th span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;font-weight:700;color:var(--tiffany-dark);}
+  .ys-matrix tbody th{text-align:left;white-space:nowrap;font-weight:700;color:var(--tiffany-dark);position:sticky;left:0;background:var(--bg-card);}
+  .ys-matrix td{font-size:15px;min-width:34px;}
+  .ys-self{background:var(--bg-primary);color:var(--text-secondary);}
+  .ys-legend{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;font-size:11.5px;font-weight:700;}
+  .ys-legend span{padding:3px 8px;border-radius:10px;}
+  .ys-pairs{display:flex;flex-direction:column;gap:6px;}
+  .ys-pair{display:flex;gap:8px;align-items:flex-start;border-radius:10px;padding:8px 10px;font-size:13px;line-height:1.45;color:var(--text-primary) !important;}
+  .ys-pair b{color:var(--text-primary);}
+  .ys-pair-ic{font-size:16px;}
+  .ys-note{font-size:12px;color:var(--text-secondary);}
+  .ys-rules,.ys-general{border:1px solid var(--border-color);border-radius:12px;background:var(--bg-card);padding:10px 12px;margin-top:10px;font-size:13px;line-height:1.5;}
+  .ys-rules-title{font-weight:800;color:var(--tiffany-dark);margin-bottom:6px;}
+  .ys-rule{margin-bottom:5px;}
+  .ys-general ul{padding-left:18px;}
+  .ys-general li{margin-bottom:4px;}
+  .ys-stabilis{display:block;text-align:center;margin-top:10px;padding:10px;border-radius:12px;background:var(--tiffany-dark);color:#fff;font-weight:800;text-decoration:none;}
+  #mainTabBar button{white-space:nowrap;}
+  @media (max-width:420px){ #mainTabBar button{font-size:10.5px !important;padding:5px 2px !important;} }
+  html.layout-desktop #viewYsite{padding-top:calc(var(--app-header-h,72px) + 12px);}
+  html.layout-desktop .ys-wrap{max-width:1200px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px;align-items:start;}
+  html.layout-desktop .ys-head, html.layout-desktop .ys-presets-row, html.layout-desktop .ys-selected{grid-column:1/-1;}
+  html.layout-desktop #ysResult{grid-column:2;grid-row:4 / span 3;position:sticky;top:calc(var(--app-header-h,72px) + 12px);max-height:calc(100vh - var(--app-header-h,72px) - 24px);overflow:auto;}
+  html.layout-desktop .ys-picker-head, html.layout-desktop #ysPicker, html.layout-desktop .ys-general{grid-column:1;}
+  .ys-ref{font-size:11px;font-weight:800;color:var(--tiffany-dark);text-decoration:none;margin-left:2px;}
+  .ys-ref-list{padding-left:20px;font-size:12.3px;line-height:1.5;}
+  .ys-ref-list li{margin-bottom:4px;border-radius:6px;transition:background .3s;}
+  .ys-ref-list li.flash{background:var(--tiffany-light);}
+  .ys-ref-list a{color:var(--tiffany-dark);word-break:break-word;}
+  .ys-ref-note{font-size:12px;color:var(--text-secondary);margin-top:6px;}
+  html.layout-desktop #ysRefs{grid-column:1/-1;}
 </style>
 </head>
 <body>
@@ -747,7 +812,7 @@
     <div>
       <h1>📘 Sổ tay lâm sàng</h1>
       <div class="sub">Phác đồ điều trị · Thang điểm · ESC/AHA/ADA/GINA/GOLD/ACG</div>
-      <div class="ver-badge">Bản 2026.10.06k · <button type="button" id="btnChangelog" onclick="openChangelog()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">Nhật ký cập nhật</button> · <button type="button" onclick="window.print()" style="background:none;border:none;color:#fff;text-decoration:underline;font-size:10px;font-weight:700;cursor:pointer;padding:0;">In phác đồ</button></div>
+      <div class="ver-badge">Bản 07/10/2026</div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
       <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇ Cài app</button>
@@ -760,6 +825,7 @@
   <div id="mainTabBar" style="display:flex;gap:5px;padding:0;margin:0;">
     <button id="tabPhacDo" class="active-main" onclick="switchMainTab('phacdo')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">📋 Phác đồ</button>
     <button id="tabThangDiem" onclick="switchMainTab('thangdiem')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">🧮 Thang điểm</button>
+    <button id="tabYsite" onclick="switchMainTab('ysite')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">💉 Y-site</button>
     <button id="tabAI" onclick="switchMainTab('ai')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">🤖 AI Y khoa</button>
   </div>
   <div class="search-wrap" id="globalSearchWrap" style="padding:8px 0 4px;position:relative;">
@@ -783,7 +849,7 @@
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
   <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px calc(72px + env(safe-area-inset-bottom,0px));">
-    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 2026.10.06
+    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 07/10/2026
   </footer>
 </div>
 
@@ -11120,7 +11186,7 @@ if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D
 if('serviceWorker' in navigator){
   try {
     const swCode = `
-      const CACHE = 'ykhoa-v20261006k';
+      const CACHE = 'ykhoa-v20261007';
       self.addEventListener('install', e => { self.skipWaiting(); });
       self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
       self.addEventListener('fetch', e => {
@@ -11159,12 +11225,6 @@ function enhanceDiseaseHeaderFav(){
   btn.textContent = isFavDisease(id) ? '★' : '☆';
   btn.title = 'Ghim phác đồ';
   btn.onclick = (e) => { e.stopPropagation(); toggleFavDisease(id, btn); };
-  const pr = document.createElement('button');
-  pr.className = 'fav-btn';
-  pr.textContent = '🖨';
-  pr.title = 'In phác đồ này';
-  pr.onclick = (e) => { e.stopPropagation(); window.print(); };
-  wrap.appendChild(pr);
   wrap.appendChild(btn);
   header.style.display = 'flex';
   header.style.justifyContent = 'space-between';
@@ -11341,6 +11401,12 @@ const onGlobalSearchDebounced = debounce(function(q){ onGlobalSearch(q); }, 120)
 function onGlobalSearch(q){
   const tab = window.__mainTab || 'phacdo';
   q = (q == null) ? '' : String(q);
+  if(tab === 'ysite'){
+    const ysIn = document.getElementById('ysSearch'); if(ysIn) ysIn.value = q;
+    if(typeof ysSetFilter === 'function') ysSetFilter(q);
+    document.getElementById('smartSearchDrop')?.classList.remove('open');
+    return;
+  }
   if(tab === 'ai'){
     smartSearch(q);
     return;
@@ -15196,6 +15262,270 @@ function ensureScales(){
 let currentFilteredScales = [];
 let currentScale = null;
 
+
+/* =========================================================
+   TRA CỨU TƯƠNG THÍCH Y-SITE (truyền chung qua chạc 3) — 2026.10.07
+   Dữ liệu do Sổ tay tự biên soạn từ nhãn thuốc (SmPC/FDA label) & y văn dược lâm sàng phổ biến.
+   KHÔNG sao chép từ Stabilis. Cặp không có trong bảng = «chưa có dữ liệu» → kiểm tra Stabilis/dược sĩ.
+   ========================================================= */
+const YS_STABILIS_URL = 'https://www.stabilis.org/TableIncompatibilites.php?codeLangue=EN-en';
+const YS_DRUGS = [
+  // Dung dịch nền
+  {id:'nacl', name:'NaCl 0,9%', cls:'Dung dịch'},
+  {id:'g5', name:'Glucose 5%', cls:'Dung dịch'},
+  {id:'rl', name:'Ringer lactat', cls:'Dung dịch', rule:'Chứa canxi — không truyền chung với ceftriaxone, máu/chế phẩm máu; nicardipine tương kỵ.'},
+  // Vận mạch – tim mạch
+  {id:'norepi', name:'Noradrenalin', cls:'Vận mạch – Tim mạch'},
+  {id:'epi', name:'Adrenalin', cls:'Vận mạch – Tim mạch'},
+  {id:'dopa', name:'Dopamin', cls:'Vận mạch – Tim mạch'},
+  {id:'dobu', name:'Dobutamin', cls:'Vận mạch – Tim mạch'},
+  {id:'vaso', name:'Vasopressin', cls:'Vận mạch – Tim mạch'},
+  {id:'milri', name:'Milrinon', cls:'Vận mạch – Tim mạch'},
+  {id:'ntg', name:'Nitroglycerin', cls:'Vận mạch – Tim mạch'},
+  {id:'nicar', name:'Nicardipin', cls:'Vận mạch – Tim mạch', ref:'nicar'},
+  {id:'labet', name:'Labetalol', cls:'Vận mạch – Tim mạch'},
+  {id:'esmo', name:'Esmolol', cls:'Vận mạch – Tim mạch', ref:'brevi'},
+  {id:'amio', name:'Amiodaron', cls:'Vận mạch – Tim mạch', rule:'Kết tủa với heparin, furosemid, natri bicarbonat; truyền kéo dài nên pha Glucose 5%.'},
+  {id:'hep', name:'Heparin', cls:'Vận mạch – Tim mạch'},
+  // An thần – giảm đau
+  {id:'mida', name:'Midazolam', cls:'An thần – Giảm đau', rule:'pH acid (~3) — kết tủa với thuốc kiềm: furosemid, natri bicarbonat, PPI, phenytoin.'},
+  {id:'fenta', name:'Fentanyl', cls:'An thần – Giảm đau'},
+  {id:'morph', name:'Morphin', cls:'An thần – Giảm đau'},
+  {id:'dexmed', name:'Dexmedetomidin', cls:'An thần – Giảm đau', ref:'precedex'},
+  {id:'keta', name:'Ketamin', cls:'An thần – Giảm đau'},
+  {id:'propo', name:'Propofol', cls:'An thần – Giảm đau', rule:'Nhũ tương lipid — ưu tiên đường/lumen riêng; nhiều thuốc làm vỡ nhũ tương. Thay dây theo quy định (6–12 giờ).'},
+  {id:'diaz', name:'Diazepam', cls:'An thần – Giảm đau', rule:'Kết tủa khi pha loãng và với hầu hết thuốc — tiêm TM chậm đường riêng, tráng NaCl 0,9% trước/sau.'},
+  // Điện giải – chuyển hóa
+  {id:'kcl', name:'Kali clorid', cls:'Điện giải – Chuyển hóa'},
+  {id:'mg', name:'Magnesi sulfat', cls:'Điện giải – Chuyển hóa'},
+  {id:'cag', name:'Calci gluconat', cls:'Điện giải – Chuyển hóa', rule:'Kết tủa với natri bicarbonat, phosphat, ceftriaxone.'},
+  {id:'cacl', name:'Calci clorid', cls:'Điện giải – Chuyển hóa', rule:'Kết tủa với natri bicarbonat, phosphat, ceftriaxone; gây hoại tử khi thoát mạch — ưu tiên TM trung tâm.'},
+  {id:'bicar', name:'Natri bicarbonat', cls:'Điện giải – Chuyển hóa', rule:'Kiềm mạnh — làm mất hoạt tính catecholamin, kết tủa với canxi và nhiều thuốc acid. Nên đường riêng.'},
+  {id:'kphos', name:'Kali/Natri phosphat', cls:'Điện giải – Chuyển hóa', rule:'Kết tủa với muối canxi.'},
+  {id:'ins', name:'Insulin nhanh (regular)', cls:'Điện giải – Chuyển hóa', rule:'Hấp phụ vào dây/túi truyền — mồi dây trước khi truyền.'},
+  {id:'furo', name:'Furosemid', cls:'Điện giải – Chuyển hóa', rule:'pH kiềm (~9) — tương kỵ với nhiều thuốc acid (dobutamin, midazolam, amiodaron, milrinon, aminoglycosid, ciprofloxacin, ondansetron, labetalol, nicardipin…).'},
+  // Tiêu hóa
+  {id:'panto', name:'Pantoprazol', cls:'Tiêu hóa', rule:'Nhãn FDA: truyền qua đường riêng hoặc Y-site; tráng dây trước và sau bằng Glucose 5%, NaCl 0,9% hoặc Ringer lactat; tương kỵ midazolam; có thể không tương hợp với chế phẩm chứa kẽm.', ref:'protonix'},
+  {id:'esome', name:'Esomeprazol', cls:'Tiêu hóa', rule:'PPI pH kiềm — tương kỵ với nhiều thuốc; nên đường riêng hoặc tráng NaCl 0,9% trước/sau.'},
+  {id:'ondan', name:'Ondansetron', cls:'Tiêu hóa'},
+  // Kháng sinh – kháng nấm – kháng virus
+  {id:'ceftri', name:'Ceftriaxon', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'KHÔNG dùng dung môi chứa canxi (Ringer, Hartmann); nhãn FDA: tương kỵ vật lý với vancomycin, aminoglycosid, fluconazol — truyền nối tiếp, tráng kỹ dây giữa hai thuốc.', ref:'ceftri'},
+  {id:'pipt', name:'Piperacillin/tazobactam', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Bất hoạt aminoglycosid khi trộn — truyền tách, tráng dây giữa hai thuốc.'},
+  {id:'mero', name:'Meropenem', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Ổn định tốt hơn trong NaCl 0,9% (kém bền trong Glucose 5%).'},
+  {id:'vanco', name:'Vancomycin', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Tương kỵ phụ thuộc nồng độ với β-lactam (piperacillin/tazobactam, ceftriaxon, cefepim) và heparin — tráng dây giữa hai thuốc.'},
+  {id:'genta', name:'Gentamicin', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Bị penicillin bất hoạt; kết tủa với heparin, furosemid.'},
+  {id:'amika', name:'Amikacin', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Bị penicillin bất hoạt — truyền tách.'},
+  {id:'ampi', name:'Ampicillin', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Kém bền trong dung dịch glucose — pha NaCl 0,9%.'},
+  {id:'cipro', name:'Ciprofloxacin', cls:'Kháng sinh – Kháng nấm – Kháng virus'},
+  {id:'levo', name:'Levofloxacin', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Nhãn FDA: không truyền chung dây với dung dịch chứa cation đa hóa trị (Mg, Ca); không truyền đồng thời thuốc khác qua cùng dây — tráng trước/sau.', ref:'levo'},
+  {id:'linez', name:'Linezolid', cls:'Kháng sinh – Kháng nấm – Kháng virus', ref:'zyvox'},
+  {id:'clinda', name:'Clindamycin', cls:'Kháng sinh – Kháng nấm – Kháng virus', ref:'cleocin'},
+  {id:'fluco', name:'Fluconazol', cls:'Kháng sinh – Kháng nấm – Kháng virus'},
+  {id:'metro', name:'Metronidazol', cls:'Kháng sinh – Kháng nấm – Kháng virus'},
+  {id:'acyc', name:'Acyclovir', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'pH rất kiềm (~11) — tương kỵ với nhiều thuốc; nên đường riêng.'},
+  {id:'amphob', name:'Amphotericin B (quy ước)', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Chỉ pha Glucose 5%; kết tủa với NaCl và điện giải — đường riêng, tráng bằng Glucose 5%.'},
+  // Thần kinh
+  {id:'loraz', name:'Lorazepam', cls:'Thần kinh'},
+  {id:'pheny', name:'Phenytoin', cls:'Thần kinh', rule:'Chỉ pha/tráng NaCl 0,9%; kết tủa với glucose và hầu hết thuốc — đường riêng, tráng NaCl trước & sau.'},
+  {id:'leve', name:'Levetiracetam', cls:'Thần kinh', ref:'leve'},
+  {id:'valpro', name:'Natri valproat', cls:'Thần kinh'},
+  // Khác
+  {id:'nac', name:'N-acetylcystein', cls:'Khác'},
+  {id:'apap', name:'Paracetamol truyền TM', cls:'Cấp cứu – Khác', rule:'SmPC: không trộn chung với thuốc khác; pha NaCl 0,9% hoặc Glucose 5%.', ref:'apap'},
+  {id:'txa', name:'Acid tranexamic', cls:'Cấp cứu – Khác', rule:'Nhãn FDA: KHÔNG trộn với máu và dung dịch chứa penicillin.', ref:'txa'},
+  {id:'mannitol', name:'Mannitol', cls:'Cấp cứu – Khác', rule:'Không truyền cùng lúc/cùng dây với máu (ngưng kết giả, tan máu); kết tủa khi chuyển sang túi PVC.', ref:'mannitol'},
+  {id:'alteplase', name:'Alteplase (rt-PA)', cls:'Cấp cứu – Khác', rule:'SmPC: KHÔNG trộn với bất kỳ thuốc nào, kể cả cùng đường truyền (kể cả heparin); chỉ pha loãng NaCl 0,9%, không pha nước cất/glucose.', ref:'actilyse'},
+  {id:'octreo', name:'Octreotid', cls:'Cấp cứu – Khác', rule:'Không tương hợp trong dinh dưỡng tĩnh mạch; ổn định 24 giờ trong NaCl 0,9%/Glucose 5%.', ref:'octreo'},
+  {id:'rocu', name:'Rocuronium', cls:'Cấp cứu – Khác', rule:'Khuyến cáo KHÔNG truyền chung Y-site thuốc giãn cơ với thuốc khác.', ref:'rocu'},
+  {id:'hydrocort', name:'Hydrocortison (natri succinat)', cls:'Cấp cứu – Khác'},
+  {id:'methylpred', name:'Methylprednisolon (natri succinat)', cls:'Cấp cứu – Khác'},
+  {id:'dexa', name:'Dexamethason', cls:'Cấp cứu – Khác'},
+  {id:'blood', name:'Máu & chế phẩm máu', cls:'Khác', rule:'Chỉ truyền chung với NaCl 0,9%. Không Glucose 5% (tan máu), không Ringer lactat (đông vón do canxi), không pha thuốc.'},
+  {id:'pn', name:'Dinh dưỡng tĩnh mạch / Lipid', cls:'Khác', rule:'Nên có lumen riêng; hạn chế tối đa truyền chung thuốc.'}
+];
+// Trạng thái: C = tương thích; I = tương kỵ; V = có điều kiện / phụ thuộc nồng độ
+const YS_PAIRS = [
+  // Dung dịch nền
+  ['ceftri','rl','I','Không dùng dung môi chứa canxi','ceftri'],['ceftri','cag','I','Kết tủa calci-ceftriaxon'],['ceftri','cacl','I','Kết tủa calci-ceftriaxon'],['ceftri','pn','I','Dinh dưỡng TM chứa canxi'],
+  ['ceftri','nacl','C','','ceftri'],['ceftri','g5','C','','ceftri'],
+  ['ceftri','genta','I','Tương kỵ vật lý (nhãn) — truyền nối tiếp, tráng kỹ','ceftri'],['ceftri','amika','I','Tương kỵ vật lý (nhãn) — truyền nối tiếp, tráng kỹ','ceftri'],['ceftri','fluco','I','Tương kỵ vật lý (nhãn) — truyền nối tiếp, tráng kỹ','ceftri'],['ceftri','linez','I','Tương kỵ hóa học (nhãn linezolid)','zyvox'],
+  ['blood','nacl','C'],['blood','g5','I','Tan máu'],['blood','rl','I','Canxi gây đông vón'],
+  ['pheny','g5','I','Kết tủa phenytoin'],['pheny','nacl','C','Dung môi duy nhất được khuyến cáo'],
+  ['amphob','nacl','I','Kết tủa'],['amphob','g5','C'],['amphob','kcl','I','Kết tủa với điện giải'],
+  ['mero','nacl','C'],['mero','g5','V','Kém bền trong glucose — ưu tiên NaCl'],
+  ['ampi','nacl','C'],['ampi','g5','V','Kém bền trong glucose'],
+  ['nicar','rl','I','Nhãn FDA: không tương hợp','nicar'],['nicar','nacl','C','','nicar'],['nicar','g5','C','','nicar'],['nicar','kcl','C','Glucose 5% + KCl 40 mEq tương hợp','nicar'],
+  ['leve','nacl','C','','leve'],['leve','g5','C','','leve'],['leve','rl','C','','leve'],['leve','diaz','C','','leve'],['leve','valpro','C','','leve'],['leve','loraz','C','','leve'],
+  ['valpro','nacl','C'],['valpro','g5','C'],['valpro','rl','C'],
+  ['dexmed','nacl','C','','precedex'],['dexmed','g5','C','','precedex'],['dexmed','rl','C','','precedex'],['dexmed','mannitol','C','Mannitol 20%','precedex'],['dexmed','mg','C','','precedex'],['dexmed','kcl','C','','precedex'],
+  ['nac','nacl','C'],['nac','g5','C'],
+  ['kcl','nacl','C'],['kcl','g5','C'],['ins','nacl','C'],['pipt','nacl','C'],['pipt','g5','C'],
+  ['cipro','nacl','C'],['cipro','g5','C'],['amio','g5','C','Dung môi ưu tiên cho truyền kéo dài'],
+  // Natri bicarbonat
+  ['bicar','norepi','I','Bất hoạt catecholamin'],['bicar','epi','I','Bất hoạt catecholamin'],['bicar','dopa','I','Bất hoạt catecholamin'],['bicar','dobu','I','Bất hoạt catecholamin'],
+  ['bicar','cag','I','Kết tủa calci carbonat'],['bicar','cacl','I','Kết tủa calci carbonat'],['bicar','mida','I','Kết tủa'],['bicar','amio','I','Kết tủa'],
+  ['bicar','ondan','I','Kết tủa'],['bicar','cipro','I','Kết tủa'],['bicar','labet','I','Theo nhãn thuốc'],['bicar','nicar','I','Nhãn FDA: không tương hợp','nicar'],['bicar','esmo','I','Nhãn FDA: kém bền','brevi'],
+  // Furosemid
+  ['furo','dobu','I','Kết tủa'],['furo','mida','I','Kết tủa'],['furo','amio','I','Kết tủa'],['furo','milri','I','Kết tủa ngay lập tức'],
+  ['furo','genta','I','Kết tủa'],['furo','cipro','I','Kết tủa'],['furo','ondan','I','Kết tủa'],['furo','labet','I','Kết tủa'],['furo','nicar','I','Kết tủa'],['furo','esmo','I','Nhãn FDA: kết tủa','brevi'],
+  ['furo','hep','C'],['furo','kcl','C'],['furo','nacl','C'],
+  // Amiodaron
+  ['amio','hep','I','Kết tủa'],['amio','norepi','C'],['amio','dobu','C'],['amio','dopa','C'],['amio','kcl','C'],
+  // Canxi – phosphat – magnesi
+  ['cag','kphos','I','Kết tủa calci phosphat'],['cacl','kphos','I','Kết tủa calci phosphat'],['cag','mg','C','Ở nồng độ thường dùng'],['cag','kcl','C'],['kcl','mg','C'],
+  // Kháng sinh
+  ['vanco','pipt','V','Kết tủa ở nồng độ cao — tráng dây giữa hai thuốc'],['vanco','ceftri','I','Tương kỵ vật lý (nhãn ceftriaxon) — truyền nối tiếp, tráng kỹ dây','ceftri'],['vanco','hep','V','Kết tủa khi vancomycin nồng độ cao'],
+  ['pipt','genta','I','Bất hoạt aminoglycosid'],['pipt','amika','I','Bất hoạt aminoglycosid'],['ampi','genta','I','Bất hoạt aminoglycosid'],['ampi','amika','I','Bất hoạt aminoglycosid'],
+  ['genta','hep','I','Kết tủa'],['cipro','hep','I','Kết tủa'],
+  ['acyc','dobu','I','Kết tủa'],['acyc','dopa','I','Kết tủa'],
+  ['pheny','dobu','I','Kết tủa'],['pheny','mida','I','Kết tủa'],['pheny','kcl','I','Kết tủa'],['pheny','hep','I','Kết tủa'],
+  ['panto','mida','I','Nhãn FDA: tương kỵ Y-site','protonix'],['esome','mida','I','Kết tủa'],['panto','nacl','C','Dung dịch tráng/Y-site','protonix'],['panto','g5','C','Dung dịch tráng/Y-site','protonix'],['panto','rl','C','Dung dịch tráng/Y-site','protonix'],['esome','nacl','C'],
+  ['dexmed','amphob','I','Nhãn FDA','precedex'],['dexmed','diaz','I','Nhãn FDA','precedex'],
+  // Vận mạch – an thần thường dùng cùng nhau ở hồi sức
+  ['norepi','epi','C'],['norepi','dobu','C'],['norepi','dopa','C'],['norepi','vaso','C'],['norepi','mida','C'],['norepi','fenta','C'],['norepi','morph','C'],
+  ['norepi','hep','C'],['norepi','kcl','C'],['norepi','dexmed','C'],['norepi','g5','C'],['norepi','nacl','C'],
+  ['dobu','dopa','C'],['dobu','epi','C'],['dobu','ntg','C'],['dobu','milri','C'],['dobu','kcl','C'],['dobu','hep','V','Báo cáo tương kỵ ở một số nồng độ — tránh nếu có thể'],
+  ['dopa','kcl','C'],['dopa','hep','C'],['milri','hep','C'],
+  ['mida','fenta','C'],['mida','morph','C'],['mida','dexmed','C'],['mida','keta','C'],['fenta','keta','C'],['fenta','dexmed','C'],
+  // Bổ sung — có trích dẫn nhãn thuốc
+  ['linez','amphob','I','Tương kỵ vật lý (nhãn)','zyvox'],['linez','diaz','I','Tương kỵ vật lý (nhãn)','zyvox'],['linez','pheny','I','Tương kỵ vật lý (nhãn)','zyvox'],
+  ['linez','nacl','C','','zyvox'],['linez','g5','C','','zyvox'],['linez','rl','C','','zyvox'],
+  ['levo','mg','I','Cation đa hóa trị — không cùng dây (nhãn)','levo'],['levo','cag','I','Cation đa hóa trị — không cùng dây (nhãn)','levo'],['levo','cacl','I','Cation đa hóa trị — không cùng dây (nhãn)','levo'],
+  ['levo','nacl','C','','levo'],['levo','g5','C','','levo'],['levo','rl','C','','levo'],
+  ['clinda','ampi','I','Tương kỵ vật lý (nhãn)','cleocin'],['clinda','pheny','I','Tương kỵ vật lý (nhãn)','cleocin'],['clinda','cag','I','Tương kỵ vật lý (nhãn)','cleocin'],['clinda','mg','I','Tương kỵ vật lý (nhãn)','cleocin'],
+  ['clinda','genta','C','Không ghi nhận tương kỵ (nhãn)','cleocin'],['clinda','nacl','C','','cleocin'],['clinda','g5','C','','cleocin'],['clinda','kcl','C','Dung dịch chứa kali','cleocin'],
+  ['rocu','furo','I','Tương kỵ (chuyên luận)','rocu'],['rocu','ins','I','Tương kỵ','rocu'],['rocu','vanco','I','Tương kỵ','rocu'],['rocu','dexa','I','Tương kỵ','rocu'],['rocu','hydrocort','I','Tương kỵ','rocu'],['rocu','methylpred','I','Tương kỵ','rocu'],
+  ['rocu','amphob','I','Tương kỵ','rocu'],['rocu','pipt','I','Tương kỵ','rocu'],['rocu','kphos','I','Tương kỵ','rocu'],['rocu','nacl','C','','rocu'],['rocu','g5','C','','rocu'],['rocu','rl','C','Hartmann','rocu'],
+  ['txa','blood','I','Nhãn FDA: không trộn với máu','txa'],['txa','nacl','C','Chế phẩm pha sẵn trong NaCl 0,9%','txa'],['txa','pipt','I','Chứa penicillin (nhãn)','txa'],['txa','ampi','I','Chứa penicillin (nhãn)','txa'],
+  ['mannitol','blood','I','Ngưng kết giả/tan máu (nhãn) — nếu bắt buộc: thêm ≥20 mEq NaCl/L mannitol','mannitol'],
+  ['octreo','pn','I','Tạo phức glycosyl-octreotid, giảm hiệu lực (nhãn)','octreo'],['octreo','nacl','C','Ổn định 24 giờ','octreo'],['octreo','g5','C','Ổn định 24 giờ','octreo'],
+  ['alteplase','g5','I','SmPC: không pha glucose (đục)','actilyse'],['alteplase','hep','I','SmPC: không cùng đường truyền, kể cả heparin','actilyse'],['alteplase','nacl','C','Dung môi pha loãng duy nhất','actilyse'],
+  ['apap','nacl','C','','apap'],['apap','g5','C','','apap'],
+  ['hep','kcl','C'],['hep','ntg','C'],['hep','morph','C'],['hep','fenta','C'],['ins','kcl','C']
+];
+const YS_REFS = {
+  ceftri:{t:'Ceftriaxone for Injection, USP — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/ceftriaxone-sodium/page/6/'},
+  zyvox:{t:'ZYVOX (linezolid) I.V. Injection — Prescribing Information, Pfizer', u:'https://www.pfizermedical.com/zyvox/dosage-admin'},
+  levo:{t:'Levofloxacin Injection — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/levofloxacin-89/page/3/'},
+  cleocin:{t:'CLEOCIN PHOSPHATE (clindamycin) Injection — Prescribing Information, Pfizer', u:'https://drugcentral.org/label/a0a2eff7-b7de-42fe-8e5a-0cfbed38bb4b/view'},
+  rocu:{t:'Rocuronium — Medication Monograph, Perth Children\'s Hospital (WA Health)', u:'https://www.pch.health.wa.gov.au/~/media/Files/Hospitals/PCH/General-documents/Health-professionals/MedicationMonographs/Rocuronium.pdf'},
+  txa:{t:'Tranexamic Acid in Sodium Chloride Injection — Prescribing Information (FDA, 2020)', u:'https://www.accessdata.fda.gov/drugsatfda_docs/label/2020/212020s003lbl.pdf'},
+  mannitol:{t:'Mannitol Injection — Prescribing Information (FDA)', u:'https://www.drugs.com/pro/mannitol.html'},
+  octreo:{t:'Octreotide Acetate Injection — Prescribing Information (FDA)', u:'https://www.drugs.com/pro/octreotide.html'},
+  actilyse:{t:'ACTILYSE (alteplase) — Product Information, HSA Singapore', u:'https://www.ndf.gov.sg/about-drugs/product-information/SIN02340P/'},
+  apap:{t:'Paracetamol 10 mg/mL Infusion — SmPC (Rwanda FDA)', u:'https://rwandafda.gov.rw/wp-content/uploads/2024/08/Paracetamol-infusion-Paracetamol-B.P-10mg-per-ml-Amanta-SmPC.pdf'},
+  nicar:{t:'Nicardipine Hydrochloride Injection — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/nicardipine-hydrochloride-7/page/3/'},
+  precedex:{t:'PRECEDEX (dexmedetomidine) — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/precedex/'},
+  brevi:{t:'BREVIBLOC (esmolol) — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/brevibloc/'},
+  leve:{t:'Levetiracetam Injection — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/levetiracetam-23/page/2/'},
+  protonix:{t:'PROTONIX I.V. (pantoprazole) — Prescribing Information (FDA)', u:'https://www.guidelinecentral.com/drug/48f4d638-d2a1-47fa-9a81-3acda1b1b1e3/protonix'}
+};
+const YS_REF_ORDER = Object.keys(YS_REFS);
+function ysRefNo(k){ const i = YS_REF_ORDER.indexOf(k); return i >= 0 ? i + 1 : 0; }
+function ysRefTag(k){ const n = ysRefNo(k); return n ? '<a class="ys-ref" href="#ysRef' + n + '" onclick="event.preventDefault();ysGoRef(' + n + ')">[' + n + ']</a>' : ''; }
+function ysGoRef(n){ const el = document.getElementById('ysRef' + n); if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1400); } }
+function ysRenderRefs(){
+  const box = document.getElementById('ysRefs'); if(!box || box.dataset.ready) return; box.dataset.ready = '1';
+  box.innerHTML = '<div class="ys-rules-title">📚 Tài liệu tham khảo</div>' +
+    '<ol class="ys-ref-list">' + YS_REF_ORDER.map((k, i) => '<li id="ysRef' + (i + 1) + '"><a href="' + YS_REFS[k].u + '" target="_blank" rel="noopener">' + YS_REFS[k].t + '</a></li>').join('') + '</ol>' +
+    '<p class="ys-ref-note">Các cặp không có số trích dẫn: tổng hợp từ nhãn thuốc và y văn dược lâm sàng phổ biến (tính kiềm/acid, kết tủa calci/phosphat, bất hoạt aminoglycosid bởi penicillin…) — cần đối chiếu.</p>' +
+    '<div class="ys-rules-title" style="margin-top:8px">🔎 Nguồn tra cứu đầy đủ khuyến nghị</div><ul class="ys-ref-list">' +
+    '<li><a href="https://www.stabilis.org/TableIncompatibilites.php?codeLangue=EN-en" target="_blank" rel="noopener">Stabilis 4.0 — bảng tương thích Y-site (miễn phí, cập nhật liên tục)</a></li>' +
+    '<li>ASHP Handbook on Injectable Drugs (Trissel) — sách/thuê bao</li>' +
+    '<li>Micromedex IV Compatibility (Merative) — thuê bao</li>' +
+    '<li>Injectable Medicines Guide (Medusa, NHS UK) — thuê bao</li>' +
+    '<li><a href="https://dailymed.nlm.nih.gov/dailymed/" target="_blank" rel="noopener">DailyMed (NLM) — nhãn thuốc FDA, mục «Dosage and Administration»</a></li></ul>';
+}
+const YS_STATUS = {
+  I:{label:'Tương kỵ', icon:'⛔', cls:'ys-I', rank:0},
+  V:{label:'Có điều kiện', icon:'⚠️', cls:'ys-V', rank:1},
+  U:{label:'Chưa có dữ liệu', icon:'❔', cls:'ys-U', rank:2},
+  C:{label:'Tương thích', icon:'✅', cls:'ys-C', rank:3}
+};
+const YS_PRESETS = [
+  {name:'Sốc nhiễm khuẩn', ids:['norepi','vaso','dobu','hep','ins','kcl','mero']},
+  {name:'An thần thở máy', ids:['mida','fenta','propo','dexmed','norepi','panto']},
+  {name:'Suy tim cấp', ids:['furo','dobu','milri','ntg','amio','hep']},
+  {name:'Kháng sinh', ids:['ceftri','vanco','pipt','genta','mero','cipro']},
+  {name:'Đột quỵ / Xuất huyết', ids:['alteplase','hep','nicar','labet','mannitol','nacl']},
+  {name:'Đặt NKQ cấp cứu', ids:['rocu','mida','fenta','keta','norepi','dexa']},
+  {name:'XHTH do giãn TM', ids:['octreo','panto','txa','ceftri','blood','nacl']},
+  {name:'Động kinh liên tục', ids:['loraz','diaz','leve','valpro','pheny','nacl','g5']}
+];
+let ysSelected = [];
+let ysFilter = '';
+function ysFind(id){ return YS_DRUGS.find(d => d.id === id); }
+function ysNorm(s){ return (typeof stripVN === 'function') ? stripVN(String(s||'')) : String(s||'').toLowerCase(); }
+function ysPair(a, b){
+  const p = YS_PAIRS.find(x => (x[0] === a && x[1] === b) || (x[0] === b && x[1] === a));
+  return p ? {s:p[2], note:p[3] || '', ref:p[4] || ''} : {s:'U', note:'', ref:''};
+}
+function ysToggle(id){
+  const i = ysSelected.indexOf(id);
+  if(i >= 0) ysSelected.splice(i, 1); else ysSelected.push(id);
+  ysRender();
+}
+function ysClear(){ ysSelected = []; ysRender(); }
+function ysPreset(i){ ysSelected = YS_PRESETS[i].ids.slice(); ysRender(); }
+function ysSetFilter(q){ ysFilter = q || ''; ysRenderPicker(); }
+function ysRenderPicker(){
+  const box = document.getElementById('ysPicker'); if(!box) return;
+  const q = ysNorm(ysFilter);
+  const groups = {};
+  YS_DRUGS.forEach(d => { if(q && ysNorm(d.name + ' ' + d.id + ' ' + d.cls).indexOf(q) < 0) return; (groups[d.cls] = groups[d.cls] || []).push(d); });
+  const keys = Object.keys(groups);
+  box.innerHTML = keys.length ? keys.map(k => '<div class="ys-group"><div class="ys-group-title">' + k + '</div><div class="ys-chips">' +
+    groups[k].map(d => '<button type="button" class="ys-chip' + (ysSelected.indexOf(d.id) >= 0 ? ' on' : '') + '" onclick="ysToggle(\'' + d.id + '\')">' + d.name + (d.rule ? ' <span class="ys-dot" title="Có lưu ý riêng">!</span>' : '') + '</button>').join('') +
+    '</div></div>').join('') : '<p class="empty-hint">Không tìm thấy thuốc trong danh sách — tra trực tiếp trên Stabilis.</p>';
+}
+function ysRender(){
+  ysRenderPicker();
+  const sel = document.getElementById('ysSelected');
+  const res = document.getElementById('ysResult');
+  if(!sel || !res) return;
+  sel.innerHTML = ysSelected.length ? ysSelected.map(id => '<span class="ys-sel">' + ysFind(id).name + '<button type="button" aria-label="Bỏ" onclick="ysToggle(\'' + id + '\')">×</button></span>').join('') + '<button type="button" class="ys-clear" onclick="ysClear()">Xóa hết</button>'
+    : '<span class="ys-hint">Chọn ≥ 2 thuốc/dung dịch bên dưới (hoặc dùng bộ mẫu) để kiểm tra truyền chung qua chạc 3.</span>';
+  if(ysSelected.length < 2){ res.innerHTML = ''; return; }
+  const pairs = [];
+  for(let i = 0; i < ysSelected.length; i++) for(let j = i + 1; j < ysSelected.length; j++){
+    const a = ysSelected[i], b = ysSelected[j], r = ysPair(a, b);
+    pairs.push({a, b, s:r.s, note:r.note, ref:r.ref});
+  }
+  pairs.sort((x, y) => YS_STATUS[x.s].rank - YS_STATUS[y.s].rank);
+  const cnt = {I:0, V:0, U:0, C:0}; pairs.forEach(p => cnt[p.s]++);
+  let verdict, vcls;
+  if(cnt.I){ verdict = '⛔ KHÔNG truyền chung toàn bộ — có ' + cnt.I + ' cặp tương kỵ. Dùng đường/lumen riêng hoặc tráng dây giữa các thuốc.'; vcls = 'ys-I'; }
+  else if(cnt.V){ verdict = '⚠️ Thận trọng — ' + cnt.V + ' cặp tương thích có điều kiện' + (cnt.U ? ', ' + cnt.U + ' cặp chưa có dữ liệu' : '') + '. Kiểm tra nồng độ/dung môi, đối chiếu Stabilis.'; vcls = 'ys-V'; }
+  else if(cnt.U){ verdict = '❔ Chưa đủ dữ liệu cho ' + cnt.U + '/' + pairs.length + ' cặp — KHÔNG mặc định là tương thích. Kiểm tra Stabilis hoặc hỏi dược sĩ.'; vcls = 'ys-U'; }
+  else { verdict = '✅ Các cặp đã chọn đều có dữ liệu tương thích Y-site ở nồng độ thường dùng.'; vcls = 'ys-C'; }
+  let h = '<div class="ys-verdict ' + vcls + '">' + verdict + '</div>';
+  // Ma trận
+  h += '<div class="ys-matrix-wrap"><table class="ys-matrix"><thead><tr><th></th>' + ysSelected.map(id => '<th><span>' + ysFind(id).name + '</span></th>').join('') + '</tr></thead><tbody>' +
+    ysSelected.map((a, i) => '<tr><th>' + ysFind(a).name + '</th>' + ysSelected.map((b, j) => {
+      if(i === j) return '<td class="ys-self">—</td>';
+      const r = ysPair(a, b), st = YS_STATUS[r.s];
+      return '<td class="' + st.cls + '" title="' + ysFind(a).name + ' + ' + ysFind(b).name + ': ' + st.label + (r.note ? ' — ' + r.note : '') + '">' + st.icon + '</td>';
+    }).join('') + '</tr>').join('') + '</tbody></table></div>';
+  h += '<div class="ys-legend">' + ['I','V','U','C'].map(k => '<span class="' + YS_STATUS[k].cls + '">' + YS_STATUS[k].icon + ' ' + YS_STATUS[k].label + '</span>').join('') + '</div>';
+  // Danh sách cặp
+  h += '<div class="ys-pairs">' + pairs.map(p => {
+    const st = YS_STATUS[p.s];
+    return '<div class="ys-pair ' + st.cls + '"><span class="ys-pair-ic">' + st.icon + '</span><div><b>' + ysFind(p.a).name + ' + ' + ysFind(p.b).name + '</b> — ' + st.label + ((p.note || p.ref) ? '<div class="ys-note">' + (p.note || 'Theo nhãn thuốc') + ' ' + ysRefTag(p.ref) + '</div>' : '') +
+      (p.s === 'U' ? '<div class="ys-note">Chưa có trong bảng của Sổ tay → tra Stabilis/hỏi dược sĩ.</div>' : '') + '</div></div>';
+  }).join('') + '</div>';
+  // Lưu ý riêng từng thuốc
+  const rules = ysSelected.map(ysFind).filter(d => d.rule);
+  if(rules.length) h += '<div class="ys-rules"><div class="ys-rules-title">📌 Lưu ý riêng của thuốc đã chọn</div>' + rules.map(d => '<div class="ys-rule"><b>' + d.name + ':</b> ' + d.rule + ' ' + ysRefTag(d.ref) + '</div>').join('') + '</div>';
+  h += '<a class="ys-stabilis" href="' + YS_STABILIS_URL + '" target="_blank" rel="noopener">🔗 Kiểm tra đầy đủ trên Stabilis (bảng Y-site)</a>';
+  res.innerHTML = h;
+}
+function ysInit(){
+  const pre = document.getElementById('ysPresets');
+  if(pre && !pre.dataset.ready){ pre.dataset.ready = '1'; pre.innerHTML = YS_PRESETS.map((p, i) => '<button type="button" class="ys-preset" onclick="ysPreset(' + i + ')">' + p.name + '</button>').join(''); }
+  ysRender();
+  ysRenderRefs();
+}
+
 function switchMainTab(tab) {
   const v1 = document.getElementById('viewPhacDo');
   const v2 = document.getElementById('viewThangDiem');
@@ -15206,6 +15536,9 @@ function switchMainTab(tab) {
   const qs = document.getElementById('quickSearch');
 
   if(v1) v1.style.display = (tab === 'phacdo') ? '' : 'none';
+  const vY = document.getElementById('viewYsite'); const bY = document.getElementById('tabYsite');
+  if(vY){ vY.style.display = (tab === 'ysite') ? '' : 'none'; if(tab === 'ysite' && typeof ysInit === 'function') ysInit(); }
+  if(bY) bY.classList.toggle('active-main', tab === 'ysite');
   if(v2) v2.style.display = (tab === 'thangdiem') ? '' : 'none';
   if(v3) {
     v3.style.display = (tab === 'ai') ? 'flex' : 'none';
@@ -15218,7 +15551,9 @@ function switchMainTab(tab) {
   if(tab === 'ai' && b3) b3.classList.add('active-main');
 
   if(qs){
-    if(tab === 'ai'){
+    if(tab === 'ysite'){
+      qs.placeholder = 'Lọc thuốc truyền: noradrenalin, ceftriaxon, furosemid…';
+    } else if(tab === 'ai'){
       qs.placeholder = 'Hoặc hỏi nhanh… (dùng ô chat bên dưới)';
     } else if(tab === 'thangdiem'){
       qs.placeholder = 'Tìm thang điểm: GCS, CURB-65, HAS-BLED, Wells…';
@@ -15656,260 +15991,37 @@ function calcScoreNow() {
 </div>
 
 
-<div id="changelogModal" onclick="if(event.target.id==='changelogModal')closeChangelog()">
-  <div class="cl-sheet" onclick="event.stopPropagation()">
-    <h2>📝 Nhật ký cập nhật và bảo trì</h2>
-    <div class="cl-item"><div class="cl-date">2026-10-06k — Rà soát mục gộp, tối ưu giao diện, thêm chế độ Desktop</div>
+
+
+<!-- VIEW TƯƠNG THÍCH Y-SITE -->
+<div id="viewYsite" style="display:none;">
+  <div class="ys-wrap">
+    <div class="ys-head">
+      <h2>💉 Tương thích thuốc truyền chung qua chạc 3 (Y-site)</h2>
+      <p>Chọn các thuốc/dung dịch đang truyền cùng một đường để kiểm tra từng cặp. Chỉ áp dụng cho <b>truyền chung qua chạc 3 trong thời gian ngắn</b> — không áp dụng cho pha chung trong một chai/bơm tiêm.</p>
+      <div class="alert-box alert-warn">Dữ liệu do Sổ tay tự biên soạn từ nhãn thuốc và y văn dược lâm sàng phổ biến, <b>không đầy đủ</b>. Tương thích còn phụ thuộc nồng độ, dung môi, nhiệt độ, thời gian tiếp xúc. Cặp «chưa có dữ liệu» KHÔNG có nghĩa là tương thích — kiểm tra <a href="https://www.stabilis.org/TableIncompatibilites.php?codeLangue=EN-en" target="_blank" rel="noopener">Stabilis</a> hoặc hỏi dược sĩ.</div>
+    </div>
+    <div class="ys-presets-row"><span class="ys-mini">Bộ mẫu:</span><span id="ysPresets"></span></div>
+    <div id="ysSelected" class="ys-selected"></div>
+    <div id="ysResult"></div>
+    <div class="ys-picker-head">
+      <b>Danh sách thuốc</b>
+      <input type="search" id="ysSearch" placeholder="Lọc thuốc: noradrenalin, ceftriaxon…" oninput="ysSetFilter(this.value)">
+    </div>
+    <div id="ysPicker"></div>
+    <div class="ys-general">
+      <div class="ys-rules-title">📏 Nguyên tắc chung khi truyền chung qua chạc 3</div>
       <ul>
-        <li><b>Chế độ Desktop</b> (nút 🖥/📱 trên đầu trang; tự bật khi màn hình ≥1100px, nhớ lựa chọn): 3 cột — trái chuyên khoa + danh sách bệnh, giữa nội dung (mở sẵn mọi thẻ, chữ lớn hơn), phải mục lục + thể bệnh + Mở/Thu tất cả; bảng hiển thị dạng lưới; thang điểm dạng lưới nhiều cột; header 1 hàng; không ẩn thanh điều hướng khi cuộn</li>
-        <li><b>Mục gộp</b>: thêm khung «Tổng quan nhóm» đầu thẻ Định nghĩa (tóm tắt từng thể, bấm để lọc); bấm tiêu đề từng thể để thu gọn/mở; chip thể bệnh đồng bộ giữa đầu trang và mục lục</li>
-        <li><b>Rà soát nhóm</b>: Rối loạn nhịp gộp thêm Nhịp chậm; VPCĐ thêm Áp xe phổi; Ca–cận giáp thêm Vitamin D; nhóm mới Ho cấp & mạn, Gan nhiễm mỡ (MASLD + rượu), Gan tự miễn (AIH + PBC/PSC); sắp xếp lại thứ tự thể (Tuyến giáp, Huyết khối TM)</li>
+        <li>Luôn <b>tráng dây</b> bằng NaCl 0,9% (hoặc Glucose 5% với thuốc chỉ tương hợp glucose) giữa hai thuốc tương kỵ hoặc chưa rõ.</li>
+        <li>Ưu tiên <b>lumen riêng</b> cho: vận mạch liều cao, dinh dưỡng tĩnh mạch/lipid, máu, phenytoin, diazepam, PPI, natri bicarbonat, thuốc hóa trị.</li>
+        <li>Quan sát dây truyền: <b>vẩn đục, kết tủa, đổi màu, sủi bọt</b> → dừng ngay, thay dây.</li>
+        <li>Không tiêm bolus thuốc khác qua đường đang truyền vận mạch (gây tăng liều đột ngột).</li>
+        <li>Đường truyền càng gần catheter (chạc 3 sát tĩnh mạch) → thời gian tiếp xúc càng ngắn, nhưng vẫn có thể kết tủa tức thì.</li>
       </ul>
     </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06j — +12 thể bệnh nội khoa (191 phác đồ, 107 mục), gộp thêm 6 nhóm, +2 thang điểm (72)</div>
-      <ul>
-        <li>Thêm vào nhóm sẵn có: THA kháng trị (spironolactone, aprocitentan, baxdrostat FDA 05/2026, RDN) → THA; Tăng sản thượng thận bẩm sinh/NCCAH (crinecerfont) → Thượng thận; Tăng đường huyết do glucocorticoid → ĐTĐ; Viêm phổi hít → VPCĐ; Bệnh phổi do thuốc (ICI, amiodarone, MTX) → Bệnh phổi kẽ; Kiềm chuyển hóa + Toan/Kiềm hô hấp → Rối loạn toan–kiềm</li>
-        <li>Nhóm gộp mới: Ngất + Hạ HA tư thế; Viêm gan virus A/B/C/E; Gan do thuốc + Ngộ độc paracetamol; Lupus + Viêm thận lupus + APS; Viêm khớp nhiễm trùng (vi khuẩn & virus: Chikungunya, Dengue, Parvovirus B19, HBV/HCV); Bệnh cơ viêm + Bệnh cơ do statin</li>
-        <li>Thang điểm mới: Đồ thị Rumack–Matthew (paracetamol), SAMS-CI (statin)</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06i — Gộp bệnh cùng nhóm: 179 phác đồ → 109 mục</div>
-      <ul>
-        <li>Gộp 43 nhóm (vd. THA: nguyên phát + cấp cứu + thai kỳ + do mạch thận; Thượng thận: Cushing + Suy TT + Cường aldosterone + U tủy + U tình cờ; Tuyến giáp 6 thể; Tuyến yên 4 thể; Rối loạn Na/K/Mg-P; AKI; BTM & biến chứng…)</li>
-        <li>Mỗi mục gộp giữ nguyên toàn bộ nội dung từng thể bệnh, chia phần rõ trong 4 thẻ; chip «Thể bệnh» lọc nhanh 1 thể</li>
-        <li>Mã bệnh cũ tự chuyển hướng (ghim ★, lịch sử, tab AI, nút liên kết) và mở đúng thể bệnh; tìm kiếm vẫn tìm được theo tên thể cũ</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06h — +12 bệnh nội khoa (179), +PLASMIC (70 thang điểm)</div>
-      <ul>
-        <li>Giữ nguyên các bệnh có yếu tố ngoại khoa đã có; chỉ bổ sung bệnh điều trị nội khoa</li>
-        <li>Tim mạch: + Hội chứng tim–thận–chuyển hóa (CKM, PREVENT), Tăng áp phổi do bệnh tim trái (nhóm 2)</li>
-        <li>Nội tiết: + Tăng triglyceride nặng/FCS (olezarsen, plozasiran FDA 11/2025), SIADH (urê, empagliflozin, tolvaptan)</li>
-        <li>Hô hấp: + Bệnh phổi kẽ do bệnh tự miễn (ACR/CHEST 2023), Ngưng thở trung ương (AASM 2025)</li>
-        <li>Tiêu hóa: + Thiếu máu thiếu sắt — tiếp cận tiêu hóa (AGA 2020), Bệnh gan do rượu (ACG 2024)</li>
-        <li>Cơ xương khớp: + Hiện tượng Raynaud, Bệnh mô liên kết hỗn hợp/không biệt hóa</li>
-        <li>Thận: + CKD-MBD (KDIGO 2017), Bệnh vi mạch huyết khối TTP/HUS/aHUS + thang PLASMIC</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06g — Chỉ nội khoa: gỡ viêm ruột thừa; +12 bệnh nội khoa (167)</div>
-      <ul>
-        <li>Phạm vi: chỉ bệnh điều trị nội khoa — đã gỡ «Viêm ruột thừa cấp» và thang AIR (69 thang điểm)</li>
-        <li>Tim mạch: + Bệnh cơ tim chu sinh (bromocriptine + kháng đông), MINOCA (co thắt vành, SCAD, MRI tim)</li>
-        <li>Nội tiết: + Rối loạn giáp do thuốc (amiodarone AIT típ 1/2, ICI, lithium), Loãng xương do glucocorticoid (ACR 2022)</li>
-        <li>Hô hấp: + Viêm phổi do Mycoplasma (kháng macrolide châu Á → doxycycline/FQ), Viêm phổi tăng BC ái toan cấp/mạn</li>
-        <li>Tiêu hóa: + Liệt dạ dày (ACG 2022), Viêm đại tràng vi thể (budesonide)</li>
-        <li>Cơ xương khớp: + Bệnh liên quan IgG4 (inebilizumab FDA 2025), Bệnh Paget xương</li>
-        <li>Thận: + MCD/FSGS (KDIGO 2021), Thiếu máu trong BTM (KDIGO 2026: Hb đích &lt;11.5, sắt TM ưu tiên khi lọc máu, ESA trước HIF-PHI)</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06f — +12 bệnh mới (156), +3 thang điểm (70)</div>
-      <ul>
-        <li>Tim mạch: + Hẹp động mạch thận/THA do mạch thận (xơ vữa, FMD), Tim mạch – Ung bướu (ESC 2022: CTRCD, viêm cơ tim do ICI)</li>
-        <li>Nội tiết: + Bão giáp & hôn mê phù niêm, Bệnh tuyến giáp trong thai kỳ & sau sinh (ATA 2017)</li>
-        <li>Hô hấp: + Ho gà người lớn, Bệnh phổi do NTM (ATS/ERS/ESCMID/IDSA 2020)</li>
-        <li>Tiêu hóa: + Bệnh não gan (EASL 2022), Viêm ruột thừa cấp (WSES 2020, CODA)</li>
-        <li>Cơ xương khớp: + Bệnh Behçet (EULAR 2018), Viêm động mạch Takayasu (ACR/EULAR 2022)</li>
-        <li>Thận: + Bệnh thận màng (KDIGO 2021, rituximab), Viêm thận kẽ cấp</li>
-        <li>Thang điểm mới: Burch–Wartofsky, ICBD 2014, AIR score; AI nhận diện 12 bệnh mới</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06e — +12 bệnh mới (144), +3 thang điểm (67)</div>
-      <ul>
-        <li>Tim mạch: + Bệnh tim nhiễm bột ATTR/AL (tafamidis, acoramidis, vutrisiran), Hội chứng QT dài/QT ngắn/Brugada/CPVT (ESC 2022)</li>
-        <li>Nội tiết: + ĐTĐ típ 1 (ADA 2026: CGM, AID, teplizumab), U thượng thận tình cờ (ESE/ENSAT 2023)</li>
-        <li>Hô hấp: + COVID-19 người lớn (IDSA/WHO), Bệnh phổi do Aspergillus — ABPA (ISHAM 2024), CPA, xâm lấn</li>
-        <li>Tiêu hóa: + Viêm thực quản tăng BC ái toan (EoE), Ung thư biểu mô tế bào gan (BCLC, atezo-bev, STRIDE, nivo-ipi)</li>
-        <li>Cơ xương khớp: + Bệnh Still (EULAR/PReS 2024 — mục tiêu ngày 7/tuần 4/tháng 3/tháng 6), Viêm mạch IgA người lớn (KDIGO 2025)</li>
-        <li>Thận: + Tiêu cơ vân, AKI liên quan thuốc cản quang (ACR/NKF 2020)</li>
-        <li>Thang điểm mới: QTc (Bazett/Fridericia/Framingham), Yamaguchi, McMahon; gắn nút QTc vào nhịp nhanh, ngất, hạ K/Mg/Ca; AI nhận diện 12 bệnh mới</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06d — Cập nhật guideline thêm 12 bệnh</div>
-      <ul>
-        <li>Nội tiết: Basedow (ETA 2022 — methimazole liều thấp kéo dài), Suy TT do glucocorticoid (ESE/ES 2024), Tăng Ca do ung thư (ES 2023 — denosumab), Suy sinh dục nam (TRAVERSE), ĐTN → AVP-D/AVP-R + copeptin</li>
-        <li>Tiêu hóa: GERD (vonoprazan, AGA 2022), Suy tụy ngoại tiết (AGA 2023 — PERT ≥40 000 U), IBS (AGA 2022), Viêm gan tự miễn (EASL 2025 — MMF hàng 1), C. diff (AGA 2024 — Rebyota/Vowst)</li>
-        <li>Cơ xương khớp: PMR (sarilumab FDA 2023), Hội chứng ống cổ tay (AAOS 2024 — CTS-6)</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06c — Cập nhật guideline 14 bệnh + nhãn ô kết quả</div>
-      <ul>
-        <li>Nhiễm trùng tiểu: IDSA 2025 UTI có biến chứng (định nghĩa mới, 4 bước chọn KS, 7 ngày kể cả du khuẩn huyết Gram âm)</li>
-        <li>Cường aldosterone: Endocrine Society 2025 (tầm soát mọi BN THA, bỏ test ức chế bắt buộc, MRA hàng đầu)</li>
-        <li>Viêm phổi cộng đồng: ATS 2025 (3–5 ngày CAP không nặng, corticoid cho CAP nặng, siêu âm phổi)</li>
-        <li>ADPKD: KDIGO 2025; AKI: KDIGO 2026 (dự thảo); Loãng xương: USPSTF 2025; Ung thư phổi: ACS 2023</li>
-        <li>IPF: nerandomilast (FDA 10/2025); PAH: 7th WSPH 2024 + sotatercept; Xơ cứng bì: EULAR 2023/2025</li>
-        <li>ACHD: ACC/AHA 2025; Sốc tim: DanGer Shock; OSA: tirzepatide; HAP/VAP: IDSA 2024 vi khuẩn kháng thuốc</li>
-        <li>Ô kết quả thang điểm hiện đúng đơn vị: pH (khí máu), FIB-4, DAS28, ROX, AG, lít, mg/dL, % nguy cơ…</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06b — Phân tích khí máu động mạch từng bước (64 thang điểm)</div>
-      <ul>
-        <li>Thang mới «Khí máu động mạch — Phân tích từng bước»: kiểm tra Henderson, toan/kiềm nguyên phát, bù trừ (Winter; 0.7×HCO₃+21; quy tắc 1–3.5 / 2–5 cấp/mạn), anion gap hiệu chỉnh albumin, Δ ratio, phát hiện rối loạn hỗn hợp, gợi ý nguyên nhân</li>
-        <li>Oxy hóa: P/F, PAO₂, A–a gradient so với dự kiến theo tuổi, phân biệt giảm thông khí vs V/Q–shunt</li>
-        <li>Engine: thang điểm có thể hiển thị khung phân tích chi tiết bên dưới (detail)</li>
-        <li>Gắn nút ở: Toan chuyển hóa, DKA/HHS, COPD, Hen, ARDS, RTA, Hạ K, Thuyên tắc phổi, Sốc tim; AI nhận diện câu hỏi khí máu</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-10-06 — +12 bệnh (132), +22 thang điểm (63), cập nhật KDIGO 2025 IgAN, ESC 2026 CVD–CKD</div>
-      <ul>
-        <li>Tim mạch: + Huyết khối tĩnh mạch sâu (DVT), THA thai kỳ & tiền sản giật (ESC 2025 thai kỳ: điều trị khi ≥140/90)</li>
-        <li>Nội tiết: + Nhân giáp & ung thư giáp biệt hóa (ATA 2025, TI-RADS, Bethesda 2023), Thiếu vitamin D (Endocrine Society 2024)</li>
-        <li>Hô hấp: + ARDS (định nghĩa toàn cầu 2024, ESICM 2023, ATS 2024), Sarcoidosis (ERS 2021)</li>
-        <li>Tiêu hóa: + Viêm đường mật cấp (Tokyo 2018), PBC/PSC (UDCA, elafibranor, seladelpar; OCA đã rút khỏi thị trường 09/2025)</li>
-        <li>Cơ xương khớp: + Hội chứng kháng phospholipid (ACR/EULAR 2023), Giả gout/CPPD (ACR/EULAR 2023)</li>
-        <li>Thận: + Viêm thận lupus (KDIGO 2024, obinutuzumab FDA 10/2025), Tăng natri máu</li>
-        <li>Thang điểm mới: FIB-4, DAS28-CRP, BASDAI, ASDAS-CRP, CAT, ACT, sPESI, Geneva cải tiến, RCRI, H₂FPEF, Mayo UC, Harvey-Bradshaw, Glasgow-Imrie, STOP-BANG, ROX, Maddrey, thiếu nước tự do, Ca hiệu chỉnh, Anion gap/Δ ratio, KFRE, Tokyo 2018, APS 2023</li>
-        <li>Engine thang điểm: hỗ trợ công thức liên tục chung (compute); thêm bộ lọc Cơ xương khớp / Thận</li>
-        <li>Gắn nút thang điểm vào phác đồ liên quan (RA, axSpA, COPD, hen, PE, IBD, MASLD, xơ gan, CKD, HF…); cập nhật bảng ánh xạ triệu chứng AI cho 12 bệnh mới</li>
-        <li>Cập nhật: Bệnh thận IgA theo KDIGO 2025 (đích protein niệu &lt;0.5, lý tưởng &lt;0.3 g/ngày; sparsentan, Nefecon); CKD thêm ESC 2026 CVD–CKD (STAMP)</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-22 — Viêm tụy cấp: phân độ nặng + liều dịch/thuốc chi tiết</div>
-      <ul>
-        <li>Revised Atlanta: nhẹ / trung bình / nặng + hướng xử trí theo tầng</li>
-        <li>Bù dịch RL: 5–10 mL/kg/h, đánh giá lại 4–6h, đích nước tiểu, tránh quá tải</li>
-        <li>Liều morphine/fentanyl, meropenem, insulin (HTG); nút BISAP/Ranson</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-18b — Tối ưu hiệu năng + UX + mã (không cắt nội dung)</div>
-      <ul>
-        <li>Hiệu năng: debounce tìm kiếm 120ms; content-visibility rộng hơn; SW cache <code>ykhoa-v20260918b</code></li>
-        <li>UX: mục lục trong phác đồ; accordion một card; nút sao chép bảng liều; aria-expanded; toast</li>
-        <li>Mã: gỡ CSS smart-search-drop trùng; helper debounce/copy/jump dùng chung</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-18 — Hợp nhất: giữ checklist trọng số + một mục nhịp nhanh</div>
-      <ul>
-        <li>Gốc: bản 121 bệnh (checklist Duke/IE, anaphylaxis, axSpA, SLE/Sjögren, PCOS…)</li>
-        <li>Gộp hiển thị: xóa mục <code>vt_vf</code> trùng — chỉ còn «Rối loạn nhịp nhanh (NCT/SVT · VT/VF)»</li>
-        <li>Ánh xạ AI <code>vt_vf</code> → <code>tachy</code>; vá lỗ mảng diseases nếu có</li>
-        <li>Giữ nguyên ACS/CCS/nút thang điểm/checklist DX đã có</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-16d — Gộp nhịp nhanh + VT/VF; bổ sung phác đồ đầy đủ</div>
-      <ul>
-        <li>Tim mạch: gộp «Rối loạn nhịp nhanh» và «VT/VF» thành một mục (NCT/SVT · VT/VF)</li>
-        <li>Bổ sung: phân loại, chẩn đoán WCT vs VT, xử trí NCT/WCT/VF, sốc điện, ICD, liều thuốc, Class I/III</li>
-        <li>Cập nhật ánh xạ triệu chứng AI: vt_vf → tachy</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-16c — ACS/NSTEMI + nút thang điểm; CCS PTP; checklist DX; tô đậm thuốc</div>
-      <ul>
-        <li>ACS: tiêu chuẩn STEMI/NSTEMI/UA rõ; nút GRACE · TIMI · DAPT · PRECISE-DAPT · ARC-HBR</li>
-        <li>CCS: bảng xác suất tiền nghiệm (tuổi/giới/kiểu đau) tự tính %</li>
-        <li>Checklist: RA, Gout, CAP (+CURB/PSI), OSA (STOP-BANG)</li>
-        <li>Tô đậm tên thuốc trong phác đồ; bảng rtable chống vỡ chữ iPhone</li>
-        <li>Giữ 121 bệnh unique từ bản nguồn</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-16 (6) — Checklist tính điểm tự động cho tiêu chuẩn chẩn đoán nhiều nội dung</div>
-      <ul>
-        <li><b>Sửa lỗi nghiêm trọng phát hiện khi rà soát:</b> bệnh "Nhịp nhanh thất & Rung thất (VT/VF)" bị mất khỏi dữ liệu (còn sót dấu phẩy thừa tạo "hố trống" trong mảng) — khiến ứng dụng crash khi người dùng bấm vào bất kỳ bệnh nào do <code>Array.find()</code> gặp phần tử rỗng. Đã khôi phục đầy đủ nội dung và xác nhận lại đủ 121 bệnh, không còn hố trống ở bất kỳ đâu trong file.</li>
-        <li>Xây dựng engine tính điểm có trọng số mới (radio theo từng nhóm miền + checkbox độc lập + cổng điều kiện tiên quyết bắt buộc) dùng chung cho nhiều bệnh, tách biệt với engine đếm đơn giản đã có (CAP/OSA/PCOS/Viêm khớp phản ứng).</li>
-        <li><b>Nâng cấp thành thang điểm chính thức có trọng số thật</b> (không còn đếm tiêu chí thô): VKDT (ACR/EULAR 2010, 4 nhóm miền), Gout (ACR/EULAR 2015, có nhánh "đã soi thấy tinh thể" bỏ qua tính điểm), Lupus ban đỏ hệ thống (EULAR/ACR 2019, 10 nhóm miền + cổng ANA≥1:80), Hội chứng Sjögren (ACR/EULAR 2016 + cổng triệu chứng khô mắt/miệng).</li>
-        <li>Thêm logic tổ hợp riêng (không phải cộng điểm đơn thuần) cho: Viêm nội tâm mạc (Duke cải tiến — chính/phụ), Sốc phản vệ (NIAID/FAAN — 3 nhóm, đủ 1 nhóm), Viêm khớp cột sống trục axSpA (ASAS — nhánh hình ảnh/nhánh lâm sàng).</li>
-        <li>Thêm checklist đơn giản (đếm) cho PCOS (Rotterdam ≥2/3) và Viêm khớp phản ứng.</li>
-        <li>Kiểm thử bằng jsdom (mô phỏng DOM thật, tick checkbox/radio thực tế) cho toàn bộ 8 checklist mới/nâng cấp — xác nhận tính điểm và phân loại đúng ở nhiều kịch bản biên; phát hiện và sửa 1 lỗi logic (điều kiện thừa gây sai phân loại "Possible" trong Duke IE khi chưa đủ tiêu chí phụ).</li>
-        <li>Render thử toàn bộ 121 bệnh bằng jsdom — xác nhận 0 crash sau khi sửa lỗi hố trống.</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-16 (5) — Bổ sung thêm 12 bệnh lý mới, 121 bệnh unique</div>
-      <ul>
-        <li>Tim mạch: + Sốc phản vệ (Anaphylaxis), Nhịp nhanh thất & Rung thất (VT/VF)</li>
-        <li>Nội tiết: + Viêm tuyến giáp (Thyroiditis), Suy sinh dục nam</li>
-        <li>Hô hấp: + Bệnh phổi nghề nghiệp (bụi phổi), Ho mạn tính — tiếp cận chẩn đoán</li>
-        <li>Tiêu hóa: + Viêm gan tự miễn, Khó tiêu chức năng</li>
-        <li>Cơ xương khớp: + Đau vai (gân chóp xoay & đông cứng khớp), Viêm khớp phản ứng</li>
-        <li>Thận: + Bệnh thận IgA, Hạ Canxi máu</li>
-        <li>Cập nhật bảng ánh xạ triệu chứng AI cho 12 bệnh mới; sửa 3 regex quá cứng nhắc không khớp câu tự nhiên (suy sinh dục nam, bụi phổi nghề nghiệp, bệnh thận IgA)</li>
-        <li>Audit: 121 bệnh unique, JS syntax OK, HTML cân bằng thẻ, test 12+ ca triệu chứng bằng Node xác nhận đúng hướng</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-16 (4) — Bổ sung thêm 12 bệnh lý mới, 109 bệnh unique + sửa lỗi AI</div>
-      <ul>
-        <li>Tim mạch: + Bóc tách động mạch chủ cấp, Bệnh cơ tim phì đại (HCM)</li>
-        <li>Nội tiết: + Đái tháo nhạt, Suy tuyến yên toàn bộ</li>
-        <li>Hô hấp: + Cúm (Influenza), Áp xe phổi & Mủ màng phổi</li>
-        <li>Tiêu hóa: + Tổn thương gan do thuốc (DILI), Co thắt tâm vị (Achalasia)</li>
-        <li>Cơ xương khớp: + Viêm đa cơ/viêm da cơ, Hội chứng ống cổ tay</li>
-        <li>Thận: + Hội chứng gan thận (HRS), Hạ Phosphate máu</li>
-        <li>Cập nhật bảng ánh xạ triệu chứng AI cho 12 bệnh mới; sửa 2 regex quá cứng nhắc (suy tuyến yên, áp xe phổi) không khớp câu tự nhiên</li>
-        <li><b>Sửa lỗi nền quan trọng:</b> mẫu "oi"/"non" (nôn/ói) trong tab AI quá ngắn, vô tình khớp giữa các từ khác ("mỏi", "mọi"...) gây nhiễu kết quả từ trước — nay dùng ranh giới từ (word-boundary) chính xác</li>
-        <li>Audit: 109 bệnh unique, JS syntax OK, HTML cân bằng thẻ, test 16+ ca triệu chứng bằng Node xác nhận không còn nhiễu</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-16 (3) — Bổ sung thêm 12 bệnh lý mới, 97 bệnh unique</div>
-      <ul>
-        <li>Tim mạch: + Viêm màng ngoài tim cấp & Chèn ép tim, Tăng huyết áp cấp cứu</li>
-        <li>Nội tiết: + Bệnh to đầu chi (Acromegaly), Tăng Prolactin máu</li>
-        <li>Hô hấp: + Ung thư phổi (tầm soát & tiếp cận), Viêm phổi bệnh viện/thở máy (HAP/VAP)</li>
-        <li>Tiêu hóa: + Viêm tụy mạn, Tầm soát ung thư đại trực tràng</li>
-        <li>Cơ xương khớp: + Fibromyalgia, Đau thắt lưng cơ học & thoát vị đĩa đệm</li>
-        <li>Thận: + Toan hóa ống thận (RTA), Hạ Magie máu</li>
-        <li>Cập nhật bảng ánh xạ triệu chứng tab AI cho 12 bệnh mới; sửa xong tham chiếu lung_cancer (nay đã có bệnh thật) và regex THA cấp cứu nhận số HA linh hoạt (180–299)</li>
-        <li>Audit: 97 bệnh unique, JS syntax OK, HTML cân bằng thẻ, đã test 12+ ca triệu chứng mẫu cho các bệnh mới bằng Node</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-16 (2) — Tối ưu tab AI y khoa: gợi ý bệnh cảnh + liều tham khảo từ triệu chứng</div>
-      <ul>
-        <li>Sửa lỗi id sai trong bảng ánh xạ triệu chứng (dka → dka_hhs không tồn tại; bỏ lung_cancer không có trong app)</li>
-        <li>Bổ sung mẫu triệu chứng cho 12 bệnh mới thêm gần đây (sốc tim, ACHD, DKA/HHS, PCOS, OSA, giãn phế quản, Celiac, C. diff, GCA, Sjögren, hạ kali, ADPKD)</li>
-        <li>Hiện rõ "🔎 Khớp triệu chứng" cho từng bệnh gợi ý — giải thích vì sao AI chọn bệnh đó</li>
-        <li>Lọc kết quả gợi ý theo triệu chứng: chỉ giữ bệnh thực sự khớp ≥1 mẫu triệu chứng cụ thể, loại bỏ nhiễu từ so khớp chữ chung chung</li>
-        <li>Khi hỏi theo chuỗi triệu chứng: tự động kèm thêm "Hướng xử trí ban đầu" + khối 💊 liều tham khảo (trước đây chỉ hiện phần chẩn đoán)</li>
-        <li>Nhận diện tốt hơn chuỗi triệu chứng liệt kê bằng dấu phẩy/dấu "+"</li>
-        <li>Audit bằng Node: chạy thực tế 10+ ca triệu chứng mẫu, xác nhận không còn kết quả nhiễu, HTML cân bằng thẻ</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-16 — Bổ sung 12 bệnh lý mới, 85 bệnh unique</div>
-      <ul>
-        <li>Tim mạch: + Sốc tim (phân độ SCAI A–E), Bệnh tim bẩm sinh ở người lớn (ACHD)</li>
-        <li>Nội tiết: + DKA/HHS (phác đồ dịch–insulin–kali), Hội chứng buồng trứng đa nang (PCOS)</li>
-        <li>Hô hấp: + Ngưng thở tắc nghẽn khi ngủ (OSA), Giãn phế quản</li>
-        <li>Tiêu hóa: + Bệnh Celiac, Viêm đại tràng do C. difficile</li>
-        <li>Cơ xương khớp: + Viêm động mạch tế bào khổng lồ (GCA), Hội chứng Sjögren</li>
-        <li>Thận: + Hạ kali máu, Bệnh thận đa nang di truyền trội (ADPKD)</li>
-        <li>Audit: 85 bệnh unique, JS syntax OK, HTML tag cân bằng, không phá cấu trúc search/content-visibility hiện có</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-09-04 — H. pylori ACG 2024; Sổ tay lâm sàng
-      </div>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-08-31 — Liều chi tiết toàn bệnh + tương tác thuốc + audit logic</div>
-      <ul>
-        <li>Bổ sung bảng 💊 Liều dùng chi tiết cho hầu hết bệnh; 🔗 Tương tác thuốc (THA, HF, ĐTĐ, lipid, COPD…)</li>
-        <li>AF/PE: mục tương tác kháng đông; HF theo ESC 2026; bảo vệ rt() khỏi undefined</li>
-        <li>Audit: 73 bệnh unique, JS OK, 1 scroll listener, null-safe render</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">2026-08-29 — Tối ưu tổng thể: PSI multi, 1 ô tìm, AI ngắn, cache tìm kiếm</div>
-      <ul>
-        <li>Guideline: AHA/ACC 2025 HTN &amp; ACS, ADA 2026, GOLD 2026, GINA 2025/2026, ESC/EAS lipid focused update 2025, CKM 2026</li>
-        <li>Tab Thang điểm: 38 thang; đồng bộ CHA₂DS₂-VA, ADD-RS, FINDRISC, YEARS, HCM Risk-SCD với phác đồ</li>
-        <li>Tìm kiếm thông minh (không dấu, viết tắt, thuốc); ghim ★; lịch sử; PWA; in phác đồ</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">Checklist bảo trì định kỳ</div>
-      <ul>
-        <li>Tim mạch: ESC/AHA HTN, AF, ACS, HF, VHD, lipid — đối chiếu class I/IIa</li>
-        <li>Hô hấp: GOLD &amp; GINA bản mới nhất trong năm</li>
-        <li>Nội tiết: ADA Standards of Care (tháng 1 hằng năm)</li>
-        <li>Thận: KDIGO CKD/AKI; điện giải</li>
-        <li>Thang điểm: ESC AF (CHA₂DS₂-VA / HAS-BLED), CURB-65, Child-Pugh, Wells/YEARS</li>
-        <li>Sau mỗi lần sửa: cập nhật dòng “Bản YYYY.MM” và mục nhật ký này</li>
-      </ul>
-    </div>
-    <div class="cl-item"><div class="cl-date">Nguồn ưu tiên (thứ tự)</div>
-      <ul>
-        <li>ESC / AHA / ACC / ADA / KDIGO / GINA / GOLD / ACR — guideline chính thức</li>
-        <li>NEJM, Lancet, Circulation, EHJ — khi có thay đổi lớn trước khi guideline cập nhật</li>
-        <li>UpToDate — tham khảo thực hành, không thay class khuyến cáo gốc</li>
-      </ul>
-    </div>
-    <button onclick="closeChangelog()" style="width:100%;margin-top:8px;padding:12px;border:none;border-radius:12px;background:var(--tiffany-main);color:#fff;font-weight:800;">Đóng</button>
+    <div id="ysRefs" class="ys-general ys-refs"></div>
   </div>
 </div>
-
 
 <!-- VIEW AI Y KHOA -->
 <div id="viewAI">
