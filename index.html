@@ -843,7 +843,7 @@
     <div>
       <h1>📘 Sổ tay lâm sàng</h1>
       <div class="sub">Phác đồ điều trị · Thang điểm · ESC/AHA/ADA/GINA/GOLD/ACG</div>
-      <div class="ver-badge">Bản 08/10/2026</div>
+      <div class="ver-badge">Bản 10/10/2026</div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
       <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇ Cài app</button>
@@ -880,7 +880,7 @@
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
   <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px calc(72px + env(safe-area-inset-bottom,0px));">
-    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 08/10/2026
+    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 10/10/2026
   </footer>
 </div>
 
@@ -11339,7 +11339,7 @@ if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D
 if('serviceWorker' in navigator){
   try {
     const swCode = `
-      const CACHE = 'ykhoa-v20261008s';
+      const CACHE = 'ykhoa-v20261010';
       self.addEventListener('install', e => { self.skipWaiting(); });
       self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
       self.addEventListener('fetch', e => {
@@ -12086,6 +12086,7 @@ const AI2_SYN = [
   ['kali clorid','kcl'],['natri bicarbonat','bicarbonate','nahco3','bicarbonat'],['calci gluconat','calcium gluconate','canxi gluconat'],['magnesi sulfat','magnesium','mgso4'],
   ['midazolam','hypnovel'],['dexmedetomidin','dexmedetomidine','precedex'],['propofol','diprivan'],['acid tranexamic','tranexamic','txa','transamin'],
   ['nhiem khuan huyet','soc nhiem khuan','sepsis','septic shock','nkh'],['xuat huyet nao','xuat huyet trong nao','ich','chay mau nao'],['vasopressin','pitressin'],
+  ['cefepim','cefepime','maxipime'],['ceftazidim','ceftazidime','fortum'],['cefotaxim','cefotaxime','claforan'],['cefuroxim','cefuroxime','zinacef'],['ceftarolin','ceftaroline','zinforo'],['cefoperazon','cefoperazone','sulperazon'],['mmse','mini mental','trang thai tam than toi thieu','minimental'],
   ['truyen chung','y site','ysite','chac 3','tuong ky','tuong thich','tuong hop'],['thang diem','score','diem'],['khuyen cao','class','muc khuyen cao']
 ];
 let AI2_IDX = null;
@@ -12324,7 +12325,7 @@ function goAIChunk(did, part, sec, heading){
 function ai2Ysite(q){
   if(typeof YS_DRUGS === 'undefined') return '';
   const n = ' ' + ai2Tokens(q).join(' ') + ' ';
-  const alias = {norepi:['noradrenalin','norepinephrine','noradrenaline'], epi:['adrenalin','epinephrine','adrenaline'], furo:['furosemid','furosemide','lasix'], amio:['amiodaron','amiodarone'], bicar:['bicarbonat','bicarbonate','nahco3'], kcl:['kali clorid','kcl'], cag:['calci gluconat','canxi gluconat','calcium gluconate'], ceftri:['ceftriaxon','ceftriaxone'], rl:['ringer lactat','ringer'], g5:['glucose 5','g5','dextrose'], nacl:['nacl','nuoc muoi sinh ly','natri clorid'], pipt:['piperacillin','tazobactam','tazocin'], hep:['heparin'], txa:['tranexamic','transamin'], apap:['paracetamol','acetaminophen'], blood:['mau','hong cau','chế phẩm máu'], mida:['midazolam'], ins:['insulin']};
+  const alias = {cefazo:['cefazolin'], cefurox:['cefuroxim','cefuroxime','zinacef'], cefoxi:['cefoxitin'], cefota:['cefotaxim','cefotaxime','claforan'], ceftaz:['ceftazidim','ceftazidime','fortum','fortaz'], cefopsul:['cefoperazon','cefoperazone','sulperazon'], cefep:['cefepim','cefepime','maxipime'], ceftaro:['ceftarolin','ceftaroline','zinforo','teflaro'], cza:['avibactam','zavicefta','avycaz'], ctz:['ceftolozan','ceftolozane','zerbaxa'], cefid:['cefiderocol','fetroja','fetcroja'], norepi:['noradrenalin','norepinephrine','noradrenaline'], epi:['adrenalin','epinephrine','adrenaline'], furo:['furosemid','furosemide','lasix'], amio:['amiodaron','amiodarone'], bicar:['bicarbonat','bicarbonate','nahco3'], kcl:['kali clorid','kcl'], cag:['calci gluconat','canxi gluconat','calcium gluconate'], ceftri:['ceftriaxon','ceftriaxone'], rl:['ringer lactat','ringer'], g5:['glucose 5','g5','dextrose'], nacl:['nacl','nuoc muoi sinh ly','natri clorid'], pipt:['piperacillin','tazobactam','tazocin'], hep:['heparin'], txa:['tranexamic','transamin'], apap:['paracetamol','acetaminophen'], blood:['mau','hong cau','chế phẩm máu'], mida:['midazolam'], ins:['insulin']};
   const found = [];
   YS_DRUGS.forEach(d => {
     const names = (alias[d.id] || []).concat([ai2Tokens(d.name.replace(/\(.*?\)/g, '')).join(' ')]);
@@ -17047,6 +17048,46 @@ function __buildScalesData(){
             [null, "ECOG " + t + " — thể trạng kém: thường ưu tiên chăm sóc giảm nhẹ, điều trị triệu chứng.", __D] ]);
         }
       }
+      ,{
+        id: "mmse",
+        unitLabel: "/30",
+        title: "MMSE — Đánh giá trạng thái tâm thần tối thiểu (Mini-Mental State Examination)",
+        subtitle: "Sàng lọc suy giảm nhận thức/sa sút trí tuệ (0–30 điểm). Nhập điểm từng phần theo phiếu MMSE chuẩn; diễn giải theo trình độ học vấn.",
+        category: "cap_cuu than_kinh", categoryName: "Thần kinh / Lão khoa",
+        source: "Folstein MF et al. J Psychiatr Res 1975 (bản quyền MMSE: PAR Inc. — dùng phiếu chính thức khi thực hiện); Tombaugh TN, McIntyre NJ. J Am Geriatr Soc 1992; Katzman R et al. J Clin Epidemiol 1988 (điểm cắt theo học vấn); Cao Mạnh Long và cs. Tạp chí Nghiên cứu Y học 2022;149(1)",
+        criteria: [
+          { name: "1. Định hướng thời gian (0–5)", detail: "1 điểm cho mỗi yếu tố đúng: năm, mùa, tháng, ngày trong tháng, thứ", key: "t", options: [0,1,2,3,4,5].map(i => ({text: i + " điểm", score:i})) },
+          { name: "2. Định hướng không gian (0–5)", detail: "Quốc gia, tỉnh/thành phố, quận/huyện, bệnh viện/nơi khám, tầng/khoa", key: "p", options: [0,1,2,3,4,5].map(i => ({text: i + " điểm", score:i})) },
+          { name: "3. Ghi nhớ tức thì (0–3)", detail: "Nhắc lại 3 từ không liên quan ngay sau khi nghe (chấm lần đầu; lặp lại tối đa đến khi thuộc để kiểm tra nhớ lại)", key: "r", options: [0,1,2,3].map(i => ({text: i + " điểm", score:i})) },
+          { name: "4. Chú ý & tính toán (0–5)", detail: "Trừ 7 liên tiếp từ 100 (5 lần) — hoặc đánh vần ngược một từ 5 chữ cái nếu BN không làm tính được", key: "a", options: [0,1,2,3,4,5].map(i => ({text: i + " điểm", score:i})) },
+          { name: "5. Nhớ lại (0–3)", detail: "Nhớ lại 3 từ ở mục 3 (sau vài phút)", key: "rc", options: [0,1,2,3].map(i => ({text: i + " điểm", score:i})) },
+          { name: "6. Gọi tên (0–2)", detail: "Gọi tên 2 đồ vật thông dụng được chỉ", key: "n", options: [0,1,2].map(i => ({text: i + " điểm", score:i})) },
+          { name: "7. Lặp lại câu (0–1)", detail: "Nhắc lại chính xác một câu ngắn", key: "rp", options: [0,1].map(i => ({text: i + " điểm", score:i})) },
+          { name: "8. Làm theo mệnh lệnh 3 bước (0–3)", detail: "1 điểm cho mỗi bước làm đúng", key: "c", options: [0,1,2,3].map(i => ({text: i + " điểm", score:i})) },
+          { name: "9. Đọc và làm theo (0–1)", detail: "Đọc và thực hiện một câu mệnh lệnh viết sẵn", key: "rd", options: [0,1].map(i => ({text: i + " điểm", score:i})) },
+          { name: "10. Viết một câu (0–1)", detail: "Câu tự viết, có chủ ngữ – vị ngữ, có nghĩa", key: "w", options: [0,1].map(i => ({text: i + " điểm", score:i})) },
+          { name: "11. Vẽ lại hình (0–1)", detail: "Vẽ lại hai ngũ giác giao nhau (đủ 10 góc, phần giao là tứ giác)", key: "d", options: [0,1].map(i => ({text: i + " điểm", score:i})) },
+          { name: "Trình độ học vấn", detail: "Dùng để chọn điểm cắt", key: "edu", options: [
+            {text:"Trung học cơ sở trở lên (≥ 6–9 năm đi học)", score:3},{text:"Tiểu học (1–5 năm)", score:2},{text:"Không biết chữ / chưa đi học", score:1} ] }
+        ],
+        compute: function(v){ return ['t','p','r','a','rc','n','rp','c','rd','w','d'].reduce((x, k) => x + (v[k] || 0), 0); },
+        detail: function(t, v){
+          if(t === null) return '';
+          const dom = [['Định hướng', (v.t||0) + (v.p||0), 10], ['Ghi nhớ tức thì', v.r||0, 3], ['Chú ý–tính toán', v.a||0, 5], ['Nhớ lại', v.rc||0, 3], ['Ngôn ngữ & thực hành', (v.n||0)+(v.rp||0)+(v.c||0)+(v.rd||0)+(v.w||0), 8], ['Thị giác–không gian', v.d||0, 1]];
+          return '<div class="alert-box alert-info" style="margin-top:8px"><b>Theo lĩnh vực:</b> ' + dom.map(x => x[0] + ' ' + x[1] + '/' + x[2]).join(' · ') + '<br>Gợi ý: nhớ lại kém nổi bật → kiểu Alzheimer; chú ý/định hướng dao động cấp tính → nghĩ mê sảng (làm 4AT/CAM), không kết luận sa sút trí tuệ khi đang bệnh cấp.</div>';
+        },
+        evaluate: function(t, v){
+          v = v || {};
+          const cut = v.edu === 1 ? 17 : v.edu === 2 ? 20 : 24;
+          const eduTxt = v.edu === 1 ? "không biết chữ (≤ 17)" : v.edu === 2 ? "tiểu học (≤ 20)" : "trung học trở lên (≤ 24)";
+          if(t > cut) return { text: "MMSE " + t + "/30 — trong giới hạn bình thường theo học vấn " + eduTxt.replace(/\s\(.*\)/, '') + ". MMSE ít nhạy với suy giảm nhận thức nhẹ (MCI) — cân nhắc MoCA nếu than phiền trí nhớ.", color: __G };
+          let sev;
+          if(t >= 20) sev = "suy giảm nhận thức NHẸ / sa sút trí tuệ nhẹ";
+          else if(t >= 10) sev = "sa sút trí tuệ TRUNG BÌNH";
+          else sev = "sa sút trí tuệ NẶNG";
+          return { text: "MMSE " + t + "/30 — dưới điểm cắt theo học vấn " + eduTxt + ": gợi ý " + sev + ". Loại trừ mê sảng, trầm cảm, suy giáp, thiếu B12, thuốc (kháng cholinergic, benzodiazepine); làm XN máu, CT/MRI sọ; chuyển chuyên khoa thần kinh/lão khoa. (Nghiên cứu cộng đồng VN 2022: điểm cắt sàng lọc 23/24, chẩn đoán 19/20.)", color: t >= 20 ? __W : __D };
+        }
+      }
     ];
 }
 function ensureScales(){
@@ -17104,7 +17145,18 @@ const YS_DRUGS = [
   {id:'esome', name:'Esomeprazol', cls:'Tiêu hóa', rule:'PPI pH kiềm — tương kỵ với nhiều thuốc; nên đường riêng hoặc tráng NaCl 0,9% trước/sau.'},
   {id:'ondan', name:'Ondansetron', cls:'Tiêu hóa'},
   // Kháng sinh – kháng nấm – kháng virus
-  {id:'ceftri', name:'Ceftriaxon', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'KHÔNG dùng dung môi chứa canxi (Ringer, Hartmann); nhãn FDA: tương kỵ vật lý với vancomycin, aminoglycosid, fluconazol — truyền nối tiếp, tráng kỹ dây giữa hai thuốc.', ref:'ceftri'},
+  {id:'ceftri', name:'Ceftriaxon (TH3)', cls:'Kháng sinh – Cephalosporin', rule:'KHÔNG dùng dung môi chứa canxi (Ringer, Hartmann); nhãn FDA: tương kỵ vật lý với vancomycin, aminoglycosid, fluconazol — truyền nối tiếp, tráng kỹ dây giữa hai thuốc.', ref:'ceftri'},
+  {id:'cefazo', name:'Cefazolin (TH1)', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: pha NaCl 0,9%, Glucose 5–10%, Ringer lactat, NaHCO₃ 5%. Như mọi β-lactam: không trộn chung với aminoglycosid; tương kỵ phụ thuộc nồng độ với vancomycin — tráng dây.', ref:'cefazo'},
+  {id:'cefurox', name:'Cefuroxim (TH2)', cls:'Kháng sinh – Cephalosporin', rule:'SmPC: không dùng đồng thời (trộn) với thuốc khác; NaHCO₃ 2,74% không khuyến cáo làm dung môi (đổi màu) — có thể bơm vào dây đang truyền bicarbonat.', ref:'zinacef'},
+  {id:'cefoxi', name:'Cefoxitin (TH2)', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: không thêm vào dung dịch aminoglycosid; khi truyền nên tạm ngưng dịch khác cùng vị trí. Tương hợp NaCl, Glucose, Ringer lactat, NaHCO₃ 5%, mannitol 5–10%.', ref:'cefoxi'},
+  {id:'cefota', name:'Cefotaxim (TH3)', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: KHÔNG pha với dung môi pH > 7,5 (natri bicarbonat); không trộn với aminoglycosid; tạm ngưng dịch khác cùng vị trí khi truyền.', ref:'claforan'},
+  {id:'ceftaz', name:'Ceftazidim (TH3)', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: kém bền trong NaHCO₃ (không dùng làm dung môi); tương kỵ vật lý với vancomycin — tráng dây giữa hai thuốc; không trộn với aminoglycosid. Khi truyền qua chạc Y nên tạm ngưng dịch khác.', ref:'fortaz'},
+  {id:'cefopsul', name:'Cefoperazon/sulbactam', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: không trộn trực tiếp với aminoglycosid (truyền tách, dây riêng); Ringer lactat và lidocain 2% chỉ dùng sau khi hoàn nguyên bằng nước cất (pha 2 bước).', ref:'sulperazon'},
+  {id:'cefep', name:'Cefepim (TH4)', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: không thêm vào dung dịch metronidazol, vancomycin, gentamicin, tobramycin, aminophyllin, ampicillin > 40 mg/mL — truyền riêng từng thuốc.', ref:'cefep'},
+  {id:'ceftaro', name:'Ceftarolin (TH5)', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: chưa xác lập tương hợp với thuốc khác — không trộn chung. Dung môi: NaCl 0,9%/0,45%, Glucose 2,5–5%, Ringer lactat.', ref:'teflaro'},
+  {id:'cza', name:'Ceftazidim/avibactam', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: chỉ truyền chung dây với các thuốc có trong bảng tương hợp của nhãn (đúng dung môi); không dùng nồng độ tối đa 40 mg/mL khi truyền chung.', ref:'avycaz'},
+  {id:'ctz', name:'Ceftolozan/tazobactam', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: chưa xác lập tương hợp — không trộn với thuốc khác. Dung môi NaCl 0,9% hoặc Glucose 5%.', ref:'zerbaxa'},
+  {id:'cefid', name:'Cefiderocol', cls:'Kháng sinh – Cephalosporin', rule:'Nhãn: chưa xác lập tương hợp với thuốc/dung môi khác ngoài NaCl 0,9% và Glucose 5%.', ref:'fetroja'},
   {id:'pipt', name:'Piperacillin/tazobactam', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Bất hoạt aminoglycosid khi trộn — truyền tách, tráng dây giữa hai thuốc.'},
   {id:'mero', name:'Meropenem', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Ổn định tốt hơn trong NaCl 0,9% (kém bền trong Glucose 5%).'},
   {id:'vanco', name:'Vancomycin', cls:'Kháng sinh – Kháng nấm – Kháng virus', rule:'Tương kỵ phụ thuộc nồng độ với β-lactam (piperacillin/tazobactam, ceftriaxon, cefepim) và heparin — tráng dây giữa hai thuốc.'},
@@ -17196,7 +17248,9 @@ const YS_PAIRS = [
   ['octreo','pn','I','Tạo phức glycosyl-octreotid, giảm hiệu lực (nhãn)','octreo'],['octreo','nacl','C','Ổn định 24 giờ','octreo'],['octreo','g5','C','Ổn định 24 giờ','octreo'],
   ['alteplase','g5','I','SmPC: không pha glucose (đục)','actilyse'],['alteplase','hep','I','SmPC: không cùng đường truyền, kể cả heparin','actilyse'],['alteplase','nacl','C','Dung môi pha loãng duy nhất','actilyse'],
   ['apap','nacl','C','','apap'],['apap','g5','C','','apap'],
-  ['hep','kcl','C'],['hep','ntg','C'],['hep','morph','C'],['hep','fenta','C'],['ins','kcl','C']
+  ['hep','kcl','C'],['hep','ntg','C'],['hep','morph','C'],['hep','fenta','C'],['ins','kcl','C'],
+  // Cephalosporin (2026.10.10)
+  ['cefazo','nacl','C','','cefazo'],['cefazo','g5','C','','cefazo'],['cefazo','rl','C','','cefazo'],['cefazo','bicar','C','NaHCO₃ 5% là dung môi được liệt kê (nhãn)','cefazo'],['cefazo','genta','I','β-lactam – aminoglycosid: không trộn chung, truyền tách',''],['cefazo','amika','I','β-lactam – aminoglycosid: không trộn chung, truyền tách',''],['cefazo','vanco','V','Kết tủa ở nồng độ cao — tráng dây giữa hai thuốc',''],['cefurox','nacl','C','','zinacef'],['cefurox','g5','C','','zinacef'],['cefurox','rl','C','Hartmann (Ringer lactat)','zinacef'],['cefurox','bicar','V','Không dùng làm dung môi; được bơm vào dây đang truyền bicarbonat (SmPC)','zinacef'],['cefurox','hydrocort','C','Không ảnh hưởng độ ổn định (SmPC)','zinacef'],['cefurox','genta','I','β-lactam – aminoglycosid: không trộn chung, truyền tách',''],['cefurox','amika','I','β-lactam – aminoglycosid: không trộn chung, truyền tách',''],['cefoxi','nacl','C','','cefoxi'],['cefoxi','g5','C','','cefoxi'],['cefoxi','rl','C','','cefoxi'],['cefoxi','bicar','C','NaHCO₃ 5% (nhãn)','cefoxi'],['cefoxi','mannitol','C','Mannitol 5–10% (nhãn)','cefoxi'],['cefoxi','genta','I','Nhãn: không thêm vào dung dịch aminoglycosid — truyền tách','cefoxi'],['cefoxi','amika','I','Nhãn: không thêm vào dung dịch aminoglycosid — truyền tách','cefoxi'],['cefota','nacl','C','','claforan'],['cefota','g5','C','','claforan'],['cefota','rl','C','','claforan'],['cefota','bicar','I','Nhãn: không pha với dung môi pH > 7,5','claforan'],['cefota','genta','I','Nhãn: không trộn với aminoglycosid — truyền tách','claforan'],['cefota','amika','I','Nhãn: không trộn với aminoglycosid — truyền tách','claforan'],['ceftaz','nacl','C','','fortaz'],['ceftaz','g5','C','','fortaz'],['ceftaz','rl','C','','fortaz'],['ceftaz','bicar','V','Nhãn: kém bền, không dùng làm dung môi','fortaz'],['ceftaz','vanco','I','Nhãn: tương kỵ vật lý (kết tủa) — tráng dây giữa hai thuốc','fortaz'],['ceftaz','genta','I','Nhãn: không thêm vào dung dịch aminoglycosid — truyền tách','fortaz'],['ceftaz','amika','I','Nhãn: không thêm vào dung dịch aminoglycosid — truyền tách','fortaz'],['ceftaz','hep','C','Ceftazidim 4 mg/mL trong NaCl/Glucose 5% (nhãn)','fortaz'],['ceftaz','kcl','C','Ceftazidim 4 mg/mL trong NaCl/Glucose 5% (nhãn)','fortaz'],['cefopsul','nacl','C','','sulperazon'],['cefopsul','g5','C','','sulperazon'],['cefopsul','rl','V','Chỉ sau khi hoàn nguyên bằng nước cất (pha 2 bước)','sulperazon'],['cefopsul','genta','I','Nhãn: không trộn trực tiếp — truyền tách, dây riêng','sulperazon'],['cefopsul','amika','I','Nhãn: không trộn trực tiếp — truyền tách, dây riêng','sulperazon'],['cefep','nacl','C','1–40 mg/mL','cefep'],['cefep','g5','C','1–40 mg/mL','cefep'],['cefep','rl','C','Ringer lactat + Glucose 5% (nhãn)','cefep'],['cefep','genta','I','Nhãn: không thêm vào gentamicin — truyền riêng','cefep'],['cefep','amika','I','β-lactam – aminoglycosid: truyền tách',''],['cefep','vanco','V','Nhãn: không pha chung — truyền riêng; tráng dây giữa hai thuốc','cefep'],['cefep','metro','V','Nhãn: không pha chung — truyền riêng; tráng dây giữa hai thuốc','cefep'],['cefep','ampi','V','Nhãn: không pha chung khi ampicillin > 40 mg/mL','cefep'],['ceftaro','nacl','C','','teflaro'],['ceftaro','g5','C','','teflaro'],['ceftaro','rl','C','','teflaro'],['cza','nacl','C','','avycaz'],['cza','g5','C','','avycaz'],['cza','rl','C','','avycaz'],['cza','dexmed','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','dopa','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','furo','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','genta','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','mg','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','norepi','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','vaso','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','metro','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','amika','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','levo','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','ceftaro','C','Bảng tương hợp Y-site của nhãn (CZA pha NaCl/Glucose 5%/Ringer lactat)','avycaz'],['cza','hep','V','Chỉ khi CZA pha Glucose 5% hoặc Ringer lactat (nhãn)','avycaz'],['cza','linez','V','Chỉ khi CZA pha Glucose 5% hoặc Ringer lactat (nhãn)','avycaz'],['cza','mero','V','Chỉ khi CZA pha NaCl 0,9% (nhãn)','avycaz'],['cza','bicar','V','Chỉ khi CZA pha Glucose 5% (nhãn)','avycaz'],['cza','kphos','V','Kali phosphat — khi CZA pha NaCl hoặc Glucose 5% (nhãn)','avycaz'],['cza','kcl','V','KCl 40 mEq/100 mL — chỉ khi CZA pha Ringer lactat (nhãn)','avycaz'],['ctz','nacl','C','','zerbaxa'],['ctz','g5','C','','zerbaxa'],['cefid','nacl','C','','fetroja'],['cefid','g5','C','','fetroja']
 ];
 const YS_REFS = {
   ceftri:{t:'Ceftriaxone for Injection, USP — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/ceftriaxone-sodium/page/6/'},
@@ -17213,7 +17267,18 @@ const YS_REFS = {
   precedex:{t:'PRECEDEX (dexmedetomidine) — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/precedex/'},
   brevi:{t:'BREVIBLOC (esmolol) — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/brevibloc/'},
   leve:{t:'Levetiracetam Injection — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/levetiracetam-23/page/2/'},
-  protonix:{t:'PROTONIX I.V. (pantoprazole) — Prescribing Information (FDA)', u:'https://www.guidelinecentral.com/drug/48f4d638-d2a1-47fa-9a81-3acda1b1b1e3/protonix'}
+  protonix:{t:'PROTONIX I.V. (pantoprazole) — Prescribing Information (FDA)', u:'https://www.guidelinecentral.com/drug/48f4d638-d2a1-47fa-9a81-3acda1b1b1e3/protonix'},
+  cefazo:{t:'Cefazolin for Injection, USP — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/cefazolin-16/page/5/'},
+  zinacef:{t:'ZINACEF (cefuroxime) — Package Insert, GSK (SAHPRA 2018)', u:'https://www.sahpra.org.za/wp-content/uploads/2020/02/Zinacef_PI_GSK_MCC-format-9-March-2018.pdf'},
+  cefoxi:{t:'Cefoxitin for Injection — Prescribing Information (FDA)', u:'https://www.drugs.com/pro/cefoxitin.html'},
+  claforan:{t:'Cefotaxime for Injection — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/cefotaxime-6/page/4/'},
+  fortaz:{t:'FORTAZ (ceftazidime) — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/fortaz-4/page/5/'},
+  sulperazon:{t:'Sulbactam/Cefoperazone (Magnex/Sulperazon) — Product Labeling, Pfizer', u:'https://labeling.pfizer.com/ShowLabeling.aspx?id=14800'},
+  cefep:{t:'Cefepime for Injection — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/cefepime-7/page/2/'},
+  teflaro:{t:'TEFLARO (ceftaroline fosamil) — Prescribing Information (FDA/DailyMed)', u:'https://medlibrary.org/lib/rx/meds/teflaro/page/2/'},
+  avycaz:{t:'AVYCAZ (ceftazidime-avibactam) — Prescribing Information, AbbVie (Tables 6–9: Y-site)', u:'https://www.rxabbvie.com/pdf/avycaz_pi.pdf'},
+  zerbaxa:{t:'ZERBAXA (ceftolozane-tazobactam) — Prescribing Information (FDA)', u:'https://www.drugs.com/pro/zerbaxa.html'},
+  fetroja:{t:'FETROJA (cefiderocol) — Prescribing Information (FDA)', u:'https://www.drugs.com/pro/fetroja.html'}
 };
 const YS_REF_ORDER = Object.keys(YS_REFS);
 function ysRefNo(k){ const i = YS_REF_ORDER.indexOf(k); return i >= 0 ? i + 1 : 0; }
@@ -17245,7 +17310,9 @@ const YS_PRESETS = [
   {name:'Đột quỵ / Xuất huyết', ids:['alteplase','hep','nicar','labet','mannitol','nacl']},
   {name:'Đặt NKQ cấp cứu', ids:['rocu','mida','fenta','keta','norepi','dexa']},
   {name:'XHTH do giãn TM', ids:['octreo','panto','txa','ceftri','blood','nacl']},
-  {name:'Động kinh liên tục', ids:['loraz','diaz','leve','valpro','pheny','nacl','g5']}
+  {name:'Động kinh liên tục', ids:['loraz','diaz','leve','valpro','pheny','nacl','g5']},
+  {name:'Cephalosporin + phối hợp', ids:['ceftaz','cefep','cefota','vanco','genta','metro','nacl','rl']},
+  {name:'VK đa kháng (CZA)', ids:['cza','norepi','vaso','furo','amika','mero','hep','nacl']}
 ];
 let ysSelected = [];
 let ysFilter = '';
