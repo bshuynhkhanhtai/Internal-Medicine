@@ -834,6 +834,31 @@
   .ai2-flash{animation:ai2flash 1.8s ease;}
   @keyframes ai2flash{0%,40%{background:rgba(234,179,8,.35);}100%{background:transparent;}}
   html.layout-desktop .ai-secfilter{max-width:980px;margin:0 auto;width:100%;}
+  /* ===== Chuyển đổi đơn vị ===== */
+  .uc-box{margin-top:5px;}
+  .uc-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .uc-toggle{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:10px;border:1px dashed var(--tiffany-main);background:transparent;color:var(--tiffany-dark);cursor:pointer;}
+  .uc-hint{font-size:11.5px;color:var(--text-secondary);font-weight:600;}
+  .uc-row{display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap;}
+  .uc-row[hidden]{display:none;}
+  .uc-in,.uc-sel{font-size:13px;padding:7px 8px;border-radius:9px;border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);}
+  .uc-in{width:110px;}
+  .uc-sel{max-width:170px;}
+  .uc-arrow{font-size:12px;color:var(--text-secondary);font-weight:700;}
+  .uc-out{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:10px;}
+  .uc-res{border:1px solid var(--border-color);border-radius:10px;padding:8px 10px;background:var(--bg-card);}
+  .uc-res.on{border-color:var(--tiffany-main);box-shadow:0 0 0 1px var(--tiffany-main) inset;}
+  .uc-res b{font-size:17px;color:var(--tiffany-dark);}
+  .uc-res span{display:block;font-size:11.5px;color:var(--text-secondary);font-weight:600;}
+  .uc-empty{font-size:12.5px;color:var(--text-secondary);}
+  .uc-ref{margin-top:12px;font-size:12.5px;}
+  .uc-ref summary{cursor:pointer;font-weight:800;color:var(--tiffany-dark);}
+  .uc-table{width:100%;border-collapse:collapse;margin-top:6px;}
+  .uc-table th,.uc-table td{text-align:left;padding:5px 6px;border-bottom:1px dashed var(--border-color);vertical-align:top;font-size:12px;}
+  .uc-table th{width:42%;}
+  .score-chip.uc-chip{border-style:dashed;}
+  .uc-inline{margin:4px 2px 0;padding:10px 12px;border:1px dashed var(--tiffany-main);border-radius:12px;background:var(--bg-card);}
+  .uc-inline summary{cursor:pointer;font-weight:800;font-size:13px;color:var(--tiffany-dark);}
 </style>
 </head>
 <body>
@@ -843,7 +868,7 @@
     <div>
       <h1>📘 Sổ tay lâm sàng</h1>
       <div class="sub">Phác đồ điều trị · Thang điểm · ESC/AHA/ADA/GINA/GOLD/ACG</div>
-      <div class="ver-badge">Bản 10/10/2026</div>
+      <div class="ver-badge">Bản 14/10/2026</div>
     </div>
     <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
       <button class="pwa-help-btn" onclick="openPwaGuide()" title="Cài đặt ứng dụng">⬇ Cài app</button>
@@ -880,7 +905,7 @@
   <div class="section-nav" id="sectionNav"></div>
   <div class="container" id="mainContainer"></div>
   <footer style="text-align:center;font-size:10.5px;color:var(--text-secondary);padding:10px 16px calc(72px + env(safe-area-inset-bottom,0px));">
-    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 10/10/2026
+    ⚠ Tài liệu tham khảo lâm sàng nhanh — không thay thế phán đoán bác sĩ điều trị.<br>Đối chiếu guideline gốc (ESC/AHA/ADA/GINA/GOLD/KDIGO) trước khi áp dụng · Bản 14/10/2026
   </footer>
 </div>
 
@@ -899,6 +924,7 @@
       <button class="score-chip" data-cat="than" onclick="filterScoreCat('than',this)">Thận</button>
       <button class="score-chip" data-cat="noi_tiet" onclick="filterScoreCat('noi_tiet',this)">Nội tiết</button>
       <button class="score-chip" data-cat="nhiem" onclick="filterScoreCat('nhiem',this)">Nhiễm trùng</button>
+      <button class="score-chip uc-chip" onclick="goSmartScale('unit_conv')">⇄ Đổi đơn vị</button>
     </div>
   </div>
   <div id="scalesList" style="padding:8px 14px calc(96px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;"></div>
@@ -1423,7 +1449,19 @@ ${rt(["Class"],[
         ["Non-DHP CCB (<b>verapamil</b>/diltiazem)","Có hại HFrEF — tránh"],
         ["<b>Ivabradine</b> + CYP3A4 mạnh","Tăng nồng độ — tránh azole/macrolide mạnh"]
       ])}
-    `,
+    
+      <div class="subhead">Bổ sung liều thuốc & cập nhật 2023–2025</div>
+      ${rt(["Liều khởi đầu → đích","Ghi chú"],[
+        ["<b>Sacubitril/Valsartan</b>","24/26 mg × 2/ngày → 97/103 mg × 2/ngày","Ngừng ACEi ≥36 giờ trước đổi; theo dõi K⁺, HA"],
+        ["<b>Bisoprolol / Carvedilol / Metoprolol succinate</b>","1,25 → 10 mg/ngày; 3,125 → 25 mg × 2 (50 mg nếu &gt;85 kg); 12,5–25 → 200 mg/ngày","Khởi đầu khi ổn định (không phù nặng); tăng gấp đôi mỗi 2 tuần"],
+        ["<b>Spironolactone / Eplerenone</b>","12,5–25 → 50 mg/ngày; 25 → 50 mg/ngày","K⁺ &lt;5,0; eGFR &gt;30; kiểm tra sau 1 tuần và 4 tuần"],
+        ["<b>Dapagliflozin / Empagliflozin</b>","10 mg/ngày","HFrEF và HFpEF/HFmrEF (ESC 2023: class I); eGFR ≥20–25"],
+        ["<b>Finerenone</b> (HFmrEF/HFpEF, FINEARTS-HF 2024)","eGFR ≥60: 20 mg → 40 mg/ngày; eGFR &lt;60: 10 mg → 20 mg/ngày (tăng liều sau 4 tuần nếu K⁺ cho phép)","Giảm biến cố suy tim nặng lên/tử vong tim mạch (RR 0,84), chủ yếu do giảm đợt suy tim nặng lên; K⁺ &gt;5,5 gặp 14,3% vs 6,9%; hạ HA tâm thu &lt;100 nhiều hơn"],
+        ["<b>Vericiguat</b>","2,5 mg → 10 mg/ngày","HFrEF tái nhập viện dù tối ưu"],
+        ["<b>Ivabradine</b>","5 mg × 2 → 7,5 mg × 2/ngày","Nhịp xoang &gt;70/phút dù tối ưu chẹn β"],
+        ["<b>Sắt TM</b> (ferric carboxymaltose / derisomaltose)","Theo thiếu hụt (ferritin &lt;100 hoặc 100–299 + TSAT &lt;20%)","Cải thiện triệu chứng, giảm nhập viện"]
+      ])}
+      <div class="alert-box alert-info"><b>STRONG-HF:</b> khởi đầu và tăng liều thuốc nền tảng nhanh (trong 2 tuần sau xuất viện), theo dõi sát giảm nhập viện/tử vong — không nên «chờ ổn định» quá lâu.</div>`,
     khuyen_cao:`
 ${rt(["Class"],[
         ["FMT 4 trụ cột HFrEF (LVEF ≤50%) khi có chỉ định",'<span class="badge badge-I">I</span>'],
@@ -2043,7 +2081,8 @@ ${rt(["Class"],[
   guidelines:["ESC 2024 (PAD)","AHA/ACC 2016 (còn tham chiếu)"],
   sections:{
     dinh_nghia:`
-      <p>Bệnh động mạch ngoại biên (PAD) là hẹp/tắc động mạch chi dưới do xơ vữa, biểu hiện từ không triệu chứng, đau cách hồi (claudication) khi gắng sức, đến thiếu máu chi trầm trọng mạn tính (CLTI) đe dọa mất chi.</p>`,
+      <p>Bệnh động mạch ngoại biên (PAD) là hẹp/tắc động mạch chi dưới do xơ vữa. Phổ lâm sàng: không triệu chứng → <b>đau cách hồi</b> → <b>thiếu máu chi mạn đe dọa (CLTI)</b>: đau nghỉ, loét/hoại tử &gt;2 tuần → <b>thiếu máu chi cấp (ALI)</b>. PAD là bệnh xơ vữa toàn thân: nguy cơ NMCT, đột quỵ, tử vong tim mạch cao (≈ bệnh mạch vành).</p>
+      <p><b>Yếu tố nguy cơ:</b> hút thuốc (mạnh nhất), ĐTĐ (đặc biệt bệnh lý mạch dưới gối), THA, rối loạn lipid, CKD, tuổi, tiền sử gia đình.</p>`,
     chan_doan:`
       <div class="subhead">Chỉ số cổ chân-cánh tay (ABI — Ankle-Brachial Index)</div>
       ${rt(["Diễn giải"],[
@@ -2057,31 +2096,47 @@ ${rt(["Class"],[
       <div class="alert-box alert-danger"><b>Thiếu máu chi trầm trọng cấp tính (Acute Limb Ischemia)</b> — cấp cứu mạch máu thật sự, nhận biết qua "6P": Pain (đau đột ngột), Pallor (nhợt), Pulselessness (mất mạch), Paresthesia (dị cảm), Paralysis (liệt), Poikilothermia (lạnh chi) — cần hội chẩn mạch máu/can thiệp tái thông khẩn cấp trong vài giờ để cứu chi.</div>
       <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('abi')">🧮 ABI</button></div>`,
     dieu_tri:`
-<p>Bệnh động mạch chi dưới là biểu hiện của xơ vữa toàn thân — điều trị phải gồm <b>bảo vệ tim mạch</b> và cải thiện triệu chứng/chi.</p>
+      <div class="subhead">1. Phòng ngừa thứ phát tim mạch (mọi bệnh nhân)</div>
+      ${rt(["Liều","Mục tiêu / ghi chú"],[
+        ["<b>Bỏ thuốc lá</b>","Tư vấn + NRT/varenicline","Quan trọng nhất; giảm nguy cơ cắt cụt"],
+        ["<b>Statin cường độ cao</b> (Atorvastatin 40–80 mg; Rosuvastatin 20–40 mg) ± ezetimibe ± PCSK9i","—","<b>LDL-C &lt;55 mg/dL (1,4 mmol/L)</b> và giảm ≥50% (ESC 2024)"],
+        ["<b>Kháng kết tập tiểu cầu đơn</b>: Aspirin 75–100 mg hoặc Clopidogrel 75 mg/ngày","—","Mọi PAD có triệu chứng/đã tái thông"],
+        ["<b>Rivaroxaban 2,5 mg × 2/ngày + Aspirin 100 mg/ngày</b>","—","PAD triệu chứng, nguy cơ biến cố chi/tim mạch cao, nguy cơ chảy máu thấp (COMPASS, VOYAGER-PAD sau tái thông)"],
+        ["<b>Kiểm soát huyết áp</b> (ACEI/ARB phù hợp)","—","Đích cụ thể theo hướng dẫn THA (chưa đối chiếu được riêng cho PAD); chẹn β không chống chỉ định"],
+        ["<b>ĐTĐ: SGLT2i/GLP-1 RA</b>","—","Semaglutide cải thiện quãng đường đi (STRIDE 2025); ưu tiên SGLT2i/GLP-1RA có lợi tim–thận"]
+      ])}
+      <div class="subhead">2. Đau cách hồi</div>
       <ul>
-        <li>Bỏ thuốc lá; statin cường độ cao; chống kết tập tiểu cầu (<b>aspirin</b> hoặc <b>clopidogrel</b>); kiểm soát HA và đường huyết.</li>
-        <li>Đau cách hồi: chương trình <b>tập đi có giám sát</b> là hàng đầu; cilostazol có thể cân nhắc nếu không chống chỉ định.</li>
-        <li>Tái thông (nội mạch hoặc mổ) khi đau nghỉ, loét/hoại tử (CLTI), hoặc cách hồi nặng dù điều trị nội tối ưu.</li>
-        <li>CLTI: chăm sóc vết thương + kháng sinh khi nhiễm + tái thông sớm — tránh cắt cụt có thể tránh được.</li>
+        <li><b>Tập đi có giám sát</b> ≥3 buổi/tuần, ≥30 phút/buổi, ≥3 tháng (ESC 2024 class I); hiệu quả có thể tương đương tái thông ở đau cách hồi; tập tại nhà có cấu trúc nếu không có chương trình giám sát.</li>
+        <li><b>Cilostazol</b> 100 mg × 2/ngày (chống chỉ định suy tim); <b>naftidrofuryl</b> 200 mg × 3/ngày (tùy quốc gia/hướng dẫn; chưa đối chiếu được ESC 2024); pentoxifylline hiệu quả không chắc chắn.</li>
+        <li>Tái thông (nội mạch/mổ) khi hạn chế sinh hoạt nặng dù điều trị tối ưu ≥3 tháng và tổn thương giải phẫu phù hợp.</li>
       </ul>
-    
-<div class="subhead">💊 Liều dùng chi tiết</div>
-      ${rt(["Liều thường dùng","Lưu ý"],[
-        ["<b>Aspirin</b>","75–100 mg/ngày","Dự phòng huyết khối"],
-        ["<b>Clopidogrel</b>","75 mg/ngày","Thay <b>aspirin</b> hoặc kết hợp chọn lọc"],
-        ["<b>Atorvastatin</b>","40–80 mg/ngày","Cường độ cao"],
-        ["Cilostazol","100 mg ×2/ngày","Cách hồi — CĐ suy tim"],
-        ["<b>Ramipril</b>","5–10 mg/ngày","Khi có THA/chỉ định"]
-      ])}
-    `,
+      <div class="subhead">3. Thiếu máu chi mạn đe dọa (CLTI)</div>
+      <ul>
+        <li><b>Chẩn đoán/ phân tầng:</b> ABI &lt;0,4, TBI/áp lực ngón chân &lt;30 mmHg, TcPO₂ &lt;30; phân loại <b>WIfI</b> (Wound–Ischemia–foot Infection) dự đoán nguy cơ cắt cụt và lợi ích tái thông; chụp mạch CTA/MRA/DSA lập kế hoạch.</li>
+        <li><b>Tái thông sớm</b> (nội mạch hoặc phẫu thuật bắc cầu; BEST-CLI: bắc cầu bằng tĩnh mạch tự thân tốt hơn ở bệnh nhân có tĩnh mạch phù hợp; BASIL-2) — đội đa chuyên khoa (mạch máu, nội tiết, chỉnh hình, chăm sóc vết thương).</li>
+        <li>Kiểm soát nhiễm trùng (kháng sinh phổ rộng, dẫn lưu, cắt lọc), giảm tải vết loét, kiểm soát đường huyết; giảm đau; tránh cắt cụt trước khi đánh giá tái thông.</li>
+      </ul>
+      <div class="subhead">4. Thiếu máu chi cấp (ALI) — cấp cứu</div>
+      ${rt(["Xử trí"],[
+        ["<b>Nhận biết</b>","6P: đau, nhợt, mất mạch, dị cảm, liệt, lạnh. Nguyên nhân: huyết khối tắc từ tim (AF), tắc huyết khối tại chỗ, phình động mạch, bóc tách."],
+        ["<b>Phân độ Rutherford</b>","I: còn sống, không mất cảm giác/vận động • IIa: mất cảm giác nhẹ • IIb: mất cảm giác + yếu vận động (cứu chi nếu tái thông ngay) • III: liệt cơ, mất cảm giác hoàn toàn (không hồi phục) → cắt cụt."],
+        ["<b>Điều trị ngay</b>","<b>Heparin không phân đoạn</b> bolus 80 UI/kg (hoặc 5000 UI) → truyền duy trì (aPTT 1,5–2,5×); giảm đau; hội chẩn mạch máu cấp cứu; Doppler/CTA."],
+        ["<b>Tái thông</b>","Lấy huyết khối bằng catheter Fogarty, tiêu sợi huyết tại chỗ qua catheter (tPA), hút huyết khối cơ học, bắc cầu; I/IIa: có thể can thiệp nội mạch; IIb: tái thông khẩn cấp."],
+        ["<b>Sau tái thông</b>","Theo dõi hội chứng tái tưới máu: tăng K⁺, CK, myoglobin niệu, <b>hội chứng khoang → cắt cân (fasciotomy)</b>; tìm nguồn tắc (siêu âm tim, ECG/AF); kháng đông lâu dài."]
+      ])}`,
     khuyen_cao:`
-${rt(["Class"],[
-        ["Statin + chống kết tập tiểu cầu + bỏ thuốc lá",'<span class="badge badge-I">I</span>'],
-        ["Tái thông khi CLTI / đau nghỉ",'<span class="badge badge-I">I</span>']
-      ])}
-    `
+      ${rt(["Mức"],[
+        ["Bỏ thuốc lá + statin cường độ cao + kháng kết tập tiểu cầu",'<span class="badge badge-I">I</span>'],
+        ["Tập đi có giám sát cho đau cách hồi",'<span class="badge badge-I">I</span>'],
+        ["Tái thông sớm cho CLTI; đánh giá WIfI",'<span class="badge badge-I">I</span>'],
+        ["Heparin ngay + tái thông khẩn cho ALI Rutherford I–IIb",'<span class="badge badge-I">I</span>'],
+        ["Rivaroxaban 2,5 mg × 2/ngày + aspirin 100 mg ở PAD nguy cơ thiếu máu cao, chảy máu không cao (ESC 2024: IIa) và sau tái thông chi dưới",'<span class="badge badge-IIa">IIa</span>'],
+        ["Cilostazol (hoặc naftidrofuryl) để cải thiện quãng đường đi — tùy hướng dẫn quốc gia",'<span class="badge badge-IIa">IIa</span>'],
+        ["Cắt cụt trước khi đánh giá khả năng tái thông ở CLTI",'<span class="badge badge-III">III</span>']
+      ])}`
   },
-  source:"2024 ESC Guidelines for the management of peripheral arterial and aortic diseases, Eur Heart J 2024"
+  source:"Mazzolai L et al. 2024 ESC Guidelines for the management of peripheral arterial and aortic diseases, Eur Heart J 2024; Gornik HL et al. 2024 ACC/AHA Multisociety PAD Guideline, Circulation 2024; Bonaca MP et al. VOYAGER PAD, N Engl J Med 2020; Farber A et al. BEST-CLI, N Engl J Med 2022; Aboyans V ESC 2017"
 },
 {
   spec:"tim_mach", id:"pe", emoji:"🫁", short:"TTP", title:"Thuyên tắc phổi (PE)",
@@ -2355,7 +2410,7 @@ ${rt(["Class"],[
 },
 {
   spec:"tim_mach", id:"vhd", emoji:"🫀", short:"Bệnh van", title:"Bệnh van tim (Valvular Heart Disease)",
-  guidelines:["ESC/EACTS 2025","ACC/AHA 2020"],
+  guidelines:["ESC/EACTS 2021","ACC/AHA 2020","INVICTUS 2022 (rheumatic AF)"],
   sections:{
     dinh_nghia:`
       <p>Bệnh van tim bao gồm hẹp và/hoặc hở các van tim (ĐMC, 2 lá, 3 lá, phổi), nguyên nhân chính ở nước phát triển là thoái hóa (hẹp van ĐMC vôi hóa, hở van 2 lá thoái hóa), trong khi thấp khớp vẫn phổ biến ở nhiều khu vực. ESC/EACTS 2025 là bản cập nhật mới nhất, nhấn mạnh can thiệp sớm hơn và vai trò mở rộng của liệu pháp qua catheter.</p>
@@ -2406,7 +2461,23 @@ ${rt(["Class"],[
         ["<b>Furosemide</b>","20–40 mg khi ứ huyết","Suy tim do van"],
         ["<b>Bisoprolol</b> / <b>digoxin</b>","Theo AF/tần số","Khi rung nhĩ kèm van"]
       ])}
-    `,
+    
+      <div class="subhead">Ngưỡng nặng & chỉ định can thiệp (tóm tắt)</div>
+      ${rt(["Hẹp nặng / tiêu chuẩn can thiệp"],[
+        ["<b>Hẹp van ĐMC (AS) nặng</b>","AVA ≤1,0 cm² (AVAi &lt;0,6 cm²/m²), gradient trung bình ≥40 mmHg, Vmax ≥4 m/s. Can thiệp: có triệu chứng; không triệu chứng nhưng LVEF &lt;50%, Vmax &gt;5,5 m/s, nghiệm pháp gắng sức bất thường/hạ HA, BNP tăng nhiều, tăng gradient nhanh; hoặc phẫu thuật tim khác. <b>TAVI:</b> ESC/EACTS 2021 dùng ngưỡng ≥75 tuổi; <b>cập nhật ESC/EACTS 2025 hạ ngưỡng xuống ≥70 tuổi</b> và cho phép cân nhắc can thiệp (TAVR) ở AS nặng không triệu chứng dựa trên EARLY-TAVR (2024); SAVR cho người trẻ hơn/nguy cơ thấp — đội tim quyết định."],
+        ["<b>Hở van ĐMC (AR) mạn nặng</b>","Phẫu thuật nếu có triệu chứng hoặc không triệu chứng với LVEF ≤55% hoặc LVESD &gt;50 mm (hoặc &gt;25 mm/m²); AR cấp (viêm nội tâm mạc, bóc tách): phẫu thuật cấp cứu."],
+        ["<b>Hẹp van 2 lá (MS) thấp khớp nặng</b>","MVA ≤1,5 cm², có triệu chứng: nong van bằng bóng qua da (PMBC) nếu giải phẫu phù hợp; mổ khi không phù hợp. <b>Rung nhĩ/MS: kháng vitamin K (warfarin), không dùng NOAC</b> (INVICTUS: warfarin vượt trội rivaroxaban ở rung nhĩ thấp khớp)."],
+        ["<b>Hở van 2 lá (MR) nguyên phát nặng</b>","Sửa van (ưu tiên) nếu có triệu chứng hoặc LVEF ≤60% / LVESD ≥40 mm / AF mới/PAPs &gt;50; <b>TEER</b> (MitraClip) cho nguy cơ mổ cao. MR thứ phát: tối ưu điều trị suy tim (GDMT); TEER chọn lọc (COAPT)."],
+        ["<b>Hở van 3 lá nặng</b>","Phẫu thuật cùng lúc mổ van tim trái; TEER/thay van 3 lá qua da ở nhóm chọn lọc."]
+      ])}
+      <div class="subhead">Kháng đông van cơ học & phòng ngừa</div>
+      ${rt(["Chi tiết"],[
+        ["<b>INR đích — van cơ học</b>","Van ĐMC (không yếu tố nguy cơ): <b>2,5 (2–3)</b>; ĐMC có yếu tố nguy cơ (AF, EF thấp, huyết khối cũ): <b>3,0</b>; van 2 lá: <b>3,0 (2,5–3,5)</b>. On-X ĐMC: INR 1,5–2,0 sau 3 tháng + aspirin 81 mg."],
+        ["<b>Thai kỳ + van cơ học</b>","Nguy cơ cao: warfarin liều ≤5 mg/ngày (quý 2–3) hoặc LMWH có kiểm soát anti-Xa; chuyển sang heparin gần sinh; tư vấn chuyên khoa tim–sản."],
+        ["<b>Thấp tim — phòng ngừa thứ phát</b>","<b>Benzathine penicillin G 1,2 triệu đơn vị TB mỗi 3–4 tuần</b> (hoặc penicillin V 250 mg × 2/ngày; erythromycin nếu dị ứng) — ≥10 năm sau đợt cuối và đến ≥40 tuổi (thấp tim có viêm tim/ bệnh van: lâu dài đến 40 tuổi hoặc suốt đời)."],
+        ["<b>Dự phòng IE trước thủ thuật răng</b>","Amoxicillin 2 g uống 30–60 phút trước (clindamycin 600 mg/ azithromycin 500 mg nếu dị ứng) — chỉ cho nhóm nguy cơ cao."],
+        ["<b>Theo dõi siêu âm tim</b>","Hẹp/hở nặng không triệu chứng: mỗi 6–12 tháng; trung bình mỗi 1–2 năm; nhẹ mỗi 3–5 năm."]
+      ])}`,
     khuyen_cao:`
 ${rt(["Class"],[
         ["Heart Team quyết định can thiệp van nặng có triệu chứng",'<span class="badge badge-I">I</span>'],
@@ -2414,7 +2485,7 @@ ${rt(["Class"],[
       ])}
     `
   },
-  source:"2025 ESC/EACTS Guidelines for the management of valvular heart disease; 2020 ACC/AHA Guideline for the Management of Patients With Valvular Heart Disease"
+  source:"Cập nhật ESC/EACTS 2025 (ngưỡng TAVI ≥70 tuổi; TAVR cho AS nặng không triệu chứng) — đối chiếu qua tóm tắt công bố; Vahanian A et al. 2021 ESC/EACTS Guidelines for the management of valvular heart disease. Eur Heart J 2022; Otto CM et al. 2020 ACC/AHA Guideline for the Management of Patients With Valvular Heart Disease. Circulation 2021; Connolly SJ et al. INVICTUS, N Engl J Med 2022; Généreux P et al. EARLY TAVR, N Engl J Med 2024; Stone GW et al. COAPT, N Engl J Med 2018"
 },
 {
   spec:"tim_mach", id:"ie", emoji:"🦠", short:"VNTM", title:"Viêm nội tâm mạc nhiễm khuẩn",
@@ -2560,7 +2631,13 @@ ${rt(["Chi tiết"],[
         <li>Masage xoang cảnh ở người &gt;40 tuổi.</li>
         <li>Holter / ILR khi nghi loạn nhịp và nguy cơ trung bình–cao.</li>
       </ul>
-      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('qtc')">🧮 Tính QTc</button><button type="button" class="score-link-btn" onclick="goSmartScale('csrs')">🧮 Canadian Syncope</button></div>`,
+      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('qtc')">🧮 Tính QTc</button><button type="button" class="score-link-btn" onclick="goSmartScale('csrs')">🧮 Canadian Syncope</button></div>
+      <div class="subhead">Test nghiêng bàn (tilt) & theo dõi nhịp</div>
+      <ul>
+        <li><b>Test nghiêng bàn 60–70°</b> 20–45 phút (± nitroglycerin 400 µg ngậm dưới lưỡi) khi nghi ngất phản xạ/hạ HA tư thế/POTS; đáp ứng: hỗn hợp, ức chế tim, hạ HA mạch.</li>
+        <li><b>Theo dõi nhịp kéo dài:</b> Holter 24–72 giờ, vòng đeo (event recorder), <b>máy ghi nhịp cấy dưới da (ILR)</b> cho ngất tái phát không giải thích, nghi loạn nhịp.</li>
+        <li>Hạ HA tư thế: giảm SBP ≥20 hoặc DBP ≥10 mmHg trong 3 phút đứng; điều trị: bù dịch/muối, vớ ép, midodrine 2,5–10 mg × 3/ngày, fludrocortisone 0,1–0,2 mg/ngày, hạn chế thuốc hạ áp/lợi tiểu.</li>
+      </ul>`,
     dieu_tri:`
       <div class="subhead">Ngất phản xạ / hạ HA tư thế</div>
       <ul>
@@ -2725,7 +2802,17 @@ ${rt(["Class"],[
         ["<b>GLP-1</b> làm chậm rỗng dạ dày","Ảnh hưởng hấp thu thuốc uống một số loại"],
         ["Orlistat","Giảm hấp thu vitamin tan trong mỡ / thuốc"]
       ])}
-    `,
+    
+      <div class="subhead">Bảng thuốc điều trị béo phì (lâu dài, kết hợp lối sống)</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Semaglutide 2,4 mg</b> (TDD mỗi tuần)","0,25 mg × 4 tuần → 0,5 → 1 → 1,7 → 2,4 mg mỗi 4 tuần","Giảm ~15% cân nặng (STEP); giảm MACE ở người béo phì đã có bệnh tim mạch (SELECT); STEP 9: OA gối"],
+        ["<b>Tirzepatide</b> (TDD mỗi tuần)","2,5 mg × 4 tuần → +2,5 mg mỗi 4 tuần, tối đa 15 mg","Giảm ~20% cân nặng (SURMOUNT-1); chỉ định OSA nặng kèm béo phì"],
+        ["<b>Liraglutide 3 mg</b> (TDD mỗi ngày)","0,6 mg → tăng 0,6 mg/tuần đến 3 mg","Giảm ~8%"],
+        ["<b>Naltrexone/Bupropion</b> ER","8/90 mg × 1 → 2 viên × 2/ngày (4 tuần)","Thận trọng THA, co giật, thuốc opioid"],
+        ["<b>Phentermine/Topiramate</b> ER","3,75/23 mg → 7,5/46 → 15/92 mg/ngày","Chống chỉ định có thai; tăng nhịp tim"],
+        ["<b>Orlistat</b>","120 mg × 3/ngày cùng bữa ăn","Phân mỡ; bổ sung vitamin tan trong dầu"]
+      ])}
+      <div class="alert-box alert-info"><b>Ngưỡng điều trị:</b> BMI ≥30 (hoặc ≥27 kèm biến chứng); với người châu Á dùng ngưỡng thấp hơn (BMI ≥25 là béo phì theo WHO/WPRO; ≥23 thừa cân). Chống chỉ định GLP-1 RA/tirzepatide: tiền sử ung thư tuyến giáp thể tủy/MEN2, viêm tụy cấp tiền sử; tác dụng phụ buồn nôn, táo bón, sỏi mật; giảm cơ nạc — đảm bảo đạm và tập kháng lực. Phẫu thuật bariatric khi BMI ≥35 (≥32,5 châu Á kèm bệnh đồng mắc) hoặc thất bại điều trị nội.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Can thiệp lối sống toàn diện là nền tảng cho mọi bệnh nhân béo phì",'<span class="badge badge-I">I</span>'],
@@ -3226,7 +3313,7 @@ ${rt(["Chi tiết"],[
 },
 {
   spec:"ho_hap", id:"pleural", emoji:"💧", short:"TDMP", title:"Tràn dịch màng phổi",
-  guidelines:["BTS 2023 Pleural Disease"],
+  guidelines:["BTS Pleural Disease 2023","ERS/ESTS 2023","ATS/STS/STR Malignant Effusion 2018"],
   sections:{
     dinh_nghia:`
       <p>Tràn dịch màng phổi là sự tích tụ dịch bất thường trong khoang màng phổi. Phân loại chính:</p>
@@ -3242,6 +3329,17 @@ ${rt(["Chi tiết"],[
         <li>Light’s criteria: dịch tiết nếu protein dịch/huyết thanh &gt;0.5 hoặc LDH dịch/huyết thanh &gt;0.6 hoặc LDH dịch &gt;2/3 giới hạn trên bình thường huyết thanh.</li>
         <li>CT ngực khi nghi ác tính hoặc biến chứng.</li>
       </ul>
+      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('light')">🧮 Light</button><button type="button" class="score-link-btn" onclick="goSmartScale('rapid')">🧮 RAPID</button></div>
+      <div class="subhead">Phân tích dịch màng phổi</div>
+      ${rt(["Ý nghĩa"],[
+        ["<b>Tiêu chuẩn Light</b> (dịch tiết nếu ≥1)","Protein dịch/huyết thanh &gt;0,5; LDH dịch/huyết thanh &gt;0,6; LDH dịch &gt;2/3 giới hạn trên bình thường của huyết thanh. Dịch thấm điều trị lợi tiểu có thể bị xếp nhầm tiết → dùng gradient albumin huyết thanh–dịch &gt;1,2 g/dL hoặc NT-proBNP dịch &gt;1500 pg/mL (suy tim)."],
+        ["<b>pH &lt;7,2; glucose &lt;60 mg/dL (3,4 mmol/L)</b>","Mủ màng phổi/parapneumonic phức tạp, ác tính, lao, viêm khớp dạng thấp; xem mục «Áp xe phổi & Mủ màng phổi» để dẫn lưu và tiêu sợi huyết."],
+        ["<b>ADA &gt;40 U/L, lympho chiếm ưu thế</b>","Gợi ý lao màng phổi (rất cần thiết ở Việt Nam); xác nhận bằng sinh thiết màng phổi (mô học u hạt/cấy/Xpert); đờm AFB/Xpert."],
+        ["<b>Tế bào học</b>","Độ nhạy ~60% lần đầu; ~70% lần 2–3; âm tính → nội soi màng phổi (thoracoscopy) hoặc sinh thiết màng phổi dưới hướng dẫn hình ảnh."],
+        ["<b>Triglycerid &gt;110 mg/dL</b>","Tràn dưỡng chấp: tổn thương ống ngực/lymphoma."],
+        ["<b>Hematocrit dịch &gt;50% máu</b>","Tràn máu màng phổi: chấn thương, ung thư, PE; đặt dẫn lưu."],
+        ["<b>Amylase dịch cao</b>","Viêm tụy/vỡ thực quản (pH &lt;7,2, dịch hôi)."]
+      ])}
       <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('light')">🧮 Light</button><button type="button" class="score-link-btn" onclick="goSmartScale('rapid')">🧮 RAPID</button></div>`,
     dieu_tri:`
 ${rt(["Xử trí"],[
@@ -3258,7 +3356,22 @@ ${rt(["Xử trí"],[
         ["<b>Furosemide</b>","20–40 mg","Tràn dịch do suy tim"],
         ["Giảm đau","Paracetamol / opioid ngắn","Sau dẫn lưu"]
       ])}
-    `,
+    
+      <div class="subhead">Xử trí theo nguyên nhân</div>
+      ${rt(["Xử trí","Ghi chú"],[
+        ["<b>Suy tim</b>","Lợi tiểu (furosemide 40–80 mg TM → uống), tối ưu thuốc suy tim; chọc tháo nếu khó thở nặng.","Không dẫn lưu thường quy"],
+        ["<b>Tràn dịch do xơ gan (hydrothorax)</b>","Hạn chế muối &lt;2 g/ngày, spironolactone 100–400 mg + furosemide 40–160 mg; chọc tháo; TIPS/ghép gan; tránh ống dẫn lưu","Nhiễm khuẩn dịch màng phổi tự phát: cấy + ceftriaxone"],
+        ["<b>Hội chứng thận hư</b>","Điều trị nguyên nhân; lợi tiểu","Tìm PE nếu thấm"],
+        ["<b>Ác tính</b>","Chọc tháo giảm triệu chứng (≤1–1,5 L/lần). Tái phát: <b>catheter màng phổi lưu (IPC)</b> hoặc <b>gây dính bằng talc</b> (bột talc 4–5 g qua nội soi/slurry); IPC khi phổi bị nhốt; hóa trị/liệu pháp đích theo nguyên nhân","ATS/STS/STR 2018: gây dính khi phổi nở lại; không dùng PRP/xạ trị thường quy"],
+        ["<b>Lao màng phổi</b>","RHZE 2 tháng + RH 4 tháng (6 tháng), hiệu chỉnh theo kháng thuốc; dẫn lưu khi lượng nhiều/triệu chứng","Corticoid không thường quy; theo dõi tái dày dính màng phổi"],
+        ["<b>PE, bệnh tự miễn (RA, SLE), thuốc, viêm tụy</b>","Điều trị nguyên nhân (kháng đông, corticoid/DMARD, ngừng thuốc…)","—"],
+        ["<b>Tràn máu màng phổi</b>","Dẫn lưu lớn (24–28 Fr) + hồi sức; phẫu thuật nếu chảy &gt;1500 mL ban đầu hoặc &gt;200 mL/giờ","Tìm nguyên nhân (chấn thương, ung thư, PE hoại tử)"]
+      ])}
+      <ul>
+        <li><b>Chọc dịch dưới siêu âm</b> (giảm tràn khí, chảy máu); tối đa 1–1,5 L/lần, dừng khi ho/đau ngực (phù phổi tái nở).</li>
+        <li><b>Tràn dịch lượng ít/không rõ nguyên nhân:</b> theo dõi hoặc nội soi màng phổi khi nghi ác tính/lao.</li>
+        <li>Parapneumonic/mủ: <b>dẫn lưu ống nhỏ ≤14 Fr + kháng sinh + tPA/DNase</b> (xem mục Áp xe phổi & Mủ màng phổi).</li>
+      </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Siêu âm hướng dẫn cho mọi thủ thuật màng phổi",'<span class="badge badge-I">I</span>'],
@@ -3267,7 +3380,7 @@ ${rt(["Xử trí"],[
         ["Chọc hút mù không siêu âm hướng dẫn",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"BTS Guideline for pleural disease 2023; BTS Clinical Statement on Pleural Procedures"
+  source:"Roberts ME et al. BTS Pleural Disease Guideline 2023. Thorax 2023; Feller-Kopman DJ et al. ATS/STS/STR Management of Malignant Pleural Effusions 2018; Bedawi EO et al. ERS/ESTS 2023; Light RW. Pleural Diseases; Saguil A et al. Diagnostic approach to pleural effusion (Am Fam Physician 2014)"
 },
 {
   spec:"noi_tiet", id:"hypoglycemia", emoji:"📉", short:"Hạ ĐH", title:"Hạ đường huyết",
@@ -4706,33 +4819,58 @@ ${rt(["Class"],[
 },
 {
   spec:"co_xuong_khop", id:"oa", emoji:"🦴", short:"THK", title:"Thoái hóa khớp",
-  guidelines:["ACR/AF 2019 + cập nhật 2024","OARSI 2019"],
+  guidelines:["ACR/AF 2019","OARSI 2019","EULAR 2023 (OA tay)","ESCEO 2019"],
   sections:{
     dinh_nghia:`
-      <p>Thoái hóa khớp (OA) là bệnh khớp thoái hóa mạn tính phổ biến nhất, đặc trưng bởi mất sụn khớp, xơ xương dưới sụn, tạo gai xương, thường gặp ở khớp gối, háng, bàn tay, cột sống.</p>`,
+      <p>Thoái hóa khớp (OA) là bệnh của <b>toàn bộ khớp</b>: mất sụn khớp, tái tạo xương dưới sụn, gai xương, viêm màng hoạt dịch nhẹ, yếu cơ quanh khớp. Thường gặp ở gối, háng, bàn tay (DIP, PIP, CMC1), cột sống; là nguyên nhân hàng đầu gây tàn tật ở người lớn tuổi.</p>
+      <p><b>Yếu tố nguy cơ:</b> tuổi, nữ, béo phì (quan trọng nhất có thể thay đổi), chấn thương/tổn thương sụn chêm–dây chằng, lệch trục, nghề nghiệp, di truyền, hội chứng chuyển hóa/ĐTĐ.</p>`,
     chan_doan:`
-      <p>Chẩn đoán chủ yếu <b>dựa lâm sàng</b>: đau khớp cơ học (tăng khi vận động/chịu lực, giảm khi nghỉ), cứng khớp buổi sáng &lt;30 phút, tuổi thường &gt;45. X-quang hỗ trợ xác nhận (hẹp khe khớp, gai xương, xơ xương dưới sụn) nhưng <b>mức độ tổn thương X-quang không nhất thiết tương xứng mức độ đau</b> — không cần chụp X-quang thường quy nếu lâm sàng đã điển hình.</p>`,
-    dieu_tri:`
-<p>Nền tảng không phải thuốc: <b>giảm cân</b> (nếu thừa cân), tập tăng sức cơ quanh khớp, vật lý trị liệu, dụng cụ hỗ trợ khi cần.</p>
       <ul>
-        <li>Thuốc: <b>NSAID</b> <b>bôi tại chỗ</b> trước; <b>NSAID</b> uống khi cần, đủ liều ngắn ngày — thận trọng dạ dày, thận, tim.</li>
-        <li>Paracetamol ít hiệu quả hơn kỳ vọng ở nhiều BN thoái hóa khớp.</li>
-        <li>Tiêm corticosteroid nội khớp: giảm đau ngắn hạn khi đợt viêm; không tiêm lặp lại quá dày.</li>
-        <li>Tránh opioid dài hạn thường quy.</li>
-        <li>Thay khớp khi đau nặng, mất chức năng dù đã điều trị bảo tồn tối ưu.</li>
+        <li><b>Chẩn đoán lâm sàng</b> ở người &gt;45 tuổi: đau cơ học (tăng khi vận động, giảm nghỉ), cứng khớp buổi sáng &lt;30 phút, lục cục/lạo xạo, hạn chế vận động, to xương; không cần X-quang để chẩn đoán gối nếu điển hình (NICE).</li>
+        <li><b>X-quang thường quy (đứng):</b> hẹp khe khớp, gai xương, xơ xương dưới sụn, nang dưới sụn; phân độ Kellgren–Lawrence 0–4. MRI/siêu âm khi nghi tổn thương sụn chêm, hoại tử vô khuẩn, chẩn đoán phân biệt.</li>
+        <li><b>Xét nghiệm:</b> không đặc hiệu; ESR/CRP bình thường hoặc tăng nhẹ. Dịch khớp &lt;2000 BC/mm³ không đặc hiệu; <b>soi dịch khớp tìm tinh thể</b> (gút, giả gút/CPPD) và loại trừ viêm khớp nhiễm khuẩn khi có sưng nóng.</li>
+        <li><b>Phân biệt:</b> viêm khớp dạng thấp (cứng khớp &gt;1 giờ, viêm đối xứng nhiều khớp nhỏ), gút/giả gút, viêm khớp vẩy nến, hoại tử vô khuẩn chỏm xương đùi, đau lan từ cột sống thắt lưng, viêm gân/bao hoạt dịch quanh gối–háng.</li>
+        <li><b>OA bàn tay:</b> nốt Heberden (DIP), Bouchard (PIP), CMC1 («vai vuông»); haemochromatosis nếu OA MCP 2–3 + tuổi trẻ.</li>
       </ul>
-    `,
+      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('bmi_bsa')">🧮 BMI</button></div>`,
+    dieu_tri:`
+      <div class="subhead">1. Nền tảng không thuốc (cho mọi bệnh nhân)</div>
+      <ul>
+        <li><b>Tập thể dục</b> (tăng sức mạnh cơ tứ đầu/mông, aerobic, thủy trị liệu, thái cực quyền/yoga) — khuyến cáo mạnh nhất; mục tiêu cụ thể (số bước, phút đi bộ).</li>
+        <li><b>Giảm cân</b> ≥5–10% nếu thừa cân/béo phì (mỗi 1 kg giảm làm giảm ~4 kg tải trọng gối); chương trình tự quản lý bệnh, dụng cụ hỗ trợ (gậy cầm bên đối diện), nẹp gối, giày phù hợp.</li>
+        <li>Điều trị nhiệt/lạnh tại chỗ, vật lý trị liệu, giáo dục bệnh nhân.</li>
+      </ul>
+      <div class="subhead">2. Thuốc (theo ACR/AF 2019, ESCEO/OARSI)</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>NSAID bôi</b> (Diclofenac gel 1%) — khuyến cáo mạnh","4 g (gối) bôi 4 lần/ngày, tối đa 32 g/ngày tổng; có thể kem/miếng dán","<b>Đầu tay cho OA gối</b> (và bàn tay), đặc biệt người cao tuổi; ít tác dụng phụ toàn thân"],
+        ["<b>NSAID uống</b>","Naproxen 250–500 mg × 2/ngày; Ibuprofen 400–600 mg × 3/ngày; Celecoxib 100–200 mg/ngày; Meloxicam 7,5–15 mg/ngày","Liều thấp nhất, thời gian ngắn nhất; kèm PPI khi nguy cơ GI; thận trọng tim mạch/thận/xuất huyết"],
+        ["<b>Paracetamol</b>","≤3 g/ngày","Chỉ khuyến cáo có điều kiện (hiệu quả khiêm tốn); dùng ngắn hạn khi NSAID chống chỉ định"],
+        ["<b>Duloxetine</b>","30 mg/ngày × 1 tuần → 60 mg/ngày","Khuyến cáo có điều kiện (ACR 2019); OA gối kèm đau trung ương/dai dẳng"],
+        ["<b>Capsaicin bôi</b>","0,025–0,075% × 3–4 lần/ngày","Có điều kiện cho OA gối"],
+        ["<b>Tiêm corticoid nội khớp</b> — khuyến cáo mạnh cho gối và háng (ACR 2019)","Triamcinolone acetonide 40 mg (gối) hoặc dạng giải phóng chậm 32 mg","Giảm đau ngắn hạn khi đợt đau/viêm tràn dịch; cách nhau ≥3 tháng; có thể tăng mất sụn nếu tiêm lặp lại"],
+        ["<b>Tramadol</b>","50 mg mỗi 6–8 giờ (tối đa 400 mg/ngày)","Có điều kiện, ngắn hạn khi NSAID chống chỉ định; <b>tránh opioid mạnh</b>"],
+        ["<b>Hyaluronic acid nội khớp</b>","—","ACR 2019: gối và bàn tay — có điều kiện không khuyến cáo; háng — mạnh không khuyến cáo"],
+        ["<b>Glucosamine, chondroitin (gối/háng), PRP, tế bào gốc, bisphosphonate, hydroxychloroquine, methotrexate, thuốc sinh học</b>","—","<b>Khuyến cáo mạnh KHÔNG dùng</b> (ACR 2019); TENS cũng mạnh không khuyến cáo ở gối/háng"]
+      ])}
+      <div class="subhead">3. Can thiệp & xu hướng mới</div>
+      <ul>
+        <li><b>Thay khớp</b> (gối/háng) khi đau nặng, mất chức năng, X-quang nặng dù điều trị bảo tồn tối ưu ≥3–6 tháng; cắt xương chỉnh trục ở bệnh nhân trẻ lệch trục; nội soi rửa khớp/cắt sụn chêm không có lợi trong OA thoái hóa đơn thuần.</li>
+        <li><b>Giảm cân bằng GLP-1 RA/tirzepatide</b> ở béo phì có OA gối (semaglutide, thử nghiệm STEP 9, NEJM 2024: giảm đau và cải thiện chức năng) — xu hướng mới, cần đánh giá lợi ích–nguy cơ.</li>
+        <li><b>OA bàn tay (EULAR 2023):</b> NSAID bôi đầu tay; NSAID uống ngắn hạn; nẹp ngón cái CMC1; thủ thuật khác theo triệu chứng. Corticoid uống ngắn ngày ở OA bàn tay viêm là lựa chọn có điều kiện.</li>
+        <li><b>Hạn chế:</b> TENS không khuyến cáo (ACR 2019); thuốc điều chỉnh bệnh (DMOAD) chưa được chấp thuận.</li>
+      </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
-        ["Tập thể dục và giảm cân là điều trị nền tảng, ưu tiên hàng đầu",'<span class="badge badge-I">I</span>'],
-        ["<b>NSAID</b> bôi tại chỗ ưu tiên hơn uống, đặc biệt người cao tuổi",'<span class="badge badge-I">I</span>'],
-        ["Tiêm corticosteroid nội khớp giảm đau ngắn hạn",'<span class="badge badge-IIa">IIa</span>'],
-        ["Glucosamine/chondroitin",'<span class="badge badge-III">III</span>'],
-        ["Tiêm huyết tương giàu tiểu cầu (PRP) thường quy",'<span class="badge badge-III">III</span>'],
-        ["Opioid thường quy cho OA mạn tính",'<span class="badge badge-III">III</span>']
+        ["Tập thể dục và giảm cân (nếu thừa cân) là điều trị nền tảng hàng đầu",'<span class="badge badge-I">I</span>'],
+        ["NSAID bôi ưu tiên hơn uống ở OA gối, đặc biệt người cao tuổi",'<span class="badge badge-I">I</span>'],
+        ["NSAID uống liều thấp ngắn hạn khi cần, kèm bảo vệ dạ dày/theo dõi thận–tim mạch",'<span class="badge badge-I">I</span>'],
+        ["Tiêm corticoid nội khớp (gối, háng) — khuyến cáo mạnh, giảm đau ngắn hạn",'<span class="badge badge-I">I</span>'],
+        ["Duloxetine, tramadol, paracetamol, capsaicin bôi (gối) — khuyến cáo có điều kiện",'<span class="badge badge-IIb">IIb</span>'],
+        ["Glucosamine, chondroitin, PRP, tế bào gốc, bisphosphonate (mạnh không khuyến cáo)",'<span class="badge badge-III">III</span>'],
+        ["Opioid mạnh/thường quy cho OA mạn tính",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"2019 ACR/Arthritis Foundation Guideline for OA Management (Hand, Hip, Knee) + 2024 focused update; OARSI 2019 Guidelines"
+  source:"Kolasinski SL et al. 2019 ACR/Arthritis Foundation Guideline for the Management of Osteoarthritis of the Hand, Hip, and Knee. Arthritis Rheumatol 2020; Bannuru RR et al. OARSI Guidelines 2019, Osteoarthritis Cartilage; Kloppenburg M et al. EULAR 2018 update hand OA, Ann Rheum Dis 2019; Bliddal H et al. STEP 9, N Engl J Med 2024"
 },
 {
   spec:"co_xuong_khop", id:"osteoporosis", emoji:"🦴", short:"Loãng xương", title:"Loãng xương",
@@ -4954,7 +5092,19 @@ ${rt(["Class"],[
         ["<b>Ciprofloxacin</b>","500 mg ×2 × 7 ngày","Bể thận — hạn chế lạm dụng"],
         ["<b>Ceftriaxone</b>","1–2 g IV/ngày","Nặng / không uống được"]
       ])}
-    `,
+    
+      <div class="subhead">Bảng kháng sinh bổ sung (IDSA/EAU)</div>
+      ${rt(["Liều","Thời gian / ghi chú"],[
+        ["<b>Viêm bàng quang không biến chứng — Nitrofurantoin</b>","100 mg × 2/ngày","5 ngày; tránh khi eGFR &lt;30 hoặc nghi viêm đài bể thận"],
+        ["<b>Fosfomycin trometamol</b>","3 g uống 1 liều","Liều đơn; có tác dụng với ESBL"],
+        ["<b>Pivmecillinam</b> (nơi có)","400 mg × 3/ngày","3–5 ngày"],
+        ["<b>TMP–SMX</b>","160/800 mg × 2/ngày","3 ngày nếu kháng &lt;20% tại địa phương"],
+        ["<b>Viêm đài bể thận không biến chứng</b>: Ciprofloxacin / Levofloxacin","Cipro 500 mg × 2/ngày × 7 ngày; Levofloxacin 750 mg/ngày × 5 ngày","Nếu kháng FQ &lt;10%; nhập viện: Ceftriaxone 1–2 g TM/ngày"],
+        ["<b>UTI biến chứng/nhiễm khuẩn huyết niệu</b>","Ceftriaxone 1–2 g/ngày; Pip-tazo 4,5 g mỗi 6–8 giờ; Cefepime 2 g mỗi 8–12 giờ","7 ngày nếu hết sốt/đáp ứng nhanh (14 ngày nếu chậm); dẫn lưu/giải áp tắc nghẽn"],
+        ["<b>ESBL</b>","Ertapenem 1 g/ngày; Meropenem 1 g mỗi 8 giờ; nhẹ: fosfomycin, nitrofurantoin (bàng quang)","Carbapenem là đầu tay cho UTI biến chứng ESBL"],
+        ["<b>Mang thai</b>","Cefalexin 500 mg × 4/ngày; amoxicillin–clavulanate; nitrofurantoin quý 2","Điều trị cả vi khuẩn niệu không triệu chứng khi mang thai; tránh FQ/TMP quý 1"],
+        ["<b>Bacteriuria không triệu chứng</b>","Không điều trị (trừ mang thai, trước thủ thuật niệu)","Không cấy nước tiểu thường quy ở người cao tuổi"]
+      ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Nitrofurantoin hoặc fosfomycin là kháng sinh đầu tay cho viêm bàng quang không biến chứng",'<span class="badge badge-I">I</span>'],
@@ -5011,7 +5161,7 @@ ${rt(["Chi tiết"],[
 },
 {
   spec:"than", id:"kidney_stone", emoji:"🪨", short:"Sỏi thận", title:"Sỏi tiết niệu",
-  guidelines:["AUA/Endourological Society 2024","EAU 2023"],
+  guidelines:["AUA/Endourological Society 2024","EAU 2024","KDIGO CKD stones"],
   sections:{
     dinh_nghia:`
       <p>Sỏi tiết niệu hình thành do kết tinh các chất hòa tan trong nước tiểu (chủ yếu canxi oxalat &gt;80%, còn lại acid uric, struvite/sỏi nhiễm trùng, cystine hiếm gặp), gây tắc nghẽn và đau quặn thận khi di chuyển qua niệu quản.</p>`,
@@ -5040,7 +5190,32 @@ ${rt(["Chi tiết"],[
         ["Tamsulosin","0.4 mg/ngày","Sỏi niệu quản chọn lọc"],
         ["Potassium citrate","Theo pH nước tiểu","Sỏi uric / hypocitraturia"]
       ])}
-    `,
+    
+      <div class="subhead">Chọn can thiệp theo kích thước/vị trí</div>
+      ${rt(["Xử trí"],[
+        ["<b>Sỏi niệu quản ≤10 mm, không biến chứng</b>","Điều trị tống sỏi nội khoa (MET): tamsulosin 0,4 mg/ngày tối đa 4 tuần — lợi ích cho sỏi niệu quản xa &gt;5 mm (thử nghiệm SUSPEND nghi ngờ); NSAID; tái đánh giá 2–4 tuần."],
+        ["<b>Sỏi niệu quản &gt;10 mm hoặc không tự đẩy</b>","Nội soi tán sỏi niệu quản (URS laser Holmium) ưu tiên; hoặc ESWL (sỏi niệu quản gần &lt;10 mm)."],
+        ["<b>Sỏi thận ≤10 mm</b>","Theo dõi (nếu không triệu chứng), ESWL hoặc nội soi mềm (RIRS)."],
+        ["<b>Sỏi thận 10–20 mm</b>","ESWL hoặc RIRS; sỏi cực dưới &gt;10 mm: RIRS/PCNL thành công cao hơn ESWL."],
+        ["<b>Sỏi thận &gt;20 mm, sỏi san hô, sỏi struvite</b>","<b>Tán sỏi qua da (PCNL)</b>; kháng sinh theo cấy; loại hoàn toàn."],
+        ["<b>Tắc nghẽn + nhiễm khuẩn (sốt, tăng BC, suy thận)</b>","<b>CẤP CỨU: giải áp ngay</b> (stent niệu quản JJ hoặc mở thận qua da) + kháng sinh (ceftriaxone 1–2 g TM, hoặc pip-tazo/carbapenem nếu nặng); trì hoãn tán sỏi đến khi hết nhiễm khuẩn."],
+        ["<b>Thai kỳ</b>","Siêu âm; bảo tồn (giảm đau paracetamol, dịch); stent/mở thận ra da khi biến chứng; URS an toàn ở quý 2."]
+      ])}
+      <div class="subhead">Phòng ngừa tái phát (24 giờ nước tiểu ở nhóm nguy cơ cao)</div>
+      ${rt(["Biện pháp / thuốc"],[
+        ["<b>Mọi loại sỏi</b>","Uống đủ nước để <b>nước tiểu ≥2,5 L/ngày</b>; natri &lt;2,3 g/ngày (muối &lt;6 g), đạm động vật vừa phải (0,8–1 g/kg), calci ăn vào bình thường 1000–1200 mg/ngày (không hạn chế calci), giảm nước ngọt/fructose; tránh vitamin C liều cao (≥1 g/ngày), kiểm soát cân nặng."],
+        ["<b>Calci oxalat + tăng calci niệu</b>","Thiazide: chlorthalidone 25–50 mg/ngày hoặc hydrochlorothiazide 25–50 mg/ngày (có thể kèm kali citrat)."],
+        ["<b>Giảm citrat niệu</b>","<b>Kali citrat</b> 30–60 mEq/ngày chia 2–3 lần (mục tiêu pH nước tiểu 6,0–7,0, citrat &gt;320 mg/ngày)."],
+        ["<b>Tăng oxalat niệu</b>","Chế độ ít oxalat + calci kèm bữa ăn; tăng nước; thêm cholestyramine nếu hấp thu oxalat tăng."],
+        ["<b>Sỏi acid uric (X-quang không cản quang)</b>","<b>Kiềm hóa</b> bằng kali citrat đến pH 6,0–6,5; allopurinol 100–300 mg/ngày nếu tăng acid uric niệu; có thể hòa tan được."],
+        ["<b>Sỏi cystine</b>","Uống rất nhiều nước (≥3 L), kiềm hóa pH &gt;7,0, tiopronin 100 mg × 3/ngày (hoặc penicillamine); hạn chế natri/đạm."],
+        ["<b>Sỏi struvite (nhiễm khuẩn)</b>","Loại sạch sỏi, kháng sinh theo kháng sinh đồ, điều trị UTI tái phát, acetohydroxamic acid (cân nhắc)."]
+      ])}
+      <ul>
+        <li><b>Giảm đau:</b> NSAID (ibuprofen 400–600 mg hoặc ketorolac 30 mg TM) ưu tiên; opioid ngắn hạn khi không dung nạp; antiemetic.</li>
+        <li><b>Theo dõi:</b> chức năng thận, chẩn đoán hình ảnh 6–12 tháng, kiểm tra tăng cường: tăng calci niệu → loại trừ cường cận giáp (PTH, calci máu); toan hóa ống thận týp 1.</li>
+        <li><b>Nhóm nguy cơ cao tái phát:</b> sỏi trẻ tuổi, tiền sử gia đình, sỏi 2 bên/thận độc nhất, bệnh ruột/phẫu thuật bariatric, CKD, nhiễm khuẩn tái phát.</li>
+      </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["CT bụng không cản quang là tiêu chuẩn chẩn đoán hình ảnh học",'<span class="badge badge-I">I</span>'],
@@ -5051,7 +5226,7 @@ ${rt(["Chi tiết"],[
         ["Tán sỏi khi đang có nhiễm trùng đường niệu chưa kiểm soát",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"AUA/Endourological Society Guideline on Surgical Management of Stones 2024; EAU Guidelines on Urolithiasis 2023"
+  source:"Assimos D et al. AUA/Endourological Society Surgical Management of Stones 2016 (cập nhật); Pearle MS et al. AUA Medical Management of Kidney Stones 2014, update 2019–2024; Skolarikos A et al. EAU Guidelines on Urolithiasis 2024; Meltzer AC et al. SUSPEND/STONE trials"
 },
 {
   spec:"than", id:"gn", emoji:"🔬", short:"BCT", title:"Bệnh cầu thận",
@@ -5220,40 +5395,80 @@ ${rt(["Chi tiết"],[
 },
 {
   spec:"tim_mach", id:"acls", emoji:"⚡", short:"Ngừng TH", title:"Ngừng tuần hoàn & ACLS (tóm tắt)",
-  guidelines:["AHA ACLS 2025","ERC 2021"],
+  guidelines:["AHA 2025","ERC/ESICM 2025","ILCOR 2025"],
   sections:{
     dinh_nghia:`
-      <p>Ngừng tuần hoàn: mất mạch trung tâm, ngừng thở hoặc thở agonal. Mục tiêu: ép ngực chất lượng, khử rung sớm khi nhịp sốc được, tìm nguyên nhân đảo ngược (Hs & Ts).</p>`,
+      <p>Ngừng tuần hoàn: mất ý thức, không có mạch trung tâm, ngừng thở hoặc thở agonal. Kết cục phụ thuộc <b>chuỗi sống còn</b> (nhận biết sớm → CPR chất lượng → khử rung sớm → ACLS → chăm sóc sau ngừng tim → phục hồi). Hướng dẫn AHA 2025 đơn giản hóa thành hai chuỗi (ngoài viện/trong viện).</p>
+      ${rt(["Nhịp / xử trí chính"],[
+        ["<b>Nhịp sốc được</b>","Rung thất (VF) / nhịp nhanh thất vô mạch (pVT): khử rung sớm + CPR."],
+        ["<b>Nhịp không sốc được</b>","Vô tâm thu / hoạt động điện vô mạch (PEA): CPR + epinephrine sớm + tìm nguyên nhân (Hs &amp; Ts)."]
+      ])}`,
     chan_doan:`
-      <p>Kiểm tra đáp ứng + thở ≤10 giây; gọi hỗ trợ; bắt đầu CPR. Nhịp sốc được: VF/pVT. Nhịp không sốc: asystole/PEA. Monitor, đường thở, IV/IO, SpO₂/EtCO₂.</p>`,
+      <ul>
+        <li>Kiểm tra đáp ứng và thở/mạch <b>≤10 giây</b>; kích hoạt đội cấp cứu, lấy máy sốc (AED/defibrillator).</li>
+        <li>Gắn monitor: xác định nhịp (sốc được hay không), SpO₂, <b>EtCO₂ dạng sóng</b> (chất lượng CPR, phát hiện ROSC; EtCO₂ &lt;10 mmHg sau 20 phút CPR là yếu tố tiên lượng xấu nhưng không dùng riêng để ngừng hồi sức).</li>
+        <li>Siêu âm tại giường (POCUS) trong khoảng đánh giá nhịp (&lt;10 giây): tràn dịch màng tim, thất phải giãn (PE), tràn khí màng phổi, thể tích — <b>không làm gián đoạn ép ngực</b>.</li>
+        <li>Khí máu/điện giải nhanh khi có thể: K⁺, Ca²⁺, pH, glucose, Hb, lactate.</li>
+      </ul>
+      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('abg')">🧪 Khí máu</button><button type="button" class="score-link-btn" onclick="goSmartScale('ca_corr')">🧮 Ca hiệu chỉnh</button></div>`,
     dieu_tri:`
-<div class="subhead">Chuỗi sống còn</div>
+      <div class="subhead">1. Thuật toán ngừng tuần hoàn người lớn</div>
       ${rt(["Xử trí"],[
-        ["VF / pVT","CPR chất lượng → sốc → CPR 2 phút → <b>epinephrine</b> 1 mg q3–5 phút; <b>amiodarone</b> 300→150 mg"],
-        ["Asystole / PEA","CPR + <b>epinephrine</b>; tìm H’s & T’s; không sốc"],
-        ["Đường thở","Bag-mask → advanced khi thành thạo; EtCO₂ theo dõi chất lượng CPR"],
-        ["Sau ROSC","ABC, SpO₂ 94–98%, huyết áp đích, 12-lead, nhiệt độ, PCI nếu nghi vành"],
-        ["Thuốc","Không trì hoãn sốc vì thuốc; IV/IO sớm"]
+        ["<b>CPR chất lượng cao</b>","Ép ngực <b>100–120 lần/phút</b>, sâu <b>5–6 cm</b>, để lồng ngực nảy lên hoàn toàn, giảm gián đoạn (&lt;10 giây), đổi người ép mỗi 2 phút; tỷ lệ 30:2 (chưa có đường thở nâng cao) hoặc thông khí mỗi 6 giây không ngừng ép khi đã đặt đường thở nâng cao; tránh tăng thông khí."],
+        ["<b>VF / pVT</b>","Sốc điện <b>1 cú</b> (ưu tiên sóng biphasic, năng lượng theo nhà sản xuất hoặc tối đa nếu không biết; chiến lược 1 cú thay vì sốc chồng) → tiếp tục CPR ngay 2 phút → kiểm tra nhịp. <b>Epinephrine</b> cho nhịp sốc được: sau khi các cú sốc đầu tiên không thành công (AHA 2025, 2a); amiodarone hoặc lidocaine <b>có thể cân nhắc</b> (2b). Đổi vector/sốc kép tuần tự: chưa xác lập lợi ích (2b)."],
+        ["<b>Vô tâm thu / PEA</b>","CPR + <b>epinephrine càng sớm càng tốt</b> (2a); kiểm tra nhịp mỗi 2 phút; tìm và xử trí nguyên nhân đảo ngược."],
+        ["<b>Đường tiếp cận</b>","Thử IV trước (class 1); IO hợp lý nếu IV thất bại/không khả thi (2a); đường thở nâng cao khi không làm gián đoạn CPR, sau đó 1 nhịp thở mỗi 6 giây (2b). EtCO₂ ≤10 mmHg sau 20 phút ở bệnh nhân đã đặt ống chỉ là một yếu tố trong quyết định ngừng hồi sức (2b), không dùng ngưỡng riêng ở bệnh nhân chưa đặt ống."],
+        ["<b>Ngừng tuần hoàn kháng trị</b>","Cân nhắc <b>ECPR</b> (VA-ECMO) ở ca chọn lọc: AHA 2025 — trung tâm có chương trình ECPR cần xây dựng và rà soát tiêu chí chọn bệnh, tổ chức theo vùng; người đặt cannula phải có kinh nghiệm; vận chuyển nhanh trong lúc ngừng tim chỉ cho ngoại viện chọn lọc cao; hợp lý ở thai phụ/sau sinh không đáp ứng hồi sức chuẩn."],
+        ["<b>Không dùng thường quy</b>","<b>Calci, natri bicarbonate, magnesi:</b> không dùng thường quy (class 3). <b>Vasopressin</b> (đơn độc/phối hợp) và epinephrine liều cao: không lợi hơn (class 3). <b>Corticoid:</b> lợi ích chưa rõ (2b). Chỉ dùng thuốc đặc hiệu khi có chỉ định (tăng K⁺, ngộ độc chẹn kênh Ca/TCA, xoắn đỉnh có QT dài…)."]
       ])}
-      <div class="alert-box alert-danger"><b>Ưu tiên:</b> Ép ngực liên tục, tần số 100–120, độ sâu đủ, xẹp ngực hoàn toàn, giảm gián đoạn.</div>
-    
-<div class="subhead">💊 Liều dùng chi tiết ACLS (người lớn)</div>
-      ${rt(["Liều","Lưu ý"],[
-        ["<b>Epinephrine</b>","1 mg IV/IO q3–5 phút","Mọi nhịp ngừng tuần hoàn"],
-        ["<b>Amiodarone</b>","300 mg bolus → có thể 150 mg","VF/pVT kháng sốc"],
-        ["<b>Lidocaine</b>","1–1.5 mg/kg → 0.5–0.75 mg/kg","Thay <b>amiodarone</b>"],
-        ["<b>Atropine</b> (nhịp chậm)","1 mg q3–5 phút, tối đa 3 mg","Nhịp chậm có triệu chứng"],
-        ["<b>Adenosine</b> (SVT)","6 mg → 12 mg nhanh + flush","QRS hẹp đều ổn định"]
+      <div class="subhead">2. Liều thuốc ACLS (người lớn)</div>
+      ${rt(["Liều / cách dùng","Chỉ định / lưu ý"],[
+        ["<b>Epinephrine</b>","1 mg TM/IO mỗi 3–5 phút","Mọi nhịp ngừng tuần hoàn; sớm nhất ở nhịp không sốc được"],
+        ["<b>Amiodarone</b>","300 mg TM/IO bolus → 150 mg","VF/pVT kháng sốc (sau cú sốc thứ 3)"],
+        ["<b>Lidocaine</b>","1–1,5 mg/kg → 0,5–0,75 mg/kg","Thay thế amiodarone (hiệu quả tương đương)"],
+        ["<b>Magnesi sulfat</b>","1–2 g TM chậm","Chỉ khi xoắn đỉnh / hạ Mg"],
+        ["<b>Calci clorid</b>","1 g TM (10 mL 10%)","Tăng K⁺: hiệu quả trong ngừng tim chưa được xác lập (AHA 2025), cân nhắc so với CPR chất lượng, sốc điện, epinephrine; còn dùng khi hạ Ca, ngộ độc chẹn kênh Ca"],
+        ["<b>Natri bicarbonat</b>","1 mEq/kg (50–100 mEq)","Chỉ khi tăng K⁺ nặng, toan chuyển hóa nặng, ngộ độc TCA"],
+        ["<b>Alteplase (PE nghi/xác nhận)</b>","50 mg TM bolus; có thể lặp 50 mg sau 15 phút; CPR ≥60–90 phút","Ngừng tuần hoàn do PE"],
+        ["<b>Nhũ tương lipid 20%</b>","1,5 mL/kg bolus → 0,25 mL/kg/phút","Ngộ độc thuốc tê (LAST)"],
+        ["<b>Atropine</b> (nhịp chậm có triệu chứng)","1 mg mỗi 3–5 phút, tối đa 3 mg","Văn bản AHA 2025 không nêu liều (liều nằm trong lưu đồ/Provider Manual; theo ACLS 2020); nhịp chậm kháng thuốc: tạo nhịp qua tĩnh mạch tạm thời hợp lý; thay bằng dopamine 5–20 mcg/kg/phút hoặc epinephrine 2–10 mcg/phút / tạo nhịp khi không đáp ứng"],
+        ["<b>Adenosine</b> (SVT QRS hẹp đều)","6 mg bolus nhanh + flush 20 mL → 12 mg (liều chuẩn; AHA 2025 không nêu liều); đường trung tâm/ghép tim: 1 mg có thể đủ","Chống chỉ định hen; không dùng cho tim nhanh QRS rộng không đều/đa dạng; không dùng verapamil/diltiazem cho nhịp nhanh QRS rộng"],
+        ["<b>Sốc đồng bộ</b>","AF: khởi đầu <b>≥200 J</b> biphasic (AHA 2025, 2a); cuồng nhĩ: 200 J có thể hợp lý; SVT QRS hẹp đều 50–100 J và VT đơn dạng có mạch ~100 J (theo ACLS 2020 — chưa đối chiếu bản 2025)","An thần trước khi sốc nếu còn tỉnh; VT đa dạng kéo dài: sốc không đồng bộ ngay"]
       ])}
-    `,
+      <div class="subhead">3. Nguyên nhân đảo ngược (Hs &amp; Ts)</div>
+      ${rt(["Xử trí nhanh"],[
+        ["<b>Giảm thể tích (Hypovolemia)</b>","Dịch/máu"],
+        ["<b>Thiếu oxy (Hypoxia)</b>","Oxy, đảm bảo đường thở/thông khí"],
+        ["<b>Toan (Hydrogen ion)</b>","Thông khí; bicarbonate khi chỉ định"],
+        ["<b>Tăng/hạ K⁺ (Hyper/hypokalemia)</b>","CaCl₂ 1 g, insulin–glucose, bicarbonate; xem mục tăng K⁺"],
+        ["<b>Hạ thân nhiệt (Hypothermia)</b>","Làm ấm tích cực; tiếp tục CPR đến khi ấm"],
+        ["<b>Tràn khí màng phổi áp lực (Tension pneumothorax)</b>","Giải áp bằng kim/mở màng phổi ngón tay"],
+        ["<b>Chèn ép tim (Tamponade)</b>","Chọc hút/mở cửa sổ màng tim dưới siêu âm"],
+        ["<b>Ngộ độc (Toxins)</b>","Giải độc đặc hiệu, lipid, naloxone, bicarbonate…"],
+        ["<b>Huyết khối (Thrombosis) — phổi / vành</b>","Tiêu sợi huyết (PE); can thiệp vành"]
+      ])}
+      <div class="subhead">4. Chăm sóc sau ngừng tuần hoàn (ROSC)</div>
+      ${rt(["Mục tiêu / hành động (AHA 2025 — đối chiếu bản gốc)"],[
+        ["<b>Huyết động</b>","Tránh hạ huyết áp: giữ <b>MAP ≥65 mmHg</b> (class 1; AHA 2025 không nêu SBP đích; chưa đủ bằng chứng chọn một vận mạch cụ thể); điện tâm đồ 12 chuyển đạo ngay."],
+        ["<b>Oxy / thông khí</b>","FiO₂ 100% cho đến khi đo được SpO₂/PaO₂ tin cậy; sau đó chuẩn FiO₂ để <b>SpO₂ 90–98% (PaO₂ 60–105 mmHg)</b> (2a); tránh thiếu oxy; <b>PaCO₂ 35–45 mmHg</b> (class 1). Lưu ý oxy xung có thể bỏ sót thiếu oxy ở da sẫm màu."],
+        ["<b>Chụp mạch vành</b>","<b>Cấp cứu nếu ST chênh lên kéo dài</b> nghi nguyên nhân tim, kể cả hôn mê (class 1); không ST chênh: hợp lý khi sốc tim, rối loạn nhịp thất tái phát hoặc thiếu máu cục bộ đang diễn ra (2a); hôn mê không có các yếu tố này: không ưu tiên chụp cấp cứu hơn chiến lược trì hoãn/chọn lọc."],
+        ["<b>Kiểm soát thân nhiệt</b>","Chiến lược có quy trình cho mọi bệnh nhân không làm theo y lệnh sau ROSC: duy trì <b>32–37,5 °C</b> (class 1), tối thiểu <b>36 giờ</b> (2a); hâm ấm không nhanh hơn 0,5 °C/giờ (2b); không truyền dịch lạnh nhanh trước viện."],
+        ["<b>Đường huyết &amp; co giật</b>","Tránh đường huyết &lt;70 và &gt;180 mg/dL (2b); EEG sớm, điều trị co giật lâm sàng và co giật chỉ trên EEG; <b>không dự phòng co giật thường quy</b>; không điều trị giật cơ không có tương quan EEG. Corticoid cho sốc sau ROSC: lợi ích chưa rõ (2b)."],
+        ["<b>Tiên lượng thần kinh</b>","Đa phương thức (không dựa một dấu hiệu đơn lẻ); hợp lý tổng hợp đánh giá <b>≥72 giờ</b> sau khi bình thường thân nhiệt và ngừng an thần (2a)."],
+        ["<b>Tìm nguyên nhân &amp; phục hồi</b>","CT sọ/ngực khi chưa rõ nguyên nhân; hỗ trợ tâm lý, phục hồi chức năng cho bệnh nhân và gia đình."]
+      ])}`,
     khuyen_cao:`
-      ${rt(["Class"],[
-        ["Ép ngực chất lượng cao liên tục",'<span class="badge badge-I">I</span>'],
-        ["Khử rung sớm VF/pVT",'<span class="badge badge-I">I</span>'],
-        ["<b>Epinephrine</b> trong ngừng tuần hoàn",'<span class="badge badge-IIa">IIa</span>']
+      ${rt(["Mức"],[
+        ["Ép ngực chất lượng cao liên tục, giảm gián đoạn",'<span class="badge badge-I">I</span>'],
+        ["Khử rung sớm VF/pVT (một cú sốc rồi CPR ngay)",'<span class="badge badge-I">I</span>'],
+        ["Epinephrine 1 mg mỗi 3–5 phút trong ngừng tuần hoàn (sớm ở nhịp không sốc được; sốc được: sau các cú sốc đầu thất bại)",'<span class="badge badge-I">I</span>'],
+        ["Amiodarone hoặc lidocaine cho VF/pVT kháng sốc (có thể cân nhắc)",'<span class="badge badge-IIb">IIb</span>'],
+        ["ECPR ở ca chọn lọc có đội ngũ sẵn sàng",'<span class="badge badge-IIa">IIa</span>'],
+        ["Duy trì MAP ≥65, SpO₂ 90–98%, PaCO₂ 35–45, kiểm soát thân nhiệt 32–37,5 °C ≥36 giờ; tiên lượng thần kinh đa phương thức ≥72 giờ",'<span class="badge badge-I">I</span>'],
+        ["Calci/bicarbonate/magnesi, vasopressin, epinephrine liều cao thường quy trong ngừng tuần hoàn",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"AHA Guidelines for CPR and ECC; ERC Guidelines"
+  source:"Panchal AR et al. 2025 AHA/ACC Guidelines for CPR and Emergency Cardiovascular Care (Circulation 2025); Perkins GD et al. ERC/ESICM 2025; ILCOR CoSTR 2025; AHA ACLS Provider Manual 2025. Đã đối chiếu nguyên văn Phần 7/9/11 (cpr.heart.org): hậu ngừng tim, thuốc/sốc/EtCO₂; ECPR, cardioversion rung nhĩ ≥200 J, calci/bicarbonate, vasopressin, IV/IO đã đối chiếu AHA 2025; liều atropine/dopamine/adenosine và năng lượng sốc nhịp nhanh hẹp/VT không có trong văn bản khuyến cáo nên giữ theo ACLS 2020"
 },
 {
   spec:"noi_tiet", id:"gdm", emoji:"🤰", short:"ĐTĐ thai kỳ", title:"Đái tháo đường thai kỳ (GDM)",
@@ -5496,34 +5711,63 @@ ${rt(["Điều trị"],[
 },
 {
   spec:"tieu_hoa", id:"diverticulitis", emoji:"🔵", short:"Viêm túi thừa", title:"Bệnh diverticulum & Viêm túi thừa đại tràng",
-  guidelines:["AGA 2021","WSES 2020"],
+  guidelines:["ACG 2026","AGA 2021","WSES 2020","ASCRS 2020"],
   sections:{
     dinh_nghia:`
-      <p>Diverticulum đại tràng (thường đại tràng sigma). Viêm túi thừa: đau hố chậu trái, sốt; có thể áp xe, thủng, viêm phúc mạc.</p>`,
+      <p><b>Bệnh túi thừa đại tràng (diverticulosis)</b>: túi thừa niêm mạc thoát vị qua thành đại tràng, chủ yếu đại tràng sigma (phổ biến ở tuổi &gt;60; ở châu Á gặp nhiều ở đại tràng phải). <b>Viêm túi thừa cấp</b>: viêm/nhiễm trùng khu trú quanh túi thừa — đau hố chậu trái, sốt, tăng bạch cầu, thay đổi thói quen đại tiện; ~4% người có túi thừa mắc viêm túi thừa.</p>
+      ${rt(["Đặc điểm"],[
+        ["<b>Không biến chứng</b>","Viêm khu trú thành đại tràng/mỡ quanh đại tràng; ~85–90% ca."],
+        ["<b>Có biến chứng</b>","Áp xe, thủng (kèm viêm phúc mạc mủ/phân), rò (bàng quang–đại tràng, âm đạo), tắc ruột/hẹp, chảy máu."],
+        ["<b>Phân độ Hinchey (cải biên)</b>","Ia: viêm quanh đại tràng • Ib: áp xe nhỏ quanh đại tràng • II: áp xe chậu/trong ổ bụng/sau phúc mạc • III: viêm phúc mạc mủ • IV: viêm phúc mạc phân."]
+      ])}
+      <div class="alert-box alert-info"><b>Yếu tố nguy cơ:</b> tuổi, béo phì, hút thuốc, ít vận động, ít xơ, NSAID/corticoid/opioid, ức chế miễn dịch. Hạt, bắp rang, hạt dẻ <u>không</u> làm tăng nguy cơ.</div>`,
     chan_doan:`
-      <p>CT bụng có cản quang — tiêu chuẩn vàng cấp cứu. Phân độ đơn giản vs biến chứng (áp xe, thủng, rò).</p>`,
+      <ul>
+        <li><b>CT bụng–chậu có cản quang</b> là tiêu chuẩn chẩn đoán/phân độ (ACG 2026 nhấn mạnh xác nhận bằng CT, nhất là lần đầu hoặc nặng, vì lâm sàng đơn thuần sai chẩn đoán khá nhiều): dày thành đại tràng, thâm nhiễm mỡ quanh túi thừa, khí ngoài lòng ruột, ổ áp xe.</li>
+        <li>CTM, CRP (ACG 2026: CRP &gt;140 mg/L là đặc điểm nguy cơ cao), lactate khi nặng, β-hCG ở phụ nữ tuổi sinh đẻ, tổng phân tích nước tiểu (loại trừ UTI), cấy máu nếu sốt/nặng.</li>
+        <li>Siêu âm là lựa chọn ở thai phụ/người trẻ khi hạn chế CT; MRI thay thế.</li>
+        <li><b>Chẩn đoán phân biệt:</b> ung thư đại tràng (nhất là sau biến chứng), viêm ruột (Crohn), viêm ruột thừa, thiếu máu ruột, viêm phần phụ/u nang buồng trứng, thai ngoài tử cung, sỏi niệu quản, hội chứng ruột kích thích.</li>
+        <li><b>Nội soi đại tràng:</b> sau viêm túi thừa <b>có biến chứng</b>, chờ ~6–8 tuần rồi nội soi (loại trừ ung thư); sau viêm <b>không biến chứng</b> chỉ làm khi có triệu chứng báo động hoặc chưa tầm soát CRC đúng hạn (ACG 2026).</li>
+      </ul>
+      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('qsofa')">🧮 qSOFA</button><button type="button" class="score-link-btn" onclick="goSmartScale('sirs')">🧮 SIRS</button><button type="button" class="score-link-btn" onclick="goSmartScale('shock_index')">🧮 Shock index</button></div>`,
     dieu_tri:`
-${rt(["Xử trí"],[
-        ["Không biến chứng, ổn định","Có thể ngoại trú; KS chọn lọc (một số BN miễn dịch tốt có thể quan sát — AGA)"],
-        ["Áp xe","KS ± dẫn lưu"],
-        ["Thủng / phúc mạc","Phẫu thuật cấp + KS"],
-        ["Sau ổn định","Chế độ giàu xơ; mổ phiên khi tái phát nhiều / biến chứng"]
+      <div class="subhead">1. Phân tầng xử trí</div>
+      ${rt(["Xử trí"],[
+        ["<b>Không biến chứng, ổn định, uống được, đủ chỗ hỗ trợ</b>","Ngoại trú. <b>Kháng sinh chọn lọc</b>: không dùng thường quy cho người nguy cơ thấp (ACG 2026, khuyến cáo có điều kiện; AGA 2021). Dùng kháng sinh khi: suy giảm miễn dịch, yếu/bệnh kèm nặng, dấu hiệu viêm toàn thân, nôn hoặc triệu chứng &gt;5 ngày, CRP &gt;140 mg/L, ổ dịch/đoạn đại tràng viêm dài trên hình ảnh, không đảm bảo theo dõi ngoại trú, hoặc cần nhập viện. Chế độ lỏng ngắn ngày → mở rộng dần; giảm đau paracetamol, tránh NSAID/opioid."],
+        ["<b>Nặng/nguy cơ cao: nhập viện</b>","Sốt cao, đau nhiều, không uống được, tuổi cao, suy giảm miễn dịch, CRP cao, thất bại ngoại trú 48–72 giờ, có biến chứng → nhịn ăn/dịch lỏng, truyền dịch, kháng sinh TM."],
+        ["<b>Áp xe</b>","&lt;3–4 cm: kháng sinh ± theo dõi; ≥3–4 cm: <b>dẫn lưu qua da dưới CT/siêu âm</b> + kháng sinh (ngưỡng kích thước theo WSES/ASCRS, ACG 2026 không nêu cụ thể); thất bại hoặc không tiếp cận → phẫu thuật."],
+        ["<b>Thủng tự do/viêm phúc mạc (Hinchey III–IV), nhiễm khuẩn huyết, tắc ruột</b>","Hồi sức + kháng sinh + <b>phẫu thuật cấp cứu</b>: Hartmann hoặc cắt đoạn nối tận–tận ± dẫn lưu hồi tràng bảo vệ; rửa ổ bụng nội soi ở chọn lọc."]
       ])}
-    
-<div class="subhead">💊 Liều dùng chi tiết</div>
-      ${rt(["Liều thường dùng","Lưu ý"],[
-        ["<b>Amoxicillin</b>-<b>clavulanate</b>","875/125mg × 2 lần/ngày × 4–7 ngày","Ngoại trú chọn lọc"],
-        ["<b>Ciprofloxacin</b> + <b>metronidazole</b>","500 mg ×2/ngày + 500 mg ×3/ngày × 4–7 ngày","Thay thế nếu dị ứng Penicillin"],
-        ["<b>Ceftriaxone</b> + Metronidazole TM","Ceftriaxone 1–2g/ngày + Metronidazole 500mg ×3/ngày","Khi nhập viện — chuyển uống khi cải thiện"]
+      <div class="subhead">2. Kháng sinh (khi có chỉ định)</div>
+      ${rt(["Phác đồ","Liều","Thời gian / ghi chú"],[
+        ["<b>Amoxicillin–clavulanate</b> (ngoại trú, đầu tay)","875/125 mg uống mỗi 12 giờ","<b>4–7 ngày</b>; tránh được tác dụng phụ fluoroquinolone (ACG 2026)"],
+        ["<b>Ciprofloxacin + Metronidazole</b>","Cipro 500 mg mỗi 12 giờ + Metronidazole 500 mg mỗi 8 giờ (uống)","4–7 ngày. Thay thế khi dị ứng penicillin; FQ: nguy cơ gân/thần kinh/QT, hạn chế nếu có lựa chọn khác"],
+        ["<b>TMP–SMX + Metronidazole</b>","160/800 mg mỗi 12 giờ + 500 mg mỗi 8 giờ","4–7 ngày; theo dõi K⁺/creatinin"],
+        ["<b>Levofloxacin + Metronidazole</b>","750 mg/ngày + 500 mg mỗi 8 giờ","4–7 ngày"],
+        ["<b>Nhập viện, nhẹ–vừa</b>: Ceftriaxone + Metronidazole","Ceftriaxone 1–2 g TM mỗi 24 giờ + Metronidazole 500 mg mỗi 8 giờ","Chuyển uống khi dung nạp ăn, hết sốt"],
+        ["<b>Nặng/sepsis, bệnh viện, ức chế MD</b>: Piperacillin–tazobactam hoặc Meropenem","4,5 g TM mỗi 6 giờ; 1 g TM mỗi 8 giờ","<b>4 ngày sau kiểm soát nguồn</b> (STOP-IT); thêm phủ <i>Enterococcus</i>/ESBL theo cấy"]
       ])}
-    `,
+      <div class="subhead">3. Phòng tái phát & phẫu thuật chọn lọc</div>
+      <ul>
+        <li><b>Lối sống:</b> chế độ giàu xơ (trái cây, rau, ngũ cốc nguyên hạt), vận động đều, giảm cân, bỏ thuốc lá, hạn chế rượu/thịt đỏ; <b>không cần kiêng hạt/bắp rang</b>.</li>
+        <li><b>Mesalamine, rifaximin, probiotics: không khuyến cáo</b> để dự phòng tái phát (ACG 2026) — chưa có lợi ích rõ ràng.</li>
+        <li>Hạn chế NSAID thường xuyên (trừ aspirin liều thấp chỉ định tim mạch), opioid, corticoid khi có thể.</li>
+        <li><b>Cắt đại tràng chọn lọc</b> không dựa riêng vào số đợt viêm: cá thể hóa theo chất lượng sống, biến chứng (rò, hẹp, áp xe tái phát), suy giảm miễn dịch (ngưỡng thấp hơn), thận mạn/ghép tạng.</li>
+        <li><b>SCAD/viêm đại tràng liên quan túi thừa:</b> đau + chảy máu trực tràng, nội soi viêm vùng sigma có túi thừa — điều trị chủ yếu chế độ xơ ± mesalamine/kháng sinh ngắn.</li>
+      </ul>
+      <div class="alert-box alert-warn"><b>Cảnh báo:</b> sau viêm túi thừa có biến chứng ~7–10% hóa ra là ung thư — luôn đánh giá niêm mạc đại tràng sau điều trị.</div>`,
     khuyen_cao:`
-      ${rt(["Class"],[
-        ["CT để xác nhận viêm túi thừa cấp",'<span class="badge badge-I">I</span>'],
-        ["Không bắt buộc kháng sinh mọi ca không biến chứng",'<span class="badge badge-IIa">IIa</span>']
+      ${rt(["Mức"],[
+        ["CT bụng–chậu để xác nhận viêm túi thừa cấp nghi ngờ lần đầu hoặc nặng",'<span class="badge badge-I">I</span>'],
+        ["Kháng sinh chọn lọc, không thường quy cho viêm túi thừa cấp không biến chứng nguy cơ thấp",'<span class="badge badge-IIa">IIa</span>'],
+        ["Thời gian kháng sinh 4–7 ngày; 4 ngày sau kiểm soát nguồn ở ca biến chứng",'<span class="badge badge-IIa">IIa</span>'],
+        ["Dẫn lưu qua da cho áp xe ≥3–4 cm",'<span class="badge badge-I">I</span>'],
+        ["Nội soi đại tràng sau viêm túi thừa có biến chứng",'<span class="badge badge-I">I</span>'],
+        ["Mesalamine/rifaximin/probiotics để phòng tái phát",'<span class="badge badge-III">III</span>'],
+        ["Cắt đại tràng dự phòng chỉ dựa vào số đợt tái phát",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"AGA Clinical Practice Update; WSES diverticulitis"
+  source:"Liều kháng sinh là liều chuẩn (ACG 2026 chỉ nêu phác đồ và 4–7 ngày; không nêu liều/ngưỡng kích thước áp xe; đối chiếu qua các tóm tắt công bố vì không truy cập được bản đầy đủ). Khuyến cáo mạnh: nội soi sau viêm biến chứng; không dùng mesalamine/rifaximin/probiotics; ACG Clinical Guideline: Colonic Diverticulitis 2026; AGA Clinical Practice Guideline on the Management of Acute Diverticulitis (Gastroenterology 2021); Sartelli M et al. WSES Guidelines for acute left-sided colonic diverticulitis 2020; Hall J et al. ASCRS Guidelines Left-Sided Colonic Diverticulitis (Dis Colon Rectum 2020); Sawyer RG et al. STOP-IT, N Engl J Med 2015; van Dijk ST et al. DIABOLO, Lancet Infect Dis 2022"
 },
 {
   spec:"co_xuong_khop", id:"psa", emoji:"🟣", short:"PsA", title:"Viêm khớp vảy nến (Psoriatic Arthritis)",
@@ -5751,7 +5995,17 @@ ${rt(["Hướng xử trí"],[
         <li>Đánh giá nguy cơ thai kỳ theo phân loại <b>mWHO</b> (I–IV) trước khi mang thai — nhóm IV (Eisenmenger, Fontan biến chứng, tâm thất hệ thống suy nặng) chống chỉ định mang thai.</li>
         <li>Bệnh nhân tuần hoàn Fontan/tím tái: theo dõi chức năng gan, huyết khối (thường cần kháng đông dự phòng), tránh mất nước.</li>
         <li>Hội chứng Eisenmenger: tránh giảm hậu tải hệ thống quá mức, cẩn trọng thuốc giãn mạch, tránh sắt thiếu ở tím tái mạn (đa hồng cầu thứ phát ≠ cần trích máu thường quy).</li>
-      </ul>`,
+      </ul>
+      <div class="subhead">Thuốc & thời điểm can thiệp thường gặp</div>
+      ${rt(["Xử trí"],[
+        ["<b>Hội chứng Eisenmenger / PAH liên quan TBS</b>","Bosentan 62,5 mg × 2 → 125 mg × 2; macitentan 10 mg/ngày; sildenafil 20 mg × 3/ngày (hoặc tadalafil 40 mg/ngày); phối hợp khi cần; <b>tránh</b> hạ HA hệ thống, mất nước, bay độ cao, tránh thai kỳ."],
+        ["<b>Tứ chứng Fallot đã sửa</b>","Thay van ĐMP khi hở nặng + RVEDVi &gt;160 mL/m² (hoặc RVESVi &gt;80), triệu chứng, hoặc QRS &gt;160 ms/ loạn nhịp thất."],
+        ["<b>Fontan</b>","Kháng đông/chống kết tập (huyết khối); tránh mất nước; theo dõi bệnh gan Fontan (siêu âm, độ đàn hồi gan), thất bại Fontan → ghép tim."],
+        ["<b>Hẹp eo ĐMC</b>","Can thiệp khi chênh áp ≥20 mmHg + THA; theo dõi phình ĐMC/ bóc tách; THA dai dẳng sau can thiệp."],
+        ["<b>Thông liên nhĩ/thất</b>","Đóng khi dòng chảy trái–phải đáng kể (Qp:Qs ≥1,5), giãn thất phải; tránh đóng khi PVR &gt;5 WU không đáp ứng giãn mạch."],
+        ["<b>Rung/cuồng nhĩ</b>","Kháng đông (DOAC ở ACHD đơn giản–trung bình; warfarin cho Fontan/van cơ học); cắt đốt qua catheter."],
+        ["<b>Thai kỳ (mWHO)</b>","I: nguy cơ thấp; II–III: theo dõi tại trung tâm chuyên sâu; <b>IV</b> (PAH nặng/Eisenmenger, EF &lt;30%, Fontan biến chứng, hẹp ĐMC nặng) <b>chống chỉ định</b> — tư vấn tránh thai, ưu tiên IUD/progestin; tránh estrogen khi tím/Fontan."]
+      ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Theo dõi định kỳ tại trung tâm ACHD chuyên sâu cho ACHD trung bình/phức tạp",'<span class="badge badge-I">I</span>'],
@@ -5811,7 +6065,7 @@ ${rt(["Hướng xử trí"],[
 },
 {
   spec:"noi_tiet", id:"pcos", emoji:"🌸", short:"PCOS", title:"Hội chứng buồng trứng đa nang (PCOS)",
-  guidelines:["International Evidence-based Guideline for PCOS 2023","Rotterdam Criteria"],
+  guidelines:["International Evidence-based Guideline PCOS 2023","Rotterdam 2003","Endocrine Society 2013"],
   sections:{
     dinh_nghia:`
       <p>PCOS là bệnh nội tiết-chuyển hóa thường gặp nhất ở phụ nữ tuổi sinh sản, chẩn đoán theo <b>tiêu chuẩn Rotterdam</b>: có ≥2/3 tiêu chí sau (sau khi loại trừ nguyên nhân khác):</p>
@@ -5840,7 +6094,21 @@ ${rt(["Hướng xử trí"],[
         <li>Muốn có thai: <b>Letrozole</b> là thuốc kích thích phóng noãn đầu tay (ưu tiên hơn clomiphene — tỉ lệ sinh sống cao hơn); <b>metformin</b> có thể phối hợp.</li>
         <li>Rậm lông: cần tránh thai hiệu quả trước khi dùng <b>spironolactone</b> (kháng androgen) do nguy cơ nữ hóa thai nam.</li>
         <li>Sàng lọc định kỳ: glucose/HbA1c, lipid, huyết áp, tầm soát ngưng thở khi ngủ và sức khỏe tâm thần.</li>
-      </ul>`,
+      </ul>
+      <div class="subhead">Bảng thuốc (Hướng dẫn quốc tế 2023)</div>
+      ${rt(["Liều / cách dùng","Ghi chú"],[
+        ["<b>Viên tránh thai kết hợp (COC)</b>","Ethinylestradiol 20–30 µg + progestin (ưu tiên liều thấp estrogen), uống 21/7","Đầu tay cho rối loạn kinh + cường androgen; bảo vệ nội mạc tử cung; chống chỉ định: huyết khối, hút thuốc ≥35 tuổi, THA nặng"],
+        ["<b>Metformin</b>","500 mg × 1/ngày → 1500–2000 mg/ngày (tăng dần 500 mg/tuần)","Đề kháng insulin/IGT/BMI cao; kèm COC hoặc thay khi chống chỉ định COC; ít hiệu quả đơn độc cho rậm lông"],
+        ["<b>Letrozole</b> (kích thích phóng noãn)","2,5 mg/ngày ngày 3–7 chu kỳ (tăng 2,5 mg mỗi chu kỳ đến 7,5 mg)","Đầu tay (tỷ lệ sinh sống cao hơn clomiphene); theo dõi nang noãn bằng siêu âm"],
+        ["<b>Clomiphene citrate</b>","50 mg/ngày × 5 ngày (tăng đến 100–150 mg)","Thay thế letrozole; tăng nguy cơ đa thai"],
+        ["<b>Gonadotropin / IVF</b>","—","Thất bại thuốc uống; theo dõi OHSS (nguy cơ cao ở PCOS); chiến lược antagonist + trigger GnRH agonist"],
+        ["<b>Spironolactone</b>","50–100 mg/ngày (chia 1–2 lần)","Rậm lông/mụn kháng COC; bắt buộc tránh thai (nguy cơ nữ hóa thai); theo dõi K⁺"],
+        ["<b>Eflornithine cream 13,9% / laser–IPL</b>","Bôi ngày 2 lần","Rậm lông mặt tại chỗ"],
+        ["<b>Progestin chu kỳ</b> (medroxyprogesterone 10 mg × 10–14 ngày mỗi 1–3 tháng; hoặc LNG-IUS)","—","Bảo vệ nội mạc khi COC chống chỉ định/&lt;3–4 lần kinh/năm"],
+        ["<b>GLP-1 RA/ liraglutide, semaglutide; orlistat</b>","Theo nhãn","Béo phì kèm PCOS khi lối sống thất bại; <b>không dùng khi đang tìm thai</b>"],
+        ["<b>Phẫu thuật bariatric</b>","—","BMI ≥35–40 hoặc ≥30–35 kèm bệnh đồng mắc; cải thiện phóng noãn"]
+      ])}
+      <div class="alert-box alert-info"><b>Sàng lọc & chẩn đoán (2023):</b> <b>AMH</b> có thể thay siêu âm ở người lớn; ở tuổi vị thành niên cần rối loạn kinh + cường androgen (không dùng siêu âm trong 8 năm đầu sau hành kinh). <b>OGTT</b> khi chẩn đoán và mỗi 1–3 năm (HbA1c/đường huyết đói nếu OGTT không khả thi); lipid, huyết áp, cân nặng/vòng eo, tầm soát <b>ngưng thở khi ngủ</b>, trầm cảm/lo âu, rối loạn ăn uống; tư vấn nguy cơ ĐTĐ thai kỳ/tiền sản giật khi mang thai.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Chẩn đoán theo tiêu chuẩn Rotterdam sau loại trừ nguyên nhân khác",'<span class="badge badge-I">I</span>'],
@@ -5849,7 +6117,7 @@ ${rt(["Hướng xử trí"],[
         ["Sàng lọc chuyển hóa (glucose, lipid) định kỳ ở mọi bệnh nhân PCOS",'<span class="badge badge-I">I</span>']
       ])}`
   },
-  source:"International Evidence-based Guideline for the Assessment and Management of PCOS 2023"
+  source:"Teede HJ et al. Recommendations from the 2023 International Evidence-based Guideline for the Assessment and Management of PCOS. Fertil Steril/J Clin Endocrinol Metab 2023; Legro RS et al. Letrozole vs clomiphene, N Engl J Med 2014; Rotterdam ESHRE-ASRM 2004"
 }
 ,
 {
@@ -5891,7 +6159,18 @@ ${rt(["Hướng xử trí"],[
         <li>Dụng cụ đẩy hàm dưới (oral appliance) là lựa chọn cho OSA nhẹ-trung bình hoặc không dung nạp CPAP.</li>
         <li>Liệu pháp theo vị trí ngủ (positional therapy) khi OSA chủ yếu xảy ra khi nằm ngửa.</li>
         <li>Phẫu thuật đường thở trên (UPPP, tiến hàm...) hoặc kích thích thần kinh hạ thiệt cân nhắc ở trường hợp chọn lọc không đáp ứng CPAP.</li>
-      </ul>`,
+      </ul>
+      <div class="subhead">Thuốc & thiết bị bổ sung (AASM 2019, FDA 2024)</div>
+      ${rt(["Liều / chỉ định","Ghi chú"],[
+        ["<b>CPAP/APAP</b>","Áp lực 4–20 cmH₂O (theo titration); mục tiêu ≥4 giờ/đêm ≥70% số đêm","Đầu tay cho AHI ≥15 hoặc AHI 5–15 có triệu chứng/bệnh tim mạch"],
+        ["<b>Tirzepatide</b>","10 mg → 15 mg TDD mỗi tuần (SURMOUNT-OSA)","FDA 12/2024: OSA trung bình–nặng kèm béo phì; giảm AHI ~50–60%"],
+        ["<b>Solriamfetol</b>","37,5–75 mg → tối đa 150 mg/ngày sáng","Buồn ngủ ban ngày còn tồn dư dù CPAP tốt; tăng HA/nhịp tim"],
+        ["<b>Modafinil / Armodafinil</b>","200–400 mg/ngày sáng","Thay solriamfetol; không thay CPAP"],
+        ["<b>Dụng cụ đẩy hàm dưới (MAD)</b>","—","OSA nhẹ–vừa, không dung nạp CPAP"],
+        ["<b>Kích thích thần kinh hạ thiệt</b>","BMI &lt;32–40, AHI 15–65, không tắc đồng tâm khi nội soi giấc ngủ (DISE)","Không dung nạp CPAP"],
+        ["<b>Phẫu thuật</b>","UPPP, tiến hàm trên–dưới (MMA), cắt amiđan; phẫu thuật bariatric","Cá thể hóa"]
+      ])}
+      <div class="alert-box alert-warn">Tránh benzodiazepine/opioid/rượu buổi tối; lái xe an toàn khi buồn ngủ; phẫu thuật: báo gây mê, theo dõi sau mổ; tư thế nằm nghiêng cho OSA phụ thuộc tư thế.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["CPAP cho OSA trung bình-nặng có triệu chứng",'<span class="badge badge-I">I</span>'],
@@ -5945,33 +6224,45 @@ ${rt(["Hướng xử trí"],[
 ,
 {
   spec:"tieu_hoa", id:"celiac", emoji:"🌾", short:"Celiac", title:"Bệnh Celiac (Celiac Disease)",
-  guidelines:["ACG 2023"],
+  guidelines:["ACG 2023","ESPGHAN 2020","BSG 2014"],
   sections:{
     dinh_nghia:`
       <p>Bệnh Celiac là bệnh ruột do miễn dịch, khởi phát bởi gluten (lúa mì, lúa mạch, mạch nha) ở người có yếu tố di truyền phù hợp (HLA-DQ2/DQ8), gây tổn thương nhung mao ruột non.</p>
       <p>Biểu hiện đa dạng: tiêu chảy/đầy hơi/sụt cân điển hình, hoặc chỉ có biểu hiện ngoài ruột (thiếu máu thiếu sắt không rõ nguyên nhân, loãng xương, vô sinh, viêm da herpetiformis, tăng men gan không rõ nguyên nhân, thiếu B12/folate).</p>`,
     chan_doan:`
-      <p>Xét nghiệm huyết thanh đầu tay: <b>IgA anti-tTG</b> kèm định lượng IgA toàn phần (loại trừ thiếu IgA gây âm giả). Nếu thiếu IgA: dùng IgG-DGP hoặc IgG-tTG.</p>
-      <div class="alert-box alert-danger">KHÔNG bắt đầu chế độ ăn không gluten trước khi làm huyết thanh học/sinh thiết — sẽ làm âm tính giả và khó chẩn đoán sau này.</div>
-      <p>Sinh thiết tá tràng (≥4 mẫu hành tá tràng xa + 1–2 mẫu bulb) khi huyết thanh dương hoặc nghi ngờ cao dù âm tính, xác nhận bằng tổn thương nhung mao/tăng lympho biểu mô (phân độ Marsh).</p>`,
-    dieu_tri:`
-<ul>
-        <li>Chế độ ăn <b>không gluten tuyệt đối, suốt đời</b> — nền tảng điều trị duy nhất đã được chứng minh.</li>
-        <li>Chuyển gặp chuyên gia dinh dưỡng để hướng dẫn tránh nguồn gluten ẩn.</li>
-        <li>Bổ sung/điều chỉnh thiếu hụt: sắt, folate, B12, vitamin D, canxi.</li>
-        <li>Đo mật độ xương (DEXA) tại thời điểm chẩn đoán nếu có yếu tố nguy cơ loãng xương.</li>
-        <li>Theo dõi huyết thanh học định kỳ (tTG) để đánh giá tuân thủ chế độ ăn.</li>
-        <li>Nếu không cải thiện dù đã ăn kiêng nghiêm ngặt → xem lại tuân thủ, loại trừ nhiễm gluten ẩn, rồi mới nghĩ đến Celiac kháng trị.</li>
+      <ul>
+        <li><b>Huyết thanh đầu tay: IgA anti-tTG</b> + IgA toàn phần (loại trừ thiếu IgA → IgG-DGP hoặc IgG-tTG). Thử khi <b>đang ăn gluten</b> (≥3 g/ngày, ~1–2 lát bánh mì, 6–8 tuần trước thử).</li>
+        <li><b>Sinh thiết tá tràng</b> (≥1–2 mẫu hành tá tràng + ≥4 mẫu D2) là tiêu chuẩn xác nhận ở người lớn (ACG 2023 không khuyến cáo chẩn đoán chỉ dựa huyết thanh ở người lớn); phân độ Marsh–Oberhuber: Marsh 1 (tăng lympho biểu mô ≥25/100), 2 (+ tăng sản hốc tuyến), 3a–c (teo nhung mao nhẹ → hoàn toàn).</li>
+        <li><b>HLA-DQ2/DQ8:</b> giá trị dự đoán âm cao — dùng để loại trừ khi đã ăn kiêng gluten hoặc huyết thanh–mô học không đồng thuận; không dùng để chẩn đoán.</li>
+        <li><b>Đang ăn kiêng gluten:</b> thử thách gluten 3 g/ngày × 2–6 tuần trước xét nghiệm; HLA âm tính loại trừ.</li>
+        <li><b>Bệnh đi kèm cần sàng lọc:</b> ĐTĐ týp 1, bệnh tuyến giáp tự miễn, thiếu IgA, hội chứng Down/Turner, viêm gan tự miễn, thiếu máu thiếu sắt/loãng xương không rõ nguyên nhân, tăng men gan.</li>
+        <li><b>Chẩn đoán phân biệt teo nhung mao:</b> olmesartan, NSAID, giardiasis, SIBO, nhiễm H. pylori, tổn thương ruột do xạ trị, CVID, Crohn, sprue nhiệt đới/enteropathy tự miễn.</li>
+        <li><b>Biến chứng cần cảnh giác:</b> sụt cân/tiêu chảy tái phát dù ăn kiêng → celiac không đáp ứng/kháng trị, lymphoma T ruột (EATL), hẹp/loét ruột.</li>
       </ul>`,
+    dieu_tri:`
+      <div class="subhead">1. Điều trị nền tảng</div>
+      <ul>
+        <li><b>Chế độ ăn không gluten suốt đời</b> (tránh lúa mì, lúa mạch, mạch đen, một số yến mạch nhiễm); chuyên gia dinh dưỡng; yến mạch chứng nhận không gluten dùng được ở đa số; <b>≤10 ppm</b> gluten là ngưỡng thực phẩm «không gluten».</li>
+        <li>Phục hồi thiếu hụt: sắt, folate, B12, vitamin D, calci, kẽm; <b>DEXA</b> khi chẩn đoán nếu nguy cơ cao; vaccine phế cầu/HBV (hyposplenism, đáp ứng kém).</li>
+        <li><b>Theo dõi:</b> tTG-IgA sau 6–12 tháng rồi hằng năm; sinh thiết kiểm tra không thường quy (chỉ khi triệu chứng kéo dài/huyết thanh còn cao dù ăn kiêng).</li>
+      </ul>
+      <div class="subhead">2. Thuốc & tình huống đặc biệt</div>
+      ${rt(["Thuốc / liều","Ghi chú"],[
+        ["<b>Viêm da dạng herpes (DH)</b>","Dapsone 25–50 mg/ngày (tăng dần 100–200 mg) + chế độ ăn không gluten","Kiểm tra G6PD, MetHb, CTM; dapsone giảm ngứa trong vài ngày"],
+        ["<b>Celiac kháng trị (RCD)</b>","Loại trừ nhiễm gluten ẩn, SIBO, suy tụy, tự miễn. RCD1: <b>budesonide</b> 9 mg/ngày (dạng giải phóng ở hồi tràng) ± azathioprine 2 mg/kg; RCD2 (lympho bào bất thường, nguy cơ EATL): hóa trị/ghép tế bào gốc","Chuyển trung tâm chuyên sâu; dinh dưỡng đường TM/ruột khi cần; theo dõi EATL"],
+        ["<b>Cơn celiac (celiac crisis)</b>","Truyền dịch, điện giải, albumin, dinh dưỡng; methylprednisolone TM có thể dùng","Hiếm; tiêu chảy nặng + mất nước + toan chuyển hóa"],
+        ["<b>Thuốc mới (nghiên cứu)</b>","Latiglutenase, larazotide, kháng thể kháng IL-15, kháng thể kháng gluten, vaccine","Chưa được chấp thuận; không thay thế ăn kiêng"]
+      ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
-        ["Xét nghiệm huyết thanh học trước khi loại gluten khỏi chế độ ăn",'<span class="badge badge-I">I</span>'],
-        ["Sinh thiết tá tràng xác nhận chẩn đoán ở người lớn",'<span class="badge badge-I">I</span>'],
-        ["Chế độ ăn không gluten suốt đời sau chẩn đoán xác định",'<span class="badge badge-I">I</span>'],
-        ["Bắt đầu ăn không gluten trước khi xét nghiệm chẩn đoán",'<span class="badge badge-III">III</span>']
+        ["IgA anti-tTG kèm IgA toàn phần khi đang ăn gluten",'<span class="badge badge-I">I</span>'],
+        ["Sinh thiết tá tràng ≥4 mẫu D2 + 1–2 mẫu bulb xác nhận ở người lớn",'<span class="badge badge-I">I</span>'],
+        ["Chế độ ăn không gluten suốt đời + chuyên gia dinh dưỡng",'<span class="badge badge-I">I</span>'],
+        ["Theo dõi tTG-IgA, bổ sung vi chất và đánh giá xương",'<span class="badge badge-IIa">IIa</span>'],
+        ["Bắt đầu ăn không gluten trước khi hoàn tất xét nghiệm chẩn đoán",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"American College of Gastroenterology (ACG) Clinical Guideline: Diagnosis and Management of Celiac Disease 2023"
+  source:"Rubio-Tapia A et al. ACG Clinical Guideline: Diagnosis and Management of Celiac Disease 2023 (Am J Gastroenterol 2023); Husby S et al. ESPGHAN Guidelines 2020 (J Pediatr Gastroenterol Nutr); Ludvigsson JF et al. BSG Guidelines 2014; Al-Toma A et al. EHC/UEG RCD guideline 2019"
 },
 {
   spec:"tieu_hoa", id:"cdiff", emoji:"🦠", short:"C.diff", title:"Viêm đại tràng do Clostridioides difficile",
@@ -6066,6 +6357,22 @@ ${rt(["Hướng xử trí"],[
         <li><b>Hydroxychloroquine</b> 200–400 mg/ngày cho triệu chứng khớp và mệt mỏi, bệnh nhẹ-trung bình — khám mắt định kỳ tầm soát độc võng mạc khi dùng kéo dài.</li>
         <li>Corticoid/thuốc ức chế miễn dịch (<b>rituximab</b> cân nhắc) cho biểu hiện toàn thân nặng (viêm mạch, bệnh phổi kẽ tiến triển, viêm thận).</li>
         <li>Theo dõi định kỳ tìm dấu hiệu gợi ý lymphoma (sưng tuyến mang tai dai dẳng, hạch to, giảm bổ thể, cryoglobulin, gammaglobulin đơn dòng).</li>
+      </ul>
+      <div class="subhead">Bảng thuốc & ESSDAI (EULAR 2020)</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Pilocarpine</b>","5 mg × 3–4/ngày","Khô miệng; vã mồ hôi, tiểu nhiều; thận trọng hen/COPD/glôcôm góc hẹp"],
+        ["<b>Cevimeline</b>","30 mg × 3/ngày","Thay pilocarpine"],
+        ["<b>Hydroxychloroquine</b>","200–400 mg/ngày (≤5 mg/kg)","Triệu chứng khớp/mệt mỏi; khám mắt hằng năm"],
+        ["<b>Glucocorticoid</b>","Prednisone 0,25–0,5 mg/kg ngắn hạn","Biểu hiện toàn thân nặng; tránh dùng kéo dài"],
+        ["<b>Rituximab</b>","1 g TM tuần 0 và 2","Viêm mạch cryoglobulin, thần kinh, lymphoma, giảm tiểu cầu; không hiệu quả cho sicca"],
+        ["<b>Methotrexate / Azathioprine / MMF</b>","MTX 10–20 mg/tuần; AZA 1–2 mg/kg; MMF 1–2 g/ngày","Tiết kiệm steroid ở biểu hiện toàn thân"],
+        ["<b>IVIG / thay huyết tương</b>","—","Bệnh thần kinh nặng, viêm mạch cryoglobulin nặng"]
+      ])}
+      <ul>
+        <li><b>ESSDAI</b> (EULAR Sjögren Disease Activity Index): 12 lĩnh vực (hạch, tuyến, khớp, da, phổi, thận, cơ, thần kinh…) — điểm &lt;5 thấp, 5–13 vừa, ≥14 cao; dùng quyết định điều trị toàn thân.</li>
+        <li>Khô mắt: nước mắt nhân tạo không chất bảo quản, gel ban đêm, nút lệ điểm, cyclosporine nhỏ mắt 0,05–0,1%, huyết thanh tự thân; khô miệng: chăm sóc răng, fluoride, điều trị nấm Candida; khô âm đạo: chất bôi trơn/estrogen tại chỗ.</li>
+        <li><b>Nguy cơ lymphoma (~5–10%)</b>: sưng tuyến mang tai dai dẳng, ban xuất huyết sờ thấy, giảm C4, cryoglobulin, gammaglobulin đơn dòng, tiểu cầu giảm → sinh thiết/MRI.</li>
+        <li><b>Phòng ngừa:</b> tiêm phòng cúm/phế cầu; phát hiện thai kỳ nguy cơ block tim bẩm sinh (anti-SSA/Ro) — theo dõi nhịp tim thai tuần 16–26, cân nhắc HCQ.</li>
       </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -6074,7 +6381,7 @@ ${rt(["Hướng xử trí"],[
         ["Theo dõi dấu hiệu gợi ý lymphoma định kỳ",'<span class="badge badge-I">I</span>']
       ])}`
   },
-  source:"EULAR recommendations for the management of Sjögren's syndrome 2020; ACR/EULAR Classification Criteria 2016"
+  source:"Ramos-Casals M et al. EULAR recommendations for the management of Sjögren syndrome with topical and systemic therapies. Ann Rheum Dis 2020; Shiboski CH et al. 2016 ACR–EULAR classification criteria; Seror R et al. ESSDAI, Ann Rheum Dis 2010"
 }
 ,
 {
@@ -6295,33 +6602,76 @@ ${rt(["Hướng xử trí"],[
 ,
 {
   spec:"ho_hap", id:"lung_cancer", emoji:"🫁", short:"Ung thư phổi", title:"Ung thư phổi — Tầm soát & Tiếp cận ban đầu",
-  guidelines:["USPSTF 2021","ACS 2023","NCCN"],
+  guidelines:["NCCN NSCLC/SCLC 2025","ESMO 2023–2025","ACS 2023","USPSTF 2021","IASLC TNM-9 (2025)"],
   sections:{
     dinh_nghia:`
-      <p>Ung thư phổi gồm 2 nhóm mô học chính: <b>không tế bào nhỏ (NSCLC, ~85%)</b> — biểu mô tuyến, biểu mô vảy, tế bào lớn; và <b>tế bào nhỏ (SCLC, ~15%)</b> — tiến triển nhanh, thường di căn sớm, đáp ứng hóa-xạ ban đầu tốt nhưng dễ tái phát.</p>
-      <p>Yếu tố nguy cơ chính: hút thuốc lá (quan trọng nhất), phơi nhiễm radon/amiăng, tiền sử gia đình, bệnh phổi nền (COPD/xơ phổi).</p>`,
+      <p>Ung thư phổi gồm <b>NSCLC</b> (~85%: biểu mô tuyến, vảy, tế bào lớn) và <b>SCLC</b> (~15%, tiến triển nhanh, di căn sớm, nhạy hóa–xạ ban đầu nhưng hay tái phát). Phân giai đoạn theo <b>TNM phiên bản 9 (IASLC, áp dụng từ 2025)</b>.</p>
+      <div class="alert-box alert-info"><b>Yếu tố nguy cơ:</b> hút thuốc lá (quan trọng nhất), khói bếp củi/than, radon, amiăng, ô nhiễm không khí, tiền sử gia đình, COPD/xơ phổi. <b>Ở Việt Nam/châu Á</b> tỷ lệ cao ở <b>phụ nữ không hút thuốc, ung thư biểu mô tuyến, đột biến EGFR (~40–50%)</b> — luôn làm xét nghiệm phân tử ở mọi ung thư tuyến.</div>`,
     chan_doan:`
-      <div class="alert-box alert-info"><b>ACS 2023 — mở rộng tầm soát:</b><ul><li>CT liều thấp hằng năm cho người <b>50–80 tuổi, hút thuốc ≥20 gói-năm</b>, đang hút <b>hoặc đã bỏ — bất kể bỏ bao nhiêu năm</b> (USPSTF 2021 vẫn giới hạn bỏ ≤15 năm).</li><li>Kèm tư vấn cai thuốc và quyết định chung; dừng tầm soát khi bệnh đồng mắc hạn chế tuổi thọ hoặc không thể phẫu thuật.</li></ul></div>
-      <p><b>Tầm soát</b> bằng CT ngực liều thấp (LDCT) hàng năm cho người 50–80 tuổi, hút thuốc ≥20 gói-năm, đang hút hoặc đã bỏ trong vòng 15 năm — ngừng tầm soát khi bỏ thuốc &gt;15 năm hoặc bệnh nặng giới hạn tuổi thọ/không còn khả năng phẫu thuật chữa khỏi.</p>
-      <p>Nốt phổi nghi ngờ: đánh giá theo kích thước/đặc điểm hình ảnh (Lung-RADS hoặc Fleischner), PET-CT đánh giá chuyển hóa và giai đoạn, sinh thiết mô (qua nội soi phế quản, xuyên thành ngực, hoặc phẫu thuật) để chẩn đoán mô học + xét nghiệm dấu ấn phân tử (EGFR, ALK, ROS1, PD-L1…) định hướng điều trị đích/miễn dịch ở NSCLC giai đoạn tiến xa.</p>
-      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('ecog')">🧮 ECOG</button></div>`,
+      <div class="subhead">Tầm soát LDCT (nguy cơ cao)</div>
+      ${rt(["Tiêu chuẩn"],[
+        ["<b>USPSTF 2021</b>","50–80 tuổi, ≥20 gói-năm, đang hút hoặc bỏ ≤15 năm; LDCT hằng năm."],
+        ["<b>ACS 2023</b>","50–80 tuổi, ≥20 gói-năm, <b>bất kể số năm đã bỏ thuốc</b>; LDCT hằng năm. Ngừng khi sức khỏe không cho phép điều trị triệt căn."],
+        ["<b>Nốt phổi</b>","Quản lý theo Lung-RADS v2022 (tầm soát) hoặc Fleischner 2017 (tình cờ): nốt đặc &lt;6 mm thường theo dõi; ≥8 mm PET-CT/sinh thiết; nốt kính mờ/bán đặc theo dõi dài hạn."]
+      ])}
+      <div class="subhead">Chẩn đoán & phân giai đoạn</div>
+      <ul>
+        <li><b>CT ngực–bụng có cản quang</b> → <b>PET-CT</b> + <b>MRI sọ</b> (bắt buộc từ stage II, đặc biệt tuyến/EGFR) + hạch trung thất: <b>EBUS-TBNA</b> (ưu tiên hơn mở trung thất).</li>
+        <li><b>Mô bệnh học</b> bằng sinh thiết phế quản/xuyên thành ngực/EBUS; <b>sinh thiết dịch màng phổi</b> khi có tràn dịch ác tính.</li>
+        <li><b>Xét nghiệm phân tử (NGS khuyến cáo) cho mọi NSCLC không vảy (và vảy ở người không hút thuốc/trẻ):</b> EGFR, ALK, ROS1, BRAF V600E, KRAS G12C, MET ex14, RET, NTRK, HER2, NRG1 + <b>PD-L1 (TPS)</b>; <b>ctDNA</b> khi mô không đủ hoặc cần kết quả nhanh.</li>
+        <li><b>Đánh giá chức năng:</b> ECOG, FEV₁/DLCO, tim mạch trước phẫu thuật.</li>
+      </ul>
+      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('ecog')">🧮 ECOG</button><button type="button" class="score-link-btn" onclick="goSmartScale('mascc')">🧮 MASCC</button></div>`,
     dieu_tri:`
-<ul>
-        <li>NSCLC giai đoạn sớm (I–II, chọn lọc IIIA): phẫu thuật cắt thùy phổi ± hóa trị bổ trợ là điều trị chính; xạ trị định vị thân (SBRT) cho người không đủ điều kiện phẫu thuật.</li>
-        <li>NSCLC giai đoạn tiến xa: điều trị theo dấu ấn phân tử — thuốc ức chế tyrosine kinase đích (nếu có đột biến EGFR/ALK...) hoặc hóa trị + miễn dịch trị liệu (ức chế PD-1/PD-L1) nếu không có đích phù hợp.</li>
-        <li>SCLC: hóa-xạ trị đồng thời cho giai đoạn khu trú; hóa trị + miễn dịch trị liệu cho giai đoạn lan tràn.</li>
-        <li>Chăm sóc giảm nhẹ tích hợp sớm ngay từ chẩn đoán giai đoạn tiến xa — cải thiện chất lượng sống, một số nghiên cứu cho thấy cải thiện cả sống còn.</li>
-        <li>Cai thuốc lá là can thiệp bắt buộc ở mọi giai đoạn — cải thiện đáp ứng điều trị và giảm biến chứng.</li>
-      </ul>`,
+      <div class="subhead">1. NSCLC theo giai đoạn</div>
+      ${rt(["Điều trị chính"],[
+        ["<b>Stage I–II (có thể mổ)</b>","Cắt thùy + nạo hạch (VATS/robot); <b>SBRT</b> nếu không mổ được. Sau mổ stage II–IIIA: hóa trị bổ trợ (cisplatin + vinorelbine/pemetrexed); <b>EGFR</b> ex19del/L858R → <b>osimertinib 80 mg/ngày × 3 năm</b> (ADAURA); <b>ALK+</b> → alectinib 600 mg × 2/ngày × 2 năm (ALINA); PD-L1 ≥1% sau hóa trị → atezolizumab/pembrolizumab 1 năm."],
+        ["<b>Stage II–III có thể mổ — tân bổ trợ/quanh mổ</b>","Nivolumab + hóa trị 3 chu kỳ (CheckMate 816); hoặc pembrolizumab/durvalumab + hóa trị trước mổ rồi tiếp tục sau mổ (KEYNOTE-671, AEGEAN) — loại EGFR/ALK."],
+        ["<b>Stage III không mổ</b>","Hóa–xạ trị đồng thời → <b>durvalumab 10 mg/kg mỗi 2 tuần hoặc 1500 mg mỗi 4 tuần (≥30 kg), tối đa 12 tháng</b> (PACIFIC); EGFR+ không tiến triển sau hóa–xạ trị → osimertinib (LAURA)."],
+        ["<b>Stage IV: có đột biến thúc đẩy</b>","Xem bảng thuốc đích bên dưới."],
+        ["<b>Stage IV: không có đột biến, PD-L1 ≥50%</b>","Pembrolizumab 200 mg mỗi 3 tuần (hoặc cemiplimab, atezolizumab) đơn trị; hoặc phối hợp hóa trị."],
+        ["<b>Stage IV: không đột biến, PD-L1 &lt;50%</b>","Hóa trị bạch kim + miễn dịch (pembrolizumab + carboplatin/cisplatin + pemetrexed (tuyến) hoặc carboplatin + paclitaxel (vảy)); ± ipilimumab + nivolumab."],
+        ["<b>Giảm nhẹ</b>","Chăm sóc giảm nhẹ tích hợp sớm từ lúc chẩn đoán giai đoạn tiến xa; xạ trị giảm nhẹ (xương, não, chèn ép)."]
+      ])}
+      <div class="subhead">2. Thuốc đích (stage IV)</div>
+      ${rt(["Thuốc / liều","Ghi chú"],[
+        ["<b>EGFR ex19del / L858R</b>","<b>Osimertinib</b> 80 mg/ngày; hoặc osimertinib + hóa trị (FLAURA2); hoặc <b>lazertinib 240 mg/ngày + amivantamab</b> (MARIPOSA; amivantamab TM theo cân nặng)","Ưu tiên có di căn não; osimertinib: phát ban, tiêu chảy, ILD, QT; lazertinib + amivantamab: dự phòng huyết khối trong 4 tháng đầu"],
+        ["<b>EGFR exon 20 insertion</b>","Amivantamab + hóa trị (PAPILLON)","—"],
+        ["<b>ALK</b>","<b>Alectinib</b> 600 mg × 2/ngày hoặc <b>lorlatinib</b> 100 mg/ngày","Lorlatinib: tăng lipid, tác dụng phụ thần kinh–nhận thức"],
+        ["<b>ROS1</b>","Entrectinib 600 mg/ngày; <b>repotrectinib 160 mg/ngày × 14 ngày rồi 160 mg × 2/ngày</b>; crizotinib 250 mg × 2/ngày","Theo nhãn FDA"],
+        ["<b>BRAF V600E</b>","Dabrafenib 150 mg × 2/ngày + trametinib 2 mg/ngày","Sốt, tăng men gan"],
+        ["<b>KRAS G12C</b>","Sotorasib 960 mg/ngày hoặc adagrasib 600 mg × 2/ngày (dòng 2)","—"],
+        ["<b>MET ex14 skip</b>","Capmatinib 400 mg × 2/ngày; tepotinib 450 mg/ngày","Phù ngoại biên"],
+        ["<b>RET</b>","Selpercatinib 160 mg × 2/ngày (≥50 kg; &lt;50 kg: 120 mg × 2/ngày); pralsetinib 400 mg/ngày","Theo nhãn FDA"],
+        ["<b>HER2 (ERBB2) đột biến / NTRK</b>","Trastuzumab deruxtecan 5,4 mg/kg mỗi 3 tuần; larotrectinib 100 mg × 2/ngày","—"]
+      ])}
+      <div class="subhead">3. SCLC</div>
+      <ul>
+        <li><b>Giai đoạn khu trú:</b> hóa–xạ trị đồng thời (cisplatin/carboplatin + etoposide) → <b>durvalumab 1500 mg mỗi 4 tuần</b> củng cố, tối đa 24 tháng (ADRIATIC); xạ trị dự phòng não (PCI) chọn lọc, MRI não theo dõi.</li>
+        <li><b>Giai đoạn lan tràn:</b> carboplatin + etoposide + <b>atezolizumab</b> hoặc <b>durvalumab 1500 mg mỗi 3 tuần cùng hóa trị × 4 chu kỳ rồi 1500 mg mỗi 4 tuần</b>; dòng 2: lurbinectedin hoặc <b>tarlatamab</b> (DLL3).</li>
+        <li>Xạ trị lồng ngực củng cố có chọn lọc.</li>
+      </ul>
+      <div class="subhead">4. Cấp cứu ung thư phổi & tác dụng phụ miễn dịch</div>
+      ${rt(["Xử trí"],[
+        ["<b>Hội chứng TMC trên (SVC)</b>","Nâng đầu, oxy, xạ trị/hóa trị theo mô học; stent TM khi nặng/thở rít; corticoid không thường quy."],
+        ["<b>Chèn ép tủy</b>","Dexamethasone 10 mg TM → 4 mg mỗi 6 giờ + MRI toàn bộ cột sống cấp cứu → xạ trị/phẫu thuật."],
+        ["<b>Tăng calci máu ác tính</b>","Bù dịch NaCl 0,9% + zoledronic acid 4 mg TM (hoặc denosumab); xem mục tăng calci."],
+        ["<b>SIADH</b>","Hạn chế dịch, muối/tolvaptan theo mức natri (xem hạ natri)."],
+        ["<b>Viêm phổi/đại tràng/gan do thuốc ức chế điểm kiểm soát miễn dịch</b>","Ngừng thuốc; độ ≥2: prednisone 1–2 mg/kg/ngày giảm dần ≥4–6 tuần; độ 3–4: methylprednisolone TM, infliximab/MMF nếu kháng; loại trừ nhiễm trùng."],
+        ["<b>Di căn não</b>","Dexamethasone 4–16 mg/ngày nếu phù; xạ phẫu/xạ trị; thuốc đích thế hệ mới thấm não (osimertinib, alectinib, lorlatinib)."]
+      ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
-        ["Tầm soát LDCT hàng năm cho người 50–80 tuổi, ≥20 gói-năm",'<span class="badge badge-I">I</span>'],
-        ["Xét nghiệm dấu ấn phân tử trước điều trị NSCLC giai đoạn tiến xa",'<span class="badge badge-I">I</span>'],
+        ["Tầm soát LDCT hằng năm cho người nguy cơ cao (50–80 tuổi, ≥20 gói-năm)",'<span class="badge badge-I">I</span>'],
+        ["Xét nghiệm phân tử (NGS) + PD-L1 trước điều trị NSCLC giai đoạn tiến xa",'<span class="badge badge-I">I</span>'],
+        ["EBUS-TBNA là lựa chọn đầu tay lấy mẫu hạch trung thất",'<span class="badge badge-I">I</span>'],
+        ["Osimertinib hàng đầu cho EGFR đột biến (bổ trợ và di căn)",'<span class="badge badge-I">I</span>'],
+        ["Durvalumab sau hóa–xạ trị đồng thời ở stage III không mổ",'<span class="badge badge-I">I</span>'],
         ["Chăm sóc giảm nhẹ tích hợp sớm ở giai đoạn di căn",'<span class="badge badge-I">I</span>'],
         ["Tầm soát bằng X-quang ngực thường quy thay LDCT",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"American Cancer Society Guideline for Lung Cancer Screening 2023 (CA Cancer J Clin 2023); USPSTF Lung Cancer Screening Recommendation 2021; NCCN Guidelines for NSCLC/SCLC"
+  source:"Liều thuốc đích và durvalumab đối chiếu nhãn FDA (osimertinib/alectinib/lorlatinib/sotorasib/adagrasib/capmatinib/tepotinib/selpercatinib/pralsetinib/entrectinib/repotrectinib/lazertinib/larotrectinib/dabrafenib); phác đồ theo giai đoạn dựa NCCN/ESMO qua tóm tắt công bố; chưa đối chiếu nhãn trastuzumab deruxtecan, crizotinib, alectinib bổ trợ (ALINA 2 năm), osimertinib bổ trợ (ADAURA 3 năm); NCCN Guidelines NSCLC & SCLC 2025; Hendriks LE et al. ESMO Clinical Practice Guidelines NSCLC 2023 & SCLC 2021; Wolf AMD et al. ACS Lung Cancer Screening Guideline 2023 (CA Cancer J Clin); USPSTF 2021; IASLC TNM 9th edition 2024; Wu YL et al. ADAURA, N Engl J Med 2020; Spigel DR et al. PACIFIC, N Engl J Med 2018; Cheng Y et al. ADRIATIC, N Engl J Med 2024"
 },
 {
   spec:"ho_hap", id:"hap_vap", emoji:"🏥", short:"VP BV/thở máy", title:"Viêm phổi bệnh viện & Viêm phổi thở máy (HAP/VAP)",
@@ -6340,7 +6690,22 @@ ${rt(["Hướng xử trí"],[
         <li>Xuống thang kháng sinh dựa trên kết quả cấy và đáp ứng lâm sàng sau 48–72 giờ — nguyên tắc quan trọng để giảm kháng thuốc.</li>
         <li>Thời gian điều trị chuẩn: <b>7 ngày</b> cho đa số trường hợp (kể cả do trực khuẩn Gram âm không lên men như <i>Pseudomonas</i>), trừ khi đáp ứng chậm/biến chứng.</li>
         <li>Phòng ngừa VAP: nâng đầu giường 30–45°, vệ sinh răng miệng, đánh giá cai máy thở hàng ngày, hạn chế an thần không cần thiết.</li>
-      </ul>`,
+      </ul>
+      <div class="subhead">Bảng kháng sinh theo tác nhân (người lớn, chức năng thận bình thường)</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Piperacillin–tazobactam</b>","4,5 g TM mỗi 6 giờ (truyền kéo dài 3–4 giờ)","Phủ Pseudomonas; đơn trị khi không MDR"],
+        ["<b>Cefepime</b>","2 g TM mỗi 8 giờ","Phủ Pseudomonas; nguy cơ độc thần kinh khi suy thận"],
+        ["<b>Meropenem</b>","1 g TM mỗi 8 giờ (truyền kéo dài)","ESBL/ nghi MDR; imipenem 500 mg mỗi 6 giờ"],
+        ["<b>Ceftazidime–avibactam</b>","2,5 g TM mỗi 8 giờ (truyền 2 giờ)","CRE (KPC, OXA-48), Pseudomonas kháng carbapenem; không phủ MBL"],
+        ["<b>Meropenem–vaborbactam / Cefiderocol</b>","4 g (2/2) mỗi 8 giờ; cefiderocol 2 g mỗi 8 giờ (truyền 3 giờ)","CRE/ Acinetobacter/ Stenotrophomonas (cefiderocol)"],
+        ["<b>Acinetobacter baumannii kháng carbapenem (CRAB)</b>","<b>Sulbactam–durlobactam</b> (1 g/1 g mỗi 6 giờ, truyền 3 giờ) + carbapenem; hoặc ampicillin–sulbactam 9 g mỗi 8 giờ (truyền 4 giờ) + thuốc khác; colistin","IDSA 2024; phối hợp ≥2 thuốc"],
+        ["<b>Colistin / Polymyxin B</b>","Colistin: nạp 9 triệu đơn vị → 4,5 triệu đơn vị mỗi 12 giờ; Polymyxin B 2–2,5 mg/kg nạp → 1,25–1,5 mg/kg mỗi 12 giờ","Độc thận/thần kinh; khí dung bổ trợ (colistin 75–150 mg × 2/ngày)"],
+        ["<b>MRSA</b>","Vancomycin 15–20 mg/kg mỗi 8–12 giờ (nạp 25–30 mg/kg khi nặng; AUC 400–600) <b>hoặc</b> Linezolid 600 mg mỗi 12 giờ","Linezolid thấm phổi tốt, ưu tiên khi suy thận/viêm phổi hoại tử"],
+        ["<b>Levofloxacin / Ciprofloxacin</b>","Levofloxacin 750 mg/ngày; Cipro 400 mg mỗi 8 giờ","Phối hợp thứ hai; hạn chế do kháng thuốc"],
+        ["<b>Aminoglycoside</b>","Amikacin 15–20 mg/kg/ngày; Tobramycin/Gentamicin 5–7 mg/kg/ngày","Thứ hai ngắn ngày; thấm phổi kém; độc thận/tai"],
+        ["<b>Candida/Aspergillus</b>","Không điều trị thường quy khi cấy đờm dương; Aspergillus: xem mục aspergillosis","—"]
+      ])}
+      <div class="alert-box alert-info"><b>Nguyên tắc:</b> kháng sinh theo kháng sinh đồ địa phương; cấy đờm/BAL <u>trước</u> kháng sinh; tăng liều/truyền kéo dài β-lactam ở bệnh nhân nặng; xuống thang sau 48–72 giờ; đánh giá lại ở ngày 7 (7 ngày là đủ đa số, kể cả Pseudomonas). Cân nhắc nguy cơ MDR: kháng sinh TM 90 ngày qua, sốc, ARDS, thay thận nhân tạo, nằm viện ≥5 ngày trước VAP.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Cấy đàm/dịch hút trước khi đổi kháng sinh khi có thể",'<span class="badge badge-I">I</span>'],
@@ -6397,13 +6762,33 @@ ${rt(["Hướng xử trí"],[
       ])}
       <p>Nguy cơ cao (tiền sử gia đình thế hệ 1 mắc CRC/polyp tiến triển, hội chứng Lynch, đa polyp tuyến gia đình, viêm ruột mạn) cần bắt đầu sớm hơn và tầm soát bằng nội soi đại tràng theo phác đồ riêng.</p>`,
     dieu_tri:`
-<ul>
-        <li>Bất kỳ xét nghiệm tầm soát nào <b>dương tính (trừ nội soi đại tràng)</b> đều cần <b>nội soi đại tràng toàn bộ xác nhận</b> — không lặp lại xét nghiệm không xâm lấn khác thay thế.</li>
-        <li>Cắt polyp qua nội soi khi phát hiện — hầu hết polyp tuyến được xử lý ngay trong cùng lần soi.</li>
-        <li>Sau cắt polyp, khoảng theo dõi tiếp theo tùy số lượng/kích thước/mô học polyp (polyp nguy cơ cao cần soi lại sớm hơn 10 năm, thường 3–5 năm).</li>
-        <li>Tư vấn di truyền nếu nghi hội chứng Lynch (CRC nhiều thế hệ, tuổi trẻ) hoặc đa polyp tuyến gia đình.</li>
-        <li>Không có xét nghiệm tầm soát nào ưu việt tuyệt đối — chọn xét nghiệm mà bệnh nhân sẽ thực sự tuân thủ định kỳ là quan trọng nhất.</li>
-      </ul>`,
+      <div class="subhead">1. Xử trí sau xét nghiệm tầm soát</div>
+      <ul>
+        <li>FIT/FIT-DNA/mt-sDNA <b>dương tính → nội soi đại tràng toàn bộ trong 3–6 tháng</b> (không lặp lại FIT); nội soi sigma/CT đại tràng bất thường → nội soi đại tràng.</li>
+        <li>Chuẩn bị ruột: PEG 4 L chia liều (tối thiểu 2 liều), dừng thuốc sắt, ngừng kháng đông cá thể hóa; mục tiêu sạch ruột đủ (Boston ≥6; ADR ≥25%).</li>
+        <li>Cắt polyp toàn bộ qua nội soi (EMR/ESD); polyp ≥20 mm cắt từng mảnh → soi lại sau 6 tháng.</li>
+        <li><b>Xét nghiệm máu (cfDNA – Shield, FDA 2024)</b>: độ nhạy thấp hơn với tiền ung thư; chưa được USPSTF/ACG khuyến cáo thay thế các phương pháp chuẩn — dành cho người từ chối nội soi/FIT.</li>
+        <li><b>Aspirin không khuyến cáo</b> khởi đầu để dự phòng CRC ở ≥60 tuổi (USPSTF 2022).</li>
+      </ul>
+      <div class="subhead">2. Giám sát sau cắt polyp (USMSTF 2020)</div>
+      ${rt(["Khoảng soi lại"],[
+        ["<b>1–2 u tuyến ống &lt;10 mm</b>","7–10 năm"],
+        ["<b>3–4 u tuyến ống &lt;10 mm</b>","3–5 năm"],
+        ["<b>5–10 u tuyến</b>, hoặc u tuyến ≥10 mm, hoặc u tuyến nhung mao/loạn sản độ cao","3 năm"],
+        ["<b>&gt;10 u tuyến</b>","1 năm (nghĩ hội chứng polyp di truyền)"],
+        ["<b>1–2 polyp răng cưa không cuống &lt;10 mm</b>","5–10 năm"],
+        ["<b>3–4 SSP &lt;10 mm</b> hoặc <b>1–2 SSP ≥10 mm/loạn sản</b>","3–5 năm; SSP ≥10 mm hoặc có loạn sản: 3 năm"],
+        ["<b>Cắt từng mảnh ≥20 mm</b>","Soi lại sau 6 tháng"]
+      ])}
+      <div class="subhead">3. Nhóm nguy cơ cao</div>
+      ${rt(["Chiến lược"],[
+        ["<b>Họ hàng bậc 1 mắc CRC/polyp tiến triển</b>","Nếu &lt;60 tuổi (hoặc ≥2 người): nội soi từ 40 tuổi hoặc <b>sớm hơn 10 năm</b> so với tuổi chẩn đoán trẻ nhất; chu kỳ 5 năm. ≥60 tuổi: như nguy cơ trung bình từ 40 tuổi."],
+        ["<b>Hội chứng Lynch</b>","Nội soi mỗi 1–2 năm từ 20–25 tuổi (hoặc sớm hơn 2–5 năm so với ca trẻ nhất); xét nghiệm MMR/MSI ở u; nội soi dạ dày, tư vấn di truyền."],
+        ["<b>Đa polyp tuyến gia đình (FAP)</b>","Nội soi sigma/đại tràng hằng năm từ 10–12 tuổi; cắt đại tràng dự phòng."],
+        ["<b>Viêm đại tràng mạn (UC/Crohn đại tràng)</b>","Nội soi giám sát sau 8 năm khởi bệnh, rồi mỗi 1–3 năm theo nguy cơ; sinh thiết/màu sắc."],
+        ["<b>Tiền sử xạ vùng bụng–chậu</b>","Nội soi 5 năm sau xạ hoặc từ tuổi 30"]
+      ])}
+      <div class="alert-box alert-warn"><b>Dấu hiệu báo động (cần nội soi chẩn đoán, không phải tầm soát):</b> chảy máu trực tràng, thiếu máu thiếu sắt, đổi thói quen đại tiện kéo dài, sụt cân, khối bụng, đau bụng kéo dài, tắc ruột.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Bắt đầu tầm soát CRC từ 45 tuổi ở người nguy cơ trung bình",'<span class="badge badge-I">I</span>'],
@@ -6411,7 +6796,7 @@ ${rt(["Hướng xử trí"],[
         ["Ngừng tầm soát hoàn toàn thường quy sau 75 tuổi không cá thể hóa",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"USPSTF Colorectal Cancer Screening Recommendation 2021; ACG/US Multi-Society Task Force 2021"
+  source:"USPSTF Colorectal Cancer Screening 2021 (JAMA 2021); Patel SG et al. Multi-Society Task Force on CRC: Updates on screening 2022 (Gastroenterology); Gupta S et al. USMSTF Recommendations for Follow-up After Colonoscopy and Polypectomy 2020; ACS CRC screening guideline 2018; Imperiale TF et al. Shield cfDNA, N Engl J Med 2024"
 }
 ,
 {
@@ -6431,7 +6816,18 @@ ${rt(["Hướng xử trí"],[
         <li>Thuốc có bằng chứng: <b>Duloxetine</b> khởi đầu 30 mg/ngày, tăng lên 60 mg/ngày sau 1 tuần (liều khuyến cáo FDA cho fibromyalgia — tăng &gt;60mg ít thêm lợi ích rõ); <b>Milnacipran</b> hoặc <b>Pregabalin</b> khởi đầu 75 mg × 2 lần/ngày, tăng dần đến 150–225 mg × 2 lần/ngày theo dung nạp (tối đa 450mg/ngày); hoặc <b>Amitriptyline liều thấp</b> 10–25 mg buổi tối — chọn theo triệu chứng nổi trội (trầm cảm/lo âu đi kèm → SNRI; rối loạn giấc ngủ nổi trội → amitriptyline/pregabalin buổi tối).</li>
         <li><b>Tránh Opioid</b> — không hiệu quả trong fibromyalgia và tăng nguy cơ lệ thuộc/tác dụng phụ.</li>
         <li>NSAID/corticoid thường không hiệu quả do đây không phải bệnh viêm — cần giải thích rõ cho bệnh nhân để tránh lạm dụng.</li>
-      </ul>`,
+      </ul>
+      <div class="subhead">Bảng thuốc fibromyalgia (EULAR 2017, ACR/AAPT)</div>
+      ${rt(["Liều khởi đầu → đích","Ghi chú"],[
+        ["<b>Duloxetine</b>","30 mg/ngày × 1 tuần → 60 mg/ngày","Có nền trầm cảm/lo âu; buồn nôn, mất ngủ; tránh nếu tăng huyết áp chưa kiểm soát/tăng nhãn áp góc đóng"],
+        ["<b>Milnacipran</b> (nơi có)","12,5 mg/ngày → 50 mg × 2/ngày","Mệt mỏi chủ đạo; theo dõi huyết áp/nhịp tim"],
+        ["<b>Pregabalin</b>","75 mg × 2/ngày → 150 mg × 2/ngày (tối đa 450 mg/ngày)","Rối loạn giấc ngủ/đau; chóng mặt, tăng cân, phù; giảm liều khi suy thận"],
+        ["<b>Gabapentin</b>","300 mg tối → 1200–2400 mg/ngày chia 3 lần","Có thể thay pregabalin"],
+        ["<b>Amitriptyline</b>","10 mg buổi tối → 25–50 mg","Mất ngủ nổi bật; thận trọng người cao tuổi (kháng cholinergic, QT)"],
+        ["<b>Cyclobenzaprine</b>","5–10 mg buổi tối (hoặc 1–4 mg dưới lưỡi)","Cải thiện giấc ngủ/đau; gây buồn ngủ"],
+        ["<b>Tramadol</b>","50 mg khi cần (≤200 mg/ngày)","Chỉ cân nhắc ngắn hạn; <b>tránh opioid mạnh, corticoid, NSAID thường quy</b>"]
+      ])}
+      <div class="alert-box alert-info">Theo EULAR 2017: tập thể dục và CBT cho mọi BN; thuốc chỉ phối hợp khi triệu chứng nổi trội. Bắt đầu thuốc liều thấp, tăng từ từ và đánh giá lại sau 4–12 tuần.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Vận động thể lực đều đặn là điều trị nền tảng",'<span class="badge badge-I">I</span>'],
@@ -6439,25 +6835,56 @@ ${rt(["Hướng xử trí"],[
         ["Opioid là điều trị hiệu quả và nên dùng thường quy",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"American College of Rheumatology (ACR) 2016 Fibromyalgia Diagnostic Criteria; EULAR management guideline"
+  source:"Wolfe F et al. 2016 ACR Fibromyalgia Diagnostic Criteria; Macfarlane GJ et al. EULAR revised recommendations for the management of fibromyalgia. Ann Rheum Dis 2017; Häuser W et al. Cochrane Reviews"
 },
 {
   spec:"co_xuong_khop", id:"low_back_pain", emoji:"🦴", short:"Đau lưng CH", title:"Đau thắt lưng cơ học & Thoát vị đĩa đệm",
-  guidelines:["ACP 2017","NASS"],
+  guidelines:["ACP 2017","NICE NG59 (cập nhật 2020)","NASS 2020","Lancet 2018 Series"],
   sections:{
     dinh_nghia:`
       <p>Đau thắt lưng cơ học (non-specific low back pain) chiếm phần lớn các trường hợp đau lưng, không có nguyên nhân thực thể nghiêm trọng, tiên lượng tự giới hạn tốt trong vài tuần. Thoát vị đĩa đệm chèn ép rễ thần kinh gây đau lan kiểu rễ (đau thần kinh tọa) là nguyên nhân đặc hiệu thường gặp.</p>`,
     chan_doan:`
       <p>Phần lớn chẩn đoán dựa lâm sàng, KHÔNG cần hình ảnh học thường quy trong 4–6 tuần đầu nếu không có "cờ đỏ".</p>
       <div class="alert-box alert-danger">Cờ đỏ cần hình ảnh học/chuyển tuyến ngay: hội chứng chùm đuôi ngựa (bí tiểu/đại tiện, tê yên ngựa, yếu 2 chân), yếu vận động tiến triển, sốt kèm tiền sử tiêm chích/suy giảm miễn dịch (nghi áp xe/viêm đĩa đệm-đốt sống), tiền sử ung thư/sụt cân không rõ nguyên nhân (nghi di căn), chấn thương mới/loãng xương nặng (nghi gãy xẹp đốt sống).</div>
-      <p>MRI cột sống là lựa chọn hình ảnh khi có cờ đỏ hoặc đau kiểu rễ kéo dài &gt;6 tuần không đáp ứng điều trị bảo tồn, hoặc trước khi cân nhắc can thiệp/phẫu thuật.</p>`,
+      <p>MRI cột sống là lựa chọn hình ảnh khi có cờ đỏ hoặc đau kiểu rễ kéo dài &gt;6 tuần không đáp ứng điều trị bảo tồn, hoặc trước khi cân nhắc can thiệp/phẫu thuật.</p>
+      <div class="subhead">Cờ đỏ — cần hình ảnh/chuyển tuyến sớm</div>
+      ${rt(["Nghĩ đến / hành động"],[
+        ["<b>Chùm đuôi ngựa</b>: bí tiểu/đại tiện, tê vùng yên ngựa, yếu 2 chân tiến triển","MRI cột sống cấp cứu, giải ép trong 24–48 giờ"],
+        ["<b>Ung thư</b>: tiền sử ung thư, sụt cân, đau đêm, tuổi &gt;50 mới đau, đau không giảm khi nằm","MRI/CT/xạ hình xương, ESR/CRP, PSA, điện di protein"],
+        ["<b>Nhiễm trùng (viêm đĩa đệm–xương, áp xe ngoài màng cứng)</b>: sốt, tiêm chích, suy giảm miễn dịch, thủ thuật gần đây","CTM, CRP, cấy máu, MRI có tiêm Gd"],
+        ["<b>Gãy xương</b>: chấn thương, loãng xương, corticoid dài ngày, tuổi &gt;70","X-quang/CT; DEXA"],
+        ["<b>Viêm cột sống trục</b>: &lt;45 tuổi, cứng buổi sáng &gt;30 phút, đỡ khi vận động","HLA-B27, MRI khớp cùng–chậu; thang BASDAI/ASDAS"],
+        ["<b>Tổn thương mạch/nội tạng</b>: đau dữ dội đột ngột, tụ máu, phình ĐMC bụng","Siêu âm/CT bụng cấp cứu"]
+      ])}
+      <div class="alert-box alert-info"><b>Đau rễ (đau thần kinh tọa):</b> nghiệm pháp Lasègue (SLR) dương tính 30–70°, Slump; phân bố L4–S1: đau/tê mặt trước–ngoài đùi, cẳng chân; yếu cơ (gập mu bàn chân L4–L5, gập gan chân S1), giảm phản xạ gân gót (S1)/gối (L4). Phân loại nguy cơ: <b>STarT Back</b> để phân tầng điều trị.</div>`,
     dieu_tri:`
-<ul>
-        <li><b>Duy trì vận động, tránh nằm nghỉ tại giường kéo dài</b> — nằm nghỉ lâu làm chậm hồi phục.</li>
-        <li>Điều trị đầu tay không dùng thuốc: giáo dục, chườm nóng/lạnh, vận động trị liệu, có thể phối hợp xoa bóp/châm cứu.</li>
-        <li>Thuốc: <b>NSAID</b> là lựa chọn đầu tay nếu cần; giãn cơ ngắn ngày cho co thắt cơ cấp; <b>tránh opioid</b> là điều trị đầu tay (chỉ cân nhắc ngắn hạn khi các biện pháp khác thất bại).</li>
-        <li>Đau kiểu rễ (thoát vị đĩa đệm) cấp: phần lớn tự cải thiện trong 6–12 tuần với điều trị bảo tồn; tiêm corticoid ngoài màng cứng có thể giảm đau ngắn hạn ở trường hợp chọn lọc.</li>
-        <li>Phẫu thuật (cắt bản sống vi phẫu/lấy nhân thoát vị) cân nhắc khi: hội chứng chùm đuôi ngựa (cấp cứu), yếu vận động tiến triển, hoặc đau kiểu rễ dai dẳng &gt;6–12 tuần dù điều trị bảo tồn đầy đủ và hình ảnh học tương ứng triệu chứng.</li>
+      <div class="subhead">1. Đau lưng cấp/bán cấp không đặc hiệu (&lt;12 tuần)</div>
+      <ul>
+        <li><b>Duy trì vận động</b>, trở lại sinh hoạt sớm; nằm nghỉ tại giường làm chậm hồi phục. Giáo dục, trấn an (đa số tự khỏi trong 4–6 tuần).</li>
+        <li><b>Chườm nóng tại chỗ</b> (bằng chứng trung bình); xoa bóp, châm cứu, thao tác cột sống: hiệu quả khiêm tốn.</li>
+        <li><b>Thuốc (ngắn ngày, liều thấp nhất):</b> NSAID đầu tay; thuốc giãn cơ nếu co thắt; <b>paracetamol đơn độc không hiệu quả hơn giả dược</b> (thử nghiệm PACE); tránh opioid đầu tay.</li>
+      </ul>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Ibuprofen</b>","400–600 mg mỗi 6–8 giờ (≤2400 mg/ngày)","Uống cùng thức ăn; PPI nếu nguy cơ GI"],
+        ["<b>Naproxen</b>","250–500 mg × 2/ngày","—"],
+        ["<b>Diclofenac</b>","50 mg × 2–3/ngày","Thận trọng tim mạch"],
+        ["<b>Celecoxib</b>","100–200 mg × 1–2/ngày","Ít tác dụng phụ GI hơn"],
+        ["<b>Tizanidine</b>","2–4 mg × 3/ngày (tối đa 36 mg)","Giãn cơ ngắn ngày ≤2 tuần; buồn ngủ, hạ HA"],
+        ["<b>Cyclobenzaprine</b>","5–10 mg × 3/ngày hoặc 5–10 mg tối","Buồn ngủ, khô miệng; thận trọng người cao tuổi"],
+        ["<b>Eperisone / Tolperisone</b> (nơi có)","50 mg × 3/ngày / 150 mg × 3/ngày","Ít an thần hơn"],
+        ["<b>Tramadol</b>","50 mg khi cần (≤200–300 mg/ngày)","Chỉ ngắn hạn khi NSAID thất bại; tránh opioid mạnh thường quy"]
+      ])}
+      <div class="subhead">2. Đau lưng mạn (&gt;12 tuần)</div>
+      <ul>
+        <li>Đầu tay không dùng thuốc: <b>tập thể dục có giám sát</b> (ổn định lõi, aerobic), tai chi, yoga, giảm stress dựa chánh niệm (MBSR), liệu pháp nhận thức–hành vi (CBT), châm cứu, phục hồi chức năng đa mô thức.</li>
+        <li>Thuốc: NSAID; <b>duloxetine</b> 30→60 mg/ngày; tramadol khi các biện pháp khác thất bại; tránh opioid mạnh dài hạn, benzodiazepine.</li>
+        <li>Xử trí yếu tố tâm lý–xã hội (trầm cảm, lo âu, sợ vận động), giảm cân, bỏ thuốc lá.</li>
+      </ul>
+      <div class="subhead">3. Đau rễ do thoát vị đĩa đệm</div>
+      <ul>
+        <li>Bảo tồn ≥6–12 tuần: NSAID, vận động; <b>gabapentin/pregabalin ít lợi ích</b> (chỉ thử ngắn hạn); tiêm corticoid ngoài màng cứng cho đau rễ nặng, giảm ngắn hạn (không giảm phẫu thuật dài hạn).</li>
+        <li><b>Phẫu thuật vi phẫu lấy nhân thoát vị</b> khi: chùm đuôi ngựa (cấp cứu), yếu vận động tiến triển/nặng, đau rễ dai dẳng &gt;6–12 tuần không đáp ứng và hình ảnh phù hợp lâm sàng.</li>
+        <li>Hẹp ống sống thoái hóa: vật lý trị liệu, tiêm ESI; phẫu thuật giải ép khi mất chức năng/đau cách hồi thần kinh nặng.</li>
       </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -6467,7 +6894,7 @@ ${rt(["Hướng xử trí"],[
         ["Opioid là điều trị đầu tay cho đau lưng cấp không biến chứng",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"American College of Physicians (ACP) Noninvasive Treatment for Low Back Pain 2017; North American Spine Society (NASS)"
+  source:"Qaseem A et al. ACP Noninvasive Treatments for Acute, Subacute, and Chronic Low Back Pain. Ann Intern Med 2017; Hartvigsen J et al. Lancet 2018 (Low back pain Series); NICE NG59 (2016, updated 2020); Kreiner DS et al. NASS Lumbar disc herniation/radiculopathy guideline 2020; Machado GC et al. PACE, BMJ 2015"
 }
 ,
 {
@@ -6681,59 +7108,87 @@ ${rt(["Hướng xử trí"],[
 },
 {
   spec:"ho_hap", id:"lung_abscess", emoji:"🫧", short:"Áp xe phổi", title:"Áp xe phổi & Mủ màng phổi (Empyema)",
-  guidelines:["ATS/IDSA CAP 2019","BTS Pleural Guideline"],
+  guidelines:["BTS Pleural Disease 2023","ERS/ESTS Pleural Infection 2023","ATS/IDSA CAP 2019","IDSA/ASM Dx 2024"],
   sections:{
     dinh_nghia:`
-      <p><b>Áp xe phổi</b>: hoại tử nhu mô phổi tạo hang chứa mủ, thường do hít sặc (vi khuẩn kỵ khí miệng-họng ở người rối loạn ý thức/nuốt), hoặc biến chứng viêm phổi hoại tử. <b>Mủ màng phổi (empyema)</b>: tràn dịch màng phổi nhiễm khuẩn có mủ thực sự, thường biến chứng từ viêm phổi cận phổi (parapneumonic effusion) tiến triển.</p>`,
+      ${rt(["Định nghĩa & đặc điểm"],[
+        ["<b>Áp xe phổi</b>","Hoại tử nhu mô phổi hóa mủ thành <b>hang đơn độc &gt;2 cm</b> có mức khí–dịch (nhiều hang nhỏ &lt;2 cm = <i>viêm phổi hoại tử</i>). <b>Nguyên phát</b> (~80%): hít sặc vi khuẩn kỵ khí vùng miệng–họng. <b>Thứ phát</b>: tắc nghẽn phế quản (u, dị vật), dãn phế quản, tắc mạch nhiễm khuẩn (viêm nội tâm mạc, Lemierre), lan từ ổ bụng/gan (áp xe gan amip, <i>K. pneumoniae</i>), suy giảm miễn dịch."],
+        ["<b>Mủ màng phổi (empyema / nhiễm trùng khoang màng phổi)</b>","Tràn dịch màng phổi nhiễm khuẩn: dịch mủ đại thể, hoặc cấy/Gram dương, hoặc dịch có pH &lt;7,2. Diễn tiến 3 giai đoạn: tiết dịch → <b>fibrin–mủ (vách hóa)</b> → tổ chức hóa (vỏ dày, phổi bị nhốt)."]
+      ])}
+      <div class="alert-box alert-info"><b>Tác nhân thường gặp:</b> kỵ khí (<i>Prevotella, Fusobacterium, Peptostreptococcus, Bacteroides</i>), nhóm <i>Streptococcus anginosus (milleri)</i>, <i>S. aureus</i> (kể cả MRSA), <i>K. pneumoniae</i> (đặc biệt chủng hypervirulent ở châu Á, áp xe gan kèm theo), trực khuẩn Gram âm/<i>P. aeruginosa</i> (bệnh viện, bệnh phổi mạn). <b>Tại Việt Nam luôn nhớ:</b> <i>Burkholderia pseudomallei</i> (melioidosis, đặc biệt ĐTĐ), lao hang, nấm, amip.</div>
+      <p><b>Yếu tố nguy cơ:</b> rối loạn ý thức (rượu, thuốc, động kinh, đột quỵ), rối loạn nuốt, răng miệng kém/viêm nha chu, ĐTĐ, bệnh phổi mạn, ức chế miễn dịch, sau viêm phổi cộng đồng không đáp ứng.</p>`,
     chan_doan:`
-      <p>Áp xe phổi: CT ngực thấy hang có mức dịch-khí, thường ở phân thùy phụ thuộc trọng lực (thùy trên phải/dưới nếu do hít sặc khi nằm).</p>
-      <p>Mủ màng phổi: chọc dịch màng phổi thấy mủ đại thể, hoặc dịch có pH&lt;7.2, glucose thấp, LDH cao, nhuộm Gram/cấy dương — bất kỳ đặc điểm này đều là chỉ định dẫn lưu.</p>
-      <div class="alert-box alert-info">Luôn tìm yếu tố nguy cơ hít sặc (rối loạn ý thức, nghiện rượu, rối loạn nuốt, vệ sinh răng miệng kém) trong áp xe phổi để định hướng điều trị và phòng ngừa tái phát.</div>`,
+      <div class="subhead">Lâm sàng</div>
+      <p>Áp xe phổi thường <b>bán cấp</b> (2–3 tuần): sốt kéo dài, ho đờm, <b>đờm hôi thối</b> (30–50%), sụt cân, đổ mồ hôi đêm, đau ngực kiểu màng phổi, ho máu. Mủ màng phổi: sốt, đau ngực kiểu màng phổi, khó thở; <b>sốt dai dẳng/CRP không giảm sau 48–72 giờ kháng sinh trong viêm phổi</b> → nghĩ biến chứng cận phổi.</p>
+      <div class="subhead">Cận lâm sàng</div>
+      ${rt(["Mục đích / diễn giải"],[
+        ["<b>CT ngực có cản quang</b>","Xác nhận hang/mức khí–dịch, phân biệt áp xe (thành dày, viền ngấm thuốc, phá vỡ cấu trúc phế quản–mạch máu) với mủ màng phổi (dấu <i>split pleura</i>, góc tù với thành ngực), thấy tắc nghẽn phế quản, hạch, u."],
+        ["<b>Siêu âm màng phổi</b>","Có vách/fibrin, định vị điểm chọc, hướng dẫn dẫn lưu; ưu tiên làm tại giường."],
+        ["<b>Cấy máu ≥2 bộ</b>","Trước kháng sinh; dương tính trong nhiều ca mủ màng phổi/<i>K. pneumoniae</i>/<i>S. aureus</i>."],
+        ["<b>Đờm (Gram, cấy, AFB/GeneXpert)</b>","Đờm khạc thường nhiễm khuẩn miệng — ít giá trị với kỵ khí; <b>bắt buộc loại trừ lao</b>; cấy tìm <i>B. pseudomallei</i> nếu vùng dịch tễ/ĐTĐ."],
+        ["<b>Dịch màng phổi</b>","Chọc dò dưới siêu âm khi có tràn dịch cận phổi. Mủ đại thể hoặc <b>pH &lt;7,2</b>, glucose &lt;60 mg/dL (3,4 mmol/L), LDH &gt;1000 U/L, Gram/cấy dương → <b>dẫn lưu</b>. Cấy dịch cả trong chai cấy máu để tăng độ nhạy; xét PCR 16S rRNA nếu cấy âm."],
+        ["<b>Nội soi phế quản</b>","Khi không có yếu tố hít sặc rõ, hút thuốc ≥50 tuổi, đáp ứng kém, nghi u/dị vật; lấy dịch rửa phế quản–phế nang (BAL) cho vi sinh."],
+        ["<b>CRP, bạch cầu, albumin, urê, đường huyết, HIV</b>","Đánh giá mức độ, cho điểm RAPID, tầm soát ĐTĐ/HIV (HbA1c nếu chưa rõ)."]
+      ])}
+      <div class="alert-box alert-warn"><b>Chẩn đoán phân biệt hang phổi:</b> ung thư phổi thể hang (hút thuốc, vách dày không đều), lao hang, GPA/Wegener (nhiều hang, tổn thương thận/mũi xoang), tắc mạch nhiễm khuẩn (cấy máu, siêu âm tim), melioidosis, nấm (<i>Aspergillus</i>, <i>Cryptococcus</i>), nhồi máu phổi hoại tử, kén phổi/bóng khí có dịch, abscess do amip (đi kèm áp xe gan).</div>
+      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('rapid')">🧮 RAPID (mủ màng phổi)</button><button type="button" class="score-link-btn" onclick="goSmartScale('curb65')">🧮 CURB-65</button><button type="button" class="score-link-btn" onclick="goSmartScale('sofa')">🧮 SOFA</button><button type="button" class="score-link-btn" onclick="goSmartScale('news2')">🧮 NEWS2</button></div>`,
     dieu_tri:`
-<ul>
-        <li><b>Áp xe phổi:</b> kháng sinh phổ kỵ khí kéo dài — <b>Ampicillin-sulbactam</b> 3g TM mỗi 6 giờ (đầu tay), hoặc <b>Clindamycin</b> 600mg TM mỗi 8 giờ (thay thế), hoặc <b>Carbapenem</b> (Meropenem 1g TM mỗi 8 giờ) nếu nặng/nghi kháng thuốc — chuyển sang đường uống (Amoxicillin-clavulanate) khi cải thiện lâm sàng; thời gian điều trị kéo dài (thường 3–6 tuần hoặc đến khi hang teo nhỏ/khỏi trên hình ảnh học), phần lớn đáp ứng kháng sinh đơn thuần không cần dẫn lưu.</li>
-        <li>Dẫn lưu qua da hoặc phẫu thuật cho áp xe phổi lớn (&gt;6–8cm) không đáp ứng kháng sinh hoặc biến chứng (vỡ vào màng phổi, chảy máu).</li>
-        <li><b>Mủ màng phổi:</b> kháng sinh phổ rộng theo kinh nghiệm (phủ Gram dương/âm/kỵ khí) + <b>dẫn lưu màng phổi bắt buộc</b> khi có tiêu chuẩn dẫn lưu (mủ đại thể, pH thấp, vi khuẩn dương).</li>
-        <li>Tiêu sợi huyết trong màng phổi (tPA + DNase) khi dịch vách hóa/dẫn lưu không hiệu quả — giảm nhu cầu phẫu thuật.</li>
-        <li>Phẫu thuật bóc vỏ màng phổi (decortication qua VATS/mở ngực) khi thất bại điều trị nội khoa + dẫn lưu.</li>
+      <div class="subhead">1. Kháng sinh — ÁP XE PHỔI</div>
+      ${rt(["Phác đồ","Liều","Ghi chú"],[
+        ["<b>Đầu tay (cộng đồng, hít sặc)</b>","<b>Ampicillin–sulbactam</b> TM","3 g mỗi 6 giờ","Phủ kỵ khí + Gram dương + nhiều Gram âm; chuyển uống khi hết sốt"],
+        ["<b>Đầu tay (tương đương)</b>","<b>Amoxicillin–clavulanate</b> TM → uống","1,2 g TM mỗi 8 giờ → 875/125 mg uống mỗi 12 giờ (hoặc 1 g/125 mg mỗi 8 giờ)","Bước xuống đường uống khi lâm sàng ổn"],
+        ["<b>Thay thế / dị ứng penicillin không phản vệ</b>","<b>Ceftriaxone</b> + <b>Metronidazole</b>","2 g TM mỗi 24 giờ + 500 mg TM/uống mỗi 8 giờ","Metronidazole <b>không dùng đơn độc</b> (kém với liên cầu miệng, cần phối hợp)"],
+        ["<b>Dị ứng nặng penicillin</b>","<b>Clindamycin</b> (± cephalosporin thế hệ 3 nếu nghi Gram âm)","600 mg TM mỗi 8 giờ (tối đa 900 mg/8 giờ), uống 300–450 mg mỗi 6–8 giờ","Tỷ lệ đề kháng kỵ khí tăng; nguy cơ <i>C. difficile</i>. Hoặc <b>Moxifloxacin</b> 400 mg/ngày (hiệu quả kỵ khí không chắc chắn)"],
+        ["<b>Bệnh viện / bệnh phổi mạn / nghi Gram âm, <i>Pseudomonas</i></b>","<b>Piperacillin–tazobactam</b> hoặc <b>Meropenem</b>","4,5 g TM mỗi 6–8 giờ; 1 g TM mỗi 8 giờ","Cân nhắc truyền kéo dài (extended infusion); điều chỉnh theo cấy/kháng sinh đồ"],
+        ["<b>Nghi/xác định MRSA</b>","Thêm <b>Vancomycin</b> hoặc <b>Linezolid</b>","15–20 mg/kg mỗi 8–12 giờ (theo AUC/nồng độ đáy); 600 mg mỗi 12 giờ","Linezolid thấm mô phổi tốt; theo dõi tiểu cầu"],
+        ["<b>Melioidosis (<i>B. pseudomallei</i>)</b>","<b>Ceftazidime</b> hoặc <b>Meropenem</b> → <b>TMP–SMX</b>","Ceftazidime 2 g TM mỗi 6 giờ hoặc Meropenem 1 g mỗi 8 giờ; tấn công ≥14 ngày (nặng/ổ mủ 4 tuần) → TMP-SMX 160/800 mg (nặng &gt;60 kg: 240/1200) mỗi 12 giờ","Duy trì TMP–SMX <b>≥12 tuần</b> chống tái phát; bổ sung acid folic"],
+        ["<b>Actinomyces</b>","<b>Penicillin G</b> → Amoxicillin","18–24 triệu đơn vị/ngày TM 2–6 tuần → Amoxicillin 500 mg–1 g mỗi 8 giờ uống","Tổng 6–12 tháng (thể ngực/xâm lấn)"],
+        ["<b>Amip (áp xe gan amip vỡ lên phổi)</b>","<b>Metronidazole</b> rồi thuốc diệt amip trong lòng ruột","500–750 mg mỗi 8 giờ × 7–10 ngày + Paromomycin 25–35 mg/kg/ngày chia 3 lần × 7 ngày","Chẩn đoán huyết thanh amip; dẫn lưu ổ mủ nếu lớn"]
+      ])}
+      <div class="alert-box alert-info"><b>Thời gian điều trị áp xe phổi:</b> TM cho đến khi hết sốt và ổn định lâm sàng (thường 1–3 tuần) → chuyển <b>uống</b>; tiếp tục đến khi <b>hang hết hoặc chỉ còn sẹo nhỏ ổn định trên hình ảnh</b> — thường <b>3–6 tuần</b> (một số nguồn kéo dài đến 6–8 tuần với hang lớn); không kéo dài vô hạn khi đã khỏi. Chụp X-quang/CT theo dõi mỗi 2–4 tuần.</div>
+      <div class="subhead">2. Dẫn lưu, can thiệp áp xe phổi</div>
+      <ul>
+        <li>Phần lớn (&gt;80–90%) khỏi với kháng sinh và dẫn lưu tư thế (vật lý trị liệu, ho khạc, bổ sung dinh dưỡng, ngừng rượu/thuốc lá).</li>
+        <li><b>Chọc dẫn lưu qua da dưới CT/siêu âm</b> khi: hang lớn (&gt;6–8 cm), sốt dai dẳng &gt;7–14 ngày, nhiễm trùng huyết, không thông với phế quản, người bệnh không thể ho khạc, thở máy; kỹ thuật an toàn nếu tránh tràn khí/tràn mủ màng phổi (đi qua nhu mô dính màng phổi).</li>
+        <li><b>Phẫu thuật cắt thùy/phân thùy</b> (VATS hoặc mở ngực): ho máu nặng, thất bại điều trị nội &gt;4–6 tuần, nghi ung thư, vỡ vào màng phổi (mủ màng phổi – dò phế quản màng phổi), hang &gt;6 cm kèm hoại thư phổi.</li>
+        <li><b>Ho máu:</b> tranexamic acid TM/khí dung, nằm nghiêng bên tổn thương; <b>thuyên tắc động mạch phế quản</b> khi ho máu nặng.</li>
+      </ul>
+      <div class="subhead">3. Kháng sinh — MỦ MÀNG PHỔI (ERS/ESTS 2023, BTS 2023)</div>
+      ${rt(["Phác đồ","Liều","Ghi chú"],[
+        ["<b>Cộng đồng</b>","<b>Ceftriaxone</b> + <b>Metronidazole</b> hoặc <b>Amoxicillin–clavulanate</b> / <b>Ampicillin–sulbactam</b>","Ceftriaxone 2 g TM mỗi 24 giờ + Metronidazole 500 mg mỗi 8 giờ; Amox-clav 1,2 g TM mỗi 8 giờ; Amp-sulbactam 3 g mỗi 6 giờ","Phủ <i>Streptococcus</i> (S. pneumoniae, S. anginosus), kỵ khí"],
+        ["<b>Bệnh viện / sau mổ / thở máy</b>","<b>Piperacillin–tazobactam</b> hoặc <b>Meropenem</b> ± <b>Vancomycin/Linezolid</b>","4,5 g TM mỗi 6 giờ; 1 g mỗi 8 giờ; Vanco 15–20 mg/kg mỗi 8–12 giờ","Phủ MRSA và Gram âm đề kháng"],
+        ["<b>Dị ứng penicillin</b>","Cephalosporin thế hệ 3 (nếu không phản vệ) + Metronidazole, hoặc Meropenem","—","<b>Tránh aminoglycoside</b> (thấm kém ở dịch màng phổi acid, bất hoạt)"],
+        ["<b>Đường dùng/thời gian</b>","TM ban đầu → uống khi cải thiện","—","<b>ERS/ESTS 2023: ít nhất 3 tuần</b>; BTS 2010: điển hình 4–6 tuần — đều là đồng thuận chuyên gia (2 RCT nhỏ 2–3 tuần chưa đủ sức mạnh để rút ngắn thường quy). Chuyển uống: không có quy tắc cứng; đánh giá lại ~48 giờ, thường khả thi sau 5–7 ngày nếu đáp ứng tốt"]
+      ])}
+      <div class="subhead">4. Dẫn lưu & tiêu sợi huyết nội màng phổi</div>
+      ${rt(["Nội dung"],[
+        ["<b>Dẫn lưu sớm</b>","Tiêu chuẩn: mủ, pH &lt;7,2, Gram/cấy dương, vách hóa, tràn dịch lượng vừa–nhiều kèm nhiễm trùng. <b>Ống dẫn lưu nhỏ ≤14 Fr</b> đặt dưới siêu âm là đầu tay (BTS 2023; ống lớn hơn kết cục tương tự nhưng đau hơn); <b>súc rửa định kỳ</b> (~30 mL NaCl 0,9% 3–4 lần/ngày) để giữ thông ống; BTS 2023 đề xuất rửa như một lựa chọn khi không dùng được tPA/DNase hoặc phẫu thuật. Nếu không đáp ứng sau 48 giờ: CT kiểm tra vị trí ống/mức độ bệnh."],
+        ["<b>Tiêu sợi huyết (MIST-2)</b>","<b>Alteplase (tPA) 10 mg + Dornase alfa (DNase) 5 mg (5000 đơn vị)</b>, mỗi thuốc pha trong 30 mL NaCl 0,9%, bơm vào ống dẫn lưu <b>2 lần/ngày × tối đa 3 ngày (6 liều)</b>; kẹp ống 1 giờ rồi mở lại. Chỉ dùng tPA hoặc DNase đơn độc kém hiệu quả."],
+        ["<b>Liều giảm (nguy cơ chảy máu)</b>","Alteplase 5 mg + DNase 5 mg 2 lần/ngày × 3 ngày có thể hiệu quả tương đương (BTS 2023: chỉ từ chuỗi ca hồi cứu; cân nhắc khi không ngừng được kháng đông; cần đồng thuận bệnh nhân). Streptokinase và dùng đơn độc tPA hoặc DNase: không khuyến cáo. Có thể bắt đầu trong 24–48 giờ ở ổ dịch vách hóa phức tạp/không đáp ứng; tạm ngừng kháng đông ≥2 ngày nếu an toàn (chảy máu ~4%, ~10% khi dùng kháng đông); lợi ích tử vong chưa rõ."],
+        ["<b>Chống chỉ định/thận trọng</b>","Tuyệt đối: chảy máu màng phổi hoạt động, đột quỵ cấp, phẫu thuật lớn trong 5 ngày, đã cắt phổi bên bệnh, dị ứng thuốc. Tương đối: rối loạn đông máu, kháng đông (warfarin, LMWH liều điều trị, DOAC), suy gan/thận nặng, đã dùng tiêu sợi huyết. Theo dõi chảy máu màng phổi, ho máu, phản ứng dị ứng."],
+        ["<b>Đánh giá đáp ứng</b>","Sốt, CRP, lượng dịch dẫn lưu, X-quang/siêu âm sau 48–72 giờ và sau tiêu sợi huyết."],
+        ["<b>Thất bại → phẫu thuật</b>","Đánh giá đáp ứng sớm (BTS 2023 gợi ý ở 48 giờ). Phẫu thuật sớm <b>không</b> được ưu tiên hơn dẫn lưu ống ban đầu; nếu còn sepsis/ổ mủ tồn dư/CRP không giảm sau dẫn lưu ± tiêu sợi huyết (thực hành thông dụng khoảng 5–7 ngày; BTS 2010 dùng mốc 7 ngày) → hội chẩn phẫu thuật; <b>VATS được ưu tiên hơn mở ngực</b>, bóc vỏ cá thể hóa theo thể trạng và giai đoạn. Bệnh nhân yếu: dẫn lưu kéo dài, mở cửa sổ ngực (Eloesser)."]
+      ])}
+      <div class="subhead">5. Hỗ trợ & theo dõi</div>
+      <ul>
+        <li>Giảm đau tốt (paracetamol ± opioid; hạn chế NSAID kéo dài vì nguy cơ chảy máu khi dùng tiêu sợi huyết), dinh dưỡng giàu đạm (albumin thấp là yếu tố tiên lượng xấu), dự phòng huyết khối.</li>
+        <li><b>Phòng tái phát:</b> điều trị răng miệng, ngừng rượu/thuốc, đánh giá nuốt, tư thế đầu cao khi ăn, hạn chế thuốc an thần; kiểm soát đường huyết.</li>
+        <li>Tái khám với CT/X-quang 4–6 tuần sau kết thúc kháng sinh; ≥50 tuổi hoặc hút thuốc: CT theo dõi đến khi hang xẹp hẳn để loại trừ ung thư.</li>
+        <li>Tiên lượng mủ màng phổi: dùng <b>RAPID</b> (Urê, Tuổi, mủ/không mủ, nguồn bệnh viện, albumin) — nguy cơ tử vong 3 tháng thấp 0–2 / trung bình 3–4 / cao 5–7.</li>
       </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
-        ["Kháng sinh phổ kỵ khí kéo dài là điều trị chính cho áp xe phổi",'<span class="badge badge-I">I</span>'],
-        ["Dẫn lưu màng phổi bắt buộc khi có tiêu chuẩn mủ màng phổi",'<span class="badge badge-I">I</span>'],
+        ["Kháng sinh phủ kỵ khí là nền tảng điều trị áp xe phổi (ampicillin–sulbactam/amoxicillin–clavulanate hoặc ceftriaxone + metronidazole)",'<span class="badge badge-I">I</span>'],
+        ["Điều trị tiếp đến khi hang hết hoặc sẹo ổn định (thường 3–6 tuần), chuyển đường uống khi cải thiện",'<span class="badge badge-IIa">IIa</span>'],
+        ["CT ngực/nội soi phế quản loại trừ u và tắc nghẽn khi không có yếu tố hít sặc hoặc đáp ứng kém",'<span class="badge badge-I">I</span>'],
+        ["Dẫn lưu màng phổi khi pH &lt;7,2, mủ, hoặc cấy/Gram dương; ưu tiên ống nhỏ ≤14 Fr dưới siêu âm",'<span class="badge badge-I">I</span>'],
+        ["Tiêu sợi huyết nội màng phổi phối hợp tPA + DNase khi còn ổ mủ vách hóa/dẫn lưu kém hiệu quả",'<span class="badge badge-IIa">IIa</span>'],
+        ["Hội chẩn phẫu thuật (ưu tiên VATS) nếu thất bại sau dẫn lưu ± tiêu sợi huyết; không phẫu thuật sớm thay cho dẫn lưu ban đầu",'<span class="badge badge-IIa">IIa</span>'],
+        ["Aminoglycoside không dùng cho mủ màng phổi",'<span class="badge badge-III">III</span>'],
         ["Dẫn lưu qua da/phẫu thuật thường quy cho mọi áp xe phổi bất kể kích thước",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"ATS/IDSA Community-Acquired Pneumonia Guideline 2019; British Thoracic Society Pleural Disease Guideline"
-}
-,
-{
-  spec:"tieu_hoa", id:"dili", emoji:"💊", short:"Tổn thương gan/thuốc", title:"Tổn thương gan do thuốc (Drug-Induced Liver Injury - DILI)",
-  guidelines:["ACG 2021"],
-  sections:{
-    dinh_nghia:`
-      <p>DILI là tổn thương gan do thuốc/thực phẩm chức năng/thảo dược, có thể theo kiểu hủy tế bào gan (tăng ALT chủ yếu), ứ mật (tăng ALP/Bilirubin chủ yếu), hoặc hỗn hợp. Thuốc thường gặp: paracetamol quá liều (kiểu hủy tế bào gan, có thể dự đoán theo liều), kháng sinh (<b>amoxicillin</b>-<b>clavulanate</b> — ứ mật, isoniazid, nitrofurantoin), <b>NSAID</b>, statin, thuốc chống lao, thực phẩm chức năng/thảo dược.</p>`,
-    chan_doan:`
-      <p>Chẩn đoán loại trừ — cần loại trừ viêm gan virus, bệnh gan tự miễn, bệnh gan do rượu/chuyển hóa, tắc mật cơ học (siêu âm) trước khi kết luận do thuốc.</p>
-      <p>Tính chỉ số R = (ALT/ULN)/(ALP/ULN) để phân loại kiểu tổn thương: R≥5 hủy tế bào gan, R≤2 ứ mật, 2&lt;R&lt;5 hỗn hợp — định hướng thuốc nghi ngờ và tiên lượng.</p>
-      <div class="alert-box alert-danger">Tiêu chuẩn Hy's Law (ALT/AST ≥3×ULN kèm Bilirubin ≥2×ULN, đã loại trừ tắc mật) gợi ý nguy cơ suy gan cấp cao — cần ngừng thuốc nghi ngờ ngay và theo dõi sát/chuyển chuyên khoa gan.</div>
-      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('r_factor')">🧮 Chỉ số R</button></div>`,
-    dieu_tri:`
-<ul>
-        <li><b>Ngừng ngay thuốc nghi ngờ</b> — biện pháp quan trọng nhất, phần lớn hồi phục sau ngừng thuốc.</li>
-        <li><b>N-acetylcysteine</b> là thuốc giải độc đặc hiệu cho quá liều paracetamol — hiệu quả cao nhất khi dùng sớm (lý tưởng &lt;8 giờ sau uống). Phác đồ TM chuẩn (21 giờ): liều nạp 150 mg/kg pha trong Dextrose 5% truyền trong 1 giờ, sau đó 50 mg/kg truyền trong 4 giờ, tiếp theo 100 mg/kg truyền trong 16 giờ — quyết định điều trị dựa nồng độ paracetamol máu đối chiếu đồ thị Rumack-Matthew (từ giờ thứ 4 sau uống) hoặc điều trị theo kinh nghiệm nếu không rõ thời điểm/liều uống.</li>
-        <li>Theo dõi chức năng gan định kỳ đến khi về bình thường hoặc ổn định; đa số DILI hồi phục hoàn toàn sau ngừng thuốc trong vài tuần-vài tháng.</li>
-        <li>Chuyển chuyên khoa gan/ghép gan khi có dấu hiệu suy gan cấp (rối loạn đông máu, bệnh não gan) — tiêu chuẩn Hy's Law dương tính là cảnh báo sớm quan trọng.</li>
-        <li>Ghi nhận rõ thuốc gây DILI vào hồ sơ, tránh tái sử dụng thuốc đó hoặc nhóm thuốc liên quan trong tương lai.</li>
-      </ul>`,
-    khuyen_cao:`
-      ${rt(["Mức"],[
-        ["Ngừng ngay thuốc nghi ngờ khi có DILI",'<span class="badge badge-I">I</span>'],
-        ["N-acetylcysteine sớm cho quá liều paracetamol",'<span class="badge badge-I">I</span>'],
-        ["Tiếp tục thuốc nghi ngờ chờ theo dõi thêm khi đã đủ tiêu chuẩn Hy's Law",'<span class="badge badge-III">III</span>']
-      ])}`
-  },
-  source:"American College of Gastroenterology (ACG) Clinical Guideline: Idiosyncratic Drug-Induced Liver Injury 2021"
+  source:"Đối chiếu nguyên văn BTS 2023 (dẫn lưu ≤14 Fr, tPA 10 mg + DNase 5 mg, RAPID, VATS); Roberts ME et al. BTS Pleural Disease Guideline 2023 (Thorax 2023;78:s1–s42); Bedawi EO et al. ERS/ESTS statement on the management of pleural infection in adults. Eur Respir J 2023;61:2201062; Rahman NM et al. MIST-2, N Engl J Med 2011;365:518; Rahman NM et al. RAPID score, Chest 2014; Metlay JP et al. ATS/IDSA CAP 2019; Kuhajda I et al. Lung abscess — etiology, diagnostic and treatment options. Ann Transl Med 2015; Dance D / Currie BJ: Melioidosis management (Lancet 2021; Clin Infect Dis); Gilbert DN. Sanford Guide 2025"
 },
 {
   spec:"tieu_hoa", id:"achalasia", emoji:"🌀", short:"Achalasia", title:"Co thắt tâm vị (Achalasia)",
@@ -6815,6 +7270,24 @@ ${rt(["Hướng xử trí"],[
         <li>Tiêm Corticoid tại chỗ vào ống cổ tay giúp giảm triệu chứng tạm thời, đặc biệt hữu ích khi chờ hoặc trong lúc chưa quyết định phẫu thuật.</li>
         <li><b>Phẫu thuật giải ép ống cổ tay</b> (mở hoặc qua nội soi) khi triệu chứng nặng/dai dẳng, có bằng chứng mất chức năng thần kinh trên EMG, hoặc thất bại điều trị bảo tồn — hiệu quả cao, phần lớn cải thiện rõ.</li>
         <li>NSAID uống ít hiệu quả hơn các biện pháp trên, chỉ hỗ trợ giảm đau triệu chứng.</li>
+      </ul>
+      <div class="subhead">Xử trí theo mức độ nặng</div>
+      ${rt(["Xử trí"],[
+        ["<b>Nhẹ–trung bình (triệu chứng ngắt quãng, NCS nhẹ)</b>","Nẹp trung tính đêm 6–12 tuần; chỉnh tư thế lao động; tiêm corticoid hoặc corticoid uống ngắn hạn; theo dõi."],
+        ["<b>Trung bình–nặng, thất bại bảo tồn 6–12 tuần</b>","Giải ép ống cổ tay (mở hoặc nội soi)."],
+        ["<b>Nặng (teo cơ mô cái, mất cảm giác kéo dài, NCS nặng)</b>","Phẫu thuật sớm, không trì hoãn."],
+        ["<b>Thai kỳ</b>","Nẹp đêm; thường tự khỏi sau sinh; tiêm corticoid nếu nặng."]
+      ])}
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Tiêm corticoid ống cổ tay</b>","Methylprednisolone/triamcinolone 20–40 mg + lidocaine 1% 1–2 mL (dưới siêu âm tốt hơn)","Giảm triệu chứng 6–12 tuần; ≤2–3 mũi; tránh tiêm trong thần kinh"],
+        ["<b>Prednisolone uống</b>","20 mg/ngày × 2 tuần → 10 mg/ngày × 2 tuần (tổng 4 tuần)","Có thể cân nhắc ngắn hạn; thận trọng ĐTĐ"],
+        ["<b>Vitamin B6, NSAID, lợi tiểu</b>","—","Bằng chứng yếu; chỉ giảm đau triệu chứng"],
+        ["<b>Siêu âm</b>","Diện tích cắt ngang thần kinh giữa ≥10 mm²","Hỗ trợ chẩn đoán, tìm khối/dị tật; không thay thế NCS khi cần xác định mức độ"]
+      ])}
+      <ul>
+        <li><b>Giải ép mở vs nội soi:</b> hiệu quả triệu chứng tương đương; nội soi phục hồi sớm hơn, ít đau sẹo; biến chứng hiếm (tổn thương thần kinh, hội chứng đau vùng phức tạp).</li>
+        <li>Không có bằng chứng ủng hộ PRP, laser, liệu pháp từ trường, hoặc vật lý trị liệu đơn thuần là điều trị chính (AAOS 2024).</li>
+        <li>Tìm và điều trị nguyên nhân: suy giáp, ĐTĐ, RA, thai kỳ, béo phì, amyloidosis (lọc máu); cân nhắc <b>amyloid transthyretin</b> ở người cao tuổi nam có CTS hai bên.</li>
       </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -7050,7 +7523,17 @@ ${rt(["Hướng xử trí"],[
         <li>Nghi GERD: điều trị thử ức chế bơm proton kèm thay đổi lối sống, đáp ứng có thể cần vài tuần-vài tháng mới rõ.</li>
         <li>Không đáp ứng điều trị thử theo trình tự trên: chuyển khảo sát chuyên sâu (CT ngực độ phân giải cao, nội soi phế quản, đo pH thực quản, đánh giá tăng nhạy cảm phản xạ ho — "cough hypersensitivity syndrome").</li>
         <li>Thuốc giảm ho trung ương (dextromethorphan, codeine) chỉ là điều trị triệu chứng tạm thời, không thay thế tìm và điều trị nguyên nhân nền.</li>
-      </ul>`,
+      </ul>
+      <div class="subhead">Ho mạn dai dẳng — thuốc điều chỉnh thần kinh</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Gabapentin</b>","300 mg ngày 1 → tăng đến 1800 mg/ngày (chia 2–3 lần) tối đa 1800 mg","Choáng váng, buồn ngủ; giảm liều suy thận"],
+        ["<b>Pregabalin</b>","75 mg × 2/ngày","Thay gabapentin"],
+        ["<b>Morphine tác dụng chậm</b> (liều thấp)","5–10 mg × 2/ngày","Ho vô căn/khó chữa; táo bón, an thần"],
+        ["<b>Amitriptyline</b>","10 → 25 mg buổi tối","Khô miệng, an thần"],
+        ["<b>Liệu pháp ngôn ngữ/điều trị ho (speech pathology)</b>","—","Hiệu quả cho ho kích thích/nhạy cảm ho"],
+        ["<b>Gefapixant</b> (P2X3, 45 mg × 2/ngày)","—","Được cấp phép ở một số nước (EU/Nhật); camlipixant đang thử nghiệm; tác dụng phụ rối loạn vị giác"]
+      ])}
+      <div class="alert-box alert-info">Ho đã loại trừ UACS/hen/ho tăng BCAT/GERD và ACEi (đổi sang ARB): có thể dùng thuốc ức chế ho trung ương. PPI không dùng thường quy nếu không có triệu chứng trào ngược điển hình. Luôn loại trừ lao, ung thư phổi, giãn phế quản khi ho ra máu/sụt cân.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Ngừng ƯCMC trước khi khảo sát sâu ho mạn ở người đang dùng thuốc này",'<span class="badge badge-I">I</span>'],
@@ -7127,7 +7610,16 @@ ${rt(["Hướng xử trí"],[
       <p><b>Bệnh lý gân chóp xoay (rotator cuff)</b>: từ viêm gân/chèn ép dưới mỏm cùng vai đến rách gân (bán phần/toàn phần), thường liên quan tuổi tác/vận động lặp lại tay cao qua đầu. <b>Viêm quanh khớp vai đông cứng (frozen shoulder/adhesive capsulitis)</b>: xơ hóa/dày bao khớp gây giảm cả vận động chủ động và bị động (khác với bệnh gân chỉ giảm vận động chủ động), thường qua 3 giai đoạn: đau tăng dần → cứng khớp → hồi phục dần, có thể kéo dài 1–3 năm; hay gặp hơn ở người ĐTĐ.</p>`,
     chan_doan:`
       <p>Khám phân biệt: giảm vận động <b>chủ động nhưng bị động còn tốt</b> → gợi ý bệnh gân/chèn ép; giảm <b>cả chủ động và bị động</b> tương đương → gợi ý đông cứng khớp vai.</p>
-      <p>Nghiệm pháp lâm sàng (Neer, Hawkins, empty can) hỗ trợ định hướng tổn thương gân. Siêu âm hoặc MRI khi nghi rách gân toàn phần/cần đánh giá trước phẫu thuật, hoặc triệu chứng không cải thiện sau điều trị bảo tồn đủ thời gian.</p>`,
+      <p>Nghiệm pháp lâm sàng (Neer, Hawkins, empty can) hỗ trợ định hướng tổn thương gân. Siêu âm hoặc MRI khi nghi rách gân toàn phần/cần đánh giá trước phẫu thuật, hoặc triệu chứng không cải thiện sau điều trị bảo tồn đủ thời gian.</p>
+      <div class="subhead">Chẩn đoán phân biệt đau vai & cờ đỏ</div>
+      ${rt(["Gợi ý"],[
+        ["<b>Hội chứng chèn ép/viêm gân chóp xoay</b>","Đau cung 60–120° (painful arc), Neer/Hawkins (+), giữ nguyên tầm vận động bị động."],
+        ["<b>Rách chóp xoay toàn phần</b>","Yếu nâng/xoay ngoài chủ động, drop-arm, tuổi &gt;50 hoặc sau chấn thương; siêu âm/MRI."],
+        ["<b>Đông cứng khớp vai (frozen shoulder)</b>","Giảm vận động <b>cả chủ động và bị động</b>, nhất là xoay ngoài; 3 giai đoạn: đau (2–9 tháng) → đông cứng (4–12 tháng) → hồi phục (5–24 tháng); liên quan ĐTĐ/suy giáp."],
+        ["<b>Viêm gân vôi hóa</b>","Đau cấp dữ dội, X-quang thấy vôi ở gân trên gai."],
+        ["<b>Thoái hóa khớp ổ chảo–cánh tay / khớp cùng–đòn</b>","Đau khi xoay, lạo xạo; X-quang."],
+        ["<b>Cờ đỏ — loại trừ nguyên nhân nặng</b>","Đau lan ngực/NMCT, u đỉnh phổi (Pancoast), viêm khớp nhiễm khuẩn (sốt, sưng nóng), gãy xương/trật khớp, tổn thương rễ/đám rối thần kinh cổ, bệnh túi mật/cơ hoành."]
+      ])}`,
     dieu_tri:`
 <ul>
         <li><b>Bệnh lý gân chóp xoay:</b> vật lý trị liệu (bài tập tăng cường/ổn định chóp xoay) là nền tảng điều trị; <b>NSAID</b> hỗ trợ giảm đau ngắn hạn; tiêm corticoid dưới mỏm cùng vai cho trường hợp đau nhiều cản trở tập vật lý trị liệu.</li>
@@ -7135,7 +7627,18 @@ ${rt(["Hướng xử trí"],[
         <li><b>Đông cứng khớp vai:</b> vật lý trị liệu kéo giãn nhẹ nhàng + <b>NSAID</b>/giảm đau là nền tảng; tiêm corticoid nội khớp giúp giảm đau đặc biệt hiệu quả ở giai đoạn đau-viêm sớm.</li>
         <li>Nong bao khớp bằng bơm dịch (hydrodilatation) hoặc thao tác nắn khớp dưới gây mê/nội soi cắt bao khớp cho trường hợp cứng khớp kéo dài không cải thiện với điều trị bảo tồn.</li>
         <li>Kiểm soát đường huyết tốt ở người ĐTĐ có thể giúp cải thiện tiên lượng đông cứng khớp vai.</li>
-      </ul>`,
+      </ul>
+      <div class="subhead">Thuốc & thủ thuật tiêm</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Paracetamol</b>","500–1000 mg mỗi 6–8 giờ (≤3 g/ngày)","Đau nhẹ"],
+        ["<b>NSAID</b>: Ibuprofen 400–600 mg × 3/ngày; Naproxen 500 mg × 2/ngày; Diclofenac gel bôi","1–2 tuần","Giảm đau ngắn hạn; thận trọng GI/thận"],
+        ["<b>Tiêm dưới mỏm cùng vai (corticoid)</b>","Triamcinolone 40 mg (hoặc methylprednisolone 40 mg) + lidocaine 1% 3–5 mL","Giảm đau 4–8 tuần; ≤3 mũi/năm, cách ≥6–12 tuần; có thể làm yếu gân nếu lặp lại; dưới hướng dẫn siêu âm tốt hơn"],
+        ["<b>Tiêm nội khớp vai (đông cứng)</b>","Triamcinolone 40 mg ± lidocaine","Hiệu quả nhất ở giai đoạn đau–viêm sớm"],
+        ["<b>Prednisolone uống</b> (đông cứng, đau nhiều)","30 mg/ngày × 2–3 tuần, giảm dần","Cân nhắc ĐTĐ; hiệu quả ngắn hạn"],
+        ["<b>Hydrodilatation</b>","Corticoid + NaCl 0,9% 20–40 mL nong bao khớp","Đông cứng kéo dài; hoặc nắn dưới gây mê/cắt bao khớp nội soi"],
+        ["<b>Viêm gân vôi hóa</b>","Chọc hút-rửa (barbotage) dưới siêu âm, sóng xung kích (ESWT)","Phần lớn tự tiêu; phẫu thuật khi thất bại"]
+      ])}
+      <div class="alert-box alert-info"><b>Chỉ định phẫu thuật sớm:</b> rách gân cấp tính toàn phần sau chấn thương ở người trẻ/hoạt động nhiều; rách lớn mất chức năng; thất bại bảo tồn ≥3–6 tháng. Rách bán phần/thoái hóa ở người lớn tuổi: vật lý trị liệu tương đương phẫu thuật dài hạn.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Vật lý trị liệu là điều trị nền tảng cho cả bệnh gân và đông cứng khớp vai",'<span class="badge badge-I">I</span>'],
@@ -7143,7 +7646,7 @@ ${rt(["Hướng xử trí"],[
         ["Tiêm corticoid nội khớp giúp giảm đau giai đoạn sớm của đông cứng khớp vai",'<span class="badge badge-IIa">IIa</span>']
       ])}`
   },
-  source:"American Academy of Orthopaedic Surgeons (AAOS) Clinical Practice Guideline on Shoulder Pain"
+  source:"Pieters L et al. Rotator Cuff Disease & Subacromial Pain: Clinical Practice Guideline (JOSPT 2020); AAOS Clinical Practice Guideline on Rotator Cuff Pathology 2019; Challoumas D et al. Frozen shoulder meta-analyses; NICE CKS Shoulder pain"
 },
 {
   spec:"co_xuong_khop", id:"reactive_arthritis", emoji:"🔗", short:"VK phản ứng", title:"Viêm khớp phản ứng (Reactive Arthritis)",
@@ -7516,7 +8019,21 @@ ${rt(["Hướng xử trí"],[
         <li>Chiến lược dịch hạn chế (bảo tồn) sau khi hết sốc.</li>
       </ul>
       <div class="subhead">3. ARDS chưa đặt ống</div>
-      <p>HFNO ưu tiên hơn oxy thông thường; CPAP/NIV qua mũ (helmet) là lựa chọn. Theo dõi chỉ số ROX — không trì hoãn đặt nội khí quản khi thất bại.</p>`,
+      <p>HFNO ưu tiên hơn oxy thông thường; CPAP/NIV qua mũ (helmet) là lựa chọn. Theo dõi chỉ số ROX — không trì hoãn đặt nội khí quản khi thất bại.</p>
+      <div class="subhead">Bảng PEEP/FiO₂ (ARDSNet — PEEP thấp) & hỗ trợ khác</div>
+      ${rt(["PEEP (cmH₂O) tương ứng"],[
+        ["FiO₂ 0,3","5"],["FiO₂ 0,4","5–8"],["FiO₂ 0,5","8–10"],["FiO₂ 0,6","10"],["FiO₂ 0,7","10–14"],["FiO₂ 0,8","14"],["FiO₂ 0,9","14–18"],["FiO₂ 1,0","18–24"]
+      ])}
+      ${rt(["Liều / chỉ định","Ghi chú"],[
+        ["<b>Nằm sấp</b>","P/F &lt;150, ≥12–16 giờ/ngày, bắt đầu trong 36 giờ","Giảm tử vong (PROSEVA); nằm sấp tỉnh táo cho người chưa đặt ống chỉ khi dung nạp (không giảm tử vong rõ)"],
+        ["<b>Giãn cơ</b>: cisatracurium","15 mg TM bolus → 37,5 mg/giờ (hoặc 0,15–0,2 mg/kg/giờ) tối đa 48 giờ","Không thường quy (ROSE: không lợi); chỉ khi mất đồng bộ nặng/P/F &lt;120"],
+        ["<b>Corticoid</b>: dexamethasone","20 mg/ngày × 5 ngày → 10 mg/ngày × 5 ngày (DEXA-ARDS); hoặc methylprednisolone 1 mg/kg/ngày","ATS 2024 khuyến cáo có điều kiện, ARDS trung bình–nặng sớm; thận trọng nhiễm nấm/lao"],
+        ["<b>VV-ECMO (EOLIA)</b>","P/F &lt;50 &gt;3 giờ, hoặc &lt;80 &gt;6 giờ, hoặc pH &lt;7,25 + PaCO₂ ≥60 &gt;6 giờ (RR 35)","Trung tâm ECMO chuyên sâu; thông khí bảo vệ phổi cực đoan"],
+        ["<b>Chiến lược dịch</b>","Hạn chế sau khi hết sốc (FACTT)","Cân bằng dịch âm nếu huyết động ổn"],
+        ["<b>An thần/vận động</b>","Giảm an thần sâu; vận động sớm","Thông khí tự nhiên sớm khi cải thiện"],
+        ["<b>NO hít, surfactant, β₂-agonist, statin, thở oscillation</b>","—","Không khuyến cáo thường quy (không giảm tử vong)"]
+      ])}
+      <div class="alert-box alert-info"><b>Ghi nhớ:</b> thông khí bảo vệ phổi (VT 6 mL/kg PBW, Pplat ≤30, driving pressure ≤15), tìm và điều trị nguyên nhân (kháng sinh sớm, kiểm soát ổ nhiễm), dự phòng loét stress/huyết khối/VAP, dinh dưỡng đường ruột sớm.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Thể tích khí lưu thông thấp 4–8 mL/kg PBW, Pplat ≤30",'<span class="badge badge-I">I</span>'],
@@ -7552,19 +8069,26 @@ ${rt(["Hướng xử trí"],[
         <li>ACE huyết thanh: độ nhạy/đặc hiệu thấp, không dùng để chẩn đoán.</li>
       </ul>`,
     dieu_tri:`
-      <p>Nhiều trường hợp (giai đoạn I, Löfgren) tự khỏi — chỉ theo dõi. Điều trị khi có <b>nguy cơ tử vong/suy cơ quan</b> hoặc ảnh hưởng nhiều đến chất lượng sống.</p>
-      ${rt(["Liều"],[
-        ["<b>Prednisone</b> (hàng 1)","20–40 mg/ngày × 1–3 tháng, giảm dần đến 5–10 mg; tổng 6–12 tháng"],
-        ["<b>Methotrexate</b> (hàng 2, tiết kiệm steroid)","10–20 mg/tuần + acid folic"],
-        ["Azathioprine, leflunomide, mycophenolate","Thay thế methotrexate"],
-        ["<b>Infliximab</b> (hàng 3)","3–5 mg/kg — bệnh kháng trị, thần kinh, tim"],
-        ["Löfgren","NSAID cho đau khớp, hồng ban nút"]
+      <div class="alert-box alert-info">Nhiều ca (stage I, Löfgren) <b>tự khỏi</b> — chỉ theo dõi 3–6 tháng. Điều trị khi: triệu chứng đáng kể, suy giảm/giảm dần chức năng phổi, tổn thương nặng cơ quan (tim, thần kinh, mắt, thận, tăng calci).</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Prednisone (hàng 1)</b>","20–40 mg/ngày × 4–6 tuần, giảm dần xuống ≤10 mg/ngày; tổng 6–12 tháng","Phổi: đánh giá lại 3 tháng; cân nhắc giảm đến liều thấp nhất; phòng PJP (TMP–SMX) khi ≥20 mg/ngày &gt;4 tuần, bảo vệ xương (calci, vitamin D ± bisphosphonate)"],
+        ["<b>Methotrexate (hàng 2)</b>","10–15 mg/tuần (tối đa 20) + acid folic 5 mg/tuần","Tiết kiệm steroid; theo dõi CTM, men gan"],
+        ["<b>Azathioprine</b>","2 mg/kg/ngày","Thay thế MTX"],
+        ["<b>Mycophenolate mofetil</b>","1–1,5 g × 2/ngày","Thay thế (nhất là khi cần thuốc ít độc gan)"],
+        ["<b>Leflunomide</b>","10–20 mg/ngày","Thay thế"],
+        ["<b>Infliximab (hàng 3)</b>","3–5 mg/kg tuần 0, 2 rồi mỗi 4–8 tuần","Kháng trị, thần kinh, tim, da (lupus pernio); tầm soát lao/HBV trước"],
+        ["<b>Hydroxychloroquine</b>","200–400 mg/ngày","Da, tăng calci máu, mệt mỏi"],
+        ["<b>Löfgren</b>","NSAID (naproxen 250–500 mg × 2/ngày); prednisone ngắn ngày nếu nặng","Tự khỏi ~90%"]
       ])}
-      <ul>
-        <li>Sarcoidosis tim: glucocorticoid ± methotrexate; ICD khi có chỉ định; theo dõi chuyên khoa.</li>
-        <li>Xơ phổi giai đoạn IV tiến triển: cân nhắc nintedanib (xơ phổi tiến triển), ghép phổi.</li>
-        <li>Mệt mỏi kéo dài: phục hồi chức năng hô hấp.</li>
-      </ul>`,
+      <div class="subhead">Điều trị theo cơ quan</div>
+      ${rt(["Xử trí"],[
+        ["<b>Tim</b>","Glucocorticoid (prednisone 0,5 mg/kg) ± MTX/infliximab; ICD khi LVEF ≤35% hoặc VT/VF/LGE lan rộng; chuyên khoa tim mạch + FDG-PET theo dõi."],
+        ["<b>Thần kinh</b>","Prednisone 0,5–1 mg/kg + MTX/AZA; infliximab khi kháng trị."],
+        ["<b>Mắt (viêm màng bồ đào)</b>","Corticoid nhỏ mắt/tiêm quanh mắt; toàn thân + MTX khi nặng/kháng."],
+        ["<b>Tăng calci máu/niệu</b>","Hydrat hóa, prednisone 20–40 mg/ngày; tránh vitamin D, calci và nắng quá mức."],
+        ["<b>Xơ phổi giai đoạn IV tiến triển</b>","Nintedanib (xơ phổi tiến triển); oxy; ghép phổi; kiểm tra tăng áp phổi (siêu âm tim)."],
+        ["<b>Theo dõi</b>","Chức năng phổi + DLCO mỗi 3–6 tháng, X-quang/CT, ECG và siêu âm tim hằng năm, khám mắt hằng năm, canxi/men gan/creatinin."]
+      ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Glucocorticoid hàng đầu cho sarcoidosis phổi có triệu chứng/ảnh hưởng chức năng",'<span class="badge badge-I">I</span>'],
@@ -7573,7 +8097,7 @@ ${rt(["Hướng xử trí"],[
         ["Điều trị ức chế miễn dịch cho sarcoidosis giai đoạn I không triệu chứng",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"ERS Clinical Practice Guidelines on Treatment of Sarcoidosis (Eur Respir J 2021); ATS Clinical Practice Guideline: Diagnosis and Detection of Sarcoidosis (AJRCCM 2020)"
+  source:"Baughman RP et al. ERS Clinical Practice Guidelines on Treatment of Sarcoidosis. Eur Respir J 2021; Crouser ED et al. ATS Clinical Practice Guideline: Diagnosis and Detection of Sarcoidosis. Am J Respir Crit Care Med 2020; Birnie DH et al. HRS Consensus on cardiac sarcoidosis 2014"
 },
 {
   spec:"tieu_hoa", id:"cholangitis", emoji:"🟡", short:"VĐM cấp", title:"Viêm đường mật cấp (Acute Cholangitis)",
@@ -8423,7 +8947,18 @@ ${rt(["Hướng xử trí"],[
         ["CTRCD nặng / suy tim có triệu chứng","Ngừng tạm thuốc độc tim; điều trị suy tim nền tảng đầy đủ (ARNI/ACEi, chẹn beta, MRA, SGLT2i)"],
         ["<b>Viêm cơ tim do ICI</b>","Ngừng ICI; <b>methylprednisolone 500–1000 mg TM × 3–5 ngày</b>, sau đó prednisone 1 mg/kg giảm dần; kháng trị: mycophenolate, abatacept, ruxolitinib, ATG tại trung tâm"],
         ["Co thắt vành do 5-FU","Ngừng thuốc, nitrate, CCB; đổi phác đồ"]
-      ])}`,
+      ])}
+      <div class="subhead">Bảng thuốc & xử trí cụ thể (ESC 2022)</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Dexrazoxane</b>","Tỷ lệ 10:1 so với doxorubicin (ví dụ 500 mg/m² cho doxorubicin 50 mg/m²), TM 15 phút trước anthracycline","Dự phòng ở nguy cơ cao; giảm CTRCD"],
+        ["<b>Carvedilol</b>","3,125 mg × 2 → 25 mg × 2/ngày","Dự phòng/điều trị CTRCD (cùng ACEi/ARB)"],
+        ["<b>Ramipril / Enalapril / Sacubitril–valsartan</b>","2,5 → 10 mg/ngày; 2,5 → 20 mg × 2; 24/26 → 97/103 mg × 2","CTRCD LVEF &lt;50% hoặc triệu chứng; liệu pháp suy tim nền tảng như HFrEF"],
+        ["<b>Viêm cơ tim do ICI</b>","<b>Methylprednisolone 500–1000 mg TM/ngày × 3–5 ngày</b> → prednisone 1 mg/kg, giảm chậm ≥4–6 tuần","Ngừng ICI; nếu kháng: abatacept, mycophenolate, ruxolitinib, IVIG; theo dõi troponin, ECG, block"],
+        ["<b>THA do VEGFi</b>","Amlodipine/ACEi/ARB; tránh diltiazem/verapamil với TKI (CYP3A4)","Mục tiêu &lt;140/90 (&lt;130/80 nếu có thể)"],
+        ["<b>Tắc mạch liên quan ung thư</b>","Apixaban 10 mg × 2 × 7 ngày → 5 mg × 2/ngày; edoxaban 60 mg/ngày; rivaroxaban 15 mg × 2 × 21 ngày → 20 mg/ngày","Cẩn trọng ung thư đường tiêu hóa/niệu; dự phòng apixaban 2,5 mg × 2/ngày khi Khorana ≥2 (AVERT)"],
+        ["<b>QT dài do thuốc ung thư</b>","Hiệu chỉnh K⁺/Mg²⁺, ngừng thuốc kéo dài QT, ECG sát","Ngừng/giảm liều nếu QTc &gt;500 ms"]
+      ])}
+      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('qtc')">🧮 QTc</button><button type="button" class="score-link-btn" onclick="goSmartScale('khorana')">🧮 Khorana</button></div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Đánh giá nguy cơ tim mạch nền (HFA-ICOS) trước điều trị độc tim",'<span class="badge badge-I">I</span>'],
@@ -8518,7 +9053,7 @@ ${rt(["Hướng xử trí"],[
 },
 {
   spec:"ho_hap", id:"pertussis", emoji:"🫁", short:"Ho gà", title:"Ho gà (Pertussis) ở thanh thiếu niên & người lớn",
-  guidelines:["CDC (MMWR 2005)","WHO Position Paper 2015"],
+  guidelines:["CDC 2024","ACIP Tdap","WHO Position Paper 2015","Global Pertussis Initiative"],
   sections:{
     dinh_nghia:`
       <p>Nhiễm <i>Bordetella pertussis</i>, lây qua giọt bắn, miễn dịch sau vaccine giảm dần → người lớn là nguồn lây cho trẻ nhỏ (trẻ &lt;6 tháng tử vong cao). Số ca tăng trở lại toàn cầu 2023–2025.</p>
@@ -8530,21 +9065,33 @@ ${rt(["Hướng xử trí"],[
       <p>Người lớn: thường chỉ <b>ho kéo dài &gt;2 tuần</b>, ho cơn, nôn sau ho — dễ bị bỏ sót.</p>`,
     chan_doan:`
       <ul>
-        <li><b>PCR dịch tỵ hầu</b> — tốt nhất trong 3 tuần đầu ho; cấy (đặc hiệu, kém nhạy) &lt;2 tuần.</li>
-        <li>Huyết thanh (anti-PT IgG) khi ho 2–8 tuần.</li>
-        <li>Trẻ nhỏ: tăng lympho bào rõ.</li>
+        <li><b>Định nghĩa lâm sàng (CDC):</b> ho ≥2 tuần kèm ≥1: cơn ho rũ, tiếng rít hít vào (whoop), nôn sau ho, ngừng thở (trẻ nhỏ).</li>
+        <li><b>PCR dịch tỵ hầu/ngoáy họng</b> — xét nghiệm đầu tay, nhạy nhất trong 3 tuần đầu (cấy &lt;2 tuần, đặc hiệu nhưng kém nhạy; để thử kháng sinh đồ). Cần tăng cường phát hiện khi ho kéo dài ở người lớn.</li>
+        <li><b>Huyết thanh (anti-PT IgG)</b> khi ho 2–8 tuần ở BN chưa tiêm vaccine trong 1 năm. Lympho bào tăng rõ ở trẻ nhỏ; tăng BC &gt;30.000 là dấu hiệu nặng.</li>
+        <li>X-quang ngực loại trừ viêm phổi; ho kéo dài ở người lớn: loại trừ hen, trào ngược, ACEI, hội chứng ho đường hô hấp trên.</li>
       </ul>`,
     dieu_tri:`
-      ${rt(["Liều người lớn"],[
-        ["<b>Azithromycin</b> (ưu tiên)","500 mg ngày 1, sau đó 250 mg/ngày ngày 2–5"],
-        ["Clarithromycin","500 mg ×2/ngày × 7 ngày"],
-        ["TMP-SMX (dị ứng macrolide)","160/800 mg ×2/ngày × 14 ngày"]
+      <div class="subhead">1. Kháng sinh (CDC; liều người lớn)</div>
+      ${rt(["Liều người lớn","Thời gian / ghi chú"],[
+        ["<b>Azithromycin</b> (ưu tiên)","500 mg ngày 1, rồi 250 mg/ngày","Ngày 2–5 (tổng 5 ngày); thai kỳ chấp nhận được"],
+        ["<b>Clarithromycin</b>","500 mg × 2/ngày","7 ngày; tương tác thuốc qua CYP3A4"],
+        ["<b>Erythromycin</b>","500 mg × 4/ngày","14 ngày; ít dung nạp"],
+        ["<b>TMP–SMX</b> (dị ứng/không dung nạp macrolide, hoặc B. pertussis kháng macrolide)","160/800 mg × 2/ngày","14 ngày; không dùng sơ sinh &lt;2 tháng, quý 3 thai kỳ thận trọng"]
       ])}
+      <div class="subhead">2. Trẻ em & nhóm đặc biệt</div>
+      ${rt(["Xử trí"],[
+        ["<b>Sơ sinh &lt;1 tháng</b>","Azithromycin 10 mg/kg/ngày × 5 ngày (ưu tiên); erythromycin/clarithromycin tăng nguy cơ hẹp môn vị phì đại (IHPS) — theo dõi."],
+        ["<b>Trẻ ≥1 tháng</b>","Azithromycin 10 mg/kg ngày 1, rồi 5 mg/kg/ngày × 4 ngày; clarithromycin 15 mg/kg/ngày chia 2 × 7 ngày."],
+        ["<b>Nhập viện</b>","Trẻ &lt;3–4 tháng, ngừng thở, tím, suy hô hấp, co giật, tăng BC &gt;30.000 — <b>nguy cơ tăng áp phổi/ho gà ác tính</b>; theo dõi ICU, trao đổi máu/lọc bạch cầu trong trường hợp chọn lọc."],
+        ["<b>Thai phụ</b>","Azithromycin; Tdap mỗi lần mang thai tuần 27–36."]
+      ])}
+      <div class="subhead">3. Dự phòng sau phơi nhiễm & cách ly</div>
       <ul>
-        <li>Điều trị kháng sinh khi ho &lt;3 tuần (giảm lây; ít ảnh hưởng triệu chứng nếu bắt đầu muộn); thai phụ gần sinh, người làm việc với trẻ nhỏ: điều trị khi ho &lt;6–8 tuần.</li>
-        <li><b>Dự phòng sau phơi nhiễm</b> (cùng phác đồ) cho người tiếp xúc trong gia đình và nhóm nguy cơ cao (trẻ &lt;1 tuổi, thai phụ quý III, người tiếp xúc với họ) trong vòng 21 ngày.</li>
-        <li>Cách ly đến khi hoàn thành 5 ngày kháng sinh.</li>
-        <li><b>Phòng ngừa:</b> Tdap cho <b>mọi thai phụ ở tuần 27–36 mỗi lần mang thai</b>; nhắc Td/Tdap mỗi 10 năm.</li>
+        <li><b>Dự phòng sau phơi nhiễm (PEP)</b> trong vòng 21 ngày kể từ lúc tiếp xúc cho người sống chung và nhóm nguy cơ cao (trẻ &lt;12 tháng, thai phụ quý 3, người chăm sóc trẻ nhỏ, bệnh phổi nặng, suy giảm miễn dịch); phác đồ giống điều trị.</li>
+        <li><b>Cách ly giọt bắn</b> đến khi hoàn thành 5 ngày kháng sinh hoặc 21 ngày kể từ khi ho nếu không điều trị.</li>
+        <li>Thuốc ho (codein, chống ho) và corticoid/β₂-agonist <b>không</b> có lợi; điều trị hỗ trợ (dinh dưỡng, hút đờm, oxy).</li>
+        <li><b>Macrolide-resistant B. pertussis (MRBP, đột biến 23S rRNA A2047G)</b> đã ghi nhận ở Trung Quốc — chọn TMP–SMX nếu thất bại, theo dõi kháng sinh đồ/PCR.</li>
+        <li><b>Tiêm chủng:</b> Tdap cho thai phụ tuần 27–36, nhân viên y tế/người chăm sóc trẻ nhỏ; Tdap một liều cho người lớn chưa từng tiêm, nhắc Td/Tdap mỗi 10 năm; lịch EPI Việt Nam: DPT 2–3–4 tháng, nhắc 18 tháng; Tdap thai kỳ đang triển khai.</li>
       </ul>`,
     khuyen_cao:`
       ${rt(["Mức"],[
@@ -8554,7 +9101,7 @@ ${rt(["Hướng xử trí"],[
         ["Kháng sinh khi ho đã kéo dài &gt;3 tuần ở người lớn không nguy cơ",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"CDC Recommended Antimicrobial Agents for the Treatment and Postexposure Prophylaxis of Pertussis (MMWR 2005); ACIP Tdap in pregnancy"
+  source:"CDC Pertussis Treatment & PEP guidance 2024 (Tiwari T et al. MMWR 2005); ACIP Tdap recommendations (MMWR 2018–2023); WHO Pertussis vaccines position paper 2015; Wang Z et al. Macrolide-resistant B. pertussis, Emerg Infect Dis 2021"
 },
 {
   spec:"ho_hap", id:"ntm", emoji:"🧫", short:"NTM", title:"Bệnh phổi do vi khuẩn lao không điển hình (NTM)",
@@ -8639,7 +9186,7 @@ ${rt(["Hướng xử trí"],[
 },
 {
   spec:"co_xuong_khop", id:"behcet", emoji:"👁", short:"Behçet", title:"Bệnh Behçet",
-  guidelines:["EULAR 2018","ICBD 2014 (tiêu chuẩn)"],
+  guidelines:["EULAR 2025","ICBD 2014 (tiêu chuẩn)","ISG 1990"],
   sections:{
     dinh_nghia:`
       <p>Viêm mạch đa dạng (mọi cỡ, động mạch và tĩnh mạch), phổ biến dọc «Con đường tơ lụa» (Thổ Nhĩ Kỳ, Trung Đông, Đông Á). Nam trẻ có tiên lượng nặng hơn. Liên quan HLA-B51.</p>
@@ -8656,23 +9203,26 @@ ${rt(["Hướng xử trí"],[
       <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('icbd')">🧮 ICBD 2014</button></div>
       <p>Khám mắt chuyên khoa cho mọi BN; CT ngực khi ho ra máu (phình ĐM phổi); loại trừ Crohn, herpes, lupus, HIV.</p>`,
     dieu_tri:`
-      ${rt(["Điều trị (EULAR 2018)"],[
-        ["Loét miệng/sinh dục","Corticoid tại chỗ; <b>colchicine</b> 0.5–1.5 mg/ngày (đặc biệt khi kèm hồng ban nút); <b>apremilast</b> 30 mg ×2/ngày cho loét miệng dai dẳng"],
-        ["Khớp","Colchicine; azathioprine, TNFi khi tái diễn"],
-        ["<b>Viêm màng bồ đào sau</b>","<b>Azathioprine</b>, ciclosporin, interferon-α hoặc <b>TNFi (infliximab/adalimumab)</b> + corticoid; đe dọa thị lực: corticoid liều cao + infliximab/adalimumab/IFN-α"],
-        ["Huyết khối tĩnh mạch sâu","<b>Ức chế miễn dịch</b> (corticoid + azathioprine/cyclophosphamide/ciclosporin) — kháng đông có thể thêm khi đã loại trừ phình ĐM phổi"],
-        ["Phình ĐM phổi/ĐM","Cyclophosphamide + corticoid liều cao ± TNFi; nút mạch ưu tiên hơn phẫu thuật khi chảy máu"],
-        ["Tiêu hóa, thần kinh","Corticoid + azathioprine/TNFi; cyclophosphamide/infliximab cho neuro-Behçet nặng"]
+      <div class="alert-box alert-info"><b>Thay đổi chính EULAR 2025 so với 2018:</b> ưu tiên <b>kháng thể đơn dòng kháng TNF (infliximab, adalimumab)</b> cho tổn thương mắt, mạch máu và thần kinh nhu mô — cả để cảm ứng lẫn duy trì; corticoid toàn thân không dùng đơn độc/kéo dài cho tổn thương mắt và da–niêm mạc.</div>
+      ${rt(["Điều trị (EULAR 2025)","Liều / ghi chú"],[
+        ["<b>Loét miệng/sinh dục, tổn thương da</b>","<b>Colchicine</b> 0,5–1,5 mg/ngày (đầu tay, nhất là hồng ban nút, sinh dục); corticoid bôi/tiêm tại chỗ; kháng thuốc/không dung nạp → <b>apremilast</b> 30 mg × 2/ngày hoặc kháng TNF (không dùng corticoid toàn thân dài ngày)","Azathioprine 2–2,5 mg/kg/ngày cho tổn thương da–niêm mạc dai dẳng"],
+        ["<b>Khớp (viêm khớp cấp)</b>","<b>Colchicine</b>; viêm khớp tái phát/mạn: azathioprine, kháng TNF","NSAID ngắn ngày nếu cần"],
+        ["<b>Viêm màng bồ đào / võng mạc</b>","Bắt buộc ức chế miễn dịch: azathioprine 2–2,5 mg/kg/ngày ± ciclosporin A 2–5 mg/kg/ngày; <b>đe dọa thị lực/phần sau</b>: <b>infliximab</b> 5 mg/kg tuần 0–2–6 rồi mỗi 8 tuần (hoặc adalimumab 40 mg mỗi 2 tuần) + thuốc ức chế miễn dịch; corticoid liều cao ngắn hạn/tiêm tại chỗ cho đợt cấp","<b>Không dùng corticoid đơn độc</b>; hội chẩn mắt, theo dõi OCT/chụp mạch huỳnh quang; interferon-α là lựa chọn thay thế"],
+        ["<b>Phình động mạch phổi/ngoại biên</b>","<b>Methylprednisolone</b> 1 g/ngày × 3 → prednisone 1 mg/kg + <b>infliximab</b> (hoặc cyclophosphamide 0,5–1 g/m² hằng tháng); giảm corticoid từ từ, duy trì anti-TNF/thuốc ức chế miễn dịch","<b>Tránh kháng đông</b> khi chưa loại trừ phình ĐM phổi (nguy cơ ho máu tử vong); nút mạch ưu tiên hơn phẫu thuật nếu nguy cơ chảy máu cao"],
+        ["<b>Huyết khối tĩnh mạch sâu (kể cả huyết khối xoang tĩnh mạch não)</b>","Corticoid + thuốc ức chế miễn dịch (azathioprine, cyclophosphamide, ưu tiên anti-TNF); kháng đông có thể thêm khi nguy cơ chảy máu thấp và đã loại trừ phình ĐM phổi","Huyết khối xoang não kèm tăng áp nội sọ đe dọa thị lực: cân nhắc phẫu thuật sớm"],
+        ["<b>Thần kinh nhu mô</b>","Corticoid liều cao (pulse) → giảm từ từ + thuốc ức chế miễn dịch, ưu tiên <b>infliximab</b>; cyclophosphamide cho thể nặng","<b>Tránh ciclosporin</b> (độc thần kinh)"],
+        ["<b>Tiêu hóa</b>","Dựa nội soi: 5-ASA hoặc azathioprine ± corticoid; nặng/kháng trị → anti-TNF; thủng/chảy máu → phẫu thuật","Phân biệt với Crohn, lao ruột, NSAID"]
       ])}`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Khám mắt chuyên khoa định kỳ cho mọi BN Behçet",'<span class="badge badge-I">I</span>'],
-        ["Ức chế miễn dịch là nền tảng điều trị huyết khối tĩnh mạch trong Behçet",'<span class="badge badge-I">I</span>'],
-        ["Azathioprine/TNFi cho viêm màng bồ đào sau",'<span class="badge badge-I">I</span>'],
+        ["Colchicine đầu tay cho tổn thương da–niêm mạc và khớp",'<span class="badge badge-I">I</span>'],
+        ["Ức chế miễn dịch (ưu tiên anti-TNF đơn dòng) cho tổn thương mắt/mạch/thần kinh, không dùng corticoid đơn độc",'<span class="badge badge-I">I</span>'],
+        ["Apremilast cho loét miệng dai dẳng/kháng colchicine",'<span class="badge badge-IIa">IIa</span>'],
         ["Kháng đông khi chưa loại trừ phình động mạch phổi",'<span class="badge badge-III">III</span>']
       ])}`
   },
-  source:"2018 update of the EULAR recommendations for the management of Behçet's syndrome (Ann Rheum Dis 2018); ICBD 2014 (J Eur Acad Dermatol Venereol 2014)"
+  source:"Hatemi G et al. EULAR recommendations for the management of Behçet syndrome: 2025 update. Ann Rheum Dis 2025; Hatemi G et al. EULAR 2018 recommendations, Ann Rheum Dis 2018; International Team for the Revision of the ICBD. J Eur Acad Dermatol Venereol 2014"
 },
 {
   spec:"co_xuong_khop", id:"takayasu", emoji:"🫀", short:"Takayasu", title:"Viêm động mạch Takayasu",
@@ -8964,7 +9514,8 @@ ${rt(["Hướng xử trí"],[
         ["<b>CEP</b>","Prednisone 0.5 mg/kg/ngày × 2 tuần, giảm dần trong <b>6 tháng</b>; tái phát thường gặp (~50%) khi giảm liều"],
         ["CEP tái phát/phụ thuộc steroid","Corticoid hít liều cao (khi kèm hen), <b>kháng IL-5</b> (mepolizumab, benralizumab) — giúp giảm steroid"],
         ["Ký sinh trùng","Ivermectin 200 µg/kg × 1–2 ngày (Strongyloides) ± albendazole"]
-      ])}`,
+      ])}
+      <div class="alert-box alert-info"><b>Thuốc sinh học (CEP/EGPA):</b> mepolizumab 100 mg TDD mỗi 4 tuần (EGPA: 300 mg mỗi 4 tuần), benralizumab 30 mg TDD mỗi 4 tuần × 3 liều rồi mỗi 8 tuần (EGPA); dupilumab 300 mg mỗi 2 tuần (hen kèm). <b>Strongyloides</b>: ivermectin 200 µg/kg/ngày × 1–2 ngày trước/kèm corticoid. EGPA: loại trừ ANCA, tổn thương tim/thần kinh; corticoid + mepolizumab/benralizumab, cyclophosphamide/rituximab thể nặng.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Rửa phế quản–phế nang để xác định BC ái toan phế nang",'<span class="badge badge-I">I</span>'],
@@ -9098,7 +9649,8 @@ ${rt(["Hướng xử trí"],[
         ["Thay thế","Risedronate 30 mg/ngày × 2 tháng; alendronate 40 mg/ngày × 6 tháng; pamidronate TM"],
         ["Giảm đau","Paracetamol, NSAID; điều trị thoái hóa khớp kèm theo"],
         ["Theo dõi","ALP sau 3–6 tháng rồi hằng năm; điều trị lại khi đau tái phát"]
-      ])}`,
+      ])}
+      <div class="alert-box alert-info"><b>Lưu ý:</b> sau zoledronic acid một lần, ALP thường về bình thường trong 6–12 tháng, đáp ứng kéo dài nhiều năm; đo ALP lại mỗi 6–12 tháng. Theo dõi hạ calci (bổ sung 1 g calci + 800 UI vitamin D trong 2 tuần sau truyền), triệu chứng giống cúm (acetaminophen), hiếm: hoại tử xương hàm/gãy xương không điển hình khi dùng kéo dài. Tránh bisphosphonate nếu eGFR &lt;35 mL/phút; dùng denosumab thận trọng (tăng chu chuyển xương rebound khi ngừng).</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Bisphosphonate (zoledronic acid) cho đau xương do Paget",'<span class="badge badge-I">I</span>'],
@@ -9211,7 +9763,19 @@ ${rt(["Hướng xử trí"],[
         ["Lipid","Statin theo nguy cơ PREVENT; thêm ezetimibe/PCSK9i theo đích LDL"],
         ["Suy tim","Bốn nhóm nền tảng (ARNI/ACEi, chẹn beta, MRA, SGLT2i) cho HFrEF; SGLT2i ± finerenone, GLP-1 RA (béo phì) cho HFpEF"]
       ])}
-      <p>Chăm sóc liên chuyên khoa (tim mạch – nội tiết – thận – dinh dưỡng); ưu tiên thuốc có lợi ích <b>đa cơ quan</b>.</p>`,
+      <p>Chăm sóc liên chuyên khoa (tim mạch – nội tiết – thận – dinh dưỡng); ưu tiên thuốc có lợi ích <b>đa cơ quan</b>.</p>
+      <div class="subhead">Mục tiêu & liều thuốc nền tảng</div>
+      ${rt(["Liều / mục tiêu","Ghi chú"],[
+        ["<b>Nguy cơ PREVENT 10 năm (ASCVD)</b>","&lt;5% thấp • 5–7,5% ranh giới • 7,5–20% trung bình • ≥20% cao","Quyết định statin/tăng cường điều trị"],
+        ["<b>Huyết áp</b>","&lt;130/80 mmHg","ACEi/ARB nền tảng khi albumin niệu hoặc ĐTĐ"],
+        ["<b>HbA1c</b>","&lt;7% (cá thể hóa)","Ưu tiên thuốc bảo vệ tim–thận"],
+        ["<b>SGLT2i</b>: Dapagliflozin 10 mg, Empagliflozin 10 mg/ngày","eGFR ≥20","Bảo vệ thận/suy tim; tạm ngừng khi nôn mất nước"],
+        ["<b>Semaglutide</b> 0,25 → 1 mg TDD mỗi tuần (hoặc 2,4 mg béo phì)","—","FLOW: giảm biến cố thận ở ĐTĐ + CKD; SELECT/SUSTAIN: giảm MACE"],
+        ["<b>Finerenone</b>","10 mg (eGFR 25–60) / 20 mg (≥60) → 20 mg/ngày","ĐTĐ týp 2 + CKD, UACR ≥30 mg/g; theo dõi K⁺"],
+        ["<b>Statin</b> (Atorvastatin 20–80 mg; Rosuvastatin 10–40 mg) ± ezetimibe","LDL-C &lt;70 mg/dL (giai đoạn 3–4: &lt;55)","Thận trọng liều rosuvastatin ở CKD nặng/người châu Á"],
+        ["<b>Tirzepatide</b> 2,5 → 15 mg TDD mỗi tuần","—","Béo phì + ĐTĐ; giảm cân mạnh"]
+      ])}
+      <div class="score-link-row"><button type="button" class="score-link-btn" onclick="goSmartScale('kdigo_cga')">🧮 KDIGO CGA</button><button type="button" class="score-link-btn" onclick="goSmartScale('kfre')">🧮 KFRE</button><button type="button" class="score-link-btn" onclick="goSmartScale('bmi_bsa')">🧮 BMI</button></div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Đo UACR + eGFR ở mọi BN THA, ĐTĐ, béo phì, bệnh tim mạch",'<span class="badge badge-I">I</span>'],
@@ -9426,7 +9990,16 @@ ${rt(["Hướng xử trí"],[
         ["Đánh giá đáp ứng","Hb tăng ≥1 g/dL sau 2–4 tuần; tiếp tục ~3 tháng sau khi Hb bình thường để bù dự trữ"],
         ["<b>Sắt truyền TM</b>","Không dung nạp/không đáp ứng sắt uống, kém hấp thu (celiac, IBD hoạt động, sau phẫu thuật dạ dày), mất máu kéo dài, cần bù nhanh: ferric carboxymaltose 750–1000 mg, ferric derisomaltose 1000 mg, iron sucrose 200 mg × 5"],
         ["Lưu ý","Ferric carboxymaltose gây <b>hạ phosphate</b> (theo dõi khi dùng lặp lại); truyền máu chỉ khi thiếu máu nặng có triệu chứng/huyết động không ổn định"]
-      ])}`,
+      ])}
+      <div class="subhead">Bảng chế phẩm sắt</div>
+      ${rt(["Liều","Ghi chú"],[
+        ["<b>Sắt uống</b>: ferrous sulfate 325 mg (65 mg Fe) / ferrous fumarate / ferrous gluconate","1 viên/ngày hoặc cách ngày","Hb tăng ≥1 g/dL sau 2–4 tuần; tiếp tục 3 tháng sau khi Hb bình thường"],
+        ["<b>Sắt sucrose</b> (TM)","200 mg × 5 lần (mỗi lần 200 mg cách 1–2 ngày)","An toàn; nhiều lần truyền"],
+        ["<b>Ferric carboxymaltose</b> (TM)","750 mg × 2 lần cách 7 ngày (hoặc 15 mg/kg ≤1000 mg)","Hạ phosphate máu — theo dõi nếu lặp lại"],
+        ["<b>Ferric derisomaltose</b> (TM)","1000 mg một lần (hoặc 20 mg/kg)","Ít hạ phosphate, một lần truyền"],
+        ["<b>Ferumoxytol</b> (TM)","510 mg × 2 lần cách 3–8 ngày","Phản vệ hiếm; giám sát 30 phút"]
+      ])}
+      <div class="alert-box alert-info"><b>Ở Việt Nam:</b> luôn nghĩ đến <b>giun móc (Ancylostoma/Necator)</b> — xét nghiệm phân, điều trị albendazole 400 mg liều đơn (hoặc mebendazole 100 mg × 2/ngày × 3 ngày); nguyên nhân khác: trĩ, loét dạ dày–tá tràng (H. pylori, NSAID), kinh nguyệt, ung thư đại–trực tràng. Truyền máu chỉ khi Hb &lt;7 g/dL (hoặc &lt;8 g/dL nếu bệnh tim mạch) hoặc không ổn định huyết động.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Nội soi hai chiều ở nam/phụ nữ sau mãn kinh thiếu máu thiếu sắt",'<span class="badge badge-I">I</span>'],
@@ -9530,7 +10103,8 @@ ${rt(["Hướng xử trí"],[
         ["Bệnh phổi kẽ","MMF, cyclophosphamide, rituximab; nintedanib khi xơ hóa tiến triển"],
         ["<b>Tăng áp động mạch phổi</b>","Phối hợp ERA + PDE5i như PAH; ức chế miễn dịch có thể cải thiện thể có viêm"],
         ["UCTD","HCQ, theo dõi 6–12 tháng/lần; tránh ức chế miễn dịch mạnh khi không tổn thương cơ quan"]
-      ])}`,
+      ])}
+      <div class="alert-box alert-info"><b>Lưu ý theo dõi:</b> huyết thanh anti-U1 RNP hiệu giá cao + ANA lốm đốm; tổn thương phổi/PAH là nguyên nhân tử vong chính (siêu âm tim hằng năm, DLCO, HRCT); hạn chế corticoid liều cao kéo dài; Raynaud: nifedipine 30–60 mg/ngày, sildenafil 20 mg × 3, loét ngón: bosentan/iloprost; HCQ 200–400 mg/ngày; tiền sản giật/thai kỳ nguy cơ cao — theo dõi sản khoa.</div>`,
     khuyen_cao:`
       ${rt(["Mức"],[
         ["Siêu âm tim tầm soát tăng áp phổi định kỳ ở MCTD",'<span class="badge badge-I">I</span>'],
@@ -11339,7 +11913,7 @@ if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D
 if('serviceWorker' in navigator){
   try {
     const swCode = `
-      const CACHE = 'ykhoa-v20261010';
+      const CACHE = 'ykhoa-v20261014-5';
       self.addEventListener('install', e => { self.skipWaiting(); });
       self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
       self.addEventListener('fetch', e => {
@@ -12087,6 +12661,7 @@ const AI2_SYN = [
   ['midazolam','hypnovel'],['dexmedetomidin','dexmedetomidine','precedex'],['propofol','diprivan'],['acid tranexamic','tranexamic','txa','transamin'],
   ['nhiem khuan huyet','soc nhiem khuan','sepsis','septic shock','nkh'],['xuat huyet nao','xuat huyet trong nao','ich','chay mau nao'],['vasopressin','pitressin'],
   ['cefepim','cefepime','maxipime'],['ceftazidim','ceftazidime','fortum'],['cefotaxim','cefotaxime','claforan'],['cefuroxim','cefuroxime','zinacef'],['ceftarolin','ceftaroline','zinforo'],['cefoperazon','cefoperazone','sulperazon'],['mmse','mini mental','trang thai tam than toi thieu','minimental'],
+  ['doi don vi','chuyen doi don vi','quy doi','unit conversion','mg dl','umol l'],['ure','bun','urea'],
   ['truyen chung','y site','ysite','chac 3','tuong ky','tuong thich','tuong hop'],['thang diem','score','diem'],['khuyen cao','class','muc khuyen cao']
 ];
 let AI2_IDX = null;
@@ -17088,6 +17663,17 @@ function __buildScalesData(){
           return { text: "MMSE " + t + "/30 — dưới điểm cắt theo học vấn " + eduTxt + ": gợi ý " + sev + ". Loại trừ mê sảng, trầm cảm, suy giáp, thiếu B12, thuốc (kháng cholinergic, benzodiazepine); làm XN máu, CT/MRI sọ; chuyển chuyên khoa thần kinh/lão khoa. (Nghiên cứu cộng đồng VN 2022: điểm cắt sàng lọc 23/24, chẩn đoán 19/20.)", color: t >= 20 ? __W : __D };
         }
       }
+      ,{
+        id: "unit_conv",
+        unitLabel: "",
+        title: "⇄ Chuyển đổi đơn vị xét nghiệm (Creatinin, Urê–BUN, Bilirubin, Glucose…)",
+        subtitle: "Quy đổi qua lại đơn vị quy ước (mg/dL…) và đơn vị SI (µmol/L, mmol/L…). Trong mỗi thang điểm cũng có ô «⇄ Nhập theo đơn vị khác».",
+        category: "tien_ich", categoryName: "Tiện ích",
+        source: "AMA Manual of Style — SI Conversion Calculator; Tietz Clinical Guide to Laboratory Tests; ADA/IFCC HbA1c Consensus 2007",
+        criteria: [ { name: "Quy đổi", detail: "", type: "uconv" } ],
+        compute: function(){ return null; },
+        evaluate: function(){ return { text: "Chọn chỉ số, nhập giá trị và đơn vị đang có — kết quả ở mọi đơn vị hiển thị bên dưới.", color: "var(--text-secondary)" }; }
+      }
     ];
 }
 function ensureScales(){
@@ -17526,6 +18112,142 @@ function filterScoreCat(cat, el) {
 function handleScoreSearch(q){ smartSearchScores(q); }
 
 
+/* =========================================================
+   CHUYỂN ĐỔI ĐƠN VỊ XÉT NGHIỆM (2026.10.14)
+   - Ô «⇄ Nhập theo đơn vị khác» dưới mỗi ô nhập số trong thang điểm
+   - Công cụ chuyển đổi độc lập (thang «unit_conv»)
+   Hệ số: AMA Manual of Style (SI conversion), Tietz Clinical Guide to Laboratory Tests
+   ========================================================= */
+const UC = {
+  creat:{n:'Creatinin', u:[['umol/l','µmol/L',1],['mg/dl','mg/dL',88.4]]},
+  urea:{n:'Urê / BUN', u:[['mmol/l','mmol/L (urê)',1],['bun','mg/dL BUN',0.357],['ureamg','mg/dL urê',0.1665]]},
+  bili:{n:'Bilirubin', u:[['umol/l','µmol/L',1],['mg/dl','mg/dL',17.1]]},
+  glu:{n:'Glucose', u:[['mmol/l','mmol/L',1],['mg/dl','mg/dL',0.0555]]},
+  ca:{n:'Canxi toàn phần', u:[['mmol/l','mmol/L',1],['mg/dl','mg/dL',0.2495],['meq/l','mEq/L',0.5]]},
+  mg:{n:'Magnesi', u:[['mmol/l','mmol/L',1],['mg/dl','mg/dL',0.4114],['meq/l','mEq/L',0.5]]},
+  phos:{n:'Phosphat', u:[['mmol/l','mmol/L',1],['mg/dl','mg/dL',0.3229]]},
+  uric:{n:'Acid uric', u:[['umol/l','µmol/L',1],['mg/dl','mg/dL',59.48]]},
+  alb:{n:'Albumin / Protein', u:[['g/l','g/L',1],['g/dl','g/dL',10]]},
+  hb:{n:'Hemoglobin', u:[['g/l','g/L',1],['g/dl','g/dL',10],['mmol/l','mmol/L',16.11]]},
+  crp:{n:'CRP', u:[['mg/l','mg/L',1],['mg/dl','mg/dL',10]]},
+  gas:{n:'PaO₂ / PaCO₂', u:[['mmhg','mmHg',1],['kpa','kPa',7.5006]]},
+  lact:{n:'Lactat', u:[['mmol/l','mmol/L',1],['mg/dl','mg/dL',0.111]]},
+  chol:{n:'Cholesterol / LDL / HDL', u:[['mmol/l','mmol/L',1],['mg/dl','mg/dL',0.02586]]},
+  tg:{n:'Triglycerid', u:[['mmol/l','mmol/L',1],['mg/dl','mg/dL',0.01129]]},
+  nh3:{n:'Amoniac', u:[['umol/l','µmol/L',1],['ug/dl','µg/dL',0.5872]]},
+  apap:{n:'Paracetamol (nồng độ)', u:[['mg/l','mg/L = µg/mL',1],['umol/l','µmol/L',0.1512]]},
+  uacr:{n:'Albumin/creatinin niệu (ACR)', u:[['mg/g','mg/g',1],['mg/mmol','mg/mmol',8.84]]},
+  trop:{n:'Troponin hs', u:[['ng/l','ng/L = pg/mL',1],['ng/ml','ng/mL = µg/L',1000]]},
+  plt:{n:'Tiểu cầu / Bạch cầu', u:[['g/l','G/L = ×10⁹/L = ×10³/µL',1],['mm3','/mm³ (/µL)',0.001]]},
+  wt:{n:'Cân nặng', u:[['kg','kg',1],['lb','lb (pound)',0.45359]]},
+  ht:{n:'Chiều cao', u:[['cm','cm',1],['in','inch',2.54],['m','m',100]]},
+  temp:{n:'Nhiệt độ', u:[['c','°C',1],['f','°F',null,x => (x - 32) / 1.8, x => x * 1.8 + 32]]},
+  a1c:{n:'HbA1c', u:[['%','% (NGSP)',1],['mmol/mol','mmol/mol (IFCC)',null,x => x / 10.929 + 2.15, x => (x - 2.15) * 10.929]]},
+  fio2:{n:'FiO₂', u:[['%','%',1],['frac','phân số (0,21–1,0)',100]]}
+};
+function ucToBase(an, ui, x){ const u = UC[an].u[ui]; return u[2] === null ? u[3](x) : x * u[2]; }
+function ucFromBase(an, ui, b){ const u = UC[an].u[ui]; return u[2] === null ? u[4](b) : b / u[2]; }
+function ucRound(v){ const a = Math.abs(v); const d = a >= 100 ? 0 : a >= 10 ? 1 : a >= 1 ? 2 : 3; const m = Math.pow(10, d); return Math.round(v * m) / m; }
+function ucFmt(v){ return String(ucRound(v)).replace('.', ','); }
+function ucNormUnit(t){ return String(t || '').toLowerCase().replace(/µ/g, 'u').replace(/\s+/g, ''); }
+function ucDetect(c){
+  const name = String(c.name || ''); const n = (typeof stripVN === 'function' ? stripVN(name) : name.toLowerCase()).replace(/đ/g, 'd');
+  let an = null;
+  if(/creatin/.test(n)) an = 'creat';
+  else if(/\bure\b|\bbun\b/.test(n)) an = 'urea';
+  else if(/bilirubin/.test(n)) an = 'bili';
+  else if(/glucose|duong huyet/.test(n)) an = 'glu';
+  else if(/canxi|calci/.test(n)) an = 'ca';
+  else if(/albumin|protein/.test(n) && !/nieu/.test(n)) an = 'alb';
+  else if(/hemoglobin|\bhb\b/.test(n)) an = 'hb';
+  else if(/\bcrp\b/.test(n)) an = 'crp';
+  else if(/paco|pao/.test(n)) an = 'gas';
+  else if(/paracetamol/.test(n)) an = 'apap';
+  else if(/uacr|\bacr\b/.test(n)) an = 'uacr';
+  else if(/can nang/.test(n)) an = 'wt';
+  else if(/chieu cao/.test(n)) an = 'ht';
+  else if(/hba1c/.test(n)) an = 'a1c';
+  else if(/fio/.test(n)) an = 'fio2';
+  else if(/tieu cau|bach cau/.test(n)) an = 'plt';
+  if(!an) return null;
+  const m = name.match(/\(([^)]*)\)/g) || [];
+  const hay = ucNormUnit(m.join(' '));
+  const units = UC[an].u;
+  let fu = -1;
+  // ưu tiên khớp đúng nhãn đơn vị trong ngoặc
+  units.forEach((u, i) => { if(fu < 0 && hay.indexOf(u[0]) >= 0) fu = i; });
+  if(fu < 0 && an === 'plt' && /×10|x10|g\/l/i.test(name)) fu = 0;
+  if(fu < 0 && an === 'urea') fu = 0;
+  if(fu < 0) return null;
+  return {an, fu};
+}
+function ucWidget(c){
+  const d = ucDetect(c); if(!d) return '';
+  const opts = UC[d.an].u.map((u, i) => i === d.fu ? '' : '<option value="' + i + '">' + u[1] + '</option>').join('');
+  return '<div class="uc-box" data-an="' + d.an + '" data-fu="' + d.fu + '" data-key="' + (c.key || '') + '">' +
+    '<div class="uc-line"><button type="button" class="uc-toggle" onclick="ucToggle(this)">⇄ Nhập theo đơn vị khác</button><span class="uc-hint"></span></div>' +
+    '<div class="uc-row" hidden><input type="number" class="uc-in" inputmode="decimal" step="any" placeholder="Giá trị" oninput="ucFill(this)">' +
+    '<select class="uc-sel" onchange="ucFill(this)">' + opts + '</select><span class="uc-arrow">→ ' + UC[d.an].u[d.fu][1] + '</span></div></div>';
+}
+function ucToggle(btn){ const row = btn.closest('.uc-box').querySelector('.uc-row'); row.hidden = !row.hidden; if(!row.hidden) row.querySelector('.uc-in').focus(); }
+function ucMain(box){ const g = box.closest('.criterion-group'); return g ? g.querySelector('.criterion-num[data-key="' + box.dataset.key + '"]') : null; }
+function ucFill(el){
+  const box = el.closest('.uc-box'); const an = box.dataset.an, fu = +box.dataset.fu;
+  const x = parseFloat(box.querySelector('.uc-in').value); const ui = +box.querySelector('.uc-sel').value;
+  const main = ucMain(box); if(!main) return;
+  if(isNaN(x)){ main.value = ''; } else main.value = ucRound(ucFromBase(an, fu, ucToBase(an, ui, x)));
+  if(typeof calcScoreNow === 'function') calcScoreNow();
+  ucHint(main, true);
+}
+function ucHint(inp, fromAlt){
+  const g = inp.closest('.criterion-group'); if(!g) return;
+  const box = g.querySelector('.uc-box'); if(!box) return;
+  const an = box.dataset.an, fu = +box.dataset.fu, h = box.querySelector('.uc-hint');
+  const v = parseFloat(inp.value);
+  if(isNaN(v)){ h.textContent = ''; return; }
+  const b = ucToBase(an, fu, v);
+  h.textContent = '= ' + UC[an].u.map((u, i) => i === fu ? null : ucFmt(ucFromBase(an, i, b)) + ' ' + u[1].split(' =')[0]).filter(Boolean).join(' · ');
+  if(!fromAlt){ const ai = box.querySelector('.uc-in'); if(ai && document.activeElement !== ai) ai.value = ''; }
+}
+/* Công cụ độc lập */
+function ucStandaloneHTML(){
+  const keys = Object.keys(UC);
+  return '<div class="uc-tool">' +
+    '<div class="crcl-sub">Chỉ số</div><select class="option-select" id="ucAn" onchange="ucToolUnits();ucToolCalc()">' + keys.map(k => '<option value="' + k + '">' + UC[k].n + '</option>').join('') + '</select>' +
+    '<div class="crcl-sub">Giá trị & đơn vị đang có</div><div class="crcl-unit-row"><input type="number" class="option-select" id="ucX" inputmode="decimal" step="any" placeholder="Nhập giá trị" oninput="ucToolCalc()">' +
+    '<select class="option-select" id="ucU" onchange="ucToolCalc()" style="max-width:170px"></select></div>' +
+    '<div id="ucOut" class="uc-out"></div>' +
+    '<details class="uc-ref"><summary>Bảng hệ số quy đổi</summary><table class="uc-table"><tbody>' +
+    keys.map(k => { const u = UC[k].u; return '<tr><th>' + UC[k].n + '</th><td>' + u.slice(1).map(x => '1 ' + x[1].split(' =')[0] + (x[2] === null ? ' (công thức)' : ' = ' + ucFmt(x[2]) + ' ' + u[0][1].split(' =')[0])).join('<br>') + '</td></tr>'; }).join('') +
+    '<tr><th>Na⁺, K⁺, Cl⁻, HCO₃⁻</th><td>1 mEq/L = 1 mmol/L</td></tr>' +
+    '<tr><th>Nhiệt độ</th><td>°C = (°F − 32) ÷ 1,8</td></tr><tr><th>HbA1c</th><td>mmol/mol = (% − 2,15) × 10,929</td></tr>' +
+    '</tbody></table></details></div>';
+}
+function ucToolUnits(){
+  const det = document.querySelector('.uc-inline'), sa = document.getElementById('ucAn');
+  if(det && sa && !sa.dataset.init){ sa.dataset.init = '1'; sa.value = det.dataset.guess || sa.value; }
+  const an = (document.getElementById('ucAn') || {}).value; const s = document.getElementById('ucU'); if(!an || !s) return;
+  s.innerHTML = UC[an].u.map((u, i) => '<option value="' + i + '">' + u[1] + '</option>').join('');
+}
+function ucToolCalc(){
+  const an = (document.getElementById('ucAn') || {}).value, out = document.getElementById('ucOut'); if(!an || !out) return;
+  const x = parseFloat(document.getElementById('ucX').value), ui = +document.getElementById('ucU').value;
+  if(isNaN(x)){ out.innerHTML = '<div class="uc-empty">Nhập giá trị để xem quy đổi.</div>'; return; }
+  const b = ucToBase(an, ui, x);
+  out.innerHTML = UC[an].u.map((u, i) => '<div class="uc-res' + (i === ui ? ' on' : '') + '"><b>' + ucFmt(ucFromBase(an, i, b)) + '</b> <span>' + u[1] + '</span></div>').join('');
+}
+
+/* Công cụ đổi đơn vị gắn cuối các thang điểm có ngưỡng xét nghiệm trong lựa chọn */
+function ucInlineTool(sc){
+  if(!sc || sc.id === 'unit_conv') return '';
+  const txt = JSON.stringify((sc.criteria || []).map(c => [c.name, c.detail, (c.options || []).map(o => o.text)]));
+  if((sc.criteria || []).some(c => c.type === 'number' && ucDetect(c))) return '';
+  if(!/mg\/dL|µmol\/L|umol\/L|mmol\/L|g\/dL|g\/L|kPa|BUN|×10⁹|G\/L/.test(txt)) return '';
+  const guess = [['uric',/acid uric/i],['chol',/LDL|cholesterol/i],['nh3',/amoniac/i],['crp',/\bCRP\b/],['creat',/creatin/i],['urea',/urê|ure\b|BUN/i],['bili',/bilirubin/i],['glu',/glucose|đường huyết/i],['alb',/albumin/i],['ca',/canxi|calci/i],['gas',/PaO|PaCO|kPa/i],['hb',/hemoglobin|\bHb\b/i],['plt',/tiểu cầu|bạch cầu/i],['lact',/lactat/i]];
+  const g = (guess.find(x => x[1].test(txt)) || ['creat'])[0];
+  return '<details class="uc-inline" data-guess="' + g + '"><summary>⇄ Đổi đơn vị nhanh (Creatinin, Urê/BUN, Bilirubin…)</summary>' + ucStandaloneHTML() + '</details>';
+}
+
 function openScoreModal(id) {
   ensureScales();
   currentScale = scalesData.find(s => s.id === id);
@@ -17537,6 +18259,7 @@ function openScoreModal(id) {
   if(unitEl) unitEl.textContent = currentScale.unitLabel || 'ĐIỂM';
   const body = document.getElementById('modalScaleBody');
   if(!body) return;
+  setTimeout(() => { if(document.getElementById('ucAn')){ ucToolUnits(); ucToolCalc(); } }, 0);
   body.innerHTML = (currentScale.criteria||[]).map((c) => {
     const isMulti = !!c.multi;
     let control = '';
@@ -17544,7 +18267,9 @@ function openScoreModal(id) {
       control = `<div class="criterion-detail">${c.detail||''}</div>
       <input type="number" class="option-select criterion-num" data-key="${c.key||''}"
         min="${c.min??''}" max="${c.max??''}" step="${c.step??'any'}"
-        placeholder="${c.placeholder||''}" oninput="calcScoreNow()" inputmode="decimal">`;
+        placeholder="${c.placeholder||''}" oninput="calcScoreNow();ucHint(this)" inputmode="decimal">${ucWidget(c)}`;
+    } else if(c.type === 'uconv'){
+      control = ucStandaloneHTML();
     } else if(c.type === 'crcl_mode'){
       control = `<div class="criterion-detail">${c.detail||''}</div>
         <div class="crcl-mode-row">
@@ -17591,7 +18316,7 @@ function openScoreModal(id) {
       ${isMulti ? `<div class="criterion-detail">${c.detail||''}</div>` : ''}
       ${control}
     </div>`;
-  }).join('') + `<div style="font-size:11px;color:var(--text-secondary);text-align:center;margin:16px 0 8px;font-style:italic;">Nguồn: ${currentScale.source||''}</div>`;
+  }).join('') + ucInlineTool(currentScale) + `<div style="font-size:11px;color:var(--text-secondary);text-align:center;margin:16px 0 8px;font-style:italic;">Nguồn: ${currentScale.source||''}</div>`;
 
   const modal = document.getElementById('calcModal');
   if(modal){
