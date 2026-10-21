@@ -796,6 +796,63 @@
   html.layout-desktop .ys-head, html.layout-desktop .ys-presets-row, html.layout-desktop .ys-selected{grid-column:1/-1;}
   html.layout-desktop #ysResult{grid-column:2;grid-row:4 / span 3;position:sticky;top:calc(var(--app-header-h,72px) + 12px);max-height:calc(100vh - var(--app-header-h,72px) - 24px);overflow:auto;}
   html.layout-desktop .ys-picker-head, html.layout-desktop #ysPicker, html.layout-desktop .ys-general{grid-column:1;}
+  /* ===== TAB TÍNH TỐC ĐỘ TRUYỀN ===== */
+  #viewInfusion{padding-top:calc(var(--app-header-h,120px) + 8px);}
+  .inf-wrap{max-width:820px;margin:0 auto;padding:6px 14px calc(90px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px;}
+  .inf-head h2{font-size:17px;color:var(--tiffany-dark);margin-bottom:4px;}
+  .inf-head p{font-size:12.5px;color:var(--text-secondary);line-height:1.5;}
+  .inf-group{margin-bottom:8px;}
+  .inf-group-title{font-size:11.5px;font-weight:800;color:var(--text-secondary);margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px;}
+  .inf-chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .inf-chip{border:1px solid var(--border-color);background:var(--bg-card);color:var(--text-primary);border-radius:14px;padding:6px 11px;font-size:12.5px;font-weight:600;cursor:pointer;min-height:34px;}
+  .inf-chip.on{background:var(--tiffany-main);color:#fff;border-color:var(--tiffany-main);}
+  #infCalc{border:1px solid var(--border-color);border-radius:14px;background:var(--bg-card);padding:12px;box-shadow:var(--card-shadow);scroll-margin-top:calc(var(--app-header-h,120px) + 8px);}
+  .inf-title h3{font-size:16px;color:var(--text-primary);}
+  .inf-mech{font-size:12.5px;color:var(--text-secondary);line-height:1.45;margin:3px 0 10px;}
+  .inf-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+  .inf-f{display:flex;flex-direction:column;gap:3px;font-size:11.5px;font-weight:700;color:var(--text-secondary);min-width:0;}
+  .inf-f input,.inf-f select{width:100%;padding:9px 10px;border-radius:9px;border:1px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);font-size:15px;font-weight:700;min-width:0;}
+  .inf-modes{display:flex;gap:6px;margin:4px 0 8px;}
+  .inf-modes button{flex:1;padding:8px;border-radius:9px;border:1px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);font-weight:700;font-size:12.5px;cursor:pointer;}
+  .inf-modes button.on{background:var(--tiffany-dark);color:#fff;border-color:var(--tiffany-dark);}
+  .inf-result{border-radius:12px;background:var(--tiffany-light);border:1px solid var(--tiffany-main);padding:10px 12px;margin-bottom:10px;}
+  .inf-big{font-size:15px;color:var(--text-primary);}
+  .inf-big b{font-size:32px;color:var(--tiffany-dark);font-weight:900;}
+  .inf-sub{font-size:12px;color:var(--text-secondary);margin-top:2px;}
+  .inf-warn{font-size:12.5px;font-weight:700;margin-top:6px;color:var(--text-primary);background:rgba(234,179,8,.18);border-radius:8px;padding:6px 8px;line-height:1.4;}
+  .inf-rangebar{position:relative;height:10px;border-radius:6px;background:var(--border-color);margin-top:12px;}
+  .inf-usual{position:absolute;top:0;bottom:0;background:var(--tiffany-main);border-radius:6px;opacity:.75;}
+  .inf-limit{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--danger);}
+  .inf-mark{position:absolute;top:-5px;width:4px;height:20px;margin-left:-2px;background:var(--text-primary);border-radius:2px;}
+  .inf-rangelab{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text-secondary);margin-top:3px;gap:6px;}
+  .inf-sec{margin-top:12px;}
+  .inf-sec-title{font-size:13px;font-weight:800;color:var(--tiffany-dark);margin-bottom:6px;}
+  .inf-sec-title span{font-weight:600;color:var(--text-secondary);font-size:11.5px;}
+  .inf-tablewrap{overflow-x:auto;}
+  .inf-tbl{border-collapse:collapse;width:100%;font-size:12.5px;}
+  .inf-tbl th{background:var(--tiffany-light);color:var(--tiffany-dark);padding:6px 8px;text-align:left;font-size:11.5px;}
+  .inf-tbl td{padding:6px 8px;border-bottom:1px solid var(--border-color);vertical-align:top;}
+  .inf-tbl tr.cur td{background:rgba(0,168,150,.16);font-weight:700;}
+  .inf-tbl tr.fx td{font-size:12px;color:var(--text-secondary);}
+  .inf-lv{font-size:13px;letter-spacing:1px;color:var(--tiffany-dark);white-space:nowrap;}
+  .inf-lv i{font-style:normal;color:var(--border-color);}
+  .inf-legend{font-size:11px;color:var(--text-secondary);margin-top:6px;line-height:1.45;}
+  .inf-notes{padding-left:18px;font-size:12.8px;line-height:1.55;display:flex;flex-direction:column;gap:4px;}
+  .inf-link-lab{font-size:12px;font-weight:800;color:var(--text-secondary);align-self:center;}
+  .inf-disc{font-size:11.5px;color:var(--text-secondary);line-height:1.5;border:1px dashed var(--border-color);border-radius:10px;padding:8px 10px;}
+  .inf-curbtn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1px solid var(--tiffany-main);background:var(--bg-card);color:var(--text-primary);font-size:14px;cursor:pointer;text-align:left;}
+  .inf-curbtn b{color:var(--tiffany-dark);}
+  .inf-chg{font-size:12px;font-weight:800;color:var(--tiffany-dark);white-space:nowrap;}
+  .inf-pickbody{margin-top:8px;}
+  #mainTabBar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;line-height:1.15;font-size:10.5px !important;padding:6px 1px !important;min-width:0;white-space:nowrap;}
+  #mainTabBar .tb-ic{font-size:16px;line-height:1.1;}
+  html.layout-desktop #viewInfusion{padding-top:calc(var(--app-header-h,72px) + 12px);}
+  .inf-gtt{font-size:15px;margin-top:4px;color:var(--text-primary);}
+  .inf-gtt b{font-size:22px;color:var(--tiffany-dark);}
+  .inf-gtt span{font-size:11.5px;color:var(--text-secondary);}
+  .inf-dil{border:1px solid var(--border-color);border-radius:10px;background:var(--bg-primary);padding:8px 10px;font-size:12.5px;line-height:1.5;margin-bottom:8px;}
+  .inf-dil.lim{border-color:var(--warning);} .inf-dil.bad{border-color:var(--danger);background:rgba(220,38,38,.08);}
+  .inf-dil-foot{color:var(--text-secondary);font-size:11.8px;margin-top:3px;}
   .ys-ref{font-size:11px;font-weight:800;color:var(--tiffany-dark);text-decoration:none;margin-left:2px;}
   .ys-ref-list{padding-left:20px;font-size:12.3px;line-height:1.5;}
   .ys-ref-list li{margin-bottom:4px;border-radius:6px;transition:background .3s;}
@@ -879,10 +936,11 @@
     </div>
   </div>
   <div id="mainTabBar" style="display:flex;gap:5px;padding:0;margin:0;">
-    <button id="tabPhacDo" class="active-main" onclick="switchMainTab('phacdo')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">📋 Phác đồ</button>
-    <button id="tabThangDiem" onclick="switchMainTab('thangdiem')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">🧮 Thang điểm</button>
-    <button id="tabYsite" onclick="switchMainTab('ysite')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">💉 Y-site</button>
-    <button id="tabAI" onclick="switchMainTab('ai')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;">🤖 AI Y khoa</button>
+    <button id="tabPhacDo" class="active-main" onclick="switchMainTab('phacdo')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;"><span class="tb-ic">📋</span>Phác đồ</button>
+    <button id="tabThangDiem" onclick="switchMainTab('thangdiem')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;"><span class="tb-ic">🧮</span>Thang điểm</button>
+    <button id="tabYsite" onclick="switchMainTab('ysite')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;"><span class="tb-ic">💉</span>Y-site</button>
+    <button id="tabInfusion" onclick="switchMainTab('infusion')" title="Tính tốc độ truyền thuốc" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;"><span class="tb-ic">💧</span>Tốc độ</button>
+    <button id="tabAI" onclick="switchMainTab('ai')" style="flex:1;padding:9px 4px;border-radius:10px;border:none;font-weight:700;font-size:11.5px;cursor:pointer;"><span class="tb-ic">🤖</span>AI Y khoa</button>
   </div>
   <div class="search-wrap" id="globalSearchWrap" style="padding:8px 0 4px;position:relative;">
     <input id="quickSearch" type="search" placeholder="Tìm thông minh: THA, COPD, GCS, HAS-BLED, suy tim…"
@@ -11035,6 +11093,7 @@ function renderDiseaseContent(){
 
   container.innerHTML = html;
   if(typeof enhanceDoseCopyButtons === 'function') setTimeout(enhanceDoseCopyButtons, 0);
+  if(typeof infInjectLinks === 'function') infInjectLinks();
 }
 
 function toggleTheme(){
@@ -11913,7 +11972,7 @@ if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D
 if('serviceWorker' in navigator){
   try {
     const swCode = `
-      const CACHE = 'ykhoa-v20261014-5';
+      const CACHE = 'ykhoa-v20261014-7';
       self.addEventListener('install', e => { self.skipWaiting(); });
       self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
       self.addEventListener('fetch', e => {
@@ -12128,6 +12187,11 @@ const onGlobalSearchDebounced = debounce(function(q){ onGlobalSearch(q); }, 120)
 function onGlobalSearch(q){
   const tab = window.__mainTab || 'phacdo';
   q = (q == null) ? '' : String(q);
+  if(tab === 'infusion'){
+    infSetFilter(q);
+    document.getElementById('smartSearchDrop')?.classList.remove('open');
+    return;
+  }
   if(tab === 'ysite'){
     const ysIn = document.getElementById('ysSearch'); if(ysIn) ysIn.value = q;
     if(typeof ysSetFilter === 'function') ysSetFilter(q);
@@ -17974,6 +18038,527 @@ function ysInit(){
   ysRenderRefs();
 }
 
+/* ===== TÍNH TỐC ĐỘ TRUYỀN THUỐC ===== */
+const INF_CLASSES = ['Vận mạch & tăng co bóp','Giãn mạch / hạ áp','Kiểm soát nhịp','Tiêu hóa – gan – thận','Chống đông · nội tiết · lợi tiểu','An thần – giảm đau'];
+/* Cột thụ thể: mức 0–3 (0 = không đáng kể). Ngưỡng liều chỉ mang tính tham khảo dược lực học (khác biệt giữa người bệnh lớn). */
+const INF_DRUGS = [
+ {id:'norepi', name:'Noradrenalin', alt:'norepinephrine', cls:0, amt:'mg', unit:'mcg/kg/min', units:['mcg/kg/min','mcg/min'],
+  range:[0.05,0.5], warn:1, ladder:[0.02,0.05,0.1,0.2,0.3,0.5,1],
+  preps:[[4,50],[8,50],[4,250],[8,250]],
+  mech:'Chủ vận α1 mạnh, β1 vừa, β2 yếu → co mạch + tăng nhẹ co bóp.',
+  cols:['α1','β1','β2'],
+  bands:[
+   {a:0,b:0.1,lv:[2,2,1],fx:'Co mạch nhẹ–vừa + tăng co bóp nhẹ.'},
+   {a:0.1,b:1,lv:[3,2,1],fx:'α1 chiếm ưu thế: co mạch rõ → MAP ↑, cung lượng tim thay đổi ít.'},
+   {a:1,b:null,lv:[3,1,0],fx:'Co mạch tối đa; nguy cơ thiếu máu đầu chi/tạng, tăng hậu gánh. Cân nhắc phối hợp vasopressin/hydrocortison, tìm nguyên nhân sốc kháng trị.'}],
+  notes:['Vận mạch đầu tay trong sốc nhiễm khuẩn (SSC 2021), đích MAP ≥ 65 mmHg. Ưu tiên catheter tĩnh mạch trung tâm; khi chưa có CVC có thể truyền tạm qua tĩnh mạch ngoại vi lớn, theo dõi vị trí thường xuyên.','Thoát mạch: ngừng truyền, hút lại qua catheter; tiêm thấm quanh vùng phentolamine 5–10 mg pha trong 10 mL NaCl 0,9% theo quy trình khoa.','Không tiêm bolus thuốc khác qua đường đang truyền vận mạch; tránh ngưng đột ngột.']},
+ {id:'epi', name:'Adrenalin', alt:'epinephrine', cls:0, amt:'mg', unit:'mcg/kg/min', units:['mcg/kg/min','mcg/min'],
+  range:[0.01,0.3], warn:0.5, ladder:[0.01,0.02,0.05,0.1,0.2,0.3,0.5],
+  preps:[[1,50],[4,50],[4,250],[1,250]],
+  mech:'Chủ vận α1, β1, β2 không chọn lọc; tỉ lệ thay đổi theo liều.',
+  cols:['α1','β1','β2'],
+  bands:[
+   {a:0,b:0.05,lv:[1,3,3],fx:'β chiếm ưu thế: tăng co bóp, tăng nhịp, giãn phế quản, giãn mạch cơ vân → MAP có thể không tăng (thậm chí giảm).'},
+   {a:0.05,b:0.15,lv:[2,3,2],fx:'Liều trung gian: tăng cung lượng tim + bắt đầu co mạch.'},
+   {a:0.15,b:null,lv:[3,3,1],fx:'α1 chiếm ưu thế: co mạch mạnh, tăng hậu gánh; nguy cơ loạn nhịp, thiếu máu tạng/đầu chi.'}],
+  notes:['Sốc phản vệ kháng điều trị tiêm bắp: truyền khởi đầu khoảng 0,05–0,1 µg/kg/phút, chỉnh theo đáp ứng huyết động. Nhịp chậm triệu chứng (AHA): 2–10 µg/phút.','Tăng lactate máu do kích thích β2 (không phải luôn là giảm tưới máu) và tăng đường huyết thường gặp.','Ngừng tim: dùng bolus 1 mg TM/XT mỗi 3–5 phút theo ACLS, không phải truyền liên tục.']},
+ {id:'dopa', name:'Dopamin', alt:'dopamine', cls:0, amt:'mg', unit:'mcg/kg/min', units:['mcg/kg/min','mcg/min'],
+  range:[2,20], warn:20, ladder:[2,3,5,7.5,10,15,20],
+  preps:[[200,50],[200,250],[400,250]],
+  mech:'Chủ vận D1/D2 (liều thấp) → β1 (liều trung bình, một phần gián tiếp qua giải phóng noradrenalin) → α1 (liều cao).',
+  cols:['D1/D2','β1','α1'],
+  bands:[
+   {a:0,b:3,lv:[3,0,0],fx:'Giãn mạch thận–mạc treo (liều “thận”); chưa chứng minh bảo vệ thận hay cải thiện kết cục.'},
+   {a:3,b:10,lv:[1,3,1],fx:'Tăng co bóp và tần số tim; ít ảnh hưởng sức cản mạch.'},
+   {a:10,b:null,lv:[1,2,3],fx:'α1 chiếm ưu thế: co mạch, tăng HA; tăng nguy cơ nhịp nhanh/loạn nhịp.'}],
+  notes:['Ít được ưu tiên trong sốc (SSC 2021 khuyến cáo noradrenalin hơn dopamin do loạn nhịp nhiều hơn); vẫn dùng khi nhịp chậm kèm tụt HA ít nguy cơ nhịp nhanh.','Nhịp chậm triệu chứng (AHA): 5–20 µg/kg/phút khi atropin không đủ.','Thoát mạch: xử trí như noradrenalin (phentolamine).']},
+ {id:'dobu', name:'Dobutamin', alt:'dobutamine', cls:0, amt:'mg', unit:'mcg/kg/min', units:['mcg/kg/min','mcg/min'],
+  range:[2.5,20], warn:20, ladder:[2.5,5,7.5,10,15,20],
+  preps:[[250,50],[250,250],[500,250]],
+  mech:'Chủ vận β1 > β2, α1 yếu → tăng co bóp, giãn mạch nhẹ.',
+  cols:['β1','β2','α1'],
+  bands:[
+   {a:0,b:5,lv:[2,1,0],fx:'Tăng co bóp, giãn mạch nhẹ; HA thường ít thay đổi.'},
+   {a:5,b:10,lv:[3,2,1],fx:'Tăng cung lượng tim rõ; nhịp tim tăng, HA có thể giảm do giãn mạch β2.'},
+   {a:10,b:null,lv:[3,2,2],fx:'Tăng nhịp nhanh, loạn nhịp, tăng tiêu thụ O₂ cơ tim; nên tìm lý do không đáp ứng ở liều này.'}],
+  notes:['Dùng trong sốc tim/giảm tưới máu do rối loạn chức năng thất trái, cung lượng tim thấp. Có thể gây tụt HA do giãn mạch → phối hợp vận mạch.','Ở bệnh nhân đang dùng chẹn β liều cao có thể kém đáp ứng → cân nhắc milrinone.','Dung nạp (giảm đáp ứng) sau 48–72 giờ.']},
+ {id:'vaso', name:'Vasopressin', alt:'', cls:0, amt:'U', unit:'U/min', units:['U/min','U/h'],
+  range:[0.01,0.04], warn:0.04, ladder:[0.01,0.02,0.03,0.04],
+  preps:[[20,50],[40,50],[20,100]],
+  mech:'Chủ vận V1 (co mạch, độc lập catecholamine), V2 (giữ nước), V1b.',
+  cols:['V1','V2'],
+  bands:[
+   {a:0,b:0.045,lv:[3,1],fx:'Co mạch, tăng nhạy với catecholamine, ít tác động lên cung lượng tim.'},
+   {a:0.045,b:null,lv:[3,2],fx:'Vượt liều thường dùng trong sốc: tăng nguy cơ thiếu máu cơ tim, ruột, đầu chi.'}],
+  notes:['Thêm vào noradrenalin khi sốc kháng trị (SSC 2021: khởi vasopressin thay vì tiếp tục tăng noradrenalin, thường khi noradrenalin ~0,25–0,5 µg/kg/phút). Liều cố định ~0,03 U/phút, không chuẩn độ.','Hạ natri máu, thiếu máu đầu chi/ruột; chống chỉ định tương đối khi có bệnh động mạch vành nặng.']},
+ {id:'phenyl', name:'Phenylephrin', alt:'', cls:0, amt:'mg', unit:'mcg/min', units:['mcg/min','mcg/kg/min'],
+  range:[40,180], warn:200, ladder:[40,60,100,140,180],
+  preps:[[10,100],[20,250],[50,250]],
+  mech:'Chủ vận α1 thuần túy → co mạch, không có tác dụng β.',
+  cols:['α1'],
+  bands:[{a:0,b:null,lv:[3],fx:'Co mạch thuần; nhịp tim có thể giảm phản xạ, cung lượng tim có thể giảm.'}],
+  notes:['Dùng khi nhịp nhanh/loạn nhịp do catecholamine, hoặc tụt HA do giãn mạch (gây mê, thuốc); không khuyến cáo thường quy trong sốc nhiễm khuẩn.','Tránh khi suy tim cung lượng thấp (tăng hậu gánh làm giảm cung lượng).']},
+ {id:'iso', name:'Isoprenalin', alt:'isoproterenol', cls:0, amt:'mg', unit:'mcg/min', units:['mcg/min','mcg/kg/min'],
+  range:[2,10], warn:20, ladder:[2,4,6,8,10],
+  preps:[[2,250],[1,50],[2,100]],
+  mech:'Chủ vận β1 = β2 không chọn lọc; không tác dụng α.',
+  cols:['β1','β2'],
+  bands:[{a:0,b:null,lv:[3,3],fx:'Tăng nhịp + co bóp, giãn mạch (HA tâm trương giảm); nguy cơ thiếu máu cơ tim và loạn nhịp.'}],
+  notes:['Cầu nối trong nhịp chậm kháng atropin hoặc xoắn đỉnh phụ thuộc nhịp chậm khi chờ máy tạo nhịp (tùy sẵn có).','Tránh khi thiếu máu cơ tim cấp, nhịp nhanh.']},
+ {id:'milri', name:'Milrinon', alt:'milrinone', cls:0, amt:'mg', unit:'mcg/kg/min', units:['mcg/kg/min'],
+  range:[0.125,0.75], warn:0.75, ladder:[0.125,0.25,0.375,0.5,0.75],
+  preps:[[10,50],[20,100],[20,50]],
+  mech:'Ức chế PDE3 → ↑cAMP (không qua thụ thể β): tăng co bóp, giãn mạch, giãn ĐM phổi.',
+  cols:['PDE3'],
+  bands:[
+   {a:0,b:0.375,lv:[2],fx:'Tăng co bóp + giãn mạch nhẹ.'},
+   {a:0.375,b:null,lv:[3],fx:'Hiệu ứng tối đa; hạ HA do giãn mạch rõ, loạn nhịp.'}],
+  notes:['Thải qua thận → giảm liều theo CrCl (nhãn thuốc): CrCl 50→0,43; 40→0,38; 30→0,33; 20→0,28; 10→0,23; 5→0,20 µg/kg/phút.','Không phụ thuộc thụ thể β nên hữu ích khi dùng chẹn β liều cao hoặc tăng áp phổi. Không nên bolus thường quy (hạ HA).']},
+ {id:'ntg', name:'Nitroglycerin', alt:'glyceryl trinitrate · NTG', cls:1, amt:'mg', unit:'mcg/min', units:['mcg/min'],
+  range:[5,200], warn:200, ladder:[5,10,20,40,80,120,200],
+  preps:[[50,250],[25,250],[10,50]],
+  mech:'Chất cho NO → ↑cGMP → giãn cơ trơn mạch. Không qua thụ thể màng.',
+  cols:['TM','ĐM','ĐM vành'],
+  bands:[
+   {a:0,b:40,lv:[3,1,2],fx:'Giãn tĩnh mạch chiếm ưu thế → giảm tiền tải, giảm công cơ tim; giãn ĐM vành.'},
+   {a:40,b:null,lv:[3,3,2],fx:'Thêm giãn tiểu ĐM → giảm hậu gánh và HA; liều >200 µg/phút ít thêm lợi ích.'}],
+  notes:['Khởi đầu 5–10 µg/phút, tăng 5–10 µg/phút mỗi 3–5 phút theo triệu chứng/HA.','Dung nạp (tachyphylaxis) sau 24–48 giờ. Chống chỉ định khi dùng sildenafil trong 24 giờ, tadalafil trong 48 giờ, NMCT thất phải, hẹp van ĐMC nặng, HA thấp.','Hấp phụ vào dây PVC → dùng dây không PVC hoặc chuẩn độ theo đáp ứng.']},
+ {id:'snp', name:'Nitroprusside', alt:'natri nitroprusside', cls:1, amt:'mg', unit:'mcg/kg/min', units:['mcg/kg/min'],
+  range:[0.3,5], warn:5, ladder:[0.3,0.5,1,2,3,5,8],
+  preps:[[50,250],[50,500],[50,50]],
+  mech:'Chất cho NO → giãn cân bằng ĐM và TM.',
+  cols:['TM','ĐM'],
+  bands:[
+   {a:0,b:2,lv:[2,3],fx:'Giãn ĐM chiếm ưu thế → hạ HA nhanh, giảm hậu gánh.'},
+   {a:2,b:null,lv:[3,3],fx:'Nguy cơ độc cyanide, nhất là khi >2 µg/kg/phút kéo dài, suy gan hoặc suy thận.'}],
+  notes:['Cần theo dõi HA liên tục (tốt nhất đường động mạch). Che ánh sáng. Tối đa 10 µg/kg/phút và không quá ~10 phút ở liều này.','Độc cyanide/thiocyanate: tránh dùng kéo dài; nhiễm độc điều trị bằng hydroxocobalamin hoặc natri thiosulfat.']},
+ {id:'nicar', name:'Nicardipin', alt:'', cls:1, amt:'mg', unit:'mg/h', units:['mg/h'],
+  range:[5,15], warn:15, ladder:[2.5,5,7.5,10,12.5,15],
+  preps:[[25,250],[25,50],[10,50]],
+  mech:'Chẹn kênh Ca²⁺ loại L (dihydropyridine), chọn lọc cơ trơn mạch → giãn ĐM.',
+  cols:['Kênh Ca²⁺ L (ĐM)'],
+  bands:[{a:0,b:null,lv:[3],fx:'Giãn ĐM hệ thống và vành; phản xạ nhịp nhanh nhẹ.'}],
+  notes:['Khởi đầu 5 mg/h, tăng 2,5 mg/h mỗi 5–15 phút, tối đa 15 mg/h; giảm xuống 3 mg/h khi đạt đích.','Đổi vị trí tĩnh mạch ngoại vi mỗi 12 giờ (viêm tĩnh mạch). Thận trọng hẹp ĐMC nặng, suy tim cung lượng thấp.']},
+ {id:'dilt', name:'Diltiazem', alt:'', cls:2, amt:'mg', unit:'mg/h', units:['mg/h'],
+  range:[5,15], warn:15, ladder:[5,7.5,10,12.5,15],
+  preps:[[125,125],[100,50],[125,50]],
+  mech:'Chẹn kênh Ca²⁺ loại L (non-dihydropyridine) → làm chậm dẫn truyền nút nhĩ-thất, giảm co bóp.',
+  cols:['Nút AV','Cơ tim','Mạch'],
+  bands:[{a:0,b:null,lv:[3,2,2],fx:'Kiểm soát tần số thất; giãn mạch, ức chế co bóp nhẹ.'}],
+  notes:['Rung nhĩ đáp ứng thất nhanh: bolus 0,25 mg/kg TM trong 2 phút (lặp lại 0,35 mg/kg nếu cần) rồi duy trì 5–15 mg/h.','Tránh khi EF thấp/suy tim cấp, block AV độ II–III, hội chứng WPW kèm rung nhĩ; không phối hợp chẹn β TM.']},
+ {id:'esmolol', name:'Esmolol', alt:'', cls:2, amt:'mg', unit:'mcg/kg/min', units:['mcg/kg/min'],
+  range:[50,200], warn:300, ladder:[50,100,150,200,300],
+  preps:[[2500,250],[500,50]],
+  mech:'Chẹn β1 chọn lọc, tác dụng cực ngắn (t½ ≈ 9 phút).',
+  cols:['β1','β2'],
+  bands:[
+   {a:0,b:200,lv:[3,0],fx:'Chẹn β1 chọn lọc: giảm tần số tim, giảm co bóp.'},
+   {a:200,b:null,lv:[3,1],fx:'Mất dần tính chọn lọc β1 (chẹn thêm β2).'}],
+  notes:['Có thể bolus 500 µg/kg trong 1 phút rồi duy trì 50 µg/kg/phút; tăng 50 µg/kg/phút mỗi 4–5 phút (kèm nạp lại bolus nếu cần).','Tránh khi suy tim cấp mất bù, block AV, nhịp chậm, hen nặng.']},
+ {id:'labet', name:'Labetalol', alt:'', cls:1, amt:'mg', unit:'mg/min', units:['mg/min','mg/h'],
+  range:[0.5,2], warn:3, ladder:[0.5,1,1.5,2,3],
+  preps:[[200,200],[100,20],[300,250]],
+  mech:'Chẹn α1 + chẹn β1/β2 không chọn lọc (tỉ lệ β:α ≈ 7:1 khi tiêm tĩnh mạch).',
+  cols:['α1','β1','β2'],
+  bands:[{a:0,b:null,lv:[1,3,2],fx:'Hạ HA nhờ giảm sức cản mạch + chẹn β; ít gây nhịp nhanh phản xạ.'}],
+  notes:['Bolus 20 mg TM, rồi 20–80 mg mỗi 10 phút hoặc truyền 0,5–2 mg/phút; tổng liều thường ≤ 300 mg.','Tránh khi nhịp chậm, block AV, suy tim cấp, hen.']},
+ {id:'amio', name:'Amiodaron', alt:'', cls:2, amt:'mg', unit:'mg/min', units:['mg/min','mg/h'],
+  range:[0.5,1], warn:1, ladder:[0.5,1],
+  preps:[[450,250],[900,500],[300,50]],
+  mech:'Ức chế đa kênh: K⁺ (IKr, kéo dài tái cực), Na⁺, Ca²⁺; chẹn β không cạnh tranh.',
+  cols:['K⁺','Na⁺','Ca²⁺','β/α'],
+  bands:[
+   {a:0,b:0.75,lv:[3,2,2,2],fx:'Giai đoạn duy trì (0,5 mg/phút).'},
+   {a:0.75,b:null,lv:[3,2,2,2],fx:'Giai đoạn nạp nhanh (1 mg/phút).'}],
+  notes:['Phác đồ: 150 mg/10 phút → 1 mg/phút × 6 giờ → 0,5 mg/phút × 18 giờ. VT/VF kháng sốc (AHA): 300 mg TM bolus, liều 2: 150 mg.','Nồng độ >2 mg/mL (kéo dài >1 giờ) nên truyền qua catheter trung tâm. Hạ HA, nhịp chậm, viêm tĩnh mạch; QT kéo dài.']},
+ {id:'octreo', name:'Octreotide (Sandostatin)', alt:'sandostatin · somatostatin', cls:3, amt:'mcg', unit:'mcg/h', units:['mcg/h'],
+  range:[25,50], warn:100, ladder:[25,50,100],
+  preps:[[500,50],[1000,50],[500,100]],
+  mech:'Đồng đẳng somatostatin: chủ vận SSTR2 > SSTR5 > SSTR3 → ↓ glucagon/hormone giãn mạch tạng, co mạch tạng, ↓ lưu lượng cửa.',
+  cols:['SSTR2','SSTR5','SSTR3'],
+  bands:[{a:0,b:null,lv:[3,2,1],fx:'Giảm lưu lượng máu tạng/cửa và áp lực tĩnh mạch cửa; giảm tiết dịch tụy – tiêu hóa.'}],
+  notes:['Xuất huyết do vỡ giãn tĩnh mạch thực quản: 50 µg TM bolus, rồi 25–50 µg/giờ trong 2–5 ngày (bắt đầu sớm, trước nội soi). Có thể thay bằng terlipressin hoặc somatostatin (250 µg bolus rồi 250 µg/giờ).','Nhịp chậm, tăng/hạ đường huyết, rối loạn dung nạp mỡ khi dùng kéo dài.']},
+ {id:'terli', name:'Terlipressin', alt:'', cls:3, amt:'mg', unit:'mg/24h', units:['mg/24h','mg/h'],
+  range:[2,12], warn:12, ladder:[2,4,6,8,12],
+  preps:[[12,50],[6,50],[2,20]],
+  mech:'Tiền thuốc của lysine-vasopressin → chủ vận V1 (co mạch tạng) > V2.',
+  cols:['V1','V2'],
+  bands:[{a:0,b:null,lv:[3,1],fx:'Co mạch tạng → giảm lưu lượng cửa, tăng tưới máu thận (HRS).'}],
+  notes:['Hội chứng gan thận (HRS-AKI): truyền liên tục 2–12 mg/24 giờ, tăng dần nếu creatinine không giảm ≥ 25% sau 2–3 ngày (kèm albumin).','Nguy cơ thiếu máu đầu chi/ruột/tim, quá tải dịch – suy hô hấp (thận trọng khi SpO₂ thấp). Theo dõi Na⁺ máu.']},
+ {id:'ufh', name:'Heparin không phân đoạn (UFH)', alt:'ufh', cls:4, amt:'U', unit:'U/kg/h', units:['U/kg/h','U/h'],
+  range:[12,18], warn:25, ladder:[12,14,16,18,20],
+  preps:[[25000,250],[25000,500],[5000,50]],
+  mech:'Tăng hoạt tính antithrombin → ức chế Xa và IIa (thrombin).',
+  cols:['Xa','IIa'],
+  bands:[{a:0,b:null,lv:[3,3],fx:'Tác dụng chống đông chuẩn độ theo aPTT hoặc anti-Xa.'}],
+  notes:['HC vành cấp: bolus 60 U/kg (tối đa 4.000 U) rồi 12 U/kg/giờ (tối đa 1.000 U/giờ). Thuyên tắc huyết khối TM: bolus 80 U/kg rồi 18 U/kg/giờ. Chuẩn độ theo nomogram aPTT/anti-Xa của khoa.','Theo dõi tiểu cầu (HIT); điều chỉnh liều khi chảy máu.']},
+ {id:'insulin', name:'Insulin thường (truyền)', alt:'regular insulin', cls:4, amt:'U', unit:'U/kg/h', units:['U/kg/h','U/h'],
+  range:[0.05,0.14], warn:0.2, ladder:[0.02,0.05,0.1,0.14],
+  preps:[[50,50],[100,100],[100,50]],
+  mech:'Chủ vận thụ thể insulin (RTK) → GLUT4 vận chuyển glucose, ức chế tạo ceton/ly giải mỡ, kéo K⁺ vào tế bào.',
+  cols:['Thụ thể insulin'],
+  bands:[
+   {a:0,b:0.07,lv:[2],fx:'Liều duy trì khi đã giảm glucose (kèm dextrose).'},
+   {a:0.07,b:null,lv:[3],fx:'Liều tiêu chuẩn trong DKA (0,1 U/kg/giờ).'}],
+  notes:['DKA (đồng thuận ADA 2024): 0,1 U/kg/giờ (có hoặc không bolus 0,1 U/kg), chỉ bắt đầu khi K⁺ ≥ 3,5 mmol/L (hướng dẫn cũ dùng 3,3); khi glucose <250 mg/dL thêm dextrose và giảm còn khoảng 0,05 U/kg/giờ.','Theo dõi glucose mỗi giờ và K⁺; pha chuẩn 1 U/mL.']},
+ {id:'furo', name:'Furosemid (truyền)', alt:'', cls:4, amt:'mg', unit:'mg/h', units:['mg/h'],
+  range:[5,40], warn:40, ladder:[5,10,20,30,40],
+  preps:[[100,50],[250,50],[40,40]],
+  mech:'Ức chế đồng vận chuyển Na⁺-K⁺-2Cl⁻ (NKCC2) ở nhánh lên quai Henle.',
+  cols:['NKCC2'],
+  bands:[{a:0,b:null,lv:[3],fx:'Lợi tiểu quai; tác dụng phụ thuộc đến được lòng ống thận (liều cao hơn khi suy thận).'}],
+  notes:['Truyền liên tục không hơn bolus ngắt quãng về hiệu quả trong suy tim cấp (DOSE); liều khởi đầu thường ≥ 1–2,5 lần liều uống hằng ngày.','Độc tai khi tốc độ >4 mg/phút. Theo dõi K⁺, Mg²⁺, creatinine.']},
+ {id:'dexmed', name:'Dexmedetomidin', alt:'precedex', cls:5, amt:'mcg', unit:'mcg/kg/h', units:['mcg/kg/h'],
+  range:[0.2,1.4], warn:1.5, ladder:[0.2,0.4,0.7,1,1.4],
+  preps:[[200,50],[400,100]],
+  mech:'Chủ vận α2 chọn lọc (α2:α1 ≈ 1620:1) → an thần “hợp tác”, giảm giao cảm, ít ức chế hô hấp.',
+  cols:['α2','α1'],
+  bands:[
+   {a:0,b:1.4,lv:[3,0],fx:'An thần, giảm đau nhẹ, giảm giao cảm → nhịp chậm, hạ HA.'},
+   {a:1.4,b:null,lv:[3,1],fx:'Kích thích α1 ngoại biên → tăng sức cản mạch, HA có thể tăng.'}],
+  notes:['Không cần liều nạp (bolus dễ gây hạ HA, nhịp chậm). Không ức chế hô hấp đáng kể; ít dùng để duy trì lâu dài (hội chứng cai).']},
+ {id:'propo', name:'Propofol', alt:'', cls:5, amt:'mg', unit:'mcg/kg/min', units:['mcg/kg/min','mg/kg/h'],
+  range:[5,50], warn:67, ladder:[5,10,20,30,50],
+  preps:[[1000,100],[500,50]],
+  mech:'Tăng hoạt động thụ thể GABA-A → an thần, gây ngủ, gây mê.',
+  cols:['GABA-A'],
+  bands:[{a:0,b:null,lv:[3],fx:'An thần phụ thuộc liều; hạ HA, ức chế hô hấp.'}],
+  notes:['An thần ICU thường 5–50 µg/kg/phút. Tránh >4 mg/kg/giờ (≈ 67 µg/kg/phút) kéo dài >48 giờ: nguy cơ hội chứng truyền propofol (PRIS).','Theo dõi triglyceride (cung cấp 1,1 kcal/mL). Dung dịch 10 mg/mL, không pha loãng thường quy.']},
+ {id:'mida', name:'Midazolam', alt:'', cls:5, amt:'mg', unit:'mg/kg/h', units:['mg/kg/h','mg/h'],
+  range:[0.02,0.1], warn:0.2, ladder:[0.02,0.04,0.06,0.1,0.2],
+  preps:[[50,50],[100,50]],
+  mech:'Điều biến dương tính thụ thể GABA-A (benzodiazepine) → an thần, chống co giật.',
+  cols:['GABA-A'],
+  bands:[{a:0,b:null,lv:[3],fx:'An thần phụ thuộc liều; tích lũy khi suy gan/thận, béo phì.'}],
+  notes:['Co giật trạng thái kháng trị dùng liều cao hơn nhiều (NCS: 0,05–2 mg/kg/giờ sau liều nạp) — vượt ngưỡng cảnh báo của công cụ này là chủ ý, tuân theo phác đồ động kinh.','Dung nạp và hội chứng cai khi dùng kéo dài.']},
+ {id:'fenta', name:'Fentanyl', alt:'', cls:5, amt:'mcg', unit:'mcg/h', units:['mcg/h','mcg/kg/h'],
+  range:[25,200], warn:300, ladder:[25,50,100,150,200],
+  preps:[[500,50],[1000,50]],
+  mech:'Chủ vận thụ thể opioid μ → giảm đau, an thần, ức chế hô hấp.',
+  cols:['μ','κ','δ'],
+  bands:[{a:0,b:null,lv:[3,1,1],fx:'Giảm đau phụ thuộc liều; ức chế hô hấp, nhịp chậm, cứng cơ ngực ở liều cao/bolus nhanh.'}],
+  notes:['Giảm đau ICU thường 25–200 µg/giờ (0,35–3 µg/kg/giờ); tích lũy khi truyền kéo dài (t½ nhạy theo ngữ cảnh tăng).']}
+];
+
+
+/* Dung môi: pref = ưu tiên · ok = dùng được · lim = hạn chế/ít dữ liệu · no = không nên */
+const INF_DILS = {nacl:'NaCl 0,9%', g5:'Glucose 5%', lr:'Ringer lactat', raw:'Nguyên chất (không pha)'};
+const INF_DIL_ST = {pref:['✅','ưu tiên'], ok:['✅','dùng được'], lim:['⚠️','hạn chế / ít dữ liệu'], no:['⛔','không nên dùng']};
+const INF_DIL = {
+ norepi:{s:{g5:'pref',nacl:'ok',lr:'lim'}, note:'Nhãn thuốc khuyên pha trong dung dịch có glucose (chống oxy hóa); NaCl 0,9% vẫn được dùng rộng rãi trong thực hành. Pha mới mỗi 24 giờ.'},
+ epi:{s:{nacl:'pref',g5:'ok',lr:'lim'}, note:'Che sáng nếu để lâu; pha mới mỗi 24 giờ. Không pha chung dung dịch kiềm (NaHCO₃).'},
+ dopa:{s:{nacl:'ok',g5:'pref',lr:'ok'}, note:'Không pha trong dung dịch kiềm (NaHCO₃) — làm bất hoạt thuốc. Dung dịch hồng/nâu = đã oxy hóa, bỏ.'},
+ dobu:{s:{nacl:'ok',g5:'ok',lr:'ok'}, note:'Không pha chung dung dịch kiềm (NaHCO₃). Màu hồng nhạt không ảnh hưởng hiệu lực.'},
+ vaso:{s:{nacl:'ok',g5:'ok',lr:'lim'}, note:'Ổn định tốt trong NaCl 0,9% và glucose 5%.'},
+ phenyl:{s:{nacl:'ok',g5:'ok',lr:'lim'}, note:''},
+ iso:{s:{g5:'ok',nacl:'ok',lr:'lim'}, note:'Bỏ dung dịch đổi màu hồng/nâu.'},
+ milri:{s:{nacl:'ok',g5:'ok',lr:'lim'}, note:'Nhãn cho phép NaCl 0,45%/0,9% và glucose 5%.'},
+ ntg:{s:{g5:'ok',nacl:'ok',lr:'lim'}, note:'Ưu tiên chai thủy tinh và dây không PVC (thuốc bị hấp phụ vào PVC).'},
+ snp:{s:{g5:'pref',nacl:'no',lr:'no'}, note:'Chỉ pha trong glucose 5%. Che sáng bình và dây; dung dịch chuyển nâu/xanh = bỏ; dùng trong 24 giờ.'},
+ nicar:{s:{nacl:'ok',g5:'ok',lr:'no'}, note:'Không pha cùng NaHCO₃ hoặc Ringer lactat (kết tủa).'},
+ dilt:{s:{nacl:'ok',g5:'ok',lr:'ok'}, note:'Không pha chung furosemid (kết tủa).'},
+ esmolol:{s:{nacl:'ok',g5:'ok',lr:'ok'}, note:'Không pha cùng NaHCO₃.'},
+ labet:{s:{nacl:'ok',g5:'ok',lr:'ok'}, note:'Không pha cùng NaHCO₃ (môi trường kiềm).'},
+ amio:{s:{g5:'pref',nacl:'no',lr:'no'}, note:'Pha trong glucose 5% (NaCl 0,9% làm giảm độ tan/kết tủa). Nồng độ >2 mg/mL kéo dài → catheter trung tâm. Dùng chai thủy tinh/polyolefin, hạn chế PVC.'},
+ octreo:{s:{nacl:'pref',g5:'lim',lr:'lim'}, note:'NaCl 0,9% ổn định; glucose 5% có thể làm giảm ổn định khi để lâu.'},
+ terli:{s:{nacl:'ok',g5:'ok',lr:'lim'}, note:''},
+ ufh:{s:{nacl:'ok',g5:'ok',lr:'ok'}, note:'Pha chuẩn 100 U/mL (25.000 U/250 mL) hoặc 50 U/mL theo khoa; ghi rõ nồng độ lên bình.'},
+ insulin:{s:{nacl:'pref',g5:'lim',lr:'lim'}, note:'Insulin hấp phụ vào dây/bình: xả dây ~20 mL dung dịch đã pha trước khi nối bệnh nhân. Pha mới mỗi 24 giờ. Khi cần bù glucose (glucose ≤ 250 mg/dL trong DKA), truyền glucose 5–10% bằng đường khác, không pha insulin vào glucose.'},
+ furo:{s:{nacl:'pref',lr:'ok',g5:'lim'}, note:'Không dùng dung dịch pH acid (<5,5) — kết tủa; không pha chung dobutamin, dopamin, diltiazem.'},
+ dexmed:{s:{nacl:'ok',g5:'ok',lr:'ok'}, note:'Lắc đều sau khi pha.'},
+ propo:{raw:'pref', s:{raw:'pref',g5:'ok',nacl:'no',lr:'no'}, note:'Dùng nguyên chất 10 mg/mL (qua dây nối riêng). Nếu pha: chỉ trong glucose 5%, nồng độ ≥ 2 mg/mL. Thay bình/dây mỗi 12 giờ (nguy cơ nhiễm khuẩn).'},
+ mida:{s:{nacl:'ok',g5:'ok',lr:'lim'}, note:'Kết tủa khi pha cùng dung dịch kiềm.'},
+ fenta:{s:{nacl:'ok',g5:'ok',lr:'lim'}, note:''}
+};
+function infDefDil(id){ const m = INF_DIL[id]; if(!m) return 'nacl'; if(m.raw) return 'raw'; const k = Object.keys(m.s); return k.find(x=>m.s[x]==='pref') || k[0]; }
+
+/* ---------- Tính toán ---------- */
+const INF_NUM = {mcg:1, mg:1000, U:1};
+const INF_T = {min:60, h:1, '24h':1/24};
+function infParseUnit(u){
+  const m = String(u).match(/^(mcg|mg|U)(\/kg)?\/(min|h|24h)$/);
+  return m ? {num:m[1], kg:!!m[2], t:m[3]} : null;
+}
+function infPerHour(dose, unit, w){ // lượng/giờ của cả bệnh nhân, theo đơn vị nền (mcg hoặc U)
+  const p = infParseUnit(unit); if(!p) return NaN;
+  return dose * (p.kg ? w : 1) * INF_NUM[p.num] * INF_T[p.t];
+}
+function infFromPerHour(ph, unit, w){
+  const p = infParseUnit(unit); if(!p) return NaN;
+  return ph / ((p.kg ? w : 1) * INF_NUM[p.num] * INF_T[p.t]);
+}
+function infConc(d, amt, vol){ return (amt * INF_NUM[d.amt]) / vol; }  // đơn vị nền / mL
+function infNeedsW(unit){ const p = infParseUnit(unit); return !!(p && p.kg); }
+function infFmt(x){
+  if(!isFinite(x)) return '—';
+  const a = Math.abs(x);
+  if(a >= 100) return String(Math.round(x));
+  if(a >= 10) return String(+x.toFixed(1));
+  if(a >= 1) return String(+x.toFixed(2));
+  return String(+x.toFixed(4));
+}
+function infUnitLabel(u){ return u.replace('mcg','µg'); }
+function infBand(d, doseP){
+  for(let i=0;i<d.bands.length;i++){ const b=d.bands[i]; if(doseP>=b.a && (b.b==null || doseP<b.b)) return i; }
+  return -1;
+}
+
+/* ---------- Trạng thái & giao diện ---------- */
+let infId = 'norepi', infFilter = '', infPickOpen = false;
+const infS = {w:70, amt:null, vol:null, mode:'d2r', dose:'', unit:null, rate:'', rateU:'mlh', dil:'nacl', gtt:20};
+try{ const sg = parseInt(localStorage.getItem('inf_gtt')); if([10,15,20,60].indexOf(sg)>=0) infS.gtt = sg; }catch(e){}
+try{ const sw = parseFloat(localStorage.getItem('inf_w')); if(sw>0) infS.w = sw; }catch(e){}
+function infFind(id){ return INF_DRUGS.find(d=>d.id===id); }
+function infNorm(s){ return (typeof stripVN==='function') ? stripVN(String(s||'')) : String(s||'').toLowerCase(); }
+function infSetFilter(q){ infFilter = q||''; infRenderPicker(); }
+function infTogglePicker(){ infPickOpen = !infPickOpen; infRenderPicker(); }
+function infRenderPicker(){
+  const box = document.getElementById('infPicker'); if(!box) return;
+  const q = infNorm(infFilter);
+  const cur = infFind(infId);
+  const open = infPickOpen || !!q;
+  let h = '<button type="button" class="inf-curbtn" onclick="infTogglePicker()" aria-expanded="'+open+'"><span>💊 Thuốc: <b>'+cur.name+'</b></span><span class="inf-chg">'+(open?'Thu gọn ▲':'Đổi thuốc ▼')+'</span></button>';
+  if(open){
+    let g = '';
+    INF_CLASSES.forEach((c,ci)=>{
+      const list = INF_DRUGS.filter(d=>d.cls===ci && (!q || infNorm(d.name+' '+d.alt+' '+d.id).indexOf(q)>=0));
+      if(!list.length) return;
+      g += '<div class="inf-group"><div class="inf-group-title">'+c+'</div><div class="inf-chips">'+
+        list.map(d=>'<button type="button" class="inf-chip'+(d.id===infId?' on':'')+'" onclick="infSelect(\''+d.id+'\')">'+d.name+'</button>').join('')+'</div></div>';
+    });
+    h += '<div class="inf-pickbody">'+(g || '<p class="empty-hint">Không có thuốc phù hợp trong danh sách.</p>')+'</div>';
+  }
+  box.innerHTML = h;
+}
+function infSelect(id, keepScroll){
+  const d = infFind(id); if(!d) return;
+  infId = id; infPickOpen = false; infFilter = ''; { const q=document.getElementById('quickSearch'); if(q && window.__mainTab==='infusion') q.value=''; }
+  infS.unit = d.unit;
+  infS.amt = d.preps[0][0]; infS.vol = d.preps[0][1];
+  infS.mode = 'd2r';
+  infS.dose = String(d.range[0]); infS.rate = ''; infS.rateU = 'mlh'; infS.dil = infDefDil(id);
+  infRender();
+  if(!keepScroll){ const el=document.getElementById('infCalc'); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+function infRender(){
+  infRenderPicker();
+  const d = infFind(infId), box = document.getElementById('infCalc'); if(!d||!box) return;
+  const prepOpts = d.preps.map((p,i)=>'<option value="'+i+'"'+((p[0]===infS.amt&&p[1]===infS.vol)?' selected':'')+'>'+infAmtLabel(p[0],d.amt)+' / '+p[1]+' mL</option>').join('')+
+    '<option value="c"'+(d.preps.every(p=>!(p[0]===infS.amt&&p[1]===infS.vol))?' selected':'')+'>Tự nhập…</option>';
+  const unitOpts = d.units.map(u=>'<option value="'+u+'"'+(u===infS.unit?' selected':'')+'>'+infUnitLabel(u)+'</option>').join('');
+  box.innerHTML =
+   '<div class="inf-title"><h3>'+d.name+'</h3><div class="inf-mech">🔬 '+d.mech+'</div></div>'+
+   '<div class="inf-grid">'+
+    '<label class="inf-f" style="'+(d.units.some(infNeedsW)?'':'display:none')+'"><span>Cân nặng (kg)</span><input id="infW" type="number" inputmode="decimal" min="1" step="0.5" value="'+infS.w+'" oninput="infOnInput()"></label>'+
+    '<label class="inf-f"><span>Pha thuốc</span><select id="infPrep" onchange="infOnPrep(this.value)">'+prepOpts+'</select></label>'+
+    '<label class="inf-f"><span>Lượng thuốc ('+(d.amt==='mcg'?'µg':d.amt)+')</span><input id="infAmt" type="number" inputmode="decimal" min="0" step="any" value="'+infS.amt+'" oninput="infOnInput()"></label>'+
+    '<label class="inf-f"><span>Thể tích cuối (mL)</span><input id="infVol" type="number" inputmode="decimal" min="0" step="any" value="'+infS.vol+'" oninput="infOnInput()"></label>'+
+   '</div>'+
+   '<div class="inf-grid">'+
+    '<label class="inf-f"><span>Dung môi pha thuốc</span><select id="infDil" onchange="infOnDil(this.value)">'+infDilOpts(d)+'</select></label>'+
+    '<label class="inf-f"><span>Dây truyền (giọt = 1 mL)</span><select id="infGtt" onchange="infOnGtt(this.value)">'+[20,15,10,60].map(g=>'<option value="'+g+'"'+(g===infS.gtt?' selected':'')+'>'+g+' giọt/mL'+(g===60?' (vi giọt)':'')+'</option>').join('')+'</select></label>'+
+   '</div>'+
+   '<div id="infDilBox"></div>'+
+   '<div class="inf-modes"><button type="button" id="infM1" class="'+(infS.mode==='d2r'?'on':'')+'" onclick="infMode(\'d2r\')">Liều → tốc độ</button><button type="button" id="infM2" class="'+(infS.mode==='r2d'?'on':'')+'" onclick="infMode(\'r2d\')">Tốc độ → liều</button></div>'+
+   '<div class="inf-grid inf-io">'+
+    (infS.mode==='d2r'
+     ? '<label class="inf-f"><span>Liều</span><input id="infDose" type="number" inputmode="decimal" min="0" step="any" value="'+infS.dose+'" oninput="infOnInput()"></label>'+
+       '<label class="inf-f"><span>Đơn vị</span><select id="infUnit" onchange="infOnUnit(this.value)">'+unitOpts+'</select></label>'
+     : '<label class="inf-f"><span>Tốc độ đang chạy</span><input id="infRateIn" type="number" inputmode="decimal" min="0" step="any" value="'+infS.rate+'" oninput="infOnInput()"></label>'+
+       '<label class="inf-f"><span>Đơn vị tốc độ</span><select id="infRateU" onchange="infOnRateU(this.value)"><option value="mlh"'+(infS.rateU==='mlh'?' selected':'')+'>mL/h</option><option value="gtt"'+(infS.rateU==='gtt'?' selected':'')+'>giọt/phút</option></select></label>'+
+       '<label class="inf-f" style="grid-column:1/-1"><span>Quy ra đơn vị liều</span><select id="infUnit" onchange="infOnUnit(this.value)">'+unitOpts+'</select></label>')+
+   '</div>'+
+   '<div id="infOut"></div>'+
+   '<div id="infTables"></div>';
+  infUpdate();
+}
+function infDilOpts(d){
+  const m = INF_DIL[d.id] || {s:{nacl:'ok'}}; const keys = ['nacl','g5','lr'].concat(m.raw?['raw']:[]);
+  return keys.map(k=>{ const st = m.s[k] || (k==='raw'?'no':'lim'); return '<option value="'+k+'"'+(k===infS.dil?' selected':'')+'>'+INF_DIL_ST[st][0]+' '+INF_DILS[k].replace(' (không pha)','')+'</option>'; }).join('');
+}
+function infDilInfo(d){
+  const m = INF_DIL[d.id] || {s:{}, note:''}; const st = m.s[infS.dil] || (infS.dil==='raw'?'no':'lim'); const e = INF_DIL_ST[st];
+  const ok = ['nacl','g5','lr'].filter(k=>m.s[k]==='pref'||m.s[k]==='ok').map(k=>INF_DILS[k]);
+  return '<div class="inf-dil'+(st==='no'?' bad':(st==='lim'?' lim':''))+'"><b>'+e[0]+' '+INF_DILS[infS.dil]+': '+e[1]+'</b>'+
+    (st==='no'||st==='lim' ? '<div>Nên dùng: '+(m.raw?'nguyên chất; ':'')+(ok.join(' hoặc ')||'—')+'.</div>':'')+
+    (m.note?'<div>'+m.note+'</div>':'')+
+    (infS.dil==='raw' ? '<div class="inf-dil-foot">Dùng nguyên chất: nhập thể tích = lượng thuốc đang có trong bơm (ví dụ 1.000 mg / 100 mL).</div>' :
+    '<div class="inf-dil-foot">Pha: hút lượng thuốc cần dùng rồi thêm <b>'+INF_DILS[infS.dil]+'</b> cho đủ thể tích cuối đã nhập; lắc đều, ghi nồng độ – ngày giờ pha lên bình/bơm.</div>')+'</div>';
+}
+function infOnDil(v){ infS.dil = v; infUpdate(); }
+function infOnGtt(v){ infS.gtt = parseInt(v)||20; try{ localStorage.setItem('inf_gtt', infS.gtt); }catch(e){} infUpdate(); }
+function infOnRateU(u){
+  const cur = parseFloat((document.getElementById('infRateIn')||{}).value);
+  if(cur>=0 && u!==infS.rateU){ infS.rate = String(+(u==='gtt' ? cur*infS.gtt/60 : cur*60/infS.gtt).toFixed(2)); }
+  infS.rateU = u; infRender();
+}
+function infAmtLabel(a, u){ return (u==='mcg') ? (a>=1000? (a/1000)+' mg' : a+' µg') : (u==='U' ? a.toLocaleString('vi-VN')+' U' : a+' mg'); }
+function infOnPrep(v){
+  const d = infFind(infId);
+  if(v!=='c'){ const p=d.preps[+v]; infS.amt=p[0]; infS.vol=p[1]; document.getElementById('infAmt').value=p[0]; document.getElementById('infVol').value=p[1]; }
+  infUpdate();
+}
+function infMode(m){
+  const w = parseFloat(document.getElementById('infW').value);
+  // chuyển giá trị sang chế độ kia để tiếp tục tính
+  const d = infFind(infId), amt = parseFloat(document.getElementById('infAmt').value), vol = parseFloat(document.getElementById('infVol').value);
+  if(m!==infS.mode && amt>0 && vol>0 && w>0){
+    const c = infConc(d,amt,vol);
+    infS.rateU = 'mlh';
+    if(m==='r2d'){ const dose=parseFloat(document.getElementById('infDose').value); if(dose>=0){ infS.rate = String(+(infPerHour(dose,infS.unit,w)/c).toFixed(2)); } }
+    else { const r=parseFloat((document.getElementById('infRateIn')||{}).value); if(r>=0){ infS.dose = String(+infFromPerHour(r*c,infS.unit,w).toPrecision(4)); } }
+  }
+  infS.mode = m; infRender();
+}
+function infOnUnit(u){
+  const d = infFind(infId), w = parseFloat(document.getElementById('infW').value);
+  if(infS.mode==='d2r'){ const cur = parseFloat(document.getElementById('infDose').value);
+    if(cur>=0 && (w>0 || !(infNeedsW(infS.unit)||infNeedsW(u)))) infS.dose = String(+infFromPerHour(infPerHour(cur,infS.unit,w||1),u,w||1).toPrecision(4));
+  }
+  infS.unit = u; infRender();
+}
+function infOnInput(){
+  const g = id => document.getElementById(id);
+  infS.w = parseFloat(g('infW').value) || 0; infS.amt = parseFloat(g('infAmt').value); infS.vol = parseFloat(g('infVol').value);
+  if(g('infDose')) infS.dose = g('infDose').value;
+  if(g('infRateIn')) infS.rate = g('infRateIn').value;
+  try{ if(infS.w>0) localStorage.setItem('inf_w', infS.w); }catch(e){}
+  const sel = g('infPrep'); if(sel){ const d=infFind(infId); const i=d.preps.findIndex(p=>p[0]===infS.amt&&p[1]===infS.vol); sel.value = i>=0?String(i):'c'; }
+  infUpdate();
+}
+function infDoseInPrimary(d, dose, w){ return infFromPerHour(infPerHour(dose, infS.unit, w), d.unit, w); }
+function infUpdate(){
+  const d = infFind(infId), out = document.getElementById('infOut'), tb = document.getElementById('infTables'); if(!d||!out||!tb) return;
+  const w = infS.w, amt = infS.amt, vol = infS.vol;
+  const needW = d.units.some(infNeedsW);
+  const okC = amt>0 && vol>0;
+  const conc = okC ? infConc(d,amt,vol) : NaN;           // đơn vị nền / mL
+  const concTxt = okC ? infConcLabel(d, conc) : '—';
+  let rate = NaN, dose = NaN, msg = [];
+  if(!okC) msg.push('Nhập lượng thuốc và thể tích pha > 0.');
+  if(infNeedsW(infS.unit) && !(w>0)) msg.push('Nhập cân nặng để tính liều theo kg.');
+  const wUse = w>0 ? w : 1;
+  if(okC && !(infNeedsW(infS.unit) && !(w>0))){
+    if(infS.mode==='d2r'){ dose = parseFloat(infS.dose); if(dose>=0) rate = infPerHour(dose,infS.unit,wUse)/conc; }
+    else { rate = parseFloat(infS.rate); if(infS.rateU==='gtt') rate = rate*60/infS.gtt; if(rate>=0) dose = infFromPerHour(rate*conc, infS.unit, wUse); }
+  }
+  const doseP = isFinite(dose) ? infDoseInPrimary(d,dose,wUse) : NaN;
+  const warns = [];
+  if(isFinite(doseP)){
+    if(doseP > d.warn*1.0001) warns.push('⚠️ Liều vượt ngưỡng thường dùng ('+infFmt(d.warn)+' '+infUnitLabel(d.unit)+'). Kiểm tra lại y lệnh/đơn vị trước khi chạy.');
+    else if(doseP < d.range[0]*0.5 && doseP>0) warns.push('ℹ️ Liều thấp hơn khoảng thường dùng ('+infFmt(d.range[0])+'–'+infFmt(d.range[1])+' '+infUnitLabel(d.unit)+').');
+  }
+  if(isFinite(rate)){
+    if(rate>0 && rate<0.5) warns.push('⚠️ Tốc độ <0,5 mL/h: độ chính xác bơm kém và chậm tới bệnh nhân → pha đậm hơn hoặc dùng dây nối ngắn.');
+    if(rate>=100 && rate<999) warns.push('ℹ️ Tốc độ ≥ 100 mL/h: cân nhắc pha đậm hơn để hạn chế lượng dịch nhập.');
+    if(rate>=999) warns.push('⚠️ Tốc độ vượt khả năng thông thường của bơm → pha đậm hơn.');
+  }
+  const big = infS.mode==='d2r'
+    ? (isFinite(rate)?'<div class="inf-big"><b>'+(rate>=100?Math.round(rate):(+rate.toFixed(1)))+'</b> mL/h</div><div class="inf-gtt">💧 ≈ <b>'+infGttN(rate)+'</b> giọt/phút <span>(dây '+infS.gtt+' giọt/mL)</span></div><div class="inf-sub">chính xác: '+(+rate.toFixed(3))+' mL/h = '+(+(rate*infS.gtt/60).toFixed(2))+' giọt/phút · nồng độ '+concTxt+'</div>':'<div class="inf-big">—</div>')
+    : (isFinite(dose)?'<div class="inf-big"><b>'+infFmt(dose)+'</b> '+infUnitLabel(infS.unit)+'</div><div class="inf-sub">'+(infS.rateU==='gtt'&&isFinite(rate)?'= '+(+rate.toFixed(2))+' mL/h · ':'')+'tương đương '+(d.unit!==infS.unit&&isFinite(doseP)?infFmt(doseP)+' '+infUnitLabel(d.unit)+' · ':'')+'nồng độ '+concTxt+'</div>':'<div class="inf-big">—</div>');
+  if(isFinite(rate) && rate>0){
+    const g = rate*infS.gtt/60;
+    if(g<6) warns.push('⚠️ <6 giọt/phút: khó đếm và dao động lớn theo tư thế/độ cao bình → dùng bơm tiêm/máy truyền hoặc pha loãng hơn.');
+    if(g>150 && infS.gtt<60) warns.push('ℹ️ >150 giọt/phút: gần chảy tia; dùng máy truyền hoặc pha đậm hơn.');
+    if(d.cls<=2 || ['ufh','insulin','terli','octreo','dexmed','propo','mida','fenta'].indexOf(d.id)>=0) warns.push('⚠️ Thuốc nguy cơ cao: chỉ dùng giọt/phút khi không có bơm/máy truyền — truyền trọng lực không chính xác, dễ thay đổi.');
+  }
+  const dbx = document.getElementById('infDilBox'); if(dbx) dbx.innerHTML = infDilInfo(d);
+  out.innerHTML = '<div class="inf-result">'+big+(msg.length?'<div class="inf-warn">'+msg.join('<br>')+'</div>':'')+
+    warns.map(x=>'<div class="inf-warn">'+x+'</div>').join('')+infRangeBar(d,doseP)+'</div>';
+  // Bảng thụ thể theo liều + thang liều + ghi chú
+  const bi = isFinite(doseP) ? infBand(d,doseP) : -1;
+  let t = '<div class="inf-sec"><div class="inf-sec-title">🧬 Kích hoạt thụ thể theo liều <span>('+infUnitLabel(d.unit)+')</span></div>'+
+    '<div class="inf-tablewrap"><table class="inf-tbl"><thead><tr><th>Khoảng liều</th>'+d.cols.map(c=>'<th>'+c+'</th>').join('')+'</tr></thead><tbody>'+
+    d.bands.map((b,i)=>'<tr class="'+(i===bi?'cur':'')+'"><td>'+infBandLabel(d,b)+'</td>'+b.lv.map(l=>'<td>'+infLv(l)+'</td>').join('')+'</tr><tr class="fx '+(i===bi?'cur':'')+'"><td colspan="'+(d.cols.length+1)+'">'+b.fx+'</td></tr>').join('')+
+    '</tbody></table></div><div class="inf-legend">●●● chiếm ưu thế · ●● vừa · ● yếu · ○ không đáng kể. Ranh giới liều chỉ gần đúng (khác biệt cá thể, bệnh nền, thuốc dùng kèm).</div></div>';
+  if(okC && (w>0 || !d.units.every(infNeedsW))){
+    const rows = d.ladder.map(v=>{ const r = infPerHour(v,d.unit,wUse)/conc; return '<tr class="'+(isFinite(doseP)&&Math.abs(v-doseP)<1e-9?'cur':'')+'"><td>'+infFmt(v)+' '+infUnitLabel(d.unit)+'</td><td><b>'+(r>=100?Math.round(r):+r.toFixed(1))+'</b> mL/h</td><td>'+infGttN(r)+'</td></tr>'; }).join('');
+    t += '<div class="inf-sec"><div class="inf-sec-title">📈 Bảng chuẩn độ nhanh <span>('+(infNeedsW(d.unit)?w+' kg · ':'')+concTxt+')</span></div><div class="inf-tablewrap"><table class="inf-tbl inf-lad"><thead><tr><th>Liều</th><th>Tốc độ bơm</th><th>Giọt/phút ('+infS.gtt+'/mL)</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  }
+  t += '<div class="inf-sec"><div class="inf-sec-title">📌 Lưu ý lâm sàng</div><ul class="inf-notes">'+d.notes.map(n=>'<li>'+n+'</li>').join('')+'</ul></div>';
+  tb.innerHTML = t;
+}
+function infGttN(rate){ const g = rate*infS.gtt/60; return g>=10 ? Math.round(g) : +g.toFixed(1); }
+function infConcLabel(d, c){ // c: đơn vị nền / mL
+  if(d.amt==='U') return infFmt(c)+' U/mL';
+  return c>=1000 ? infFmt(c/1000)+' mg/mL' : infFmt(c)+' µg/mL';
+}
+function infLv(l){ return '<span class="inf-lv l'+l+'" title="'+['không đáng kể','yếu','vừa','ưu thế'][l]+'">'+(l?'●'.repeat(l):'')+'<i>'+'○'.repeat(3-l)+'</i></span>'; }
+function infBandLabel(d,b){
+  const u=''; if(b.a===0 && b.b!=null) return '< '+infFmt(b.b); if(b.b==null) return (b.a===0?'mọi liều':'≥ '+infFmt(b.a)); return infFmt(b.a)+' – '+infFmt(b.b);
+}
+function infRangeBar(d, doseP){
+  const max = d.warn*1.4, pct = v => Math.max(0,Math.min(100,v/max*100));
+  const mk = isFinite(doseP) ? '<span class="inf-mark" style="left:'+pct(doseP)+'%"></span>' : '';
+  return '<div class="inf-rangebar" aria-hidden="true"><span class="inf-usual" style="left:'+pct(d.range[0])+'%;width:'+(pct(d.range[1])-pct(d.range[0]))+'%"></span><span class="inf-limit" style="left:'+pct(d.warn)+'%"></span>'+mk+'</div>'+
+    '<div class="inf-rangelab"><span>0</span><span>Khoảng thường dùng '+infFmt(d.range[0])+'–'+infFmt(d.range[1])+' '+infUnitLabel(d.unit)+'</span><span>'+infFmt(max)+'</span></div>';
+}
+function infInit(){
+  if(!document.getElementById('infCalc').dataset.ready){ document.getElementById('infCalc').dataset.ready='1'; infSelect(infId, true); }
+  else infRenderPicker();
+}
+function goInfusion(id){
+  document.getElementById('smartSearchDrop')?.classList.remove('open');
+  const qs = document.getElementById('quickSearch'); if(qs) qs.value='';
+  infFilter = '';
+  switchMainTab('infusion');
+  if(id && infFind(id)) infSelect(id, true);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+/* Nút dẫn từ bài bệnh → tab tính tốc độ */
+const INF_LINKS = [
+ ['norepi', /\bnoradrenalin|\bnorepinephrin|\bnoradrenaline/],
+ ['epi', /(^|[^a-z])(adrenalin|epinephrin)/],
+ ['dopa', /\bdopamin/],
+ ['dobu', /\bdobutamin/],
+ ['vaso', /\bvasopressin/],
+ ['phenyl', /\bphenylephrin/],
+ ['iso', /\bisoprenalin|\bisoproterenol/],
+ ['milri', /\bmilrinon/],
+ ['ntg', /\bnitroglycerin|\bglyceryl trinitrat|\bntg\b/],
+ ['snp', /\bnitroprussid/],
+ ['nicar', /\bnicardipin/],
+ ['dilt', /\bdiltiazem/],
+ ['esmolol', /\besmolol/],
+ ['labet', /\blabetalol/],
+ ['octreo', /\boctreotid|\bsandostatin|\bsomatostatin/],
+ ['terli', /\bterlipressin/],
+ ['amio', /\bamiodaron.{0,60}truyen|truyen.{0,60}\bamiodaron/],
+ ['ufh', /\bufh\b|heparin khong phan doan|truyen.{0,40}\bheparin|\bheparin.{0,40}truyen/],
+ ['insulin', /insulin.{0,50}(truyen|tinh mach|\btm\b)|(truyen|tinh mach).{0,50}insulin/],
+ ['furo', /furosemid.{0,50}truyen|truyen.{0,50}furosemid/],
+ ['dexmed', /\bdexmedetomidin/],
+ ['propo', /\bpropofol/],
+ ['mida', /\bmidazolam.{0,50}truyen|truyen.{0,50}\bmidazolam/],
+ ['fenta', /\bfentanyl.{0,50}truyen|truyen.{0,50}\bfentanyl/]
+];
+function infDetectDrugs(d){
+  const txt = infNorm(Object.values(d.sections||{}).join(' ').replace(/<[^>]*>/g,' ').replace(/\s+/g,' '));
+  const dose = /truyen|\/phut|\/gio|\/min\b|\/h\b|mcg|µg|ug\/kg|mg\/h|bom/;
+  const excl = /agonist|chu van|antagonist|doi khang|vaptan|ngam|duoi luoi|tilt/;
+  return INF_LINKS.filter(l=>{
+    const re = new RegExp(l[1].source,'g'); let m;
+    while((m = re.exec(txt))){
+      const ctx = txt.slice(Math.max(0,m.index-100), m.index+m[0].length+100);
+      const near = txt.slice(Math.max(0,m.index-25), m.index+m[0].length+25);
+      if(dose.test(ctx) && !excl.test(near)) return true;
+      if(m[0].length===0) re.lastIndex++;
+    }
+    return false;
+  }).map(l=>l[0]);
+}
+function infInjectLinks(){
+  try{
+    const d = diseases.find(x=>x.id===activeDiseaseId); if(!d) return;
+    const ids = infDetectDrugs(d); if(!ids.length) return;
+    const body = document.querySelector('#card_dieu_tri .card-body-inner'); if(!body || body.querySelector('.inf-link-row')) return;
+    const row = document.createElement('div');
+    row.className = 'score-link-row inf-link-row';
+    row.innerHTML = '<span class="inf-link-lab">💧 Tính tốc độ truyền:</span>'+ids.map(id=>'<button type="button" class="score-link-btn" onclick="goInfusion(\''+id+'\')">'+infFind(id).name.replace(/ \(.*\)/,'')+'</button>').join('');
+    body.insertBefore(row, body.firstChild);
+  }catch(e){ console.warn('infInjectLinks', e); }
+}
+
 function switchMainTab(tab) {
   const v1 = document.getElementById('viewPhacDo');
   const v2 = document.getElementById('viewThangDiem');
@@ -17987,6 +18572,9 @@ function switchMainTab(tab) {
   const vY = document.getElementById('viewYsite'); const bY = document.getElementById('tabYsite');
   if(vY){ vY.style.display = (tab === 'ysite') ? '' : 'none'; if(tab === 'ysite' && typeof ysInit === 'function') ysInit(); }
   if(bY) bY.classList.toggle('active-main', tab === 'ysite');
+  const vI = document.getElementById('viewInfusion'); const bI = document.getElementById('tabInfusion');
+  if(vI){ vI.style.display = (tab === 'infusion') ? '' : 'none'; if(tab === 'infusion' && typeof infInit === 'function') infInit(); }
+  if(bI) bI.classList.toggle('active-main', tab === 'infusion');
   if(v2) v2.style.display = (tab === 'thangdiem') ? '' : 'none';
   if(v3) {
     v3.style.display = (tab === 'ai') ? 'flex' : 'none';
@@ -17999,7 +18587,9 @@ function switchMainTab(tab) {
   if(tab === 'ai' && b3) b3.classList.add('active-main');
 
   if(qs){
-    if(tab === 'ysite'){
+    if(tab === 'infusion'){
+      qs.placeholder = 'Lọc thuốc: noradrenalin, dobutamin, sandostatin…';
+    } else if(tab === 'ysite'){
       qs.placeholder = 'Lọc thuốc truyền: noradrenalin, ceftriaxon, furosemid…';
     } else if(tab === 'ai'){
       qs.placeholder = 'Hoặc hỏi nhanh… (dùng ô chat bên dưới)';
@@ -18584,6 +19174,19 @@ function calcScoreNow() {
 
 
 
+
+<!-- VIEW TÍNH TỐC ĐỘ TRUYỀN -->
+<div id="viewInfusion" style="display:none;">
+  <div class="inf-wrap">
+    <div class="inf-head">
+      <h2>💧 Tính tốc độ truyền thuốc (bơm tiêm điện / máy truyền dịch)</h2>
+      <p>Chọn thuốc → nhập cân nặng, cách pha và liều để ra tốc độ mL/h; hoặc nhập mL/h để suy ra liều đang chạy. Kèm bảng <b>thụ thể được kích hoạt theo liều</b> và bảng chuẩn độ nhanh.</p>
+    </div>
+    <div id="infPicker"></div>
+    <div id="infCalc"></div>
+    <div class="inf-disc">Công cụ hỗ trợ tính toán, dữ liệu tự biên soạn từ nhãn thuốc và hướng dẫn thông dụng (SSC 2021, AHA/ACLS, ADA 2024, AASLD/Baveno VII…). Ranh giới liều–thụ thể chỉ gần đúng. <b>Luôn kiểm tra chéo với y lệnh, nồng độ pha chuẩn của khoa và thư viện thuốc của bơm</b> trước khi chạy.</div>
+  </div>
+</div>
 
 <!-- VIEW TƯƠNG THÍCH Y-SITE -->
 <div id="viewYsite" style="display:none;">
